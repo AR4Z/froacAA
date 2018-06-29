@@ -194,7 +194,7 @@ hidden<script type="text/javascript">
             $('#form').show();
             $('#submitg').show();
         });
-        $('#username').blur(function() {
+        $('#input_username').blur(function() {
              $.get("<?php echo base_url() ?>index.php/usuario/checkusr/"+$("#username").val(), function(respuesta) {
                   $('#rta').val(respuesta);
             if (respuesta == 1){
@@ -241,22 +241,22 @@ hidden<script type="text/javascript">
                                                     </select>-->
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="apellido">Nombre:</label>
-                                                    <input  type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombres" required>
+                                                    <label for="nombre" id="nombre">Nombre:</label>
+                                                    <input  type="text" class="form-control" name="nombre" placeholder="Nombres"  aria-labelledby="nombre" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="apellido">Apellido:</label>
-                                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos" required>
+                                                    <label for="apellidos" id="apellidos">Apellidos:</label>
+                                                    <input type="text" class="form-control"  name="apellidos" placeholder="Apellidos"  aria-labelledby="apellidos" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="fecha_nac">Fecha de nacimiento:</label>
+                                                    <label id="fecha_nac" for="fecha_nac">Fecha de nacimiento:</label>
                                                     <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                                    <input  type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>
+                                                    <input  type="text" class="form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" aria-labelledby="fecha_nac" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="mail">E-mail:</label>
+                                                    <label id="mail" for="mail">E-mail:</label>
                                                     <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
-                                                    <input type="text" class="form-control" id="mail" name="mail" placeholder="Correo electronico" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+                                                    <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
                                                 </div>
                                                 <div id="in_use1" class="alert alert-block alert-danger fade in">
                                                     <button data-dismiss="alert" class="close close-sm" type="button">
@@ -271,8 +271,8 @@ hidden<script type="text/javascript">
                                                     <strong>Éxito!</strong> este correo electronico esta disponible.
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="username">Nombre de usuario:</label>
-                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario unico en FROAC" required>
+                                                    <label for="username" id="username" >Nombre de usuario:</label>
+                                                    <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC"  aria-labelledby="username" required>
                                                 </div>
                                                 <div id="in_use" class="alert alert-block alert-danger fade in">
                                                     <button data-dismiss="alert" class="close close-sm" type="button">
@@ -287,9 +287,9 @@ hidden<script type="text/javascript">
                                                     <strong>Éxito!</strong> este nombre de usuario esta disponible.
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="passwd">Password:</label>
-                                                    <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Contraseña" required><br>
-                                                    <input type="password" class="form-control" id="passwd2" name="passwd2" placeholder="Reescribe la contraseña" required>
+                                                    <label for="passwd" id="passwd">Password:</label>
+                                                    <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" required><br>
+                                                    <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" required>
                                                 </div>
                                                 <div id="no_match" class="alert alert-block alert-danger fade in">
                                                     <button data-dismiss="alert" class="close close-sm" type="button">
@@ -817,21 +817,21 @@ hidden<script type="text/javascript">
   <script type="text/javascript">
   $("#in_use, #no_use, #no_match").hide();
 
-  $('#fecha_nac').datepicker();
-  $("#username").change(function(){
+  $('#input_fecha_nac').datepicker();
+  $("#input_username").change(function(){
    $.ajax({
     type: "POST",
     url: "<?php echo base_url()?>index.php/usuario/verify_username",
-    data: { username: $("#username").val()}
+    data: { username: $("#input_username").val()}
   })
    .done(function( msg ) {
      if(msg >= 1 ){
 
-      $("#in_name").text($("#username").val());
+      $("#in_name").text($("#input_username").val());
       $("#in_use").show();
       $("#no_use").hide();
       $("#sub").hide();
-      $("#username").val("");
+      $("#input_username").val("");
     }else{
       $("#no_use").show();
       $("#in_use").hide();
@@ -843,20 +843,20 @@ hidden<script type="text/javascript">
 
   $("#in_use1, #no_use1").hide();
 
-  $("#mail").change(function(){
+  $("#input_mail").change(function(){
       $.ajax({
           type: "POST",
           url: "<?php echo base_url()?>index.php/usuario/verify_email",
-          data: { mail: $("#mail").val()}
+          data: { mail: $("#input_mail").val()}
       })
           .done(function( msg ) {
               if(msg >= 1 ){
 
-                  $("#in_name").text($("#mail").val());
+                  $("#in_name").text($("#input_mail").val());
                   $("#in_use1").show();
                   $("#no_use1").hide();
                   $("#sub").hide();
-                  $("#mail").val("");
+                  $("#input_mail").val("");
               }else{
                   $("#no_use1").show();
                   $("#in_use1").hide();
@@ -864,19 +864,19 @@ hidden<script type="text/javascript">
               }
           });
   });
-  $("#passwd").change(function(){
-    if ($("#passwd").val().length < 6){
+  $("#input_passwd").change(function(){
+    if ($("#input_passwd").val().length < 6){
       alert("Su contraseña debe ser de minimo 6 caracteres!")
-      $("#passwd").val("");
+      $("#input_passwd").val("");
     }
   });
-  $("#passwd2").change(function(){
-    if($("#passwd").val() == $("#passwd2").val()){
+  $("#input_passwd2").change(function(){
+    if($("#input_passwd").val() == $("#input_passwd2").val()){
         $("#no_match").hide();
     }
-    if($("#passwd").val() != $("#passwd2").val()){
+    if($("#input_passwd").val() != $("#input_passwd2").val()){
       $("#no_match").show();
-      $("#passwd2").val("")
+      $("#input_passwd2").val("")
     }
   });
 
