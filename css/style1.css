@@ -1,0 +1,291 @@
+/*Inicio Reset*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, form, header, hgroup, 
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+  outline: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, 
+footer, form, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	font-family: arial;
+	font-weight: normal;
+	font-size:
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*Fin Reset*/
+
+body {
+  color: #000;
+  background: white;
+  font-family: 'Open Sans', sans-serif;
+  padding: 0;
+  margin: 0;
+  font-size: auto;
+}
+#container {
+  width: 100%;
+  height: 100%;
+}
+#unalTop {
+  position: relative;
+  z-index: 1;
+}
+#unalTop .tx-srlanguagemenu {
+  float: right;
+  margin: 0 5px;
+  color: white;
+}
+#unalTop .tx-srlanguagemenu .btn {
+  background: transparent;
+  color: #fff;
+  border: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  -webkit-text-shadow: none!important;
+  -ms-text-shadow: none!important;
+  -moz-text-shadow: none!important;
+  -o-text-shadow: none!important;
+  -khtml-text-shadow: none!important;
+  text-shadow: none!important;
+  -webkit-box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  -o-box-shadow: none!important;
+  -ms-box-shadow: none!important;
+  -khtml-box-shadow: none!important;
+  box-shadow: none!important;
+  border: 0!important;
+}
+#unalTop .logo {
+  -moz-transition: width .5s, height .5s;
+  -ms-transition: width .5s, height .5s;
+  -o-transition: width .5s, height .5s;
+  -webkit-transition: width .5s, height .5s;
+  background: no-repeat url(../img/sealBck.png);
+  float: left;
+  height: auto;
+  margin-left: 10px;
+  position: absolute;
+  text-align: center;
+  transition: width .5s, height .5s;
+  width: 234px;
+  height: 135px;
+  z-index: 2;
+}
+#unalTop .logo img {
+  -moz-transition: width .5s, height .5s;
+  -ms-transition: width .5s, height .5s;
+  -o-transition: width .5s, height .5s;
+  -webkit-transition: width .5s, height .5s;
+  margin: 33px auto;
+  transition: width .5s, height .5s;
+  width: 192px !important;
+  height: 70px !important;
+}
+#unalTop .firstMenu {
+  background: #666;
+  height: 30px;
+}
+.navigation {
+  background-color: #464646;
+  color: #fff;
+  height: 80px;
+  position: relative;
+}
+#unalTop .seal {
+  position: absolute;
+  right: 10px;
+  top: 37px;
+  z-index: 2;
+}
+.navigation .site-url {
+  background: no-repeat 0 0 url(../img/locDot.png);
+  padding: 0 0 0 20px;
+  float: left;
+  height: 17px;
+  clear: both;
+  margin: 12px 10px 10px 250px;
+  font-size: 24px;
+  line-height: 18px;
+}
+.navigation .navbar- {
+  clear: both;
+  margin: 0 0 0 240px;
+}
+.navigation .btn {
+  padding: 6px 8px;
+  text-transform: uppercase;
+  font-size: 1.125em;
+  letter-spacing: 0.025em;
+  margin: 0;
+  text-shadow: none;
+  background: none;
+  border: none;
+  box-shadow: none!important;
+  width: auto;
+}
+.dropdown-menu {
+  min-width: 0;
+  background: #333;
+  border-color: #222;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  background-clip: padding-box;
+}
+.btn-group, .btn-group-vertical {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+  cursor: pointer;
+}
+.btn-group:hover {
+  background: #666;
+  border-radius: 5px;
+}
+.navigation a{
+	text-decoration: none;
+	color: white;
+}
+.white-bg {
+  background: #fff;
+  border-bottom: 1px solid #f1f2f7;
+}
+.main-content{
+	border: 1px solid black;
+}
+.logogaia{
+  vertical-align: middle;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.encabezado{
+  text-align: left;
+  vertical-align: middle;
+  display: inline-block;
+}
+.top-nav{
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 20px;
+}
+#textRecuerdame{
+  width: 120px;
+  display: inline-block;
+}
+
+#arealoggin {
+  color: #222;
+  font-weight: bold;
+  float: right;
+  margin-right: 30px;
+  vertical-align: middle;
+}
+.link{
+  color: #CF4327;
+}
+#linklogo{
+  text-decoration: none;
+}
+.user {
+  padding: 3px 8px;
+  width: 120px;
+  font-size: 14px;
+  background-color: white;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear .2s, box-shadow linear .2s;
+  -moz-transition: border linear .2s, box-shadow linear .2s;
+  -o-transition: border linear .2s, box-shadow linear .2s;
+  transition: border linear .2s, box-shadow linear .2s;
+  border: 1px solid #666;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+.defaultButton {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background: #666;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+  padding-left: 8px;
+  height: 23px;
+  width: 77px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.defaultButton:hover {
+  background: #666;
+}
+#registrarse {
+  text-decoration: none;
+  margin-left: 1em;
+}
+#quitarMargin {
+  margin-top: 8px;
+  margin-left: -3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
