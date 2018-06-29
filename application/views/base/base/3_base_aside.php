@@ -3,9 +3,9 @@
           <div id="sidebar"  class="nav-collapse" role="navigation" aria-label="Barra de navegación FROAC">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  
+
                 <li id="accessibilityNav">
-                    <a href="#">      
+                    <a href="#">
                   <i class="icon-info"></i>
                         Accesibilidad<span class="dcjq-icon"></span></a>
                     <ul class="nav nav-second-level">
@@ -13,14 +13,14 @@
                             <a>
                                 <label id="fontSizeLabel" for="fontSizeNav">Cambiar Fuente</label>
                                 <br>
-                                <input style="color: #555;" type="number" name="fontSizeNav" id="fontSizeNav" class="fontSize" min="8" max="40">
+                                <input style="color: #555;" type="number" name="fontSizeNav" id="fontSizeNav" aria-labelledby="fontSizeLabel" class="fontSize" min="8" max="40">
                             </a>
                         </li>
                         <li>
                             <a>
                                 <label id="interlineLabel" for="interlineNav">Cambiar Interlineado</label>
                                 <br>
-                                <input style="color: #555;" type="number" name="interlineNav" id="interlineNav" class="interline" min="10" max="40">
+                                <input style="color: #555;" type="number" name="interlineNav" id="interlineNav" aria-labelledby="interlineLabel" class="interline" min="10" max="40">
                             </a>
                         </li>
         <!--li>
@@ -30,8 +30,8 @@
             <a><label id="decreaseInterline" for="">Disminuir Interlineado</label></a>
         </li-->
         <li>
-            <a><label id="" for="contrast">Contraste</label>
-                <select class="form-control" id="contrastNav">
+            <a><label id="label_contrast" for="contrast">Contraste</label>
+                <select class="form-control" id="contrastNav" aria-labelledby="label_contrast" role="listbox">
                     <option value="">Normal</option>
                     <option value="highContrast1">Negro - Blanco</option>
                     <option value="highContrast2">Amarillo - Negro</option>
@@ -40,8 +40,8 @@
             </a>
         </li>
         <li>
-            <a><label id="" for="font">Fuente</label>
-                <select class="form-control" id="fontNav">
+            <a><label id="label_font" for="font">Fuente</label>
+                <select class="form-control" id="fontNav" aria-labelledby="label_font" role="listbox">
                     <option value="">Normal</option>
                     <option value="Arial">Arial</option>
                     <option value="Georgia">Georgia</option>
@@ -87,7 +87,7 @@
                           <i class="icon-cogs"></i>
                           <span>Aplicaciones</span>
                       </a>
-      
+
                   </li>
 
                   <li>
@@ -127,15 +127,15 @@
                       </a>
                   </li>
 
-                                      
 
-                    
-                  
+
+
+
               </ul>
               <!-- sidebar menu end-->
           </div>
       </aside>
 
 
-      
+
       <!--sidebar end-->

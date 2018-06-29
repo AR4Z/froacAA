@@ -298,27 +298,30 @@ hidden<script type="text/javascript">
                                                     <strong>Las contraseñas no concuerdan.</strong>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="level">Nivel Educativo:</label>
-                                                    <select class="form-control input-sm m-bot15" name="nevel_ed" required>
+                                                    <label id="label_nivel_educativo" for="level">Nivel Educativo:</label>
+                                                    <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="list-box" required>
                                                         <?php
                                                         foreach ($nivel_educativo as $key) { ?>
                                                             <option name="level[]" value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
                                                         <?php } ?>
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="pref">Preferencias:</label>
-                                                    <select class="form-control input-sm m-bot15" name="pref" required>
+                                                <div class="form-group" role="group" aria-labelledby="label_preferences">
+                                                    <label id="label_preferences" for="pref">Preferencias:</label><br/>
+
                                                         <?php
-                                                        foreach ($preferencias as $key) { ?>
-                                                            <input type="checkbox" name="pref[]" value= " <?php echo $key->use_pre_id ?> "/><?php echo $key->use_pre_preferencia ?><br />
+                                                        foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
+
+                                                            <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" name="pref[]" value= " <?php echo $key->use_pre_id ?> "/><label id="<?php echo $preferencia?>"><?php echo $key->use_pre_preferencia ?></label><br />
                                                         <?php } ?>
+
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <strong>¿Presenta algún tipo de necesidad especial?</strong>
                                                 <div class="row col-md-12">
-                                                    <INPUT TYPE=RADIO id="discapasi" NAME="NO" value="Si"> Si
-                                                    <INPUT TYPE=RADIO id="discapano" NAME="NO" value="No"> No
+                                                    <INPUT TYPE=RADIO id="discapasi" NAME="SI" value="Si" aria-labelledby="sineedspecial"><label id="sineedspecial">Si</label>
+                                                    <INPUT TYPE=RADIO id="discapano" NAME="NO" value="No" aria-labelledby="noneedspecial"><label id="noneedspecial">No</label>
                                                 </div>
                                             </div>
 
