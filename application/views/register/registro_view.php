@@ -1,4 +1,5 @@
-hidden<script type="text/javascript">
+
+<script type="text/javascript">
 
     $(document).ready(function() {
         estiloAprendizaje= 'Para conocer su estilo de aprendizaje puede realizar el test ahora mismo o en el momento que usted lo requiera';
@@ -7,21 +8,6 @@ hidden<script type="text/javascript">
         $("#img_ok").hide();
         $("#img_not").hide();
         $("#submitg, #boton, #cancelar, #proc").button();
-
-        $("#fecha_nac").datepicker({
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true,
-            changeYear: true,
-            changeDay: true,
-            yearRange: "1945:2035"
-
-        });
-         //Cerrar el calendario (datapicker) al seleccionar el dia
-        $('#fecha_nac').on('changeDate', function (cer) {
-            if(cer.viewMode === 'days'){
-                $('fecha_nac').datepicker('hide');
-            }
-        });
 
         $(".submitg").click(function() {
             $("#form").validate({
@@ -195,7 +181,7 @@ hidden<script type="text/javascript">
             $('#submitg').show();
         });
         $('#input_username').blur(function() {
-             $.get("<?php echo base_url() ?>index.php/usuario/checkusr/"+$("#username").val(), function(respuesta) {
+             $.get("<?php echo base_url() ?>index.php/usuario/checkusr/"+$("#input_username").val(), function(respuesta) {
                   $('#rta').val(respuesta);
             if (respuesta == 1){
                 $('#img_not').show();
@@ -209,7 +195,7 @@ hidden<script type="text/javascript">
     });
 
 </script>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/datepicker/css/datepicker.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css">
     <section id="main-content" role="main">
         <section class="wrapper">
         <!-- page start-->
@@ -249,9 +235,9 @@ hidden<script type="text/javascript">
                                                     <input type="text" class="form-control"  name="apellidos" placeholder="Apellidos"  aria-labelledby="apellidos" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label id="fecha_nac" for="fecha_nac">Fecha de nacimiento:</label>
+                                                    <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                                     <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                                    <input  type="text" class="form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" aria-labelledby="fecha_nac" required>
+                                                    <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="" title="format: dd/MM/y" aria-labelledby="fecha_nac" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label id="mail" for="mail">E-mail:</label>
@@ -299,10 +285,10 @@ hidden<script type="text/javascript">
                                                 </div>
                                                 <div class="form-group">
                                                     <label id="label_nivel_educativo" for="level">Nivel Educativo:</label>
-                                                    <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="list-box" required>
+                                                    <select class="form-control input-sm m-bot15" name="nevel_ed" aria-selected="true" aria-labelledby="label_nivel_educativo" role="listbox" required>
                                                         <?php
                                                         foreach ($nivel_educativo as $key) { ?>
-                                                            <option name="level[]" value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
+                                                            <option name="level[]"  value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -312,7 +298,7 @@ hidden<script type="text/javascript">
                                                         <?php
                                                         foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
 
-                                                            <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" name="pref[]" value= " <?php echo $key->use_pre_id ?> "/><label id="<?php echo $preferencia?>"><?php echo $key->use_pre_preferencia ?></label><br />
+                                                            <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" aria-selected="true" name="pref[]" value= " <?php echo $key->use_pre_id ?> "/><label id="<?php echo $preferencia?>"><?php echo $key->use_pre_preferencia ?></label><br />
                                                         <?php } ?>
 
                                                 </div>
@@ -320,8 +306,8 @@ hidden<script type="text/javascript">
                                             <div class="form-group">
                                                 <strong>¿Presenta algún tipo de necesidad especial?</strong>
                                                 <div class="row col-md-12">
-                                                    <INPUT TYPE=RADIO id="discapasi" NAME="SI" value="Si" aria-labelledby="sineedspecial"><label id="sineedspecial">Si</label>
-                                                    <INPUT TYPE=RADIO id="discapano" NAME="NO" value="No" aria-labelledby="noneedspecial"><label id="noneedspecial">No</label>
+                                                    <input TYPE=RADIO id="discapasi" NAME="SI" value="Si" aria-labelledby="sineedspecial"><label id="sineedspecial">Si</label>
+                                                    <input TYPE=RADIO id="discapano" NAME="SI" value="No" aria-labelledby="noneedspecial"><label id="noneedspecial">No</label>
                                                 </div>
                                             </div>
 
@@ -815,12 +801,18 @@ hidden<script type="text/javascript">
     </section>
   <!--main content end-->
 
+  <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.js"></script>
+  <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
   <!--script for this page-->
-  <script type="text/javascript" src="<?php echo base_url();?>asset/datepicker/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript">
+     $(document).ready(function() {
+     	$('.date').datepicker();
+     });
+     </script>
   <script type="text/javascript">
   $("#in_use, #no_use, #no_match").hide();
-
-  $('#input_fecha_nac').datepicker();
   $("#input_username").change(function(){
    $.ajax({
     type: "POST",

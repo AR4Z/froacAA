@@ -30,8 +30,8 @@
             <a><label id="decreaseInterline" for="">Disminuir Interlineado</label></a>
         </li-->
         <li>
-            <a><label id="label_contrast" for="contrast">Contraste</label>
-                <select class="form-control" id="contrastNav" aria-labelledby="label_contrast" role="listbox">
+            <a><label id="label_contrast" for="contrastNav">Contraste</label>
+                <select class="form-control" aria-selected="true" id="contrastNav" aria-labelledby="label_contrast" name="contrast" role="listbox">
                     <option value="">Normal</option>
                     <option value="highContrast1">Negro - Blanco</option>
                     <option value="highContrast2">Amarillo - Negro</option>
@@ -40,8 +40,8 @@
             </a>
         </li>
         <li>
-            <a><label id="label_font" for="font">Fuente</label>
-                <select class="form-control" id="fontNav" aria-labelledby="label_font" role="listbox">
+            <a><label id="label_font" for="fontNav">Fuente</label>
+                <select class="form-control" aria-selected="true" id="fontNav" aria-labelledby="label_font" name="font" role="listbox">
                     <option value="">Normal</option>
                     <option value="Arial">Arial</option>
                     <option value="Georgia">Georgia</option>
@@ -126,11 +126,6 @@
                           <span>GAIA</span>
                       </a>
                   </li>
-
-
-
-
-
               </ul>
               <!-- sidebar menu end-->
           </div>

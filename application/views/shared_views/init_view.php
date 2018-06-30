@@ -5,43 +5,34 @@
         <br>
         <div class="col-lg-12" style="display: none;" id="hide-s">
 
-            <div class="input-group  m-bot15" >
-                <label> 
+            <div class="input-group  m-bot15">
+                <label>
                     <button class="btn btn-success buscar" type="button" style="margin-left: 0px;">Buscar</button>
-                <input type="text" class="form-control" id="hide-input" autofocus="" style="margin-left: 70px;margin-top: -50px;">
-                </label>
-
-                
-
+                <input type="text" class="form-control" id="hide-input" title="Buscar objeto de aprendizaje" autofocus="" style="margin-left: 70px;margin-top: -50px;"></label>
             </div>
 
         </div>
-
         <div class="row">
-
-
             <div class="col-lg-12" id="show-s">
 
                 <section class="panel">
                     <div class="panel-body">
                         <div class="">
                             <div class="text-center">
-                                <h1 class="froac" style="margin-top:-5px" title="Federación de Repositorios de Objetos de Aprendizaje Colombia">Federación de Repositorios de Objetos de Aprendizaje Colombia 
+                                <h1 class="froac" style="margin-top:-5px" title="Federación de Repositorios de Objetos de Aprendizaje Colombia">Federación de Repositorios de Objetos de Aprendizaje Colombia
                                     <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC"  width="50">
                                 </h1>
                             </div>
                         </div>
                         <br>
-
-
                         <div class="row">
                             <div class="col-sm-1"></div>
-
                             <div class="col-sm-10">
-                                <center><div class="input-group  m-bot15" role="search" aria-label="Buscar objeto de aprendizaje">
-                                    
+                                <center>
+                                    <div class="input-group  m-bot15" role="search" aria-label="Buscar objeto de aprendizaje">
                                     <label>
-                                    <input type="text" class="form-control" id="search" autofocus="" ></label>
+                                    <input type="text" title="Buscar objeto de aprendizaje" class="form-control" id="search" autofocus="">
+                                    </label>
                                     <a data-toggle="" class="" href="<?php echo base_url()?>usuario/busqueda">
                                     <span class="username"><button class="btn btn-success buscar" type="button">Buscar</button></span>
                                     </a>
@@ -117,12 +108,12 @@
             <!--
             <a rel="nofollow" href="http://www.tawdis.net/system/modules/org.fundacionctic.taw4_wcag_informes_ocms/elements/wcag20/resumen.jsp" title="Análisis de la accesibilidad de la página con TAW"><img style="border: 0; width: 60px; height: 31px;margin-left: 450px" src="asset/img/taw.png" alt="TAW. Nivel doble A. WCAG 1.0 WAI"></a>
             <a href="http://www.w3.org/WAI/WCAG1AA-Conformance"
-                title="Explicación del Nivel Doble-A de 
+                title="Explicación del Nivel Doble-A de
                 Conformidad">
-                <img height="32" style="margin-left:20px;" width="88" 
+                <img height="32" style="margin-left:20px;" width="88"
                 src="http://www.w3.org/WAI/wcag1AA-blue"
-                alt="Icono de conformidad con el Nivel Doble-A, 
-                de las Directrices de Accesibilidad para el 
+                alt="Icono de conformidad con el Nivel Doble-A,
+                de las Directrices de Accesibilidad para el
                 Contenido Web 1.0 del W3C-WAI"></a>-->
         </div>
 
@@ -171,8 +162,7 @@
 </script>
 <!-- js placed at the end of the document so the pages load faster -->
 <!--<script src="js/jquery.js"></script>-->
-<script type="text/javascript" language="javascript"
-src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.js"></script>
+
 <script type="text/javascript" language="javascript"
 src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 

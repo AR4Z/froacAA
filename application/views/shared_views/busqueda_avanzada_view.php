@@ -4,16 +4,16 @@
 
         <section class="panel">
             <header class="panel-heading">
-                 BUSQUEDA AVANZADA</b>
+                <h1>BUSQUEDA AVANZADA</h1>
             </header>
             <div class="panel-body">
                 <div class="row">
 
-    </div>
+                </div>
     <div class="art-postcontent" role="search" aria-label="Busqueda avanzada de objetos de aprendizaje"><br>
 
         <label> <p>Keywords</p>
-        <input type="text" class="form-control" id="search" autofocus="" style="margin-left: 80px;margin-top: -53px;"></label>
+        <input type="text" class="form-control" title="Buscar objeto de aprendizaje" id="search" autofocus="" style="margin-left: 80px;margin-top: -53px;"></label>
 
 <br><br>
         <p>Campus La Nubia <br>

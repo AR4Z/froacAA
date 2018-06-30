@@ -11,7 +11,9 @@
         <title>FROAC</title>
 
         <!-- Bootstrap core CSS -->
+
         <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="asset/css/datepicker.css" type="text/css" />
         <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
         <!--external css-->
         <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -20,9 +22,9 @@
         <!-- Custom styles for this template -->
         <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
-        <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
         <script src="<?php echo base_url() ?>asset/js/jquery-1.8.3.min.js"></script>
         <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
+
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>
           <script src="js/html5shiv.js"></script>

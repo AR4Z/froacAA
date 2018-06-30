@@ -79,11 +79,10 @@
             </div>
         </section>
 
-
-
         <div class="row"  id="result">
 
         </div>
     </section>
 </section>
+
 <!--main content end-->
