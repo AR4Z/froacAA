@@ -145,7 +145,6 @@
     $(".buscar").click(function() {
         verify_params();
         $("#info").hide("slow");
-
     });
 
     $(document).keypress(function(e) {
@@ -156,8 +155,6 @@
 
 
     });
-
-
 
 </script>
 <!-- js placed at the end of the document so the pages load faster -->

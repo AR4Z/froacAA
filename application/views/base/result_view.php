@@ -19,7 +19,7 @@ if ($sess == 1) {
         </header>
         <div class="panel-body">
             <?php
-            #echo var_dump($result[0]);
+            //echo var_dump($result[0]);
             if (!empty($result[0])) {
                 foreach ($result[0] as $key) {
                     $url = base64_encode($key['lo_location']);
