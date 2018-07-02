@@ -12,6 +12,7 @@
         <!-- Bootstrap core CSS -->
         <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
+
         <!--external css-->
         <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -20,8 +21,7 @@
         <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
         <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
-
-
+        
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>

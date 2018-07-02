@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-/*
+/* 
  * sizes and positions
  */
 a.datepicker-button {
@@ -138,10 +138,10 @@ div.datepicker-calendar .offscreen {
 }
 .datepicker-overlay {
 	background: #777;
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
+    display: none;        
+    position: fixed;   
+    top: 0;                  
+    right: 0;              
     bottom: 0;
     left: 0;
     opacity: 0.5;
@@ -160,11 +160,11 @@ div.datepicker-calendar button.datepicker-close {
 	border-radius: 2px;
 }
 
-/****************************
+/**************************** 
  * colors
  ***************************/
 
-/****************************
+/**************************** 
  * default theme colors
  ***************************/
 a.datepicker-button.default {
@@ -194,7 +194,7 @@ div.datepicker-calendar.default div.datepicker-month-next.enabled:hover,
 div.datepicker-calendar.default div.datepicker-month-next.enabled:focus,
 div.datepicker-calendar.default div.datepicker-month:hover,
 div.datepicker-calendar.default div.datepicker-month:focus,
-div.datepicker-calendar.default button.datepicker-close:hover,
+div.datepicker-calendar.default button.datepicker-close:hover, 
 div.datepicker-calendar.default button.datepicker-close:focus {
 	background-color: #EEE;
 	border-color:  #999;
@@ -239,7 +239,7 @@ div.datepicker-calendar.default button.datepicker-close {
 	color: #000;
 }
 
-/****************************
+/**************************** 
  * bootstrap theme colors
  ***************************/
 a.datepicker-button.bootstrap {
@@ -319,7 +319,7 @@ div.datepicker-calendar.bootstrap div.datepicker-month-next.enabled:hover,
 div.datepicker-calendar.bootstrap div.datepicker-month-next.enabled:focus,
 div.datepicker-calendar.bootstrap div.datepicker-month:hover,
 div.datepicker-calendar.bootstrap div.datepicker-month:focus,
-div.datepicker-calendar.bootstrap button.datepicker-close:hover,
+div.datepicker-calendar.bootstrap button.datepicker-close:hover, 
 div.datepicker-calendar.bootstrap button.datepicker-close:focus {
 	background-color: #EEE;
 	border-color:  #999;
@@ -365,7 +365,7 @@ div.datepicker-calendar.bootstrap button.datepicker-close {
 	color: #000;
 }
 
-/****************************
+/**************************** 
  * maroon theme colors
  ***************************/
 a.datepicker-button.maroon {
@@ -401,7 +401,7 @@ div.datepicker-calendar.maroon div.datepicker-month-next.enabled:hover,
 div.datepicker-calendar.maroon div.datepicker-month-next.enabled:focus,
 div.datepicker-calendar.maroon div.datepicker-month:hover,
 div.datepicker-calendar.maroon div.datepicker-month:focus,
-div.datepicker-calendar.maroon button.datepicker-close:hover,
+div.datepicker-calendar.maroon button.datepicker-close:hover, 
 div.datepicker-calendar.maroon button.datepicker-close:focus {
 	background-color: #A63950;
 	border-color:  #800;
@@ -447,7 +447,7 @@ div.datepicker-calendar.maroon button.datepicker-close {
 	border-color:  #EEE;
 }
 
-/****************************
+/**************************** 
  * blue theme colors
  ***************************/
 a.datepicker-button.blue {
@@ -482,7 +482,7 @@ div.datepicker-calendar.blue div.datepicker-month-next.enabled:hover,
 div.datepicker-calendar.blue div.datepicker-month-next.enabled:focus,
 div.datepicker-calendar.blue div.datepicker-month:hover,
 div.datepicker-calendar.blue div.datepicker-month:focus,
-div.datepicker-calendar.blue button.datepicker-close:hover,
+div.datepicker-calendar.blue button.datepicker-close:hover, 
 div.datepicker-calendar.blue button.datepicker-close:focus {
 	background-color: #0B6BA8;
 	border-color:  #3484B7;
@@ -528,7 +528,7 @@ div.datepicker-calendar.blue button.datepicker-close {
 	border-color:  #EEE;
 }
 
-/****************************
+/**************************** 
  * green theme colors
  ***************************/
 a.datepicker-button.green {
@@ -563,7 +563,7 @@ div.datepicker-calendar.green div.datepicker-month-next.enabled:hover,
 div.datepicker-calendar.green div.datepicker-month-next.enabled:focus,
 div.datepicker-calendar.green div.datepicker-month:hover,
 div.datepicker-calendar.green div.datepicker-month:focus,
-div.datepicker-calendar.green button.datepicker-close:hover,
+div.datepicker-calendar.green button.datepicker-close:hover, 
 div.datepicker-calendar.green button.datepicker-close:focus {
 	background-color: #0D803B;
 	border-color:  #36955C;

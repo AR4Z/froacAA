@@ -1,4 +1,7 @@
-<link rel="stylesheet" href="asset/css/datepicker.css" type="text/css" />
+<link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
+<link href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
+<script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function() {
@@ -200,22 +203,26 @@
         <section class="wrapper">
         <!-- page start-->
             <div class="row">
-                <div class="col-lg-12" >
-                    <section class="panel" role="form" aria-label="Crear cuenta">
-                        <header class="panel-heading">
+                <!--<div class="col-md-4">
+
+                </div>-->
+                <div class="col-md-12" >
+                    <section class="card border-right-0 border-bottom-0 border-left-0" role="form" aria-label="Crear cuenta">
+                        <header class="card-heading">
                             <h1>Crear cuenta en FROAC</h1>
                         </header>
                         <!--FORMULARIO DE REGISTRO DE USUARIO-->
-                        <div class="panel-body">
-                            <div class="row">
+                        <div class="card-body">
+
                                 <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/guardar" enctype='multipart/form-data' id="form">
-                                    <div class="col-lg-12">
+
                                         <!--label>hola:</label><input type="text" id="verResult"/-->
-                                        <section class="panel">
-                                            <header class="panel-heading">
+                                        <section class="card  border-right-0 border-bottom-0 border-left-0">
+                                            <header class="card-heading">
                                                 Información personal
+
                                             </header>
-                                            <div class="panel-body">
+                                            <div class="card-body">
                                                 <div class="form-group">
                                                     <input type="hidden" value="2" name="tipoU">
                                                     <!--<label for="exampleInputEmail1">Usted es:</label>
@@ -237,21 +244,22 @@
                                                 <div class="form-group">
                                                     <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                                     <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                                    <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="" title="format: dd/MM/y" aria-labelledby="fecha_nac" required>
+                                                    <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="" title="format: dd/MM/y" aria-labelledby="fecha_nac" required></input>
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label id="mail" for="mail">E-mail:</label>
                                                     <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
                                                     <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
                                                 </div>
-                                                <div id="in_use1" class="alert alert-block alert-danger fade in">
-                                                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                                <div id="in_use1" aria-hidden="true" class="alert alert-danger">
+                                                    <button type="button" class="close" data-hide="in_use1"  aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Lo sentimos!</strong> El correo electrónico ingresado, ya está registrado.
                                                 </div>
-                                                <div id="no_use1" class="alert alert-success fade in">
-                                                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                                <div id="no_use1" aria-hidden="true" class="alert alert-success">
+                                                    <button data-hide="no_use1" class="close" type="button" aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Éxito!</strong> este correo electronico esta disponible.
@@ -260,14 +268,14 @@
                                                     <label for="username" id="username" >Nombre de usuario:</label>
                                                     <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC"  aria-labelledby="username" required>
                                                 </div>
-                                                <div id="in_use" class="alert alert-block alert-danger fade in">
-                                                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                                <div id="in_use" aria-hidden="true" role="alert" class="alert alert-danger">
+                                                    <button data-hide="in_use" class="close" aria-label="Cerrar alerta" type="button">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Lo sentimos!</strong> el nombre de usuario <strong id="in_name"></strong> no esta disponible.
                                                 </div>
-                                                <div id="no_use" class="alert alert-success fade in">
-                                                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                                <div id="no_use" aria-hidden="true" class="alert alert-success">
+                                                    <button data-hide="no_use" class="close" type="button" aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Éxito!</strong> este nombre de usuario esta disponible.
@@ -277,8 +285,8 @@
                                                     <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" required><br>
                                                     <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" required>
                                                 </div>
-                                                <div id="no_match" class="alert alert-block alert-danger fade in">
-                                                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                                <div id="no_match" class="alert alert-danger" role="alert" aria-hidden="true">
+                                                    <button type="button" class="close" data-hide="no_match"  aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Las contraseñas no concuerdan.</strong>
@@ -311,10 +319,13 @@
                                                 </div>
                                             </div>
 
-                                            <input type="button" style="display:none;" value="Realizar Test NEED" name="need" id="need" class="btn btn-info">
-                                    </div>
-                                    <!--FIN FORMULARIO DE REGISTRO DE USUARIO-->
-                                    <input type="text" style="display: none;" id="necesidadespecial" name="necesidadespecial">
+                                            <div class="form-group">
+                                                <input type="button" style="display:none;" value="Realizar Test NEED" name="need" id="need" class="btn btn-info">
+
+                                        <!--FIN FORMULARIO DE REGISTRO DE USUARIO-->
+                                        <input type="text" style="display: none;" id="necesidadespecial" name="necesidadespecial">
+                                            </div>
+
 <!--
 
                                     TEST DE ESTILO DE APRENDIZAJE
@@ -330,11 +341,16 @@
                                     <input type="hidden" name="cantidad5" id="cantidad5" ><!--value="0"-->
                                     <input type="hidden" name="cantidad6" id="cantidad6" ><!--value="0"-->
                                     <h3 class="art-postheader" id="result" ></h3>
-                                    <input id="submitg" type="submit" class="btn btn-info" value="Guardar Información">
+
+                                    <div class="form-group">
+                                        <input id="submitg" type="submit" class="btn btn-info" value="Guardar Información">
+                                    </div>
+
+
                                 </form>
                             </div>
                     </section>
-                </div>
+
 
                 <!-- TEST PARA ESTUDIANTES CON NECESIDADES ESPECIALES-->
 
@@ -792,6 +808,7 @@
                 <!--FIN TEST DE ESTILO DE APRENDIZAJE-->
                 </div>
             </div>
+
         </section>
         </div>
 
@@ -801,16 +818,17 @@
     </section>
   <!--main content end-->
 
-  <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.js"></script>
-  <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
+
+
   <!--script for this page-->
   <script type="text/javascript">
      $(document).ready(function() {
-     	$('.date').datepicker();
+     	$('.date').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+        $('.glyphicon-calendar').attr("class", "oi oi-calendar");
      });
-     </script>
+    </script>
   <script type="text/javascript">
   $("#in_use, #no_use, #no_match").hide();
   $("#input_username").change(function(){
@@ -849,11 +867,13 @@
 
                   $("#in_name").text($("#input_mail").val());
                   $("#in_use1").show();
+                  $("#in_use1").attr("aria-hidden", false);
                   $("#no_use1").hide();
                   $("#sub").hide();
                   $("#input_mail").val("");
               }else{
                   $("#no_use1").show();
+                  $("#no_use1").attr("aria-hidden", false);
                   $("#in_use1").hide();
                   $("#sub").show();
               }
@@ -868,12 +888,22 @@
   $("#input_passwd2").change(function(){
     if($("#input_passwd").val() == $("#input_passwd2").val()){
         $("#no_match").hide();
+        $("#no_match").attr("aria-hidden", true);
     }
     if($("#input_passwd").val() != $("#input_passwd2").val()){
+        $("#no_match").attr("aria-hidden", false);
       $("#no_match").show();
-      $("#input_passwd2").val("")
+      $("#input_passwd2").val("");
     }
   });
+
+  $(function(){
+      $("[data-hide]").on("click", function(){
+          $("#" + $(this).attr("data-hide")).hide();
+          $("#" + $(this).attr("data-hide")).attr("aria-hidden", true);
+      });
+  });
+
 
 //######################################################################################################################
 
