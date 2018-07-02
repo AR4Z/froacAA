@@ -22,12 +22,12 @@
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
     <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
     <script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.scrollTo.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>asset/js/jquery.sparkline.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
     <script src="<?php echo base_url()?>asset/js/owl.carousel.js" ></script>

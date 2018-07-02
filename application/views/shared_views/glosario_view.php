@@ -4,7 +4,7 @@
 
         <section class="panel">
             <header class="panel-heading">
-                 GLOSARIO</b>
+                 <h1>GLOSARIO</h1>
             </header>
             <div class="panel-body">
                 <div class="row">

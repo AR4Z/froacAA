@@ -22,6 +22,7 @@
         <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
         <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
         <script src="<?php echo base_url() ?>asset/js/jquery-1.8.3.min.js"></script>
+        <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>
           <script src="js/html5shiv.js"></script>

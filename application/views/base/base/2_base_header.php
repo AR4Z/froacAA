@@ -1,130 +1,112 @@
-<!doctype html>
-<html>
-    <head>
-        
-        <link rel="stylesheet" type="text/css" href="css/style1.css">
-        
-        
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-        <link type="image/x-icon" href="images/favicon.ico" rel="shortcut icon"/>
-        <link href="css/fss/fss-reset.css" rel="stylesheet" type="text/css" />
-        <link href="css/fss/fss-layout.css" rel="stylesheet" type="text/css" />
-        <link href="css/fss/fss-text.css" rel="stylesheet" type="text/css" />
-        <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
-        <link href="css/print.css" media="print" rel="stylesheet" type="text/css" />
 
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-theme-bw-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-theme-wb-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-theme-by-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-theme-yb-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-theme-lgdg-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/framework/preferences/css/fss/fss-text-prefsEditor.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/lib/jquery/ui/css/fl-theme-by/by.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/lib/jquery/ui/css/fl-theme-yb/yb.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/lib/jquery/ui/css/fl-theme-bw/bw.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/lib/jquery/ui/css/fl-theme-wb/wb.css" />
-        <link rel="stylesheet" type="text/css" href="lib/infusion/lib/jquery/ui/css/fl-theme-lgdg/lgdg.css" />
-        <link href="lib/infusion/framework/preferences/css/PrefsEditor.css" rel="stylesheet" type="text/css" />
-        
-        <link href="lib/infusion/framework/preferences/css/SeparatedPanelPrefsEditor.css" rel="stylesheet" type="text/css" />
+<header id="unalTop" role="navigation" aria-label="Barra de navegación Universidad Nacional de Colombia">
 
-        <script type="text/javascript" src="lib/infusion/infusion-custom.js"></script>
-        <script type="text/javascript" src="js/floe.js"></script>
-        <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
 
-        
-        
-        
-        
-    </head>
-    <body>
-        
-         <script type="text/javascript">
-            $(document).ready(function () {
-                floe.setupUIO({
-                    templatePrefix: "lib/infusion/framework/preferences/html/",
-                    messagePrefix: "lib/infusion/framework/preferences/messages/",
-                    tocTemplate: "lib/infusion/components/tableOfContents/html/TableOfContents.html",
-                    template: "lib/infusion/framework/preferences/html/SeparatedPanelPrefsEditor.html"
-                });
-            });
-        </script>
-        
-        
-        
-        <!--header start-->
-        <header id="unalTop" role="navigation" aria-label="Barra de navegación Universidad Nacional de Colombia">
-            
-            
-            
-            
-        <!--BEGIN markup for Preference Editor -->
-        <div class="flc-prefsEditor-separatedPanel fl-prefsEditor-separatedPanel">
-            <!-- This is the div that will contain the Preference Editor component -->
-            <div class="flc-slidingPanel-panel flc-prefsEditor-iframe"></div>
+<!--
+    <div class="flc-prefsEditor-separatedPanel fl-prefsEditor-separatedPanel">
 
-            <!--This div is for the sliding panel that shows and hides the Preference Editor controls -->
-            <div class="fl-panelBar">
+        <div class="flc-slidingPanel-panel flc-prefsEditor-iframe"></div>
+
+
+        <div class="fl-panelBar">
                 <span class="fl-prefsEditor-buttons">
-                    <button id="Reset" class="flc-prefsEditor-reset fl-prefsEditor-reset"><span class="fl-icon-undo"></span> Restaurar</button>
+                    <button id="Reset" class="flc-prefsEditor-reset fl-prefsEditor-reset"><span
+                            class="fl-icon-undo"></span> Restaurar</button>
                     <button id="show-hide" class="flc-slidingPanel-toggleButton fl-prefsEditor-showHide"> Mostrar/Ocultar</button>
                 </span>
-            </div>
         </div>
-        <!-- END markup for Preference Editor -->
-      <!--header start-->
-        <div class="logo">
-            <a href="http://unal.edu.co">
-                <img alt="Escudo de la Universidad Nacional de Colombia" src="<?php echo base_url()?>asset/img/escudoUnal.png" width="150" />
-            </a>
-            <div class="diag">
-            </div>
+    </div>
+     END markup for Preference Editor -->
+    <!--header start-->
+    <div class="logo">
+        <a href="http://unal.edu.co">
+            <img alt="Escudo de la Universidad Nacional de Colombia"
+                 src="<?php echo base_url()?>asset/img/escudoUnal.png" width="150"/>
+        </a>
+        <div class="diag">
         </div>
-        <div class="seal">
-            <img alt="Escudo de la República de Colombia" src="<?php echo base_url()?>asset/img/sealColombia.png" width="66" height="66" />
-        </div>
+    </div>
+    <div class="seal">
+        <img alt="Escudo de la República de Colombia" src="<?php echo base_url()?>asset/img/sealColombia.png" width="66"
+             height="66"/>
+    </div>
 
-        <div class="firstMenu">
-            <ul class="socialLinks">
-                <dd><a ></a></dd>
+    <div class="firstMenu">
+        <ul class="socialLinks">
+            <dd><a></a></dd>
 
-            </ul></div>
-            <div class="navigation">
-            <div >
+        </ul>
+    </div>
+    <div class="navigation">
+        <div>
 
         </div>
     </div>
 
 
+</header>
+<br>
 
-    </header>
-    <br>
-      
-      <div class="header white-bg col-lg-12" role="banner" aria-label="Barra FROAC">
-        
-        
-            <div class="sidebar-toggle-box">
-                <div data-original-title="Oculta barra lateral" data-placement="right" class="icon-reorder tooltips"></div>
-            </div>
-            <!--logo start-->
-            <a href="<?php echo base_url()?>" class="logo tooltips"  data-placement="right" ><span>FROAC</span></a>
-            <!--logo end-->
-         
-             <div class="top-nav">
-                <!--search & user info start-->
-                <ul class="nav pull-left top-menu">
-                  
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="" class="" href="<?php echo base_url()?>login">
-                            <span class="username" data-placement="left" >Iniciar sesión</span>
-                        </a>
-                        
-                    </li>
-                    <!-- user login dropdown end -->
+<div class="header white-bg col-lg-12" role="banner" aria-label="Barra FROAC">
+
+
+    <div class="sidebar-toggle-box">
+        <div data-original-title="Oculta barra lateral" data-placement="right" class="icon-reorder tooltips"></div>
+    </div>
+    <!--logo start-->
+    <a href="<?php echo base_url()?>" class="logo tooltips" data-placement="right"><span>FROAC</span></a>
+    <!--logo end-->
+
+    <div class="top-nav">
+
+        <?php if($usr_data == null) : ?>
+
+        <!--search & user info start-->
+        <ul class="nav pull-left top-menu">
+
+            <!-- user login dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="" class="" href="<?php echo base_url()?>login">
+                    <span class="username" data-placement="left">Iniciar sesión</span>
+                </a>
+            </li>
+            <!-- user login dropdown end -->
+        </ul>
+        <?php else : ?>
+        <?php foreach ($usr_data as $usr){} ?>
+        <!--<ul class="nav pull-right top-menu">
+
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-haspopup="true" aria-expanded="false">
+                    <span class="username"><?php echo $usr['use_nombre'] ?></span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout" aria-hidden="true" aria-label="submenu">
+                    <div class="log-arrow-up"></div>
+                    <li><a tabindex="-1" href="<?php echo base_url()?>usuario/perfil"><i class=" icon-suitcase"></i> Perfil</a></li>
+
+                    <li><a href="<?php echo base_url()?>sesion/logout"><i class="icon-key"></i> Salir</a></li>
                 </ul>
-                <!--search & user info end-->
-            </div>
-        
-        </div> 
-      <!--header end-->
+            </li>
+
+        </ul>-->
+        <div class="dropdown nav pull-right top-menu">
+  <button class="btn btn-outline-dark btn-lg  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span><?php echo $usr['use_nombre'] ?></span>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil"><i class=" icon-suitcase"></i> Perfil</a>
+    <a class="dropdown-item" href="<?php echo base_url()?>sesion/logout"><i class="icon-key"></i> Salir</a>
+
+  </div>
+</div>
+        <?php endif; ?>
+        <!--search & user info end-->
+    </div>
+
+</div>
+<!--header end-->
+<script>
+
+
+</script>

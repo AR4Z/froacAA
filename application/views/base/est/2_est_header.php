@@ -31,14 +31,14 @@
       <header class="header white-bg" role="banner" aria-label="Barra FROAC">
             <div class="sidebar-toggle-box">
                 <div data-original-title="Oculta barra lateral" data-placement="right" class="icon-reorder tooltips"></div>
-            </div>    
+            </div>
             <!--logo start-->
             <a href="<?php echo base_url()?>" class="logo tooltips" data-original-title="Federación de repositorios de objetos de aprendizaje Colombia." data-placement="right" ><span>FROAC</span></a>
             <!--logo end-->
             <!--<div class="nav notify-row" id="top_menu">
-                  notification start 
+                  notification start
                 <ul class="nav top-menu">
-                     settings start 
+                     settings start
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="icon-tasks"></i>
@@ -120,7 +120,7 @@
                             </li>
                         </ul>
                     </li>
-                     settings end 
+                     settings end
                      inbox dropdown start
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -185,7 +185,7 @@
                             </li>
                         </ul>
                     </li>
-                     inbox dropdown end 
+                     inbox dropdown end
                      notification dropdown start
                     <li id="header_notification_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -238,14 +238,14 @@
                             </li>
                         </ul>
                     </li>
-                     notification dropdown end 
+                     notification dropdown end
                 </ul>
-                  notification end 
+                  notification end
             </div>-->
             <div class="top-nav ">
                 <!--search & user info start-->
                         <ul class="nav pull-right top-menu">
-                  
+
                      <!--user login dropdown start -->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">

@@ -58,13 +58,14 @@
 </li>
 
 
-
-                  <li>
-                      <a href="<?php echo base_url()?>usuario/registro" >
-                          <i class="icon-user"></i>
-                          <span>Crear una cuenta</span>
-                      </a>
-                  </li>
+<?php if($usr_data == null) : ?>
+    <li>
+        <a href="<?php echo base_url()?>usuario/registro" >
+            <i class="icon-user"></i>
+            <span>Crear una cuenta</span>
+        </a>
+    </li>
+    <?php endif; ?>
 
                   <li>
                       <a  href="<?php echo base_url()?>">

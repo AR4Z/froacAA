@@ -5,7 +5,7 @@
 
         <section class="panel">
             <header class="panel-heading">
-                 Repositorios Federados en FROAC</b>
+                <h1> Repositorios Federados en FROAC</h1>
             </header>
             <div class="panel-body">
                 <div class="row">
@@ -19,15 +19,15 @@
                             <aside class="profile-nav alt green-border">
                                 <section class="panel">
                                     <div class="user-heading alt green-bg">
-                                        <h1><?php echo $key['rep_name'] ?></h1>
+                                        <h2 id="<?php echo preg_replace('/\s+/', '', $key['rep_name'])?>"><?php echo $key['rep_name'] ?></h2>
                                         <p><?php echo $key['rep_affiliation'] ?></p>
                                     </div>
 
                                     <ul class="nav nav-pills nav-stacked">
-                                        <li><a href="<?php echo $key['rep_url'] ?>" target="blank"> <i class="icon-cloud"></i> Ver Sitio del Repositorio</a></li>
-                                        <li><a href="javascript:;"> <i class="icon-file-text"></i> Estándar: <b><?php echo $key['rep_metadata_inf'] ?></b> </a></li>
-                                        <li><a href="<?php echo base_url()?>repositorio/lo_rep/<?php echo $key['rep_id'] ?>"> <i class="icon-file-text-alt"></i> Cantidad de Objetos <span class="label label-info pull-right r-activity"><?php echo $key['rep_countoas']?></span></a></li>
-                                        <li><a href="javascript:;"> <i class="icon-calendar"></i> Última Actualización: <b><?php echo $key['rep_lastupdate']?></b> </a></li>
+                                        <li><a aria-labelledby="<?php echo preg_replace('/\s+/', '', $key['rep_name'])?>" href="<?php echo $key['rep_url'] ?>" target="blank"> <i class="icon-cloud"></i> Ver Sitio del Repositorio</a></li>
+                                        <li><a href="javascript:;"> <i class="icon-file-text"></i> Estándar: <strong><?php echo $key['rep_metadata_inf'] ?></strong> </a></li>
+                                        <li><a aria-label="Objetos de este repositorio" href="<?php echo base_url()?>repositorio/lo_rep/<?php echo $key['rep_id'] ?>"> <i class="icon-file-text-alt"></i> Cantidad de Objetos <span class="label label-info pull-right r-activity"><?php echo $key['rep_countoas']?></span></a></li>
+                                        <li><a href="javascript:;"> <i class="icon-calendar"></i> Última Actualización: <strong><?php echo $key['rep_lastupdate']?></strong> </a></li>
                                         <?php
                                         $session_data = $this->session->userdata('logged_in');
                                             if ($this->session->userdata('logged_in'))

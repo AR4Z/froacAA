@@ -29,20 +29,19 @@
 
     <body class="login-body">
 
-        <div class="container">
-            <form class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
+        <div class="container" role="main">
+            <form role="form" aria-label="Iniciar seción en FROAC" class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
                 <p class="form-signin-heading">Federación de Repositorios de Objetos de Aprendizaje Colombia <br><br>
-                    <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="aca pondre el texto :D" width="50"></p>
+                    <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="50"></p>
                 <?php echo validation_errors(); ?>
                 <?php echo form_open('sesion'); ?>
                 <div class="login-wrap">
-                    <input type="text" class="form-control" placeholder="E-mail" name="username" autofocus>
-                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <input type="text" title="Nombre de usuario FROAC" class="form-control" placeholder="Nombre de usuario" name="username" autofocus>
+                    <input type="password" title="Contraseña" class="form-control" name="password" placeholder="Contraseña">
                     <label class="checkbox">
-                        <input type="checkbox" value="remember-me"> Recordarme
+                        <input type="checkbox" aria-selected="true" value="remember-me"> Recordarme
                         <span class="pull-right">
                             <a data-toggle="modal" href="#myModal"> Olvide mi contraseña?</a>
-
                         </span>
                     </label>
                     <button class="btn btn-lg btn-login btn-block" type="submit">Iniciar Sesión</button>
@@ -53,9 +52,9 @@
                         </a>
                     </div><br>
                     <div class="registration" align="center">
-                       
+
                         <a class="" href="<?php echo base_url()?>">
-                            <li class="icon-reply"><b>Volver</b></li>
+                            <li class="icon-reply"><strong>Volver</strong></li>
                         </a>
                     </div>
 

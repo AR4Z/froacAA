@@ -1,6 +1,6 @@
 <?php
 
-//Clase Usuario, encargada de todas las operaciones y 
+//Clase Usuario, encargada de todas las operaciones y
 //metodos de los usuarios.
 
 class Usuario extends CI_Controller {
@@ -17,7 +17,7 @@ class Usuario extends CI_Controller {
     public function get_usr_data($username) {
         $this->load->view('base/login_view');
     }
-    
+
 ///metodo que carga la vista acerca
     public function acerca() {
         if ($this->session->userdata('logged_in')) {
@@ -26,10 +26,11 @@ class Usuario extends CI_Controller {
             if ($rol [0] ['use_rol_id'] == 2) {
                 $content = array(
                 "main_view" => "shared_views/acerca_view",
+                "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                 "encabezado" => "Acerca de",
                 "url" => "usuario/acerca/"
                 );
- 
+
         $this->load->view('base/est_template', $content);
     }
     else{
@@ -38,7 +39,7 @@ class Usuario extends CI_Controller {
                 "encabezado" => "Acerca de",
                 "url" => "usuario/acerca/"
                 );
- 
+
         $this->load->view('base/base_template', $content);
 
     }
@@ -48,7 +49,7 @@ class Usuario extends CI_Controller {
                 "encabezado" => "Acerca de",
                 "url" => "usuario/acerca/"
                 );
- 
+
         $this->load->view('base/base_template', $content);
         }
     }
@@ -73,6 +74,7 @@ class Usuario extends CI_Controller {
                 $content = array(
                 "main_view" => "shared_views/equipo_view",
                 "encabezado" => "Equipo FROAC",
+                "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                 "url" => "usuario/equipo/"
             );
                 $this->load->view('base/est_template', $content);
@@ -95,8 +97,8 @@ class Usuario extends CI_Controller {
                 $this->load->view('base/base_template', $content);
         }
     }
-         
-            
+
+
 
     public function glosario() {
         if ($this->session->userdata('logged_in')) {
@@ -106,6 +108,7 @@ class Usuario extends CI_Controller {
                 $content = array(
                 "main_view" => "shared_views/glosario_view",
                 "encabezado" => "Glosario",
+                "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                 "url" => "usuario/glosario/"
             );
                 $this->load->view('base/est_template', $content);
@@ -140,7 +143,7 @@ class Usuario extends CI_Controller {
             redirect(base_url(), 'refresh');//Definir que pasa si ya esta loggeado
         } else {
             $content = array(
-                "preferencias" => $this->usuario_model->get_preferencias(), 
+                "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                 "main_view" => "register/registro_view"
             );
@@ -153,7 +156,7 @@ class Usuario extends CI_Controller {
             redirect(base_url(), 'refresh');//Definir que pasa si ya esta loggeado
         } else {
             $content = array(
-                "preferencias" => $this->usuario_model->get_preferencias(), 
+                "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                 "main_view" => "shared_views/busqueda_avanzada_view"
             );
@@ -205,7 +208,7 @@ class Usuario extends CI_Controller {
      * para verificar si ya existe en la base de datos
      */
      public function verify_email(){
-        
+
         $mail = $_POST["mail"];
         $mail = strtolower($mail);
         $result = $this->usuario_model->verify_email($mail);
@@ -233,7 +236,7 @@ class Usuario extends CI_Controller {
         }
     }
 
-    //Metodo que establece la calificación de los usuarios para cada 
+    //Metodo que establece la calificación de los usuarios para cada
     //OA parametros cadena = "lo_id, rep_id, lo_score, username"
     function set_score(){
 
@@ -270,7 +273,7 @@ class Usuario extends CI_Controller {
         $this->load->view('shared_views/xml_service');
     }
 
-    
+
     public function search_service($params){
         $content = array(
             "main_view" => "shared_views/service_view",
@@ -395,8 +398,8 @@ class Usuario extends CI_Controller {
 
     }
 
-    
-    //Metodo que guarda los registros cuando se crea una cuenta por parte del estudiante, 
+
+    //Metodo que guarda los registros cuando se crea una cuenta por parte del estudiante,
     // en la tabla usuario y estudiante
 
     public function guardar() {
@@ -629,7 +632,7 @@ class Usuario extends CI_Controller {
           echo '   Cantidad de K    ';
           echo $cant_K; */
 
-        //GLOBAL _ SECUENCIAL 
+        //GLOBAL _ SECUENCIAL
 
         for ($j = 49; $j <= 70; $j++) {
             if ($this->input->post($j) == 'G')
@@ -639,7 +642,7 @@ class Usuario extends CI_Controller {
         }
 
     /*$this->usuario_model->guardar_estudiante($cant_V,$cant_A,$cant_R,$cant_K,$cant_G,$cant_S);
-    
+
         /* echo "   cantidad G  ";
           echo $cant_G;
           echo "   cantidad S  ";
@@ -678,12 +681,12 @@ class Usuario extends CI_Controller {
         echo json_encode($datos);#$mayor.",".$cant_V.",".$cant_A.",".$cant_R.",".$cant_K.",".$cant_G.",".$cant_S;
         /*
 
-esta es una opción que dio valen usando javascrip en la cual se manda la variable mayor y las 
-6 variables cant en una cadena serada por un caracter especial para desde la vista desarmar la 
+esta es una opción que dio valen usando javascrip en la cual se manda la variable mayor y las
+6 variables cant en una cadena serada por un caracter especial para desde la vista desarmar la
 cadena y enviar al modelo estos valores
         echo $mayor."&".$cant_K;*/
 
-        
+
         //echo 'Su estilo de aprendizaje es: ' . $mayor . ' con un resultado de ' . $puntaje;
        // $data = $this->input->post('1');
         // $data = json_decode(stripslashes($_POST['1']),true);
@@ -822,8 +825,8 @@ cadena y enviar al modelo estos valores
             if ($this->input->post($i) == 'K')
                 $cant_K++;
         }
-        
-        //GLOBAL _ SECUENCIAL 
+
+        //GLOBAL _ SECUENCIAL
 
         for ($j = 49; $j <= 70; $j++) {
             if ($this->input->post($j) == 'G')
@@ -863,12 +866,12 @@ cadena y enviar al modelo estos valores
         else{
                         //If no session, redirect to login page
             redirect('init', 'refresh');
-            
+
         }
-     
+
     }*/
 
 
-  
-    
+
+
 }

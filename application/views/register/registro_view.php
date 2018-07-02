@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="asset/css/datepicker.css" type="text/css" />
 <script type="text/javascript">
 
     $(document).ready(function() {
@@ -203,7 +203,7 @@
                 <div class="col-lg-12" >
                     <section class="panel" role="form" aria-label="Crear cuenta">
                         <header class="panel-heading">
-                            <legend>Crear cuenta en FROAC</legend>
+                            <h1>Crear cuenta en FROAC</h1>
                         </header>
                         <!--FORMULARIO DE REGISTRO DE USUARIO-->
                         <div class="panel-body">

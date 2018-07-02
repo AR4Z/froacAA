@@ -3,9 +3,9 @@
           <div id="sidebar"  class="nav-collapse "role="navigation" aria-label="Barra de navegación FROAC">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  
+
                 <li id="accessibilityNav">
-                    <a href="#">      
+                    <a href="#">
                   <i class="icon-info"></i>
                         Accesibilidad<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -79,7 +79,7 @@
                           <i class="icon-cogs"></i>
                           <span>Aplicaciones</span>
                       </a>
-      
+
                   </li>
 
                   <li>
@@ -119,15 +119,15 @@
                       </a>
                   </li>
 
-                                      
 
-                    
-                  
+
+
+
               </ul>
               <!-- sidebar menu end-->
           </div>
       </aside>
 
 
-      
+
       <!--sidebar end-->

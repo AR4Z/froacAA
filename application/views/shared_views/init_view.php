@@ -3,14 +3,13 @@
 <section id="main-content" role="main">
     <section class="wrapper">
         <br>
-        <div class="col-lg-12" style="display: none;" id="hide-s">
-
-            <div class="input-group  m-bot15">
-                <label>
-                    <button class="btn btn-success buscar" type="button" style="margin-left: 0px;">Buscar</button>
-                <input type="text" class="form-control" id="hide-input" title="Buscar objeto de aprendizaje" autofocus="" style="margin-left: 70px;margin-top: -50px;"></label>
+        <div class="row" style="display: none;" id="hide-s">
+            <div class="col">
+                <input type="text" class="form-control" id="hide-input" title="Buscar objeto de aprendizaje" autofocus="">
             </div>
-
+            <div class="col">
+                <button class="btn btn-success buscar" type="button" style="margin-left: 0px;">Buscar</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12" id="show-s">
@@ -26,8 +25,8 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-10">
+                            <div class="col-sm"></div>
+                            <div class="col-sm">
                                 <center>
                                     <div class="input-group  m-bot15" role="search" aria-label="Buscar objeto de aprendizaje">
                                     <label>
@@ -38,7 +37,8 @@
                                     </a>
                                 </div></center>
                             </div>
-                            <div class="col-sm-1"></div>
+
+                            <div class="col-sm"></div>
                         </div>
                     </div>
                 </section>
@@ -59,7 +59,7 @@
                             <?php echo $total_user ?>
                         </p>
 
-                        <p>Usarios</p>
+                        <p>Usuarios</p>
                     </div>
                 </section>
             </div>

@@ -4,20 +4,19 @@
 
         <section class="panel">
             <header class="panel-heading">
-                 EQUIPO DE FROAC</b>
+                 <h1>EQUIPO DE FROAC</h1>
             </header>
             <div class="panel-body">
                 <div class="row">
-
-    </div>
+                </div>
     <div class="art-postcontent"><br>
+        <p>Grupo de Trabajo Académico GAIA - Grupo Ambientes Inteligentes Adaptativos <br/>
+            Universidad Nacional de Colombia – Sede Manizales <br/>
+            Director: Néstor Darío Duque Méndez <br/>
+            Correo Director: ndduqueme@unal.edu.co <br/>
+            Correo Grupo: gaia_man@unal.edu.co
+        </p>
 
-        <p>Grupo de Trabajo Académico GAIA - Grupo Ambientes Inteligentes Adaptativos </p>
-           <p>  Universidad Nacional de Colombia – Sede Manizales</p>
-           <p>  Director: Néstor Darío Duque Méndez</p>
-            <p> Correo Director: ndduqueme@unal.edu.co</p>
-           <p>  Correo Grupo: gaia_man@unal.edu.co </p>
-<br><br>
         <p>Campus La Nubia <br>
             Km 9 vía al Aeropuerto la Nubia <br>
             8879400 Ext:55764</p>
@@ -29,9 +28,7 @@
 
         </section>
 
-
         <div class="row"  id="result">
-
         </div>
     </section>
 </section>
