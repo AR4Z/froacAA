@@ -1,6 +1,6 @@
 <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
 <link href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
-<script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
 <script type="text/javascript">
 
@@ -11,78 +11,59 @@
         $("#img_ok").hide();
         $("#img_not").hide();
         $("#submitg, #boton, #cancelar, #proc").button();
-
-        $(".submitg").click(function() {
-            $("#form").validate({
-                rules: {
-                    nombre: {
-                        required: true,
-                        minlength: 3
-                    },
-                    apellido: {
-                        required: true,
-                        minlength: 3
-                    },
-                    fecha_nac: {
-                        required: true,
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                    },
-                    sexo: {
-                        required: true
-                    },
-                    lang: {
-                        required: true
-                    },
-                    username: {
-                        required: true,
-                        minlength: 4
-                    },
-                    passwd: {
-                        required: true,
-                        minlength: 6
-                    },
-                    passwd1: {
-                        equalTo: "#passwd"
-                    }
+        $("#form").validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    minlength: 3
                 },
-                messages: {
-                    nombre: {
-                        required: "<span style=color:red;>Escribe tu Nombre </span>",
-                        minlength: "Tu Nombre con minimo 3 letras."
-                    },
-                    apellido: {
-                        required: "<span style=color:red;>Escribe tu Apellido</span>",
-                        minlength: "Tu Nombre con minimo 3 letras"
-                    },
-                    fecha_nac: {
-                        required: "<span style=color:red;>Escribe tu Fecha de Nacimiento </span>"
-                    },
-                    sexo: {
-                        required: "<span style=color:red;>Elige tu Sexo </span>"
-                    },
-                    lang: {
-                        required: "<span style=color:red;>Escribe tu Idioma</span>",
-                        minlength: "Mail erróneo",
-                        error: "Mail erróneo",
-                    },
-                    username: {
-                        required: "<span style=color:red;>Escribe tu Nombre de usuario</span>",
-                        minlength: "Tu nombre de ususario con minimo 4 letras"
-                    },
-                    passwd: {
-                        required: "<span style=color:red;>Escribe tu password</span>",
-                        minlength: "Tu password con minimo 6 caracteres "
-                    },
-                    passwd1: {
-                        equalTo: "<span style=color:red;>Las contraseñas no coinciden</span>"
-                    }
+                apellido: {
+                    required: true,
+                    minlength: 3
+                },
+                fecha_nac: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                username: {
+                    required: true,
+                    minlength: 4
+                },
+                passwd: {
+                    required: true,
+                    minlength: 6
+                },
+                passwd1: {
+                    equalTo: "#passwd"
                 }
-            });
-
-
+            },
+            messages: {
+                nombre: {
+                    required: "<span style=color:red;>Escribe tu Nombre </span>",
+                    minlength: "Tu Nombre con minimo 3 letras."
+                },
+                apellido: {
+                    required: "<span style=color:red;>Escribe tu Apellido</span>",
+                    minlength: "Tu Nombre con minimo 3 letras"
+                },
+                fecha_nac: {
+                    required: "<span style=color:red;>Escribe tu Fecha de Nacimiento </span>"
+                },
+                username: {
+                    required: "<span style=color:red;>Escribe tu Nombre de usuario</span>",
+                    minlength: "Tu nombre de ususario con minimo 4 letras"
+                },
+                passwd: {
+                    required: "<span style=color:red;>Escribe tu password</span>",
+                    minlength: "Tu password con minimo 6 caracteres "
+                },
+                passwd1: {
+                    equalTo: "<span style=color:red;>Las contraseñas no coinciden</span>"
+                }
+            }
         });
 
         $('#proc').click(function() {
@@ -235,46 +216,51 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="nombre" id="nombre">Nombre:</label>
-                                                    <input  type="text" class="form-control" name="nombre" placeholder="Nombres"  aria-labelledby="nombre" required>
+                                                    <input  type="text" class="name form-control" name="nombre" placeholder="Nombres"  aria-labelledby="nombre" required autofocus>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="apellidos" id="apellidos">Apellidos:</label>
                                                     <input type="text" class="form-control"  name="apellidos" placeholder="Apellidos"  aria-labelledby="apellidos" required>
                                                 </div>
-                                                <div class="form-group">
+                                                <div id="cont_fecha_nac" class="form-group">
                                                     <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                                     <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
                                                     <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="" title="format: dd/MM/y" aria-labelledby="fecha_nac" required></input>
-
                                                 </div>
                                                 <div class="form-group">
                                                     <label id="mail" for="mail">E-mail:</label>
                                                     <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
-                                                    <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+                                                    <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail"  required>
                                                 </div>
-                                                <div id="in_use1" aria-hidden="true" class="alert alert-danger">
+                                                <div id="in_use1" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-danger">
                                                     <button type="button" class="close" data-hide="in_use1"  aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Lo sentimos!</strong> El correo electrónico ingresado, ya está registrado.
                                                 </div>
-                                                <div id="no_use1" aria-hidden="true" class="alert alert-success">
+                                                <div id="no_use1" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-success">
                                                     <button data-hide="no_use1" class="close" type="button" aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Éxito!</strong> este correo electronico esta disponible.
                                                 </div>
+                                                <div id="invalid_email" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-danger">
+                                                    <button data-hide="invalid_email" class="close" type="button" aria-label="Cerrar alerta">
+                                                        <i class="icon-remove"></i>
+                                                    </button>
+                                                    <strong>Lo sentimos!</strong> El correo no es válido.
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="username" id="username" >Nombre de usuario:</label>
                                                     <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC"  aria-labelledby="username" required>
                                                 </div>
-                                                <div id="in_use" aria-hidden="true" role="alert" class="alert alert-danger">
+                                                <div id="in_use" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-danger">
                                                     <button data-hide="in_use" class="close" aria-label="Cerrar alerta" type="button">
                                                         <i class="icon-remove"></i>
                                                     </button>
                                                     <strong>Lo sentimos!</strong> el nombre de usuario <strong id="in_name"></strong> no esta disponible.
                                                 </div>
-                                                <div id="no_use" aria-hidden="true" class="alert alert-success">
+                                                <div id="no_use" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-success">
                                                     <button data-hide="no_use" class="close" type="button" aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
@@ -285,7 +271,7 @@
                                                     <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" required><br>
                                                     <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" required>
                                                 </div>
-                                                <div id="no_match" class="alert alert-danger" role="alert" aria-hidden="true">
+                                                <div id="no_match" class="alert alert-danger" aria-live="assertive" role="alert" aria-hidden="true">
                                                     <button type="button" class="close" data-hide="no_match"  aria-label="Cerrar alerta">
                                                         <i class="icon-remove"></i>
                                                     </button>
@@ -312,14 +298,14 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <strong>¿Presenta algún tipo de necesidad especial?</strong>
+                                                <label>¿Presenta algún tipo de necesidad especial?</label>
                                                 <div class="row col-md-12">
                                                     <input TYPE=RADIO id="discapasi" NAME="SI" value="Si" aria-labelledby="sineedspecial"><label id="sineedspecial">Si</label>
                                                     <input TYPE=RADIO id="discapano" NAME="SI" value="No" aria-labelledby="noneedspecial"><label id="noneedspecial">No</label>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group" aria-live="assertive">
                                                 <input type="button" style="display:none;" value="Realizar Test NEED" name="need" id="need" class="btn btn-info">
 
                                         <!--FIN FORMULARIO DE REGISTRO DE USUARIO-->
@@ -823,14 +809,23 @@
   <!--script for this page-->
   <script type="text/javascript">
      $(document).ready(function() {
-     	$('.date').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
-        $('.glyphicon-calendar').attr("class", "oi oi-calendar");
-     });
+         $('.date').datepicker();
+         $('.name').focus();
+         $('.glyphicon-calendar').attr("class", "oi oi-calendar");
+         $('.glyphicon-triangle-right').attr('class', "oi oi-caret-right");
+         $('.glyphicon-triangle-left').attr('class', "oi oi-caret-left");
+         $('.glyphicon-backward').attr('class', "oi oi-media-skip-backward");
+         $('.glyphicon-forward').attr('class', "oi oi-media-skip-forward");
+         $(".datepicker-button").click(function () {
+             console.log("swss")
+             $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
+         });
+    });
+
+
     </script>
   <script type="text/javascript">
-  $("#in_use, #no_use, #no_match").hide();
+  $("#in_use, #no_use, #no_match, #invalid_email").hide();
   $("#input_username").change(function(){
    $.ajax({
     type: "POST",
@@ -855,7 +850,10 @@
 
 
   $("#in_use1, #no_use1").hide();
-
+  function validateEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
   $("#input_mail").change(function(){
       $.ajax({
           type: "POST",
@@ -864,27 +862,35 @@
       })
           .done(function( msg ) {
               if(msg >= 1 ){
-
                   $("#in_name").text($("#input_mail").val());
                   $("#in_use1").show();
                   $("#in_use1").attr("aria-hidden", false);
                   $("#no_use1").hide();
+                  $("#invalid_email").hide();
                   $("#sub").hide();
                   $("#input_mail").val("");
               }else{
                   $("#no_use1").show();
                   $("#no_use1").attr("aria-hidden", false);
                   $("#in_use1").hide();
+                  $("#invalid_email").hide();
                   $("#sub").show();
+                  if(!validateEmail($("#input_mail").val())){
+                      $("#invalid_email").show();
+                      $("#invalid_email").attr("aria-hidden", false);
+                      $("#no_use1").hide();
+                  }
               }
           });
   });
+
   $("#input_passwd").change(function(){
     if ($("#input_passwd").val().length < 6){
       alert("Su contraseña debe ser de minimo 6 caracteres!")
       $("#input_passwd").val("");
     }
   });
+
   $("#input_passwd2").change(function(){
     if($("#input_passwd").val() == $("#input_passwd2").val()){
         $("#no_match").hide();
