@@ -32,7 +32,7 @@
     <script src="<?php echo base_url()?>asset/js/owl.carousel.js" ></script>
     <script src="<?php echo base_url()?>asset/js/jquery.customSelect.min.js" ></script>
     <script src="<?php echo base_url()?>asset/js/respond.min.js" ></script>
-    <script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>
+    <!--<script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>-->
     <!--common script for all pages-->
     <script src="<?php echo base_url()?>asset/js/common-scripts.js"></script>
     <script src="<?php echo base_url()?>asset/js/artyom.js"></script>
