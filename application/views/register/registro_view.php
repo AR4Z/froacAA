@@ -2,6 +2,9 @@
 <link href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
 <script type="text/javascript">
 
     $(document).ready(function() {
@@ -11,60 +14,6 @@
         $("#img_ok").hide();
         $("#img_not").hide();
         $("#submitg, #boton, #cancelar, #proc").button();
-        $("#form").validate({
-            rules: {
-                nombre: {
-                    required: true,
-                    minlength: 3
-                },
-                apellido: {
-                    required: true,
-                    minlength: 3
-                },
-                fecha_nac: {
-                    required: true,
-                },
-                email: {
-                    required: true,
-                    email: true,
-                },
-                username: {
-                    required: true,
-                    minlength: 4
-                },
-                passwd: {
-                    required: true,
-                    minlength: 6
-                },
-                passwd1: {
-                    equalTo: "#passwd"
-                }
-            },
-            messages: {
-                nombre: {
-                    required: "<span style=color:red;>Escribe tu Nombre </span>",
-                    minlength: "Tu Nombre con minimo 3 letras."
-                },
-                apellido: {
-                    required: "<span style=color:red;>Escribe tu Apellido</span>",
-                    minlength: "Tu Nombre con minimo 3 letras"
-                },
-                fecha_nac: {
-                    required: "<span style=color:red;>Escribe tu Fecha de Nacimiento </span>"
-                },
-                username: {
-                    required: "<span style=color:red;>Escribe tu Nombre de usuario</span>",
-                    minlength: "Tu nombre de ususario con minimo 4 letras"
-                },
-                passwd: {
-                    required: "<span style=color:red;>Escribe tu password</span>",
-                    minlength: "Tu password con minimo 6 caracteres "
-                },
-                passwd1: {
-                    equalTo: "<span style=color:red;>Las contraseñas no coinciden</span>"
-                }
-            }
-        });
 
         $('#proc').click(function() {
 
@@ -195,7 +144,7 @@
                         <!--FORMULARIO DE REGISTRO DE USUARIO-->
                         <div class="card-body">
 
-                                <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/guardar" enctype='multipart/form-data' id="form">
+                                <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/guardar" enctype='multipart/form-data' id="form" formnovalidate>
 
                                         <!--label>hola:</label><input type="text" id="verResult"/-->
                                         <section class="card  border-right-0 border-bottom-0 border-left-0">
@@ -216,21 +165,21 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="nombre" id="nombre">Nombre:</label>
-                                                    <input  type="text" class="name form-control" name="nombre" placeholder="Nombres"  aria-labelledby="nombre" required autofocus>
+                                                    <input  type="text" class="name form-control" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" autofocus>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="apellidos" id="apellidos">Apellidos:</label>
-                                                    <input type="text" class="form-control"  name="apellidos" placeholder="Apellidos"  aria-labelledby="apellidos" required>
+                                                    <input type="text" class="form-control"  name="apellidos" placeholder="Apellidos"  aria-labelledby="apellidos">
                                                 </div>
                                                 <div id="cont_fecha_nac" class="form-group">
                                                     <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                                     <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                                    <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="" title="format: dd/MM/y" aria-labelledby="fecha_nac" required></input>
+                                                    <input  type="text" class="date form-control"  id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento"  aria-labelledby="fecha_nac"></input>
                                                 </div>
                                                 <div class="form-group">
                                                     <label id="mail" for="mail">E-mail:</label>
                                                     <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
-                                                    <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail"  required>
+                                                    <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail">
                                                 </div>
                                                 <div id="in_use1" aria-hidden="true" aria-live="assertive" role="alert" class="alert alert-danger">
                                                     <button type="button" class="close" data-hide="in_use1"  aria-label="Cerrar alerta">
@@ -809,7 +758,11 @@
   <!--script for this page-->
   <script type="text/javascript">
      $(document).ready(function() {
-         $('.date').datepicker();
+         $('.date').datepicker({
+             inputFormat: ["yyyy-MM-dd"],
+		     outputFormat: 'yyyy-MM-dd',
+         });
+
          $('.name').focus();
          $('.glyphicon-calendar').attr("class", "oi oi-calendar");
          $('.glyphicon-triangle-right').attr('class', "oi oi-caret-right");
@@ -820,13 +773,80 @@
              console.log("swss")
              $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
          });
+
     });
 
 
     </script>
   <script type="text/javascript">
+  $("#form").validate({
+      rules: {
+          nombre: {
+              required: true,
+              minlength: 3
+          },
+          apellidos: {
+              required: true,
+              minlength: 3
+          },
+          fecha_nac: {
+              required: true
+          },
+          mail: {
+              required: true,
+              email: true,
+          },
+          username: {
+              required: true,
+              minlength: 4
+          },
+          passwd: {
+              required: true,
+              minlength: 6
+          },
+          passwd2: {
+              required: true,
+              equalTo: "#input_passwd"
+          }
+      },
+      messages: {
+          nombre: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
+              minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+          },
+          apellidos: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
+              minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
+          },
+          fecha_nac: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>"
+          },
+          mail:{
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
+              email:"<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>"
+          },
+          username: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
+              minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>"
+          },
+          passwd: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
+              minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
+          },
+          passwd2: {
+              required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
+              equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
+          }
+      }
+  });
+
+  $("#input_fecha_nac").change(function(){
+      console.log("eliminar error");
+      $("#input_fecha_nac-error").attr("style", "display: none;");
+  });
   $("#in_use, #no_use, #no_match, #invalid_email").hide();
-  $("#input_username").change(function(){
+  $("#in_use1, #no_use1").hide();
+  /*$("#input_username").change(function(){
    $.ajax({
     type: "POST",
     url: "<?php echo base_url()?>index.php/usuario/verify_username",
@@ -849,7 +869,7 @@
  });
 
 
-  $("#in_use1, #no_use1").hide();
+
   function validateEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -908,7 +928,7 @@
           $("#" + $(this).attr("data-hide")).hide();
           $("#" + $(this).attr("data-hide")).attr("aria-hidden", true);
       });
-  });
+  });*/
 
 
 //######################################################################################################################
