@@ -1028,14 +1028,14 @@
 </script>
 <script type="text/javascript">
 
-function validateusername(possible_username){
-    return $.ajax({
-     type: "POST",
-     url: "<?php echo base_url()?>index.php/usuario/verify_username",
-     data: { username: possible_username}
- });
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }
 
+$.validator.addMethod("email_regex", function(value, element){
+    return validateEmail(value);
+});
 
 $("#form").validate({
     rules: {
@@ -1053,7 +1053,21 @@ $("#form").validate({
         },
         mail: {
             required: true,
-            email: true,
+            email_regex: true,
+            remote:{
+                type:'POST',
+                url: "<?php echo base_url()?>index.php/usuario/verify_email",
+                dataType: 'json',
+                data: {
+                    mail: function(){
+                        return $('#input_mail').val();
+                    }
+                },
+                dataFilter: function(resp){
+                    let json = JSON.parse(resp);
+                    return !json.success;
+                }
+            }
         },
         username: {
             required: true,
@@ -1067,8 +1081,8 @@ $("#form").validate({
                         return $("#input_username").val();
                     }
                 },
-                dataFilter: function(msg){
-                        let json = JSON.parse(msg);
+                dataFilter: function(resp){
+                        let json = JSON.parse(resp);
                         return !json.success;
                 }
 
@@ -1098,7 +1112,8 @@ $("#form").validate({
         },
         mail: {
             required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
-            email: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>"
+            email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
+            remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
         },
         username: {
             required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
@@ -1120,11 +1135,9 @@ $("#form").validate({
     },
 });
 
-/*
-  function validateEmail(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-  }
+
+
+ /*
   $("#input_mail").change(function(){
       $.ajax({
           type: "POST",

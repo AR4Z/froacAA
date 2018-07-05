@@ -289,14 +289,8 @@ if ($this->input->post('cantidad6')!='') {
     //Se verifica si el correo electrónico ingresado existe en la base de datos
 
     function verify_email($mail){
-
-        $this->db->select('use_email');
-        $this->db->from('users');
         $this->db->where('use_email', $mail);
-        $this->db->limit(1);
-
-        $query = $this->db->get();
-
+        $query = $this->db->get('users');
         return $query->num_rows();
     }
 

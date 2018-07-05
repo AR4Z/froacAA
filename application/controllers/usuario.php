@@ -212,7 +212,11 @@ class Usuario extends CI_Controller {
         $mail = $_POST["mail"];
         $mail = strtolower($mail);
         $result = $this->usuario_model->verify_email($mail);
-        print_r($result);
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'success' =>($result>=1),
+
+        ));
     }
 
     // Método que guarda los datos de un usuario al ser registrado desde el administrador
