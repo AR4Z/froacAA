@@ -992,19 +992,21 @@
 
 <!--script for this page-->
 <script type="text/javascript">
+let today = new Date();
+let dd = today.getDate() - 1;
+let mm = today.getMonth() + 1;
+let yyyy = today.getFullYear();
+
+if(dd < 10) {
+    dd = '0'+ dd
+}
+
+if(mm < 10) {
+    mm = '0'+ mm
+}
     $(document).ready(function() {
-        let today = new Date();
-        let dd = today.getDate() - 1;
-        let mm = today.getMonth() + 1;
-        let yyyy = today.getFullYear();
 
-        if(dd < 10) {
-            dd = '0'+ dd
-        }
 
-        if(mm < 10) {
-            mm = '0'+ mm
-        }
         $('.birthdate').datepicker({
             startView: 2,
             inputFormat: ["yyyy-MM-dd"],
@@ -1033,6 +1035,16 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+function validateDate(date, infDate, supDate){
+    return (infDate <= date) && (date <= supDate);
+}
+
+$.validator.addMethod('range_date', function(value, element){
+    let date = new Date(value);
+    let infDate = new Date('1975-01-01');
+    return validateDate(date, infDate, today);
+});
+
 $.validator.addMethod("email_regex", function(value, element){
     return validateEmail(value);
 });
@@ -1049,7 +1061,8 @@ $("#form").validate({
         },
         fecha_nac: {
             required: true,
-            dateISO: true
+            dateISO: true,
+            range_date: true
         },
         mail: {
             required: true,
@@ -1108,7 +1121,8 @@ $("#form").validate({
         },
         fecha_nac: {
             required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
-            dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>"
+            dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
+            range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
         },
         mail: {
             required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
