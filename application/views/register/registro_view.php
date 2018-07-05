@@ -5,126 +5,127 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
-<script type="text/javascript">/*
-    $(document).ready(function() {
-        estiloAprendizaje = 'Para conocer su estilo de aprendizaje puede realizar el test ahora mismo o en el momento que usted lo requiera';
-        $('#estiloaprendizaje').text(estiloAprendizaje);
+<script type="text/javascript">
+    /*
+        $(document).ready(function() {
+            estiloAprendizaje = 'Para conocer su estilo de aprendizaje puede realizar el test ahora mismo o en el momento que usted lo requiera';
+            $('#estiloaprendizaje').text(estiloAprendizaje);
 
-        $("#img_ok").hide();
-        $("#img_not").hide();
-        $("#submitg, #boton, #cancelar, #proc").button();
+            $("#img_ok").hide();
+            $("#img_not").hide();
+            $("#submitg, #boton, #cancelar, #proc").button();
 
-        $('#proc').click(function() {
+            $('#proc').click(function() {
 
-            var form_data = $('#form_usr').serializeArray();
-            $.post("<?php echo base_url() ?>index.php/usuario/test_result", form_data, function(respuesta) {
-                // $("#result").text(respuesta);
-                //alert("Resultado"+respuesta);
-                var cantidades = JSON.parse(respuesta);
-                //$('#verResult').val(','+cantidades[0]+',');
-                var larespuesta, cantidad1, cantidad2, cantidad3, cantidad4, cantidad5, cantidad6;
-                var i = 0;
-                for (var x in cantidades) {
-                    if (i == 0) {
-                        larespuesta = cantidades[x];
-                    } else if (i == 1) {
-                        cantidad1 = cantidades[x];
-                    } else if (i == 2) {
-                        cantidad2 = cantidades[x];
-                    } else if (i == 3) {
-                        cantidad3 = cantidades[x];
-                    } else if (i == 4) {
-                        cantidad4 = cantidades[x];
-                    } else if (i == 5) {
-                        cantidad5 = cantidades[x];
-                    } else if (i == 6) {
-                        cantidad6 = cantidades[x];
+                var form_data = $('#form_usr').serializeArray();
+                $.post("<?php echo base_url() ?>index.php/usuario/test_result", form_data, function(respuesta) {
+                    // $("#result").text(respuesta);
+                    //alert("Resultado"+respuesta);
+                    var cantidades = JSON.parse(respuesta);
+                    //$('#verResult').val(','+cantidades[0]+',');
+                    var larespuesta, cantidad1, cantidad2, cantidad3, cantidad4, cantidad5, cantidad6;
+                    var i = 0;
+                    for (var x in cantidades) {
+                        if (i == 0) {
+                            larespuesta = cantidades[x];
+                        } else if (i == 1) {
+                            cantidad1 = cantidades[x];
+                        } else if (i == 2) {
+                            cantidad2 = cantidades[x];
+                        } else if (i == 3) {
+                            cantidad3 = cantidades[x];
+                        } else if (i == 4) {
+                            cantidad4 = cantidades[x];
+                        } else if (i == 5) {
+                            cantidad5 = cantidades[x];
+                        } else if (i == 6) {
+                            cantidad6 = cantidades[x];
+                        }
+                        i++;
                     }
-                    i++;
-                }
-                $('#result_test').val(larespuesta);
+                    $('#result_test').val(larespuesta);
+                    $('#form').show();
+                    $('#test').hide();
+                    $('#submitg').show();
+
+                    var estiloAprendizaje;
+                    switch ($('#result_test').val()) {
+                        case '1':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Auditivo-Global (La instrucción que se habla o se escucha facilita el aprendizaje de este tipo de aprendizaje. Las conferencias, las grabaciones, los debates son todos mecanismos que permiten que las personas de este estilo exploren conceptos) ';
+                            break;
+                        case '2':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Auditivo-Secuencial (Las personas Auditivas secuenciales tienden a deletrear fonéticamente (sonidos.) Estos estudiantes aprenden escuchando y recuerdan los hechos cuando éstos son presentados en forma de poemas, cantos o melodías) ';
+                            break;
+                        case '3':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Kinestesico-Global (Estas personas aprender mejor haciendo actividades que les permiten experimentar o practicar el concepto que están intentando aprender. La clave para el aprendizaje efectivo es que la instrucción les ofrece oportunidades concretas para aplicar la información.)';
+                            break;
+                        case '4':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Kinestesico-Secuencial (Estas personas aprenden mejor moviendo, experimentando  y manipulando. Les gusta descubrir como funcionan las cosas y muchas veces son exitosos en artes prácticas como carpintería o diseño)';
+                            break;
+                        case '5':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Lector-Global (Las personas con una preferencia a la modalidad leer/escribir aprenden mejor cuando reciben y devuelven la información en palabras)';
+                            break;
+                        case '6':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Lector-Secuencial (Las personas con estilo de aprendizaje Lector Secuencial tienen preferencia por información impresa en forma de palabras)';
+                            break;
+                        case '7':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Visual-Global (Las personas Visuales Globales aprenden  mirando. Ellos van a imágenes del pasado cuando tratan de recordar. Ellos dibujan la forma de las cosas en su mente)';
+                            break;
+                        case '8':
+                            estiloAprendizaje = 'Su estilo de aprendizaje es: Visual-Secuencial (Las personas visuales secuenciales gustan de reunir y procesar información usando tablas, diagramas, gráficas, mapas y otras imágenes o formas basadas en gráfico para aprender)';
+                            break;
+                        default:
+                            estiloAprendizaje = 'Para conocer su estilo de aprendizaje puede realizar el test ahora mismo o en el momento que usted lo requiera';
+                            break;
+                    }
+
+
+                    $('#estiloaprendizaje').text(estiloAprendizaje);
+                    $('#result_test').val(larespuesta);
+                    $('#cantidad1').val(cantidad1);
+                    $('#cantidad2').val(cantidad2);
+                    $('#cantidad3').val(cantidad3);
+                    $('#cantidad4').val(cantidad4);
+                    $('#cantidad5').val(cantidad5);
+                    $('#cantidad6').val(cantidad6);
+
+
+
+
+                });
+            });
+
+
+
+            $('#boton').click(function() {
+                $('#test').show();
+                $('#form').hide();
+                $('#submitg').hide();
+                window.location.href = "#main-content";
+            });
+            $('#cancelar').click(function() {
+                $('#test_need').hide();
                 $('#form').show();
-                $('#test').hide();
                 $('#submitg').show();
-
-                var estiloAprendizaje;
-                switch ($('#result_test').val()) {
-                    case '1':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Auditivo-Global (La instrucción que se habla o se escucha facilita el aprendizaje de este tipo de aprendizaje. Las conferencias, las grabaciones, los debates son todos mecanismos que permiten que las personas de este estilo exploren conceptos) ';
-                        break;
-                    case '2':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Auditivo-Secuencial (Las personas Auditivas secuenciales tienden a deletrear fonéticamente (sonidos.) Estos estudiantes aprenden escuchando y recuerdan los hechos cuando éstos son presentados en forma de poemas, cantos o melodías) ';
-                        break;
-                    case '3':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Kinestesico-Global (Estas personas aprender mejor haciendo actividades que les permiten experimentar o practicar el concepto que están intentando aprender. La clave para el aprendizaje efectivo es que la instrucción les ofrece oportunidades concretas para aplicar la información.)';
-                        break;
-                    case '4':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Kinestesico-Secuencial (Estas personas aprenden mejor moviendo, experimentando  y manipulando. Les gusta descubrir como funcionan las cosas y muchas veces son exitosos en artes prácticas como carpintería o diseño)';
-                        break;
-                    case '5':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Lector-Global (Las personas con una preferencia a la modalidad leer/escribir aprenden mejor cuando reciben y devuelven la información en palabras)';
-                        break;
-                    case '6':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Lector-Secuencial (Las personas con estilo de aprendizaje Lector Secuencial tienen preferencia por información impresa en forma de palabras)';
-                        break;
-                    case '7':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Visual-Global (Las personas Visuales Globales aprenden  mirando. Ellos van a imágenes del pasado cuando tratan de recordar. Ellos dibujan la forma de las cosas en su mente)';
-                        break;
-                    case '8':
-                        estiloAprendizaje = 'Su estilo de aprendizaje es: Visual-Secuencial (Las personas visuales secuenciales gustan de reunir y procesar información usando tablas, diagramas, gráficas, mapas y otras imágenes o formas basadas en gráfico para aprender)';
-                        break;
-                    default:
-                        estiloAprendizaje = 'Para conocer su estilo de aprendizaje puede realizar el test ahora mismo o en el momento que usted lo requiera';
-                        break;
-                }
-
-
-                $('#estiloaprendizaje').text(estiloAprendizaje);
-                $('#result_test').val(larespuesta);
-                $('#cantidad1').val(cantidad1);
-                $('#cantidad2').val(cantidad2);
-                $('#cantidad3').val(cantidad3);
-                $('#cantidad4').val(cantidad4);
-                $('#cantidad5').val(cantidad5);
-                $('#cantidad6').val(cantidad6);
-
-
-
-
             });
-        });
-
-
-
-        $('#boton').click(function() {
-            $('#test').show();
-            $('#form').hide();
-            $('#submitg').hide();
-            window.location.href = "#main-content";
-        });
-        $('#cancelar').click(function() {
-            $('#test_need').hide();
-            $('#form').show();
-            $('#submitg').show();
-        });
-        $('#cancelar1').click(function() {
-            $('#test').hide();
-            $('#form').show();
-            $('#submitg').show();
-        });
-        $('#input_username').blur(function() {
-            $.get("<?php echo base_url() ?>index.php/usuario/checkusr/" + $("#input_username").val(), function(respuesta) {
-                $('#rta').val(respuesta);
-                if (respuesta == 1) {
-                    $('#img_not').show();
-                    $('#img_ok').hide();
-                } else {
-                    $('#img_ok').show();
-                    $('#img_not').hide();
-                }
+            $('#cancelar1').click(function() {
+                $('#test').hide();
+                $('#form').show();
+                $('#submitg').show();
             });
-        });
-    });*/
+            $('#input_username').blur(function() {
+                $.get("<?php echo base_url() ?>index.php/usuario/checkusr/" + $("#input_username").val(), function(respuesta) {
+                    $('#rta').val(respuesta);
+                    if (respuesta == 1) {
+                        $('#img_not').show();
+                        $('#img_ok').hide();
+                    } else {
+                        $('#img_ok').show();
+                        $('#img_not').hide();
+                    }
+                });
+            });
+        });*/
 </script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css">
 <section id="main-content" role="main">
@@ -992,18 +993,18 @@
 
 <!--script for this page-->
 <script type="text/javascript">
-let today = new Date();
-let dd = today.getDate() - 1;
-let mm = today.getMonth() + 1;
-let yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = today.getDate() - 1;
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
 
-if(dd < 10) {
-    dd = '0'+ dd
-}
+    if (dd < 10) {
+        dd = '0' + dd
+    }
 
-if(mm < 10) {
-    mm = '0'+ mm
-}
+    if (mm < 10) {
+        mm = '0' + mm
+    }
     $(document).ready(function() {
 
 
@@ -1012,7 +1013,7 @@ if(mm < 10) {
             inputFormat: ["yyyy-MM-dd"],
             outputFormat: 'yyyy-MM-dd',
             min: '1975-01-01',
-		    max: yyyy + "-" + mm + "-" + dd
+            max: yyyy + "-" + mm + "-" + dd
         });
 
         $('.name').focus();
@@ -1029,485 +1030,484 @@ if(mm < 10) {
     });
 </script>
 <script type="text/javascript">
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
 
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
+    function validateDate(date, infDate, supDate) {
+        return (infDate <= date) && (date <= supDate);
+    }
 
-function validateDate(date, infDate, supDate){
-    return (infDate <= date) && (date <= supDate);
-}
+    $.validator.addMethod('range_date', function(value, element) {
+        let date = new Date(value);
+        let infDate = new Date('1975-01-01');
+        return validateDate(date, infDate, today);
+    });
 
-$.validator.addMethod('range_date', function(value, element){
-    let date = new Date(value);
-    let infDate = new Date('1975-01-01');
-    return validateDate(date, infDate, today);
-});
+    $.validator.addMethod("email_regex", function(value, element) {
+        return validateEmail(value);
+    });
 
-$.validator.addMethod("email_regex", function(value, element){
-    return validateEmail(value);
-});
-
-$("#form").validate({
-    rules: {
-        nombre: {
-            required: true,
-            minlength: 3
-        },
-        apellidos: {
-            required: true,
-            minlength: 3
-        },
-        fecha_nac: {
-            required: true,
-            dateISO: true,
-            range_date: true
-        },
-        mail: {
-            required: true,
-            email_regex: true,
-            remote:{
-                type:'POST',
-                url: "<?php echo base_url()?>index.php/usuario/verify_email",
-                dataType: 'json',
-                data: {
-                    mail: function(){
-                        return $('#input_mail').val();
-                    }
-                },
-                dataFilter: function(resp){
-                    let json = JSON.parse(resp);
-                    return !json.success;
-                }
-            }
-        },
-        username: {
-            required: true,
-            minlength: 4,
-            remote: {
-                type: "POST",
-                url: "<?php echo base_url()?>index.php/usuario/verify_username",
-                dataType: 'json',
-                data: {
-                    username: function(){
-                        return $("#input_username").val();
-                    }
-                },
-                dataFilter: function(resp){
+    $("#form").validate({
+        rules: {
+            nombre: {
+                required: true,
+                minlength: 3
+            },
+            apellidos: {
+                required: true,
+                minlength: 3
+            },
+            fecha_nac: {
+                required: true,
+                dateISO: true,
+                range_date: true
+            },
+            mail: {
+                required: true,
+                email_regex: true,
+                remote: {
+                    type: 'POST',
+                    url: "<?php echo base_url()?>index.php/usuario/verify_email",
+                    dataType: 'json',
+                    data: {
+                        mail: function() {
+                            return $('#input_mail').val();
+                        }
+                    },
+                    dataFilter: function(resp) {
                         let json = JSON.parse(resp);
                         return !json.success;
+                    }
                 }
+            },
+            username: {
+                required: true,
+                minlength: 4,
+                remote: {
+                    type: "POST",
+                    url: "<?php echo base_url()?>index.php/usuario/verify_username",
+                    dataType: 'json',
+                    data: {
+                        username: function() {
+                            return $("#input_username").val();
+                        }
+                    },
+                    dataFilter: function(resp) {
+                        let json = JSON.parse(resp);
+                        return !json.success;
+                    }
 
+                }
+            },
+            passwd: {
+                required: true,
+                minlength: 6
+            },
+            passwd2: {
+                required: true,
+                equalTo: "#input_passwd"
             }
         },
-        passwd: {
-            required: true,
-            minlength: 6
+        messages: {
+            nombre: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+            },
+            apellidos: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
+            },
+            fecha_nac: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
+                dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
+                range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
+            },
+            mail: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
+                email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
+                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
+            },
+            username: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
+                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
+            },
+            passwd: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
+            },
+            passwd2: {
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
+                equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
+            }
         },
-        passwd2: {
-            required: true,
-            equalTo: "#input_passwd"
-        }
-    },
-    messages: {
-        nombre: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
-            minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+        errorPlacement: function(error, element) {
+            let name = element.attr('name');
+            error.appendTo($("#" + name + "-validate"));
         },
-        apellidos: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
-            minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
-        },
-        fecha_nac: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
-            dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
-            range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
-        },
-        mail: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
-            email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
-            remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
-        },
-        username: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
-            minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
-            remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
-        },
-        passwd: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
-            minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
-        },
-        passwd2: {
-            required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
-            equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
-        }
-    },
-    errorPlacement: function (error, element) {
-        let name = element.attr('name');
-        error.appendTo($("#" + name + "-validate"));
-    },
-});
-
-/*
-    //######################################################################################################################
-
-    //En caso de tener discapacidad se debe mostar un botón que lo lleve al formulario Test para personas con necesidades
-    // especiales
-
-    $("#discapasi").click(function() {
-        $("#need").show();
     });
 
-    //En caso de dar click en la opción "SI" por equivocación, al dar click en la opción "No", el botón se ocultará.
+    /*
+        //######################################################################################################################
 
-    $("#discapano").click(function() {
-        $("#need").hide();
-    })
-    //######################################################################################################################
+        //En caso de tener discapacidad se debe mostar un botón que lo lleve al formulario Test para personas con necesidades
+        // especiales
 
-    //####################################################################################################################
+        $("#discapasi").click(function() {
+            $("#need").show();
+        });
 
-    //Cuando se tiene una discapacidad y se da click en el botón realizar test, este muestra el formulario para
-    // realizar el test para personas con necesidades especiales
+        //En caso de dar click en la opción "SI" por equivocación, al dar click en la opción "No", el botón se ocultará.
 
-    $('#need').click(function() {
-        $('#test_need').show();
-        $('#form').hide();
-        $('#submitg').hide();
-        window.location.href = "#main-content";
-    });
+        $("#discapano").click(function() {
+            $("#need").hide();
+        })
+        //######################################################################################################################
 
-    //#####################################################################################################################
+        //####################################################################################################################
 
-    //#####################################################################################################################
+        //Cuando se tiene una discapacidad y se da click en el botón realizar test, este muestra el formulario para
+        // realizar el test para personas con necesidades especiales
 
-    //Cuando se tiene una discapacidad, se muestran las preguntas correspondientes al tipo de discapacidad seleccionada.
+        $('#need').click(function() {
+            $('#test_need').show();
+            $('#form').hide();
+            $('#submitg').hide();
+            window.location.href = "#main-content";
+        });
 
-    $("#1").click(function() {
-        if ($("#1").attr("estado") == 0) {
-            $("#limitacionV").show();
-            $("#1").attr("estado", 1);
+        //#####################################################################################################################
 
-        } else {
-            $("#1").prop("checked", false);
-            $("#limitacionV").hide();
-            $("#1").attr("estado", 0);
+        //#####################################################################################################################
 
-        }
+        //Cuando se tiene una discapacidad, se muestran las preguntas correspondientes al tipo de discapacidad seleccionada.
 
-    });
+        $("#1").click(function() {
+            if ($("#1").attr("estado") == 0) {
+                $("#limitacionV").show();
+                $("#1").attr("estado", 1);
 
-    $("#6").click(function() {
-        if ($("#6").attr("estado") == 0) {
-            $("#tamaño").show();
-            $("#6").attr("estado", 1);
+            } else {
+                $("#1").prop("checked", false);
+                $("#limitacionV").hide();
+                $("#1").attr("estado", 0);
 
-        } else {
-            $("#6").prop("checked", false);
+            }
+
+        });
+
+        $("#6").click(function() {
+            if ($("#6").attr("estado") == 0) {
+                $("#tamaño").show();
+                $("#6").attr("estado", 1);
+
+            } else {
+                $("#6").prop("checked", false);
+                $("#tamaño").hide();
+                $("#6").attr("estado", 0);
+
+            }
+
+        });
+
+        $("#5").click(function() {
             $("#tamaño").hide();
-            $("#6").attr("estado", 0);
+        });
 
-        }
+        $("#2").click(function() {
+            if ($("#2").attr("estado") == 0) {
+                $("#limitacionA").show();
+                $("#2").attr("estado", 1);
 
-    });
+            } else {
+                $("#2").prop("checked", false);
+                $("#limitacionA").hide();
+                $("#2").attr("estado", 0);
 
-    $("#5").click(function() {
-        $("#tamaño").hide();
-    });
+            }
+        });
 
-    $("#2").click(function() {
-        if ($("#2").attr("estado") == 0) {
-            $("#limitacionA").show();
-            $("#2").attr("estado", 1);
-
-        } else {
-            $("#2").prop("checked", false);
-            $("#limitacionA").hide();
-            $("#2").attr("estado", 0);
-
-        }
-    });
-
-    $("#8").click(function() {
-        if ($("#8").attr("estado") == 0) {
-            $("#8").attr("estado", 1);
-        } else {
-            $("#8").prop("checked", false);
-            $("#8").attr("estado", 0);
-        }
-    });
+        $("#8").click(function() {
+            if ($("#8").attr("estado") == 0) {
+                $("#8").attr("estado", 1);
+            } else {
+                $("#8").prop("checked", false);
+                $("#8").attr("estado", 0);
+            }
+        });
 
 
-    $("#3").click(function() {
-        if ($("#3").attr("estado") == 0) {
-            $("#limitacionM").show();
-            $("#3").attr("estado", 1);
+        $("#3").click(function() {
+            if ($("#3").attr("estado") == 0) {
+                $("#limitacionM").show();
+                $("#3").attr("estado", 1);
 
-        } else {
-            $("#3").prop("checked", false);
-            $("#limitacionM").hide();
-            $("#3").attr("estado", 0);
+            } else {
+                $("#3").prop("checked", false);
+                $("#limitacionM").hide();
+                $("#3").attr("estado", 0);
 
-        }
+            }
 
-    });
+        });
 
-    $("#4").click(function() {
-        if ($("#4").attr("estado") == 0) {
-            $("#limitacionC").show();
-            $("#4").attr("estado", 1);
+        $("#4").click(function() {
+            if ($("#4").attr("estado") == 0) {
+                $("#limitacionC").show();
+                $("#4").attr("estado", 1);
 
-        } else {
-            $("#4").prop("checked", false);
-            $("#limitacionC").hide();
-            $("#4").attr("estado", 0);
+            } else {
+                $("#4").prop("checked", false);
+                $("#limitacionC").hide();
+                $("#4").attr("estado", 0);
 
-        }
+            }
 
-    });
-
-
-    //#####################################################################################################################
-
-    //#####################################################################################################################
+        });
 
 
-    $('#respuesta_need').click(function() {
-        $("#necesidadespecial").val("");
-        //Limitacion Visual ******************
-        if ($("#1").is(":checked")) {
-            if ($("#5").is(":checked")) {
-                if ($("#necesidadespecial").val() != "") {
-                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Nula");
-                } else {
-                    $("#necesidadespecial").val("Vision-Nula");
+        //#####################################################################################################################
+
+        //#####################################################################################################################
+
+
+        $('#respuesta_need').click(function() {
+            $("#necesidadespecial").val("");
+            //Limitacion Visual ******************
+            if ($("#1").is(":checked")) {
+                if ($("#5").is(":checked")) {
+                    if ($("#necesidadespecial").val() != "") {
+                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Nula");
+                    } else {
+                        $("#necesidadespecial").val("Vision-Nula");
+                    }
+
+                    $("#necesidadespecial").show();
                 }
+
+                if ($("#81").is(":checked")) {
+
+                    if ($("#necesidadespecial").val() != "") {
+                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#81").attr("value"));
+                    } else {
+                        $("#necesidadespecial").val("Vision-Parcial" + $("#81").attr("value"));
+                    }
+                }
+
+                if ($("#82").is(":checked")) {
+
+                    if ($("#necesidadespecial").val() != "") {
+                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#82").attr("value"));
+                    } else {
+                        $("#necesidadespecial").val("Vision-Parcial" + $("#82").attr("value"));
+                    }
+                }
+
+                if ($("#83").is(":checked")) {
+
+                    if ($("#necesidadespecial").val() != "") {
+                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#83").attr("value"));
+                    } else {
+                        $("#necesidadespecial").val("Vision-Parcial" + $("#83").attr("value"));
+                    }
+                }
+
+                if ($("#84").is(":checked")) {
+
+                    if ($("#necesidadespecial").val() != "") {
+                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#84").attr("value"));
+                    } else {
+                        $("#necesidadespecial").val("Vision-Parcial" + $("#84").attr("value"));
+                    }
+                }
+                $("#necesidadespecial").show();
+            }
+
+            //Limitacion Visual ******************
+
+            //Limitacion Auditiva *************************
+            if ($("#2").is(":checked")) {
+                if ($("#91").is(":checked")) {
+
+                    if ($("#101").is(":checked")) {
+
+                        if ($("#111").is(":checked")) {
+
+                            if ($("#necesidadespecial").val() != "") {
+                                $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas-Texto");
+                            } else {
+                                $("#necesidadespecial").val($("#91").attr("value") + "/Señas-Texto");
+                            }
+                        } else {
+
+                            if ($("#necesidadespecial").val() != "") {
+                                $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas");
+                            } else {
+                                $("#necesidadespecial").val($("#91").attr("value") + "/Señas");
+                            }
+                        }
+                    } else {
+                        if ($("#111").is(":checked")) {
+
+                            if ($("#101").is(":checked")) {
+                                if ($("#111").is(":checked")) {
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas-Texto");
+                                    } else {
+                                        $("#necesidadespecial").val($("#91").attr("value") + "/Señas-Texto");
+                                    }
+                                } else {
+
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas");
+                                    } else {
+                                        $("#necesidadespecial").val($("#91").attr("value") + "/Señas");
+                                    }
+
+                                }
+
+                            } else {
+                                if ($("#111").is(":checked")) {
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Texto");
+                                    } else {
+                                        $("#necesidadespecial").val($("#91").attr("value") + "/Texto");
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+
+
+                }
+
+                if ($("#92").is(":checked")) {
+
+                    if ($("#101").is(":checked")) {
+
+                        if ($("#111").is(":checked")) {
+
+                            if ($("#necesidadespecial").val() != "") {
+                                $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas-Texto");
+                            } else {
+                                $("#necesidadespecial").val($("#92").attr("value") + "/Señas-Texto");
+                            }
+                        } else {
+
+                            if ($("#necesidadespecial").val() != "") {
+                                $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas");
+                            } else {
+                                $("#necesidadespecial").val($("#92").attr("value") + "/Señas");
+                            }
+                        }
+                    } else {
+                        if ($("#111").is(":checked")) {
+
+                            if ($("#101").is(":checked")) {
+                                if ($("#111").is(":checked")) {
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas-Texto");
+                                    } else {
+                                        $("#necesidadespecial").val($("#92").attr("value") + "/Señas-Texto");
+                                    }
+                                } else {
+
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas");
+                                    } else {
+                                        $("#necesidadespecial").val($("#92").attr("value") + "/Señas");
+                                    }
+
+                                }
+
+                            } else {
+                                if ($("#111").is(":checked")) {
+                                    if ($("#necesidadespecial").val() != "") {
+                                        $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Texto");
+                                    } else {
+                                        $("#necesidadespecial").val($("#92").attr("value") + "/Texto");
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+
+
+                }
+
 
                 $("#necesidadespecial").show();
             }
 
-            if ($("#81").is(":checked")) {
+            if ($("#3").is(":checked")) {
 
-                if ($("#necesidadespecial").val() != "") {
-                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#81").attr("value"));
+                if ($("#12").is(":checked")) {
+                    if ($("#13").is(":checked")) {
+                        if ($("#necesidadespecial").val() != "") {
+                            $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Mouse-Teclado");
+                        } else {
+                            $("#necesidadespecial").val("Motriz" + "/Mouse-Teclado");
+                        }
+                    } else {
+                        if ($("#necesidadespecial").val() != "") {
+                            $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Mouse");
+                        } else {
+                            $("#necesidadespecial").val("Motriz" + "/Mouse");
+                        }
+                    }
                 } else {
-                    $("#necesidadespecial").val("Vision-Parcial" + $("#81").attr("value"));
+                    if ($("#13").is(":checked")) {
+                        if ($("#necesidadespecial").val() != "") {
+                            $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Teclado");
+                        } else {
+                            $("#necesidadespecial").val("Motriz" + "/Teclado");
+                        }
+                    }
                 }
+                $("#necesidadespecial").show();
             }
-
-            if ($("#82").is(":checked")) {
-
+            if ($("#4").is(":checked")) {
                 if ($("#necesidadespecial").val() != "") {
-                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#82").attr("value"));
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Cognitivo/");
                 } else {
-                    $("#necesidadespecial").val("Vision-Parcial" + $("#82").attr("value"));
+                    $("#necesidadespecial").val("Cognitivo/");
                 }
-            }
-
-            if ($("#83").is(":checked")) {
-
-                if ($("#necesidadespecial").val() != "") {
-                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#83").attr("value"));
+                if ($("#141").is(":checked")) {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-ConcentraSi");
                 } else {
-                    $("#necesidadespecial").val("Vision-Parcial" + $("#83").attr("value"));
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-ConcentraNo");
                 }
-            }
-
-            if ($("#84").is(":checked")) {
-
-                if ($("#necesidadespecial").val() != "") {
-                    $("#necesidadespecial").val($("#necesidadespecial").val() + ",Vision-Parcial" + $("#84").attr("value"));
+                if ($("#151").is(":checked")) {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-TextoSi");
                 } else {
-                    $("#necesidadespecial").val("Vision-Parcial" + $("#84").attr("value"));
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "/TextoNo");
                 }
+                if ($("#161").is(":checked")) {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-InstruccionesSi");
+                } else {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-InstruccionesNo");
+                }
+                if ($("#171").is(":checked")) {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-DistraccionSi");
+                } else {
+                    $("#necesidadespecial").val($("#necesidadespecial").val() + "-DistraccionNo");
+                }
+                var str = $("#necesidadespecial").val();
+                $("#necesidadespecial").val(str.substring(0, (str.length)-1));
+                $("#necesidadespecial").show();
             }
             $("#necesidadespecial").show();
-        }
-
-        //Limitacion Visual ******************
-
-        //Limitacion Auditiva *************************
-        if ($("#2").is(":checked")) {
-            if ($("#91").is(":checked")) {
-
-                if ($("#101").is(":checked")) {
-
-                    if ($("#111").is(":checked")) {
-
-                        if ($("#necesidadespecial").val() != "") {
-                            $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas-Texto");
-                        } else {
-                            $("#necesidadespecial").val($("#91").attr("value") + "/Señas-Texto");
-                        }
-                    } else {
-
-                        if ($("#necesidadespecial").val() != "") {
-                            $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas");
-                        } else {
-                            $("#necesidadespecial").val($("#91").attr("value") + "/Señas");
-                        }
-                    }
-                } else {
-                    if ($("#111").is(":checked")) {
-
-                        if ($("#101").is(":checked")) {
-                            if ($("#111").is(":checked")) {
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas-Texto");
-                                } else {
-                                    $("#necesidadespecial").val($("#91").attr("value") + "/Señas-Texto");
-                                }
-                            } else {
-
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Señas");
-                                } else {
-                                    $("#necesidadespecial").val($("#91").attr("value") + "/Señas");
-                                }
-
-                            }
-
-                        } else {
-                            if ($("#111").is(":checked")) {
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#91").attr("value") + "/Texto");
-                                } else {
-                                    $("#necesidadespecial").val($("#91").attr("value") + "/Texto");
-                                }
-                            }
-                        }
+            $('#form').show();
+            $('#test_need').hide();
+            $('#submitg').show();
 
 
-                    }
-                }
-
-
-            }
-
-            if ($("#92").is(":checked")) {
-
-                if ($("#101").is(":checked")) {
-
-                    if ($("#111").is(":checked")) {
-
-                        if ($("#necesidadespecial").val() != "") {
-                            $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas-Texto");
-                        } else {
-                            $("#necesidadespecial").val($("#92").attr("value") + "/Señas-Texto");
-                        }
-                    } else {
-
-                        if ($("#necesidadespecial").val() != "") {
-                            $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas");
-                        } else {
-                            $("#necesidadespecial").val($("#92").attr("value") + "/Señas");
-                        }
-                    }
-                } else {
-                    if ($("#111").is(":checked")) {
-
-                        if ($("#101").is(":checked")) {
-                            if ($("#111").is(":checked")) {
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas-Texto");
-                                } else {
-                                    $("#necesidadespecial").val($("#92").attr("value") + "/Señas-Texto");
-                                }
-                            } else {
-
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Señas");
-                                } else {
-                                    $("#necesidadespecial").val($("#92").attr("value") + "/Señas");
-                                }
-
-                            }
-
-                        } else {
-                            if ($("#111").is(":checked")) {
-                                if ($("#necesidadespecial").val() != "") {
-                                    $("#necesidadespecial").val($("#necesidadespecial").val() + "," + $("#92").attr("value") + "/Texto");
-                                } else {
-                                    $("#necesidadespecial").val($("#92").attr("value") + "/Texto");
-                                }
-                            }
-                        }
-
-
-                    }
-                }
-
-
-            }
-
-
-            $("#necesidadespecial").show();
-        }
-
-        if ($("#3").is(":checked")) {
-
-            if ($("#12").is(":checked")) {
-                if ($("#13").is(":checked")) {
-                    if ($("#necesidadespecial").val() != "") {
-                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Mouse-Teclado");
-                    } else {
-                        $("#necesidadespecial").val("Motriz" + "/Mouse-Teclado");
-                    }
-                } else {
-                    if ($("#necesidadespecial").val() != "") {
-                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Mouse");
-                    } else {
-                        $("#necesidadespecial").val("Motriz" + "/Mouse");
-                    }
-                }
-            } else {
-                if ($("#13").is(":checked")) {
-                    if ($("#necesidadespecial").val() != "") {
-                        $("#necesidadespecial").val($("#necesidadespecial").val() + ",Motriz" + "/Teclado");
-                    } else {
-                        $("#necesidadespecial").val("Motriz" + "/Teclado");
-                    }
-                }
-            }
-            $("#necesidadespecial").show();
-        }
-        if ($("#4").is(":checked")) {
-            if ($("#necesidadespecial").val() != "") {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + ",Cognitivo/");
-            } else {
-                $("#necesidadespecial").val("Cognitivo/");
-            }
-            if ($("#141").is(":checked")) {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-ConcentraSi");
-            } else {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-ConcentraNo");
-            }
-            if ($("#151").is(":checked")) {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-TextoSi");
-            } else {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "/TextoNo");
-            }
-            if ($("#161").is(":checked")) {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-InstruccionesSi");
-            } else {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-InstruccionesNo");
-            }
-            if ($("#171").is(":checked")) {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-DistraccionSi");
-            } else {
-                $("#necesidadespecial").val($("#necesidadespecial").val() + "-DistraccionNo");
-            }
-            var str = $("#necesidadespecial").val();
-            $("#necesidadespecial").val(str.substring(0, (str.length)-1));
-            $("#necesidadespecial").show();
-        }
-        $("#necesidadespecial").show();
-        $('#form').show();
-        $('#test_need').hide();
-        $('#submitg').show();
-
-
-    });*/
+        });*/
     //#####################################################################################################################
 </script>
