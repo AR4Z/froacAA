@@ -1135,19 +1135,6 @@ $("#form").validate({
     },
 });
 
-
-
- /*
-  $("#input_mail").change(function(){
-      $.ajax({
-          type: "POST",
-          url: "<?php echo base_url()?>index.php/usuario/verify_email",
-          data: { mail: $("#input_mail").val()}
-      }).done(function( msg ) {
-          return !(msg >= 1);
-      });
-  });
-
 /*
     //######################################################################################################################
 
