@@ -258,7 +258,10 @@ class Usuario extends CI_Controller {
         $username = $_POST["username"];
         $username = strtolower($username);
         $result = $this->usuario_model->verify_username($username);
-        print_r($result);
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'success' => ($result>=1),
+        ));
     }
 
     public function save_user(){

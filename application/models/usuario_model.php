@@ -22,9 +22,9 @@ class Usuario_model extends CI_Model {
 
 
     function get_all_usr_data($username) {
-       $query = $this->db->query("select users.use_username, users.use_nombre, users.use_email, users.use_fecha_registro,users.use_apellido, use_rol.use_rol_nombre, use_rol.use_rol_id, 
+       $query = $this->db->query("select users.use_username, users.use_nombre, users.use_email, users.use_fecha_registro,users.use_apellido, use_rol.use_rol_nombre, use_rol.use_rol_id,
 use_student.use_stu_datebirth, use_level.use_level, use_ls.use_ls_learningstyle, use_ls.use_ls_description
-from users  
+from users
 inner join use_student on use_student.use_username=users.use_username
 inner join use_level on cast(use_level.use_id_level as text)=use_student.use_stu_level
 left join use_ls on use_ls.use_ls_id=use_student.use_ls_id
@@ -70,7 +70,7 @@ where users.use_username='".$username."'");
             $this->db->update('use_score', $data);
         }
     }
-    
+
     function get_rol($username) {
     	$this->db->select('use_rol_id');
     	$this->db->from('users');
@@ -87,28 +87,22 @@ where users.use_username='".$username."'");
     }
 
 
-    // Metodo que verifica si un nombre de usuario dado existe en la base de datos 
+    // Metodo que verifica si un nombre de usuario dado existe en la base de datos
 
     function verify_username($username) {
-        //pendiente
-        $this->db->select('use_username');
-        $this->db->from('users');
         $this->db->where('use_username', $username);
-        $this->db->limit(1);
-
-        $query = $this->db->get();
-
+        $query = $this->db->get('users');
         return $query->num_rows();
     }
 
-    // Metodo que guarda los registros a partir de la creación de una cuenta por parte del administrador. 
-   
+    // Metodo que guarda los registros a partir de la creación de una cuenta por parte del administrador.
+
     public function guardar_usuario() {
 
         $data = array(
          "use_username"        =>  $this->input->post("username"),
          "use_nombre"          =>  $this->input->post("nombre"),
-         "use_apellido"        =>  $this->input->post("apellido"),    
+         "use_apellido"        =>  $this->input->post("apellido"),
          "use_clave"           =>  md5($this->input->post("passwd2")),
          "use_email"           =>  $this->input->post("mail"),
          "use_fecha_registro"  =>  date("Y-m-d"),
@@ -116,12 +110,12 @@ where users.use_username='".$username."'");
          );
         $this->db->insert('users', $data);
     }
-    
+
     // Cuando un usuario (estudiante) se registra, la información se guarda en la tabla
     // de usuario: "users" y en la tabla del estudiante: "use_student"
 
     public function guardar_estudiante() {
-       
+
         $today = date("Y-m-d");
 
 /*
@@ -205,7 +199,7 @@ if ($this->input->post('cantidad6')!='') {
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
 
     public function insert_pref($pref, $id) {
-  
+
         $data = array(
             'use_pre_id' => $pref,
             'use_username' => $id
@@ -255,14 +249,14 @@ if ($this->input->post('cantidad6')!='') {
 
     public function get_nivel_educativo() {
 
-    
+
         $query = $this->db->get('use_level');
 
         return $query->result();
     }
-    
 
-    //Metodo que selecciona las preferencias de un estudiante dado  
+
+    //Metodo que selecciona las preferencias de un estudiante dado
 
     public function get_preferencia_est($user) {
         $this->db->select('*');
@@ -295,7 +289,7 @@ if ($this->input->post('cantidad6')!='') {
     //Se verifica si el correo electrónico ingresado existe en la base de datos
 
     function verify_email($mail){
-        
+
         $this->db->select('use_email');
         $this->db->from('users');
         $this->db->where('use_email', $mail);
@@ -306,7 +300,7 @@ if ($this->input->post('cantidad6')!='') {
         return $query->num_rows();
     }
 
-    
+
     public function get_rol_data() {
 
         // Se obtienen los registros de los roles que hay en la tabla "use_rol"
