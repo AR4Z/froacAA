@@ -271,7 +271,7 @@ if ($this->input->post('cantidad6')!='') {
     public function update_user($username){
         $data1 = array(
             "use_nombre"          =>  $this->input->post("nombre"),
-            "use_apellido"        =>  $this->input->post("apellido"),
+            "use_apellido"        =>  $this->input->post("apellidos"),
             "use_email"           =>  $this->input->post("mail"),
             "use_rol_id"          =>  $this->input->post("tipoU"),
 

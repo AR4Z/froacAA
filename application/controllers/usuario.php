@@ -322,7 +322,6 @@ class Usuario extends CI_Controller {
     function update_user(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-
             $this->usuario_model->update_user($session_data["username"]);
             $this->perfil();
         } else {

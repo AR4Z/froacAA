@@ -14,10 +14,10 @@
                               <p><?php echo $usr_data['use_email']?></p>
                           </div>
 
-                          <ul class="nav nav-pills nav-stacked">
-                              <li><a href="<?php echo base_url()?>usuario/mis_objetos"> <i class="icon-book"></i> Mis objetos</a></li>
+                          <ul class="nlist-group list-group-flush">
+                              <li><a class="list-group-item" href="<?php echo base_url()?>usuario/mis_objetos"> <i class="icon-book"></i> Mis objetos</a></li>
                              <!-- <li><a href="profile-activity.html"> <i class="icon-rss-sign"></i> Noticias <span class="label label-danger pull-right r-activity">9</span></a></li>-->
-                              <li><a href="<?php echo base_url()?>usuario/editar_usr"> <i class="icon-book"></i> Editar perfil</a></li>
+                              <li><a class="list-group-item" href="<?php echo base_url()?>usuario/editar_usr"> <i class="icon-edit"></i> Editar perfil</a></li>
                               <!--<li><a href="<?php echo base_url()?>usuario/estilos"> <i class="icon-edit"></i> Test de Estilos de Aprendizaje </a></li>>-->
                           </ul>
 
