@@ -1,9 +1,13 @@
-<?php foreach ($usr_all_data as $usr_data){} ?>
+<!--<h1><?php var_dump($usr_all_data)?></h1>
+<h2><?php var_dump($usr_data)?>></h2>-->
+<?php foreach($usr_all_data as $usr_data){ ?>
       <!--main content start-->
+
       <section id="main-content" role="main">
           <section class="wrapper">
               <!-- page start-->
               <div class="row">
+
                   <aside class="profile-nav col-lg-3" role="complementary" aria-label="Perfil del usuario">
                       <section class="panel">
                           <div class="user-heading round">
@@ -65,4 +69,5 @@
               <!-- page end-->
           </section>
       </section>
+<?php };?>
       <!--main content end-->

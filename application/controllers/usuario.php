@@ -178,7 +178,7 @@ class Usuario extends CI_Controller {
                 );
                 $this->load->view('base/admin_template', $content);
             } else {
-                if ($rol [0] ['use_rol_id'] == 5) {
+                if ($rol [0] ['use_rol_id'] == 3) {
                     $content = array(
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -215,7 +215,6 @@ class Usuario extends CI_Controller {
         header('Content-Type: application/json');
         echo json_encode(array(
             'success' =>($result>=1),
-
         ));
     }
 

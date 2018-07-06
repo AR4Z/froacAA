@@ -274,7 +274,6 @@ if ($this->input->post('cantidad6')!='') {
             "use_apellido"        =>  $this->input->post("apellidos"),
             "use_email"           =>  $this->input->post("mail"),
             "use_rol_id"          =>  $this->input->post("tipoU"),
-
         );
         $data2 = array(
             "use_stu_level"       =>  $this->input->post("nevel_ed"),
@@ -283,6 +282,7 @@ if ($this->input->post('cantidad6')!='') {
 
         $this->db->where('use_username', $username);
         $this->db->update('users', $data1);
+        $this->db->where('use_username', $username);
         $this->db->update('use_student', $data2);
     }
 

@@ -60,9 +60,11 @@
                                         </div>
                                         <div id="mail-validate">
                                         </div>
+
+
                                         <div class="form-group">
                                             <label for="fecha_nac">Nivel de educación:</label>
-                                            <select class="form-control input-sm m-bot15" name="nevel_ed" required>
+                                            <select class="form-control input-sm m-bot15" name="nevel_ed" aria-required="true">
                                                     <option value="<?php echo $usr_all_data[0]["use_edu_level"]?>"><?php echo $usr_all_data[0]["use_level"]?></option>
                                                     <option value="0">Seleccione una opción</option>
                                                     <option value="1">Básica Primaria</option>
@@ -75,7 +77,7 @@
                                                     <option value="8">Maestría</option>
                                                     <option value="9">Doctorado</option>
                                                     <option value="10">Posdoctorado</option>
-                                                </select>
+                                            </select>
                                         </div>
                                         <button id="sub" type="submit" class="btn btn-info">Actualizar mis datos</button>
                                         <a class="btn btn-success pull-right" href="<?php echo base_url()?>usuario/perfil">
