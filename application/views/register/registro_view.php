@@ -1006,14 +1006,12 @@
         mm = '0' + mm
     }
     $(document).ready(function() {
-
-
         $('.birthdate').datepicker({
-            startView: 2,
-            inputFormat: ["yyyy-MM-dd"],
-            outputFormat: 'yyyy-MM-dd',
-            min: '1975-01-01',
-            max: yyyy + "-" + mm + "-" + dd
+            startView: 1,
+            inputFormat: ["yyyy/MM/dd"],
+            outputFormat: "yyyy/MM/dd",
+            min: '1975/01/01',
+            max: yyyy + "/" + mm + "/" + dd
         });
 
         $('.name').focus();
@@ -1030,8 +1028,12 @@
     });
 </script>
 <script type="text/javascript">
+    function validateUsername(username){
+        let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
+        return re.test(username);
+    }
     function validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
 
@@ -1039,15 +1041,19 @@
         return (infDate <= date) && (date <= supDate);
     }
 
-    $.validator.addMethod('range_date', function(value, element) {
+    $.validator.addMethod('range_date', function(value) {
         let date = new Date(value);
         let infDate = new Date('1975-01-01');
         return validateDate(date, infDate, today);
     });
 
-    $.validator.addMethod("email_regex", function(value, element) {
+    $.validator.addMethod("email_regex", function(value) {
         return validateEmail(value);
     });
+
+    $.validator.addMethod("usernameValidation", function(value){
+        return validateUsername(value);
+    })
 
     $("#form").validate({
         rules: {
@@ -1084,6 +1090,7 @@
             },
             username: {
                 required: true,
+                usernameValidation: true,
                 minlength: 4,
                 remote: {
                     type: "POST",
@@ -1098,7 +1105,6 @@
                         let json = JSON.parse(resp);
                         return !json.success;
                     }
-
                 }
             },
             passwd: {
@@ -1132,7 +1138,9 @@
             username: {
                 required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
                 minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
+                usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es inválido.</div>",
                 remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
+
             },
             passwd: {
                 required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
