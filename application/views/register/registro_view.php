@@ -1007,7 +1007,7 @@
     }
     $(document).ready(function() {
         $('.birthdate').datepicker({
-            startView: 1,
+            startView: 2,
             inputFormat: ["yyyy/MM/dd"],
             outputFormat: "yyyy/MM/dd",
             min: '1975/01/01',
