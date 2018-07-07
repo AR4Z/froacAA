@@ -299,6 +299,7 @@ class Usuario extends CI_Controller {
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
+                    "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                     "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
                     "main_view" => "admin/perfil_view"
                 );
@@ -307,6 +308,7 @@ class Usuario extends CI_Controller {
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
+                    "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                     "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
                     "main_view" => "usr/editar_view"
                 );
@@ -357,7 +359,7 @@ class Usuario extends CI_Controller {
     function upd_passwd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            $this->usuario_model->actualizar_passwd(md5($_POST["passwd_new"]),$session_data["username"]);
+            $this->usuario_model->actualizar_passwd(md5($_POST["new_password"]), $session_data["username"]);
             $this->session->unset_userdata('logged_in');
             redirect(base_url(), 'refresh');
 

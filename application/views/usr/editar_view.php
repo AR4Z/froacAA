@@ -18,7 +18,7 @@
                     </header>
                     <div class="card-body">
 
-                        <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/update_user" enctype='multipart/form-data' id="form">
+                        <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/update_user" enctype='multipart/form-data' id="form-update-info-user">
                             <div class="col-lg-12">
                                 <section class="card  border-right-0 border-bottom-0 border-left-0 border-top-0">
                                     <header class="card-heading">
@@ -43,41 +43,36 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="apellidos" id="apellidos">Apellidos:</label>
-                                            <input type="text" value="<?php echo $usr_all_data[0]["use_apellido"]?>" class="form-control" name="apellidos" placeholder="Apellidos" aria-labelledby="apellidos">
+                                            <input type="text" value="<?php echo $usr_all_data[0]["use_apellido"]?>" class="form-control" name="apellidos" placeholder="Apellidos" aria-labelledby="apellidos" aria-required="true">
                                         </div>
                                         <div id="apellidos-validate">
                                         </div>
                                         <div id="cont_fecha_nac" class="form-group">
                                             <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                             <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                            <input type="text" class="birthdate form-control" value="<?php echo $usr_all_data[0]['use_stu_datebirth']?>" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-labelledby="fecha_nac"></input>
+                                            <input type="text" class="birthdate form-control" value="<?php echo $usr_all_data[0]['use_stu_datebirth']?>" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-labelledby="fecha_nac" aria-required="true"></input>
                                         </div>
                                         <div id="fecha_nac-validate">
                                         </div>
                                         <div class="form-group">
                                             <label id="mail" for="mail">E-mail:</label>
-                                            <input value="<?php echo $usr_all_data[0]["use_email"]?>" type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail">
+                                            <input value="<?php echo $usr_all_data[0]["use_email"]?>" type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" aria-required="true">
                                         </div>
                                         <div id="mail-validate">
                                         </div>
 
-
                                         <div class="form-group">
-                                            <label for="fecha_nac">Nivel de educación:</label>
-                                            <select class="form-control input-sm m-bot15" name="nevel_ed" aria-required="true">
-                                                    <option value="<?php echo $usr_all_data[0]["use_edu_level"]?>"><?php echo $usr_all_data[0]["use_level"]?></option>
-                                                    <option value="0">Seleccione una opción</option>
-                                                    <option value="1">Básica Primaria</option>
-                                                    <option value="2">Básica Secundaria</option>
-                                                    <option value="3">Educación Media</option>
-                                                    <option value="4">Educación Superior</option>
-                                                    <option value="5">Carrera Técnica/Tecnológica</option>
-                                                    <option value="6">Pregrado</option>
-                                                    <option value="7">Especialización</option>
-                                                    <option value="8">Maestría</option>
-                                                    <option value="9">Doctorado</option>
-                                                    <option value="10">Posdoctorado</option>
-                                            </select>
+                                            <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
+                                            <select id="nivel-educacion" class="form-control input-sm m-bot15" name="nevel_ed"  aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
+                                                            <?php
+                                                            foreach ($nivel_educativo as $key) { ?>
+                                                                <?php if($key->use_id_level == $usr_all_data[0]["use_id_level"]):?>
+                                                                    <option name="level[]"  value= "<?php echo $key->use_id_level ?>" aria-select="true" selected><?php echo $key->use_level ?></option>
+                                                                <?php else:?>
+                                                                    <option name="level[]"  value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
+                                                                <?php endif?>
+                                                            <?php } ?>
+                                                        </select>
                                         </div>
                                         <button id="sub" type="submit" class="btn btn-info">Actualizar mis datos</button>
                                         <a class="btn btn-success pull-right" href="<?php echo base_url()?>usuario/perfil">
@@ -99,20 +94,19 @@
 <!--main content end-->
 
 <!-- Modal chpassword -->
-<div class="modal fade" id="dialog_chpasswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="dialog_chpasswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para actualización de contraseña">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Actualizar Contraseña</h4>
+                <h4 class="modal-title" is="myModalLabel">Actualizar Contraseña</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" id="dialog_chpassword_view">
-
             </div>
-            <div class="modal-footer">
+            <!--<div class="modal-footer">
                 <button data-dismiss="modal" id="cancelar" class="btn btn-warning" type="button">Cancelar</button>
                 <button data-dismiss="modal" id="aceptar" class="btn btn-success" type="button">Aceptar</button>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
@@ -131,6 +125,21 @@
     if (mm < 10) {
         mm = '0' + mm
     }
+
+    $('#dialog_chpasswd').on('shown.bs.modal', function () {
+      $('#psswd_now').trigger('focus')
+    })
+    $(document).keypress(function(e) {
+        console.log("swssw")
+        if ($("#dialog_chpasswd").hasClass('show') && (e.keycode == 13 || e.which == 13)) {
+            if(!$('#form').is(':visible')){
+                $("#verificar").click();
+            } else {
+                $('#update').click();
+            }
+
+        }
+    });
     $(document).ready(function() {
         $('.birthdate').datepicker({
             startView: 2,
@@ -171,7 +180,7 @@
     $.validator.addMethod("email_regex", function(value) {
         return validateEmail(value);
     });
-    $("#form").validate({
+    $("#form-update-info-user").validate({
         rules: {
             nombre: {
                 required: true,

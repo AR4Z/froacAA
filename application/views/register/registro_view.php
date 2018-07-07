@@ -163,48 +163,48 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre" id="nombre">Nombre:</label>
-                                        <input type="text" class="name form-control" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" autofocus>
+                                        <input type="text" class="name form-control" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
                                     </div>
                                     <div id="nombre-validate">
                                     </div>
                                     <div class="form-group">
                                         <label for="apellidos" id="apellidos">Apellidos:</label>
-                                        <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" aria-labelledby="apellidos">
+                                        <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" aria-required="true" aria-labelledby="apellidos">
                                     </div>
                                     <div id="apellidos-validate">
                                     </div>
                                     <div id="cont_fecha_nac" class="form-group">
                                         <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                         <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                        <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-labelledby="fecha_nac"></input>
+                                        <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-required="true" aria-labelledby="fecha_nac"></input>
                                     </div>
                                     <div id="fecha_nac-validate">
                                     </div>
                                     <div class="form-group">
                                         <label id="mail" for="mail">E-mail:</label>
                                         <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
-                                        <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail">
+                                        <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-required="true" aria-labelledby="mail">
                                     </div>
                                     <div id="mail-validate">
                                     </div>
                                     <div class="form-group">
                                         <label for="username" id="username">Nombre de usuario:</label>
-                                        <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC" aria-labelledby="username">
+                                        <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC" aria-required="true" aria-labelledby="username">
                                     </div>
                                     <div id="username-validate">
                                     </div>
                                     <div class="form-group">
                                         <label for="passwd" id="passwd">Password:</label>
-                                        <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" required><br>
-                                        <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" required>
+                                        <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" aria-required="true"><br>
+                                        <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" aria-required="true">
                                     </div>
                                     <div id="passwd-validate">
                                     </div>
                                     <div id="passwd2-validate">
                                     </div>
                                     <div class="form-group">
-                                        <label id="label_nivel_educativo" for="level">Nivel Educativo:</label>
-                                        <select class="form-control input-sm m-bot15" name="nevel_ed" aria-selected="true" aria-labelledby="label_nivel_educativo" role="listbox" required>
+                                        <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
+                                        <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
                                                         <?php
                                                         foreach ($nivel_educativo as $key) { ?>
                                                             <option name="level[]"  value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
@@ -232,7 +232,6 @@
 
                                 <div class="form-group" aria-live="assertive">
                                     <input type="button" style="display:none;" value="Realizar Test NEED" name="need" id="need" class="btn btn-info">
-
                                     <!--FIN FORMULARIO DE REGISTRO DE USUARIO-->
                                     <input type="text" style="display: none;" id="necesidadespecial" name="necesidadespecial">
                                 </div>
