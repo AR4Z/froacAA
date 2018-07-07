@@ -3,7 +3,7 @@
 <section id="main-content" role="main">
    <section class="wrapper">
       <br>
-      <div class="row" style="display: none;" id="hide-s">
+      <div class="row" style="display: none;" id="hide-s"  role="search" aria-hidden="true" aria-label="Buscar objeto de aprendizaje">
          <div class="col">
             <input type="text" class="form-control" id="hide-input" title="Buscar objeto de aprendizaje" autofocus="">
          </div>
@@ -11,8 +11,8 @@
             <button class="btn btn-success buscar" type="button" style="margin-left: 0px;">Buscar</button>
          </div>
       </div>
-      <div class="row">
-         <div class="col-lg-12" id="show-s">
+      <div class="row" id="show-s" aria-hidden="false">
+         <div class="col-lg-12">
             <section class="panel">
                <div class="panel-body">
                   <div class="">
@@ -28,7 +28,7 @@
                      <div class="col-sm">
                         <div class="input-group" role="search" aria-label="Buscar objeto de aprendizaje">
                            <label>
-                           <input type="text" title="Buscar objeto de aprendizaje" class="form-control" id="search" autofocus="">
+                           <input type="text" title="Buscar objeto de aprendizaje" class="form-control" id="search" autofocus>
                            </label>
                            <a class="" href="<?php echo base_url()?>usuario/busqueda">
                            <button style="margin-left:10px;"  class="btn btn-success buscar" type="button">Buscar</button>
@@ -42,7 +42,7 @@
          </div>
       </div>
       <br><br>
-      <div class="row state-overview" style="margin-top: -30px"id="info">
+      <div class="row state-overview" style="margin-top: -30px" aria-hidden="false" role="contentinfo" aria-label="Información de FROAC" id="info">
          <div class="col-lg-3 col-sm-6">
             <section class="panel">
                <div class="symbol terques">
@@ -106,7 +106,7 @@
                 de las Directrices de Accesibilidad para el
                 Contenido Web 1.0 del W3C-WAI"></a>-->
       </div>
-      <div class="row"  id="result">
+      <div class="row" id="result">
       </div>
    </section>
 </section>
@@ -121,7 +121,9 @@
    $("#result").show();
    $("#search").keyup(function() {
        $("#hide-s").show("slow");
+       $("#hide-s").attr('aria-hidden', 'false');
        $("#show-s").hide("slow");
+       $("#show-s").attr('aria-hidden', 'true');
        $("#hide-input").val($("#search").val());
        $("#hide-input").focus();
    });
@@ -131,12 +133,14 @@
    $(".buscar").click(function() {
        verify_params();
        $("#info").hide("slow");
+       $("#info").attr('aria-hidden', 'true');
    });
 
    $(document).keypress(function(e) {
        if (e.which == 13 && $("#hide-input").val().length > 0) {
            verify_params();
            $("#info").hide("slow");
+           $("#info").attr('aria-hidden', 'true');
        }
 
 
