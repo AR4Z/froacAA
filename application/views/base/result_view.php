@@ -14,7 +14,8 @@ if ($sess == 1) {
     <!-- page start-->
     <section class="panel">
         <header class="panel-heading">
-            Resultados que incluyen todas las palabras <b>( <?php echo $palabras ?> )</b>
+            <h4>Resultados que incluyen todas las palabras <b>( <?php echo $palabras ?> )</b></h4>
+
             <div id="prueba"></div>
         </header>
         <div class="panel-body">
@@ -117,21 +118,20 @@ if ($sess == 1) {
 </div>-->
 
 <!-- Modal Metadata -->
-<div class="modal fade" id="dialog_medatada"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="dialog_medatada"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para ver metadata del objeto de aprendizaje">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Metadatos estandar LOM</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
             </div>
 
-            <div class="modal-body" style="height: 450px; width: 700px;" id="dialog_metadata_result">
-                <iframe src="" style="height: 450px; width: 500px;" class="insideiframe col-md-12" style="display: none">
+            <div class="modal-body" id="dialog_metadata_result">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="" style="" class="insideiframe embed-responsive-item" style="display: none">
 
-                </iframe>
-            </div>
-            <div class="modal-footer">
-                <button data-dismiss="modal"  class="btn btn-success" type="button">Aceptar</button>
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -173,6 +173,14 @@ if ($sess == 1) {
 
 <script type="text/javascript">
 
+$(document).keypress(function(e) {
+    console.log("swssw")
+    if ($("#dialog_medatada").hasClass('show') && (e.keycode == 13 || e.which == 13)) {
+        $('#dialog_medatada').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    }
+});
 
     function verMetadata(id) {
         $(".insideiframe").attr("src", "<?php echo base_url(); ?>index.php/lo/load_metadata/"+id);
