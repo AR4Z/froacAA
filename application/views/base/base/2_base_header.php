@@ -2,6 +2,8 @@
 <header id="unalTop" role="navigation" aria-label="Barra de navegación Universidad Nacional de Colombia">
 
 
+
+
 <!--
     <div class="flc-prefsEditor-separatedPanel fl-prefsEditor-separatedPanel">
 
@@ -18,29 +20,33 @@
     </div>
      END markup for Preference Editor -->
     <!--header start-->
+
+
     <div class="logo">
         <a href="http://unal.edu.co">
             <img alt="Escudo de la Universidad Nacional de Colombia"
                  src="<?php echo base_url()?>asset/img/escudoUnal.png" width="150"/>
         </a>
         <div class="diag">
+
         </div>
     </div>
     <div class="seal">
+
         <img alt="Escudo de la República de Colombia" src="<?php echo base_url()?>asset/img/sealColombia.png" width="66"
              height="66"/>
     </div>
 
     <div class="firstMenu">
         <ul class="socialLinks">
-            <dd><a></a></dd>
+            <li>
+                <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"  aria-controls="collapseExample">ACCESIBILIDAD</a>
+            </li>
 
         </ul>
     </div>
     <div class="navigation">
-        <div>
 
-        </div>
     </div>
 
 

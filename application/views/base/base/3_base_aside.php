@@ -2,7 +2,7 @@
     <div id="sidebar"  class="nav-collapse" role="navigation" aria-label="Barra de navegación FROAC">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-
+<!--
           <li id="accessibilityNav">
               <a href="#">
             <i class="icon-info"></i>
@@ -22,12 +22,12 @@
                           <input style="color: #555;" type="number" name="interlineNav" id="interlineNav" aria-labelledby="interlineLabel" class="interline" min="10" max="40">
                       </a>
                   </li>
-    <!--li>
+    <li>
       <a><label id="increaseInterline" for="">Aumentar Interlineado</label></a>
     </li>
     <li>
       <a><label id="decreaseInterline" for="">Disminuir Interlineado</label></a>
-    </li-->
+  </li>
     <li>
       <a><label id="label_contrast" for="contrastNav">Contraste</label>
           <select class="form-control" aria-selected="true" id="contrastNav" aria-labelledby="label_contrast" name="contrast" role="listbox">
@@ -53,8 +53,8 @@
       </a>
     </li>
     </ul>
-    <!-- /.nav-second-level -->
-    </li>
+
+</li>-->
 
 
     <?php if($usr_data == null) : ?>

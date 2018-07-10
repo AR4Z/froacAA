@@ -18,7 +18,7 @@ $().ready(function(){
 
     //modifyButtonForm();
 
-    changeFontSize();
+    //changeFontSize();
 
     highContrast();
 
@@ -146,7 +146,7 @@ function loadInterfacePersonalization(){
 
 }
 
-function changeFontSize(selector){
+function changeFontSize(selector, increment, decrement){
 
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector ;
 
@@ -159,21 +159,36 @@ function changeFontSize(selector){
     selectors.push($('h4'));
     selectors.push($('h5'));
     selectors.push($('h6'));
+    selectors.push($('span'));
+    selectors.push($('p'));
 
-    $(selector).val(parseInt($('body').css('font-size')));
 
-    $(selector).change(function(){
-
-        var size = parseInt($(selector).val());
-
+    /*$(selector).change(function(){
         $.each(selectors, function(){
-            /*var actualSize = this.css('font-size');
+            var actualSize = this.css('font-size');
             var actualSizeFloat = parseFloat(actualSize);
-            var newSize = actualSizeFloat * 1.2;*/
-            this.css('font-size', size);
+            console.log(actualSize)
+            //var newSize = (actualSizeFloat * $(selector).val())/change;
+            //change = $(selector).val();
+            if(increment){
+                this.css('font-size', actualSizeFloat + 1.6);
+            } else if(decrement) {
+                this.css('font-size', actualSizeFloat - 1.6);
+            }
         });
 
-        //console.log(size);
+    });*/
+    $.each(selectors, function(){
+        var actualSize = this.css('font-size');
+        var actualSizeFloat = parseFloat(actualSize);
+        console.log(actualSize)
+        //var newSize = (actualSizeFloat * $(selector).val())/change;
+        //change = $(selector).val();
+        if(increment){
+            this.css('font-size', actualSizeFloat + 1.6);
+        } else if(decrement) {
+            this.css('font-size', actualSizeFloat - 1.6);
+        }
     });
 }
 
