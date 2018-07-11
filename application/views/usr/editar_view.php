@@ -1,4 +1,4 @@
-<link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
+<!--<link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">-->
 <link href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>

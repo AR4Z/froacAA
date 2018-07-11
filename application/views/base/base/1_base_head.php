@@ -21,6 +21,7 @@
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
+    <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <!--<script src="<?php echo base_url() ?>asset/js/inputSpinner.js"></script>-->
 
@@ -57,14 +58,33 @@
                         <p>Cambiar el tamaño de la fuente.</p>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                    <span class="glyphicon glyphicon-minus"></span>
+                                <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[0]">
+                                    <span class="oi oi-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" name="quant[1]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" style="text-align:center">
+                            <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" style="text-align:center">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
+                                    <span class="oi oi-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header text-center"><span><b>TAMAÑO DE INTERLINEADO</b></span></div>
+                    <div class="card-body">
+                        <p>Cambiar el tamaño del interlineado.</p>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                    <span class="oi oi-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="12" min="9" max="36" step="1" style="text-align:center">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span class="oi oi-plus"></span>
                                 </button>
                             </span>
                         </div>
@@ -88,6 +108,7 @@
                 console.log("ejecuto");
 
                 fieldName = $(this).attr('data-field');
+                console.log(fieldName);
                 type = $(this).attr('data-type');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseFloat(input.val());
@@ -143,7 +164,8 @@
                     //alert('Sorry, the maximum value was reached');
                     $(this).val($(this).data('oldValue'));
                 }
-                console.log($(this).data('tipo'));
+                console.log($(this));
+
                 changeFontSize('#inputFontSize');
             });
             $(".input-number").keydown(function(e) {
