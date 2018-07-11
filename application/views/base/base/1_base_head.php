@@ -35,6 +35,49 @@
         .container-fluid {
             overflow-x: auto;
         }
+
+        .contrast-input[type="checkbox"][id^="cb"] {
+            display: none;
+        }
+
+        .contrast-label {
+            cursor: pointer;
+        }
+
+        .contrast-label:before {
+            background-color: white;
+            color: white;
+            content: " ";
+            display: block;
+            border-radius: 50%;
+            border: 1px solid grey;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 28px;
+            transition-duration: 0.4s;
+            transform: scale(0);
+        }
+
+        .contras-label img {
+            height: 64px;
+            width: 64px;
+            transition-duration: 0.2s;
+            transform-origin: 50% 50%;
+        }
+
+        :checked+.contras-label {
+            border-color: #ddd;
+        }
+
+        :checked+.contrast-label:before {
+            content: "✔";
+            background-color: grey;
+            transform: scale(1);
+        }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -90,7 +133,32 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="card bg-light mb-3" style="max-width: 35rem; min-width: 35rem;">
+                    <div class="card-header text-center"><span><b>CONTRASTE</b></span></div>
+                    <div class="card-body">
+                        <p>Cambiar el contraste.</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                            <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                            <label class="form-check-label contrast-label" for="inlineRadio3"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" /></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option3">
+                            <label class="form-check-label contrast-label" for="inlineRadio4"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" /></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option3">
+                            <label class="form-check-label contrast-label" for="inlineRadio5"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" /></label>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -122,7 +190,7 @@
                             newValue = currentVal - step;
                             decimals *= dataDecimals;
                             console.log(decimals);
-                            if(dataDecimals){
+                            if (dataDecimals) {
                                 input.val(Math.round(newValue * decimals) / decimals).change();
                             } else {
                                 input.val(newValue).change();
@@ -138,7 +206,7 @@
                         if (currentVal < input.attr('max')) {
                             newValue = currentVal + step;
                             decimals *= dataDecimals;
-                            if(dataDecimals){
+                            if (dataDecimals) {
                                 input.val(Math.round(newValue * decimals) / decimals).change();
                             } else {
                                 input.val(newValue).change();
@@ -158,9 +226,9 @@
             });
             $('.input-number').change(function() {
                 console.log("tercera");
-                if($(this).attr('data-decimals') != 0){
-                    $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals')))/ (10 * $(this).attr('data-decimals')));
-                } else if($(this).attr('data-decimals') == 0) {
+                if ($(this).attr('data-decimals') != 0) {
+                    $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals'))) / (10 * $(this).attr('data-decimals')));
+                } else if ($(this).attr('data-decimals') == 0) {
                     $(this).val(parseInt($(this).val()));
                 }
                 minValue = parseFloat($(this).attr('min'));
@@ -181,7 +249,7 @@
                 }
                 console.log($(this));
 
-                if($(this).attr('id') == 'inputInterlineSize'){
+                if ($(this).attr('id') == 'inputInterlineSize') {
                     changeInterlineSpace('#inputInterlineSize');
                 } else {
                     changeFontSize('#inputFontSize');

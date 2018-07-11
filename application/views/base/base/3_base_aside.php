@@ -2,7 +2,7 @@
     <div id="sidebar"  class="nav-collapse" role="navigation" aria-label="Barra de navegación FROAC">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-<!--
+
           <li id="accessibilityNav">
               <a href="#">
             <i class="icon-info"></i>
@@ -54,7 +54,7 @@
     </li>
     </ul>
 
-</li>-->
+</li>
 
 
     <?php if($usr_data == null) : ?>
