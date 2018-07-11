@@ -46,7 +46,7 @@
 
 </head>
 
-<body>
+<body style='line-height:1.5;'>
 
     <section id="container">
         <div class="collapse container-fluid" id="collapseExample">
@@ -181,7 +181,11 @@
                 }
                 console.log($(this));
 
-                changeFontSize('#inputFontSize');
+                if($(this).attr('id') == 'inputInterlineSize'){
+                    changeInterlineSpace('#inputInterlineSize');
+                } else {
+                    changeFontSize('#inputFontSize');
+                }
             });
             $(".input-number").keydown(function(e) {
                 console.log("cuarta");

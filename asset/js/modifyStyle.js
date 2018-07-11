@@ -273,7 +273,7 @@ function changeFontFamily(selector){
 function changeInterlineSpace(selector){
 
     selector = (typeof selector == 'undefined') ? '#interlineNav' : selector ;
-
+    /*
     var selectors = [];
 
     selectors.push($('body'));
@@ -293,11 +293,12 @@ function changeInterlineSpace(selector){
 
             /*var actualInterline = this.css('line-height');
             var actualInterlineFloat = parseFloat(actualInterline);
-            var newInterline = actualInterlineFloat + 1;*/
+            var newInterline = actualInterlineFloat + 1;
             this.css('line-height', interline + 'px');
 
             //console.log(this.selector);
             //console.log(newInterline);
         });
-    });
+    });*/
+    $('body').css('line-height', $(selector).val());
 }
