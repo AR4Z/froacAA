@@ -58,7 +58,7 @@
                         <p>Cambiar el tamaño de la fuente.</p>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[0]">
+                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[0]">
                                     <span class="oi oi-minus"></span>
                                 </button>
                             </span>
@@ -77,11 +77,11 @@
                         <p>Cambiar el tamaño del interlineado.</p>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
                                     <span class="oi oi-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="12" min="9" max="36" step="1" style="text-align:center">
+                            <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="1.5" min="1" max="2" step="0.1" data-decimals="1" style="text-align:center">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
                                     <span class="oi oi-plus"></span>
@@ -100,8 +100,6 @@
             /*$('#fontSizeNav').change(function(){
                 console.log("change");
             });*/
-            //plugin bootstrap minus and plus
-            //http://jsfiddle.net/laelitenetwork/puJ6G/
 
             $('.btn-number').click(function(e) {
                 e.preventDefault();
@@ -110,14 +108,25 @@
                 fieldName = $(this).attr('data-field');
                 console.log(fieldName);
                 type = $(this).attr('data-type');
-                var input = $("input[name='" + fieldName + "']");
-                var currentVal = parseFloat(input.val());
-                var step = parseFloat(input.attr('step'));
+                let input = $("input[name='" + fieldName + "']");
+                let currentVal = parseFloat(input.val());
+                let step = parseFloat(input.attr('step'));
+                let dataDecimals = parseFloat(input.attr('data-decimals')) || 0;
+                console.log(dataDecimals);
+                let newValue = 0;
+                let decimals = 10;
                 if (!isNaN(currentVal)) {
                     if (type == 'minus') {
                         input.data('tipo', type);
                         if (currentVal > input.attr('min')) {
-                            input.val(currentVal - step).change();
+                            newValue = currentVal - step;
+                            decimals *= dataDecimals;
+                            console.log(decimals);
+                            if(dataDecimals){
+                                input.val(Math.round(newValue * decimals) / decimals).change();
+                            } else {
+                                input.val(newValue).change();
+                            }
                         }
                         if (parseFloat(input.val()) == input.attr('min')) {
                             $(this).attr('disabled', true);
@@ -127,12 +136,17 @@
                     } else if (type == 'plus') {
                         input.data('tipo', type);
                         if (currentVal < input.attr('max')) {
-                            input.val(Math.round(currentVal + step)).change();
+                            newValue = currentVal + step;
+                            decimals *= dataDecimals;
+                            if(dataDecimals){
+                                input.val(Math.round(newValue * decimals) / decimals).change();
+                            } else {
+                                input.val(newValue).change();
+                            }
                         }
                         if (parseFloat(input.val()) == input.attr('max')) {
                             $(this).attr('disabled', true);
                         }
-
                     }
                 } else {
                     input.val(0);
@@ -144,14 +158,11 @@
             });
             $('.input-number').change(function() {
                 console.log("tercera");
+
                 minValue = parseFloat($(this).attr('min'));
                 maxValue = parseFloat($(this).attr('max'));
                 valueCurrent = parseFloat($(this).val());
-                console.log(valueCurrent);
                 name = $(this).attr('name');
-                $(this).val(Math.round((valueCurrent * 10))/10);
-                valueCurrent = parseFloat($(this).val());
-                console.log(valueCurrent);
                 if (valueCurrent >= minValue) {
                     $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled');
                 } else {
