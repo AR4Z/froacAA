@@ -62,7 +62,7 @@
                                     <span class="oi oi-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" style="text-align:center">
+                            <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" data-decimals="0" style="text-align:center">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
                                     <span class="oi oi-plus"></span>
@@ -158,7 +158,11 @@
             });
             $('.input-number').change(function() {
                 console.log("tercera");
-                $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals')))/ (10 * $(this).attr('data-decimals')));
+                if($(this).attr('data-decimals') != 0){
+                    $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals')))/ (10 * $(this).attr('data-decimals')));
+                } else if($(this).attr('data-decimals') == 0) {
+                    $(this).val(parseInt($(this).val()));
+                }
                 minValue = parseFloat($(this).attr('min'));
                 maxValue = parseFloat($(this).attr('max'));
                 valueCurrent = parseFloat($(this).val());
