@@ -158,7 +158,7 @@
             });
             $('.input-number').change(function() {
                 console.log("tercera");
-
+                $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals')))/ (10 * $(this).attr('data-decimals')));
                 minValue = parseFloat($(this).attr('min'));
                 maxValue = parseFloat($(this).attr('max'));
                 valueCurrent = parseFloat($(this).val());
