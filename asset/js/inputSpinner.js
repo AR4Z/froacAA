@@ -88,10 +88,10 @@
             if ($original.prop("placeholder")) {
                 $input.prop("placeholder", $original.prop("placeholder"))
             }
-
+/*
             if ($original.prop("id")) {
                 $input.prop("id", $original.prop("id")+"Spinner")
-            }
+            }*/
             $original.after($inputGroup)
 
 

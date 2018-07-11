@@ -16,7 +16,7 @@ Website: http://thevectorlab.net/
 #unalTop .logo .diag{background:transparent;position:absolute;width:242px}
 #unalTop .seal{position:absolute;right:10px;top:37px;z-index:2}
 .navigation{ background-color:#464646;color:#fff;height:85px;position:relative}
-.navigation .site-url{background:no-repeat 0 0 url(../img/locDot.png);clear:both;float:left;font-size:24px;height:17px;line-height:18px;margin:12px 10px 10px 250px;padding:0 0 0 20px}
+.navigation .site-url{background:no-repeat 0 0 url(../img/locDot.png);clear:both;float:left;font-size:2rem;height:17px;line-height:18px;margin:12px 10px 10px 250px;padding:0 0 0 20px}
 .navigation .site-url a{color:snow; text-decoration:none}
 .navigation .site-url a:hover {color:#8cadda;}
 
@@ -38,7 +38,7 @@ Website: http://thevectorlab.net/
 
 p.numeros{
 
-    font-size: 40px;
+    font-size:  3.333rem;
 }
 
 body {
@@ -48,7 +48,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     padding: 0px !important;
     margin: 0px !important;
-    font-size:13px;
+    font-size:1rem;
 }
 
 ul li {
@@ -96,7 +96,7 @@ a, a:hover, a:focus {
     border-radius: 5px 5px 0 0;
     -webkit-border-radius: 5px 5px 0 0;
     color: #09757a;
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 300;
     font-family: 'Open Sans', sans-serif;
 }
@@ -112,7 +112,7 @@ a, a:hover, a:focus {
 }
 .form-signin .form-control {
     position: relative;
-    font-size: 16px;
+    font-size: 1.333rem;
     height: auto;
     padding: 10px;
     -webkit-box-sizing: border-box;
@@ -128,7 +128,7 @@ a, a:hover, a:focus {
     -webkit-border-radius: 5px;
     border: 1px solid #eaeaea;
     box-shadow: none;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .form-signin .btn-login {
@@ -144,7 +144,7 @@ a, a:hover, a:focus {
 .form-signin p {
     text-align: center;
     color: #09757a;
-    font-size: 16px;
+    font-size:  1.333rem;
     font-weight: 300;
 }
 
@@ -177,7 +177,7 @@ a, a:hover, a:focus {
 }
 
 .login-social-link a i {
-    font-size: 20px;
+    font-size: 1.667rem;
     padding-right: 10px;
 }
 
@@ -323,7 +323,7 @@ ul.sidebar-menu li ul.sub li:last-child{
 }
 
 ul.sidebar-menu li ul.sub li a {
-    font-size: 12px;
+    font-size: 1rem;
     padding: 6px 0;
     line-height: 35px;
     height: 35px;
@@ -365,7 +365,7 @@ ul.sidebar-menu li a{
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
-    font-size: 12px;
+    font-size: 1rem;
     outline: none;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -390,7 +390,7 @@ ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:fo
 
 
 ul.sidebar-menu li a i {
-    font-size: 15px;
+    font-size: 1.25rem;
     padding-right: 6px;
 }
 
@@ -405,7 +405,7 @@ ul.sidebar-menu li a.active i {
 
 .mail-info, .mail-info:hover {
     margin: -3px 6px 0 0;
-    font-size: 11px;
+    font-size:  0.9167rem;
 }
 
 /*main content*/
@@ -442,7 +442,7 @@ ul.sidebar-menu li a.active i {
 }
 
 a.logo {
-    font-size: 21px;
+    font-size: 1.75rem;
     color: #2e2e2e;
     float: left;
     margin-top: 15px;
@@ -473,7 +473,7 @@ a.logo span {
 
 ul.top-menu > li > a {
     color: #666666;
-    font-size: 16px;
+    font-size:  1.333rem;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     border:1px solid #f0f0f8 !important;
@@ -543,7 +543,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.extended li a {
     border-bottom: 1px solid #EBEBEB !important;
-    font-size: 12px;
+    font-size: 1rem;
     list-style: none;
 }
 
@@ -559,14 +559,14 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.tasks-bar .task-info .desc {
-    font-size: 13px;
+    font-size:  1.083rem;
     font-weight: normal;
 }
 
 .dropdown-menu.tasks-bar .task-info .percent {
     display: inline-block;
     float: right;
-    font-size: 13px;
+    font-size:  1.083rem;
     font-weight: 600;
     padding-left: 10px;
     margin-top: -4px;
@@ -590,12 +590,12 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.inbox li a .subject .from {
-    font-size: 12px;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .dropdown-menu.inbox li a .subject .time {
-    font-size: 11px;
+    font-size:  0.9167rem;
     font-style: italic;
     font-weight: bold;
     position: absolute;
@@ -604,7 +604,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.inbox li a .message {
     display: block !important;
-    font-size: 11px;
+    font-size:  0.9167rem;
 }
 
 .top-nav  {
@@ -665,7 +665,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended.logout > li > a i {
-    font-size: 17px;
+    font-size: 1.417rem;
 }
 
 .dropdown-menu.extended.logout > li > a > i {
@@ -673,7 +673,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .top-nav .username {
-    font-size: 13px;
+    font-size: 1.083rem;
     color: #555555;
 }
 
@@ -789,7 +789,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .sidebar-toggle-box .icon-reorder {
     cursor: pointer;
     display: inline-block;
-    font-size: 20px;
+    font-size: 1.667rem;
 }
 
 
@@ -829,7 +829,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .state-overview .symbol i {
     color: #fff;
-    font-size: 50px;
+    font-size: 4.167rem;
 }
 
 .state-overview .symbol {
@@ -868,7 +868,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     margin-bottom: 20px;
     padding-bottom: 5px;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 1.5rem;
     display: inline-block;
     width: 100%;
     font-weight: 300;
@@ -900,7 +900,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     bottom: -30px;
     width: 100%;
     text-align: center;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .custom-bar-chart .bar .value {
@@ -972,7 +972,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     display: block;
 }
 .panel.green-chart .chart-tittle {
-    font-size: 16px;
+    font-size: 1.333rem;
     padding: 15px;
     display: inline-block;
     font-weight:normal;
@@ -1013,16 +1013,16 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .panel.terques-chart .chart-tittle .value a {
     color: #fff;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .panel.terques-chart .chart-tittle .value a:hover, .panel.terques-chart .chart-tittle .value a.active {
     color: #55f2e7;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .panel.terques-chart .chart-tittle {
-    font-size: 16px;
+    font-size: 1.333rem;
     padding: 15px;
     display: inline-block;
     font-weight:normal;
@@ -1068,7 +1068,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .task-thumb-details h1, .task-thumb-details h1 a, .task-progress h1, .task-progress h1 a {
     color: #39b5aa;
-    font-size: 18px;
+    font-size: 1.5rem;
     margin: 0;
     padding: 0;
     font-weight: 400;
@@ -1086,7 +1086,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .personal-task tbody tr td i {
-    font-size: 20px;
+    font-size: 1.667rem;
     color: #c7cbd4;
 }
 
@@ -1172,7 +1172,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 h3.timeline-title {
     margin: 0;
     color: #C8CCD7;
-    font-size: 20px;
+    font-size:  1.667rem;
     font-weight: 400;
     margin: 0 0 5px;
     text-transform: uppercase;
@@ -1199,7 +1199,7 @@ h3.timeline-title {
 }
 
 .timeline-desk h1 {
-    font-size: 16px;
+    font-size: 1.333rem;
     font-weight: 300;
     margin: 0 0 5px;
 }
@@ -1314,7 +1314,7 @@ h3.timeline-title {
 }
 
 .timeline .time-icon:before {
-    font-size: 16px;
+    font-size: 1.333rem;
     margin-top: 5px;
 }
 .timeline .timeline-date {
@@ -1328,7 +1328,7 @@ h3.timeline-title {
 .timeline-desk h5 span {
     color: #999999;
     display: block;
-    font-size: 12px;
+    font-size: 1rem;
     margin-bottom: 4px;
 }
 
@@ -1343,7 +1343,7 @@ h3.timeline-title {
 }
 
 .timeline-desk p {
-    font-size: 12px;
+    font-size: 1rem;
     margin-bottom: 0;
 }
 
@@ -1404,13 +1404,13 @@ h3.timeline-title {
 }
 
 .revenue-head span i {
-    font-size: 18px;
+    font-size:  1.5rem;
 }
 
 .revenue-head h3 {
     display: inline;
     padding: 0 10px;
-    font-size: 16px;
+    font-size: 1.333rem;
     font-weight: 300;
 }
 
@@ -1517,12 +1517,12 @@ h3.timeline-title {
 .panel-footer.revenue-foot ul li a i {
     color: #c6cad5;
     display: block;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 .panel-footer.revenue-foot ul li a:hover i, .panel-footer.revenue-foot ul li.active a i {
     color: #ff6c60;
     display: block;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 /*flatlab carousel model*/
@@ -1538,7 +1538,7 @@ h3.timeline-title {
 
 .flat-carousal h1 {
     text-align: center;
-    font-size: 16px;
+    font-size: 1.333rem;
     margin: 30px 20px;
     line-height: 20px;
     font-weight: 300;
@@ -1555,7 +1555,7 @@ a.view-all {
     margin-bottom: 18px;
     display: inline-block;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 ul.ft-link {
@@ -1575,7 +1575,7 @@ ul.ft-link li {
 ul.ft-link li a {
     color: #74829c;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 ul.ft-link li a:hover, ul.ft-link li.active a {
@@ -1697,13 +1697,13 @@ ul.ft-link li a i {
 
 .post-info h1 {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.5rem;
     color: #a19899;
     font-weight: 300;
 }
 
 .post-highlight.terques h2 {
-    font-size: 16px;
+    font-size: 1.333rem;
     color: #fff;
     font-style: italic;
     padding: 0 20px;
@@ -1726,7 +1726,7 @@ ul.ft-link li a i {
 }
 
 .post-info .desk  h3{
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .post-info .desk.yellow h3 {
@@ -1740,7 +1740,7 @@ ul.ft-link li a i {
 .post-btn a {
     float: left;
     margin-right: 8px;
-    font-size: 18px;
+    font-size: 1.5rem;
     color: #9a9a9a;
 }
 
@@ -1791,7 +1791,7 @@ ul.ft-link li a i {
 }
 
 .social-footer ul li a {
-    font-size: 25px;
+    font-size: 2.083rem;
     color: #ceced0;
 }
 
@@ -1820,7 +1820,7 @@ ul.ft-link li a i {
     border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
     text-align: center;
-    font-size: 16px;
+    font-size: 1.333rem;
     font-weight: 300;
 }
 
@@ -1859,7 +1859,7 @@ ul.ft-link li a i {
 
 .follower h4 {
     margin: 0 0 10px 0;
-    font-size: 15px;
+    font-size:  1.25rem;
     font-weight: 300;
 }
 
@@ -1886,17 +1886,17 @@ ul.ft-link li a i {
     -webkit-border-radius: 4px 4px 0 0;
     color: #fff;
     text-align: center;
-    font-size: 16px;
+    font-size:  1.333rem;
     font-weight: 300;
 }
 
 .weather-bg i {
-    font-size: 60px;
+    font-size: 5rem;
     display: block;
 }
 
 .weather-bg .degree {
-    font-size: 60px;
+    font-size: 5rem;
 }
 
 .weather-category {
@@ -1937,7 +1937,7 @@ ul.ft-link li a i {
 
 .fontawesome-icon-list h2 {
     margin-top: 0;
-    font-size: 20px;
+    font-size: 1.667rem;
     font-weight: 300;
 }
 
@@ -1950,7 +1950,7 @@ ul.ft-link li a i {
 }
 
 .fontawesome-icon-list i {
-    font-size: 16px;
+    font-size: 1.333rem;
     padding-right: 10px;
 }
 
@@ -2013,7 +2013,7 @@ ul.ft-link li a i {
 }
 
 .user-head .user-name h5 {
-    font-size: 14px;
+    font-size: 1.167rem;
     margin-top: 15px;
     margin-bottom: 0;
     font-weight: 300;
@@ -2023,14 +2023,14 @@ ul.ft-link li a i {
 }
 
 .user-head .user-name span a {
-    font-size: 12px;
+    font-size: 1rem;
     color: #87e2e7;
 }
 
 a.mail-dropdown {
     background: #80d3d9;
     padding:3px 5px;
-    font-size: 10px;
+    font-size: 0.8333rem;
     color: #01a7b3;
     border-radius: 2px;
     margin-top: 20px;
@@ -2084,7 +2084,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus  {
 
 ul.inbox-nav li a i {
     padding-right: 10px;
-    font-size: 16px;
+    font-size:  1.333rem;
     color: #6a6a6a;
 }
 
@@ -2097,7 +2097,7 @@ ul.labels-info li h4 {
     padding-right:15px;
     padding-top: 5px;
     color: #5c5c5e;
-    font-size: 13px;
+    font-size: 1.083rem;
     text-transform: uppercase;
 }
 
@@ -2123,7 +2123,7 @@ ul.labels-info li a i {
     margin-bottom: 0;
     padding: 0 22px;
     color: #9d9f9e;
-    font-size: 11px;
+    font-size: 0.9167rem;
 }
 
 .inbox-head {
@@ -2295,19 +2295,19 @@ ul.inbox-pagination li {
 
 
 .error-wrapper h1 {
-    font-size: 90px;
+    font-size: 7.5rem;
     font-weight: 300;
     margin: -50px 0 0 0;
 }
 
 .error-wrapper h2 {
-    font-size: 20px;
+    font-size: 1.667rem;
     font-weight: 300;
     margin: 0 0 30px 0;
 }
 
 .error-wrapper p, .error-wrapper p a {
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 
@@ -2365,13 +2365,13 @@ ul.inbox-pagination li {
 }
 
 .profile-nav .user-heading h1 {
-    font-size: 22px;
+    font-size: 1.833rem;
     font-weight: 300;
     margin-bottom: 5px;
 }
 
 .profile-nav .user-heading p {
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .profile-nav ul {
@@ -2407,14 +2407,14 @@ ul.inbox-pagination li {
 }
 
 .profile-nav ul > li > a > i{
-    font-size: 16px;
+    font-size: 1.333rem;
     padding-right: 10px;
     color: #bcb3aa;
 }
 
 .r-activity {
     margin: 6px 0 0;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 
@@ -2423,7 +2423,7 @@ ul.inbox-pagination li {
     font-weight: 300;
     box-shadow: none;
     color: #c3c3c3;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .profile-info .panel-footer {
@@ -2443,7 +2443,7 @@ ul.inbox-pagination li {
     padding: 40px 110px;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
-    font-size: 16px;
+    font-size: 1.333rem;
     font-weight: 300;
 }
 
@@ -2452,7 +2452,7 @@ ul.inbox-pagination li {
 }
 
 .bio-graph-info h1 {
-    font-size: 22px;
+    font-size: 1.833rem;
     font-weight: 300;
     margin: 0 0 20px;
 }
@@ -2482,7 +2482,7 @@ ul.inbox-pagination li {
 }
 
 .bio-desk h4 {
-    font-size: 15px;
+    font-size: 1.25rem;
     font-weight:400;
 }
 
@@ -2544,7 +2544,7 @@ ul.summary-list > li {
 
 ul.summary-list > li > a > i {
     display:block;
-    font-size: 18px;
+    font-size: 1.5rem;
     padding-bottom: 5px;
 }
 
@@ -2590,7 +2590,7 @@ ul.summary-list > li:last-child  {
     background: #eee;
     text-align: center;
     color: #fff;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .activity.terques span {
@@ -2624,17 +2624,17 @@ ul.summary-list > li:last-child  {
 
 .activity h4 {
     margin-top:0 ;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .activity p {
     margin-bottom: 0;
-    font-size: 13px;
+    font-size: 1.083rem;
 }
 
 .activity .activity-desk i, .activity.alt .activity-desk i {
     float: left;
-    font-size: 18px;
+    font-size: 1.5rem;
     margin-right: 10px;
     color: #bebebe;
 }
@@ -2710,7 +2710,7 @@ ul.summary-list > li:last-child  {
 
 .invoice-list h4 {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .invoice-block {
@@ -2729,7 +2729,7 @@ ul.amounts li {
 .invoice-btn a{
     font-weight: 300;
     margin: 0 5px;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .corporate-id {
@@ -2867,7 +2867,7 @@ ul.amounts li {
 }
 
 .fc-header-title h2 {
-    font-size: 20px !important;
+    font-size:  1.667rem !important;
     color: #C8CCD7;
     font-weight: 300;
 }
@@ -2957,7 +2957,7 @@ ul.amounts li {
 
 .panel-heading .nav {
     border: medium none;
-    font-size: 13px;
+    font-size: 1.083rem;
     margin: -10px -15px -11px;
 }
 
@@ -3021,7 +3021,7 @@ ul.amounts li {
 }
 
 .close-sm {
-    font-size: 14px;
+    font-size: 1.167rem;
 }
 
 /*carousel*/
@@ -3081,7 +3081,7 @@ ul.amounts li {
 
 .carousel-inner h3 {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 1.333rem;
     margin: 0;
 }
 
@@ -3308,7 +3308,7 @@ table.sliders tr td {
 }
 .has-switch span {
     cursor: pointer;
-    font-size: 14.994px;
+    font-size:  1.167rem;
     font-weight: 700;
     float: left;
     height: 29px;
@@ -3437,7 +3437,7 @@ table.sliders tr td {
     border: none;
     color: #34495e;
     font-family: "Lato", sans-serif;
-    font-size: 14px;
+    font-size: 1.167rem;
     margin: 0px;
     padding: 0 0 0 5px;
     outline: 0;
@@ -3449,7 +3449,7 @@ table.sliders tr td {
     bottom: 0;
     color: #ffffff;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 1rem;
     opacity: 0;
     padding: 7px 7px 5px 0;
     position: absolute;
@@ -3686,7 +3686,7 @@ table.sliders tr td {
 }
 
 .stepy-titles li div{
-    font-size:16px;
+    font-size:1.333rem;
     font-weight: 300;
     background: #eee;
     border-radius: 50%;
@@ -3743,7 +3743,7 @@ table.sliders tr td {
 }
 
 .twt-feed h1 {
-    font-size: 22px;
+    font-size: 1.833rem;
     font-weight: 300;
     margin-bottom: 5px;
 }
@@ -3773,11 +3773,11 @@ table.sliders tr td {
 
 .twt-category ul li{
     color: #89817f;
-    font-size: 13px;
+    font-size: 1.083rem;
 }
 
 .twt-category h5  {
-    font-size: 20px;
+    font-size: 1.667rem;
     font-weight: 300;
 }
 
@@ -3798,12 +3798,12 @@ table.sliders tr td {
 .p-head {
     color: #f77b6f;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 1.167rem;
 }
 
 .cmt-head {
     font-weight: 400;
-    font-size: 13px;
+    font-size:  1.083rem;
 }
 
 .p-thumb img {
@@ -3945,7 +3945,7 @@ table.sliders tr td {
     margin: 0;
 }
 .msg-time-chat .attribution {
-    font-size: 11px;
+    font-size:  0.9167rem;
     margin: 0px 0 5px;
 }
 .msg-time-chat {
@@ -3960,7 +3960,7 @@ table.sliders tr td {
     -webkit-border-radius: 4px;
     margin-right: 10px;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 1.083rem;
 }
 .msg-out a, .msg-out a:hover{
     color: #288f98;
@@ -3969,14 +3969,14 @@ table.sliders tr td {
     -webkit-border-radius: 4px;
     margin-right: 10px;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 1.083rem;
 }
 
 
 /*custom select*/
 
 span.customSelect {
-    font-size:12px;
+    font-size:1rem;
     background-color: #ffffff;
     padding:10px;
     border:1px solid #EAEAEA;
@@ -4027,7 +4027,7 @@ span.customSelect.changed {
 .tools a {
     margin-left: 10px;
     color: #a7a7a7;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 /* google maps */
@@ -4040,7 +4040,7 @@ span.customSelect.changed {
 .rating {
     unicode-bidi: bidi-override;
     direction: rtl;
-    font-size: 30px;
+    font-size: 2.5rem;
 }
 .rating span.star,
 .rating span.star {
@@ -4075,7 +4075,7 @@ span.customSelect.changed {
 .classic-search p {
     margin-bottom: 3px;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 .classic-search p a {
     color: #314558;
@@ -4345,7 +4345,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .full-width .dropdown-menu > li > a {
     padding: 10px 20px;
-    font-size: 13px;
+    font-size: 1.083rem;
 }
 
 
@@ -4418,7 +4418,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 #sortable li {
     padding-left: 3em;
-    font-size: 12px;
+    font-size: 1rem;
 }
 #sortable li i {
     position: absolute;
@@ -4496,7 +4496,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 .lock-wrapper h1 {
     text-align: center;
     color: #fff;
-    font-size: 18px;
+    font-size: 1.5rem;
     text-transform: uppercase;
     padding: 20px 0 0 0;
 }
@@ -4522,7 +4522,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 #time {
     width: 100%;
     color: #fff;
-    font-size: 60px;
+    font-size: 5rem;
     margin-bottom: 80px;
     display: inline-block;
     text-align: center;
@@ -4617,7 +4617,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .adtocart i{
     color: #fff;
-    font-size: 25px;
+    font-size: 2.083rem;
     line-height: 42px;
 }
 
@@ -4625,12 +4625,12 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     color: #5A5A5A;
     display: inline-block;
     margin-top: 20px;
-    font-size: 16px;
+    font-size: 1.333rem;
 }
 
 .product-list .price {
     color:#fc5959 ;
-    font-size: 15px;
+    font-size: 1.25rem;
 }
 
 .pro-img-details {
@@ -4642,7 +4642,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .pro-d-title {
-    font-size: 16px;
+    font-size: 1.333rem;
     margin-top: 0;
 }
 
@@ -4662,7 +4662,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .pro-price, .amount-old {
-    font-size: 18px;
+    font-size:  1.5rem;
     padding: 0 10px;
 }
 
@@ -4687,7 +4687,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .pro-d-head {
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 

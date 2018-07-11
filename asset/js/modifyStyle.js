@@ -1,7 +1,17 @@
 /**
  * Created by magir on 4/03/2016.
  */
-
+let elementFonts = {
+    'h1':$('h1').css('font-size'),
+    'h2':$('h2').css('font-size'),
+    'h3':$('h3').css('font-size'),
+    'h4':$('h4').css('font-size'),
+    'h5':$('h5').css('font-size'),
+    'h6':$('h6').css('font-size'),
+    'p':$('p').css('font-size'),
+    'body':$('body').css('font-size'),
+    'span':$('span').css('font-size')
+}
 $().ready(function(){
 
     //Modifica el estilo de las tablas agregadas
@@ -146,10 +156,10 @@ function loadInterfacePersonalization(){
 
 }
 
-function changeFontSize(selector, increment, decrement){
+function changeFontSize(selector){
 
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector ;
-
+    /*
     var selectors = [];
 
     selectors.push($('body'));
@@ -160,7 +170,7 @@ function changeFontSize(selector, increment, decrement){
     selectors.push($('h5'));
     selectors.push($('h6'));
     selectors.push($('span'));
-    selectors.push($('p'));
+    selectors.push($('p'));*/
 
 
     /*$(selector).change(function(){
@@ -178,18 +188,23 @@ function changeFontSize(selector, increment, decrement){
         });
 
     });*/
-    $.each(selectors, function(){
-        var actualSize = this.css('font-size');
+    /*$.each(selectors, function(){
+        let name  = this.prop("nodeName") || this.prop('tagName');
+        if(name == undefined){
+            return;
+        }
+        console.log(this);
+        //console.log(name);
+        var actualSize = elementFonts[name.toLowerCase()];
         var actualSizeFloat = parseFloat(actualSize);
-        console.log(actualSize)
         //var newSize = (actualSizeFloat * $(selector).val())/change;
         //change = $(selector).val();
-        if(increment){
-            this.css('font-size', actualSizeFloat + 1.6);
-        } else if(decrement) {
-            this.css('font-size', actualSizeFloat - 1.6);
-        }
-    });
+
+        this.css('font-size', actualSizeFloat + (($(selector).val() - 1) * 10) * 1.6);
+        //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
+    });*/
+
+    $('html').css('font-size', $(selector).val()+'px');
 }
 
 function highContrast(selector){
