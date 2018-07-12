@@ -30,11 +30,9 @@ $().ready(function(){
 
     //changeFontSize();
 
-    highContrast();
 
     changeFontFamily();
 
-    changeInterlineSpace();
 
     loadInterfacePersonalization();
 });
@@ -207,8 +205,8 @@ function changeFontSize(selector){
     $('html').css('font-size', $(selector).val()+'px');
 }
 
-function highContrast(selector){
-
+function highContrast(theme, selector){
+    /*
     selector = (typeof selector == 'undefined') ? 'select#contrastNav' : selector ;
 
     var selectors = [];
@@ -239,7 +237,22 @@ function highContrast(selector){
         }else if(selector === 'select#contrast'){
             $('select#contrastNav').val(valueSelected);
         }
-    });
+    });*/
+    if(theme === 'normal'){
+        $('body').removeAttr('class');
+    } else if(theme === 'white-black'){
+        $('body').attr('class', 'fl-theme-wb');
+
+    } else if(theme === 'black-white'){
+        $('body').attr('class', 'fl-theme-bw');
+
+    } else if(theme === 'yellow-black'){
+        $('body').attr('class', 'fl-theme-yb');
+    } else if(theme === 'black-yellow'){
+        $('body').attr('class', 'fl-theme-by');
+    } else if(theme === 'gray'){
+        $('body').attr('class', 'fl-theme-lgdg');
+    }
 }
 
 function changeFontFamily(selector){
