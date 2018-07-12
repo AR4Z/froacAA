@@ -12,12 +12,14 @@
     <title>FROAC</title>
     <!-- Bootstrap core CSS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
+    <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <!--external css-->
     <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.css" type="text/css">
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
@@ -25,7 +27,8 @@
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
-    <!--<script src="<?php echo base_url() ?>asset/js/inputSpinner.js"></script>-->
+    <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.min.js"></script>
 
     <style>
         .card {
@@ -80,6 +83,7 @@
             background-color: grey;
             transform: scale(1);
         }
+
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -177,19 +181,71 @@
                         </select>
                     </div>
                 </div>
+                <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR</b></span></div>
+                    <div class="card-body">
+                        <p>Cambiar configuración del cursor.</p>
+                        <b>TAMAÑO</b>
+                        <br/>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normal" checked>
+                            <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="16">
+                            <label class="form-check-label" for="cursorSize32">16 x 16</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="32">
+                            <label class="form-check-label" for="cursorSize80">32 x 32</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="40">
+                            <label class="form-check-label" for="cursorSize128">40 x 40</label>
+                        </div>
+                        <div id="div-color-cursor" style="display:none">
+                            <b>COLOR</b>
+                            <br/>
+                            <div id="id1" class="input-group colorpicker-component formcolorpicker">
+                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(0, 0, 0)" class="form-control"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text input-group-addon"><i></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
 
         </div>
+        <script type="text/javascript">
+        $('.formcolorpicker').each(function () {
+            $(this).colorpicker();
+        });
+        </script>
         <script>
-            //$("input[type='number']").InputSpinner();
-            /*$('#fontSizeNav').change(function(){
-                console.log("change");
-            });*/
+            $("input[name='colorMousePointer']").change(function(){
+                let size = $("input[name='radioOptionsSizeCursor']:checked").val();
+                console.log(size);
+                changeMousePointer(size);
+            })
+            $("input[name='radioOptionsSizeCursor']").change(function(){
+                let size = parseInt($("input[name='radioOptionsSizeCursor']:checked").val());
+                console.log(size);
+                if(size){
+                    $('#div-color-cursor').show();
+                    changeMousePointer(size);
+                } else {
+                    $('#div-color-cursor').hide();
+                    $('body').css('cursor', 'auto');
+                }
+            });
             $("select[name='type-font']").change(function(){
                 changeFontFamily($(this).val());
                 console.log("cambiando");
-            })
+            });
             $("input[name='radioOptionscontrast']").change(function() {
                 console.log("hang");
                 highContrast($(this).val());

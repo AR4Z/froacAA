@@ -202,6 +202,19 @@ function changeFontSize(selector){
     $('html').css('font-size', $(selector).val()+'px');
 }
 
+function changeMousePointer(sizePointer){
+    let colorPointer = $('#colorMousePointer').val();
+    if(sizePointer){
+        $('body').awesomeCursor('mouse-pointer', {
+            color: colorPointer,
+            size: sizePointer
+        });
+    } else {
+        console.log("tumbarlo");
+    }
+
+}
+
 function highContrast(theme, selector){
     /*
     selector = (typeof selector == 'undefined') ? 'select#contrastNav' : selector ;
