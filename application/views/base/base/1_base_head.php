@@ -95,7 +95,7 @@
 
 </head>
 
-<body style='line-height:1.5; font-family:"Open Sans", sans-serif'>
+<body style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto'>
 
     <section id="container">
         <div class="collapse container-fluid" id="collapseExample">
@@ -182,7 +182,7 @@
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
-                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR</b></span></div>
+                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" style="color:green, font-size:16px;"></i></b></span></div>
                     <div class="card-body">
                         <p>Cambiar configuración del cursor.</p>
                         <b>TAMAÑO</b>
@@ -203,11 +203,12 @@
                             <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="40">
                             <label class="form-check-label" for="cursorSize128">40 x 40</label>
                         </div>
+
                         <div id="div-color-cursor" style="display:none">
                             <b>COLOR</b>
                             <br/>
                             <div id="id1" class="input-group colorpicker-component formcolorpicker">
-                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(0, 0, 0)" class="form-control"/>
+                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text input-group-addon"><i></i></span>
                                 </div>
@@ -221,6 +222,9 @@
 
         </div>
         <script type="text/javascript">
+        $(document).ready(function(){
+            $('body').css('cursor', '');
+        });
         $('.formcolorpicker').each(function () {
             $(this).colorpicker();
         });
