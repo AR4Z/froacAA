@@ -11,6 +11,7 @@
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
     <!-- Bootstrap core CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
 
@@ -164,6 +165,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header text-center"><span><b>TIPO DE FUENTE</b></span></div>
+                    <div class="card-body">
+                        <p>Cambiar el tipo de fuente.</p>
+                        <select name="type-font" class="custom-select">
+                            <option selected value="open-sans">Open Sans</option>
+                            <option value="serif">Serif</option>
+                            <option value="cantarell">Cantarell</option>
+                            <option value="source-code-pro">Source code PRO</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
 
@@ -173,7 +186,11 @@
             /*$('#fontSizeNav').change(function(){
                 console.log("change");
             });*/
-            $("input[name='radioOptionscontrast']").change(function(){
+            $("select[name='type-font']").change(function(){
+                changeFontFamily($(this).val());
+                console.log("cambiando");
+            })
+            $("input[name='radioOptionscontrast']").change(function() {
                 console.log("hang");
                 highContrast($(this).val());
             });

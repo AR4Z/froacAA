@@ -255,8 +255,8 @@ function highContrast(theme, selector){
     }
 }
 
-function changeFontFamily(selector){
-
+function changeFontFamily(fontName, selector){
+    /*
     selector = (typeof selector == 'undefined') ? 'select#fontNav' : selector ;
 
     var selectors = [];
@@ -279,8 +279,23 @@ function changeFontFamily(selector){
         }else if(selector === 'select#font'){
             $('select#fontNav').val(valueSelected);
         }
-    });
+    });*/
 
+    let fontsURL = {
+        'open-sans':'https://fonts.googleapis.com/css?family=Open+Sans',
+        'serif':'https://fonts.googleapis.com/css?family=PT+Serif',
+        'cantarell':'https://fonts.googleapis.com/css?family=Cantarell',
+        'source-code-pro': 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
+    }
+    let fontsName = {
+        'open-sans':'Open Sans, sans-serif;',
+        'serif':'PT Serif, serif;',
+        'cantarell':'Cantarell, sans-serif;',
+        'source-code-pro': 'Source Code Pro, monospace;'
+    }
+
+    $('#font').attr('href', fontsURL[fontName]);
+    $('body').css('font-family', fontsName[fontName]);
 }
 
 function changeInterlineSpace(selector){
