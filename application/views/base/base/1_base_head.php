@@ -204,13 +204,13 @@
                             <label class="form-check-label" for="cursorSize128">40 x 40</label>
                         </div>
 
-                        <div id="div-color-cursor" style="display:none">
-                            <b>COLOR</b>
+                        <div id="div-color-cursor" class="no-high-contrast" style="display:none">
+                            <b class="no-high-contrast">COLOR</b>
                             <br/>
-                            <div id="id1" class="input-group colorpicker-component formcolorpicker">
-                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control"/>
-                                <div class="input-group-append">
-                                    <span class="input-group-text input-group-addon"><i></i></span>
+                            <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
+                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
+                                <div class="input-group-append no-high-contrast">
+                                    <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -222,12 +222,12 @@
 
         </div>
         <script type="text/javascript">
-        $(document).ready(function(){
-            $('body').css('cursor', '');
-        });
+
         $('.formcolorpicker').each(function () {
             $(this).colorpicker();
         });
+
+
         </script>
         <script>
             $("input[name='colorMousePointer']").change(function(){
@@ -252,6 +252,12 @@
             });
             $("input[name='radioOptionscontrast']").change(function() {
                 console.log("hang");
+                $('.colorpicker').addClass('no-high-contrast');
+                $('.colorpicker-saturation').addClass('no-high-contrast');
+                $('.colorpicker-guide').addClass('no-high-contrast');
+                $('.colorpicker-hue').addClass('no-high-contrast');
+                $('.colorpicker-alpha').addClass('no-high-contrast');
+                $('.colorpicker-bar').children().addClass('no-high-contrast');
                 highContrast($(this).val());
             });
             $('.btn-number').click(function(e) {
