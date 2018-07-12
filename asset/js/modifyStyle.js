@@ -31,9 +31,6 @@ $().ready(function(){
     //changeFontSize();
 
 
-    changeFontFamily();
-
-
     loadInterfacePersonalization();
 });
 
@@ -288,14 +285,16 @@ function changeFontFamily(fontName, selector){
         'source-code-pro': 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
     }
     let fontsName = {
-        'open-sans':'Open Sans, sans-serif;',
-        'serif':'PT Serif, serif;',
-        'cantarell':'Cantarell, sans-serif;',
-        'source-code-pro': 'Source Code Pro, monospace;'
+        'open-sans':"'Open Sans', sans-serif",
+        'serif':"'PT Serif', serif",
+        'cantarell':"'Cantarell', sans-serif",
+        'source-code-pro': "'Source Code Pro', monospace"
     }
-
+    console.log(fontName);
     $('#font').attr('href', fontsURL[fontName]);
+    console.log(fontsName[fontName]);
     $('body').css('font-family', fontsName[fontName]);
+    console.log($('body').css('font-family'));
 }
 
 function changeInterlineSpace(selector){

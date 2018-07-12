@@ -91,7 +91,7 @@
 
 </head>
 
-<body style='line-height:1.5;'>
+<body style='line-height:1.5; font-family:"Open Sans", sans-serif'>
 
     <section id="container">
         <div class="collapse container-fluid" id="collapseExample">
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-light mb-3" style="max-width: 42rem; min-width: 42rem;">
+                <div class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
                     <div class="card-header text-center"><span><b>CONTRASTE</b></span></div>
                     <div class="card-body">
                         <p>Cambiar el contraste.</p>
