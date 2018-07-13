@@ -323,6 +323,24 @@
             </div>
         </div>
         <script>
+            $().ready(function(){
+                $('#inputFontSize').val(localStorage['fontSize'] || 12);
+                changeFontSize('#inputFontSize');
+                $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5);
+                changeInterlineSpace('#inputInterlineSize');
+                $("input[value=" + (localStorage['contrast'] || 'normal') + ']').prop('checked', true);
+                highContrast($("input[name='radioOptionscontrast']:checked").val());
+                $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
+                changeFontFamily($("select[name='type-font']").val());
+                $("input[value=" + ((''+localStorage['cursorSize']) || 'normal') + ']').prop('checked', true);
+                changeMousePointer(parseInt($("input[name='radioOptionsSizeCursor']:checked").val()));
+                if(parseInt($("input[name='radioOptionsSizeCursor']:checked").val())){
+                    $('#div-color-cursor').show();
+                }
+            });
+            $('.formcolorpicker').each(function() {
+                $(this).colorpicker();
+            });
             $("input[name='invertImages']").change(function(){
                 if ($(this).prop("checked")) {
                     $('img').css('filter', 'invert(1)');
@@ -339,9 +357,7 @@
                     $('body').css('filter', 'invert(0)');
                 }
             });
-            $('.formcolorpicker').each(function() {
-                $(this).colorpicker();
-            });
+
 
             $("input[name='colorCursorTrails']").change(function(){
                 $('.trail').css('background', $("input[name='colorCursorTrails']").val());
@@ -369,14 +385,17 @@
                 let size = parseInt($("input[name='radioOptionsSizeCursor']:checked").val());
                 console.log(size);
                 if (size) {
+                    localStorage['cursorSize'] = size;
                     $('#div-color-cursor').show();
                     changeMousePointer(size);
                 } else {
+                    localStorage['cursorSize'] = 'normal';
                     $('#div-color-cursor').hide();
                     $('body').css('cursor', 'auto');
                 }
             });
             $("select[name='type-font']").change(function() {
+                localStorage['font-family'] = $(this).val();
                 changeFontFamily($(this).val());
                 console.log("cambiando");
             });
@@ -388,7 +407,9 @@
                 $('.colorpicker-hue').addClass('no-high-contrast');
                 $('.colorpicker-alpha').addClass('no-high-contrast');
                 $('.colorpicker-bar').children().addClass('no-high-contrast');
-                highContrast($(this).val());
+                localStorage['contrast'] = $("input[name='radioOptionscontrast']:checked").val();
+                console.log(localStorage['contrast']);
+                highContrast($("input[name='radioOptionscontrast']:checked").val());
             });
             $('.btn-number').click(function(e) {
                 e.preventDefault();
@@ -471,8 +492,11 @@
                 console.log($(this));
 
                 if ($(this).attr('id') == 'inputInterlineSize') {
+                    localStorage['interlineSize'] = $(this).val();
                     changeInterlineSpace('#inputInterlineSize');
                 } else {
+                    localStorage['fontSize'] = $(this).val();
+                    console.log("local", localStorage['fontSize']);
                     changeFontSize('#inputFontSize');
                 }
             });

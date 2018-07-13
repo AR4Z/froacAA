@@ -18,10 +18,9 @@ $().ready(function(){
 
     //modifyButtonForm();
 
-    //changeFontSize();
-
     animate();
-    loadInterfacePersonalization();
+    //loadInterfacePersonalization();
+
 });
 
 function modifyTables(){
@@ -201,7 +200,7 @@ function changeMousePointer(sizePointer){
             size: sizePointer
         });
     } else {
-        console.log("tumbarlo");
+        $('body').css('cursor', 'auto');
     }
 
 }
