@@ -1,17 +1,7 @@
 /**
  * Created by magir on 4/03/2016.
  */
-let elementFonts = {
-    'h1':$('h1').css('font-size'),
-    'h2':$('h2').css('font-size'),
-    'h3':$('h3').css('font-size'),
-    'h4':$('h4').css('font-size'),
-    'h5':$('h5').css('font-size'),
-    'h6':$('h6').css('font-size'),
-    'p':$('p').css('font-size'),
-    'body':$('body').css('font-size'),
-    'span':$('span').css('font-size')
-}
+
 $().ready(function(){
 
     //Modifica el estilo de las tablas agregadas
@@ -30,7 +20,7 @@ $().ready(function(){
 
     //changeFontSize();
 
-
+    animate();
     loadInterfacePersonalization();
 });
 
@@ -150,6 +140,7 @@ function loadInterfacePersonalization(){
     }
 
 }
+
 
 function changeFontSize(selector){
 
@@ -342,3 +333,72 @@ function changeInterlineSpace(selector){
     });*/
     $('body').css('line-height', $(selector).val());
 }
+
+
+let dots = [], mouse = {
+                x: 0,
+                y: 0
+                };
+
+
+let Dot = function() {
+  this.x = 0;
+  this.y = 0;
+  this.node = (function(){
+    let n = document.createElement("div");
+    n.className = "trail no-high-contrast";
+    document.body.appendChild(n);
+    return n;
+  }());
+};
+
+
+Dot.prototype.draw = function() {
+  this.node.style.left = this.x + "px";
+  this.node.style.top = this.y + "px";
+};
+
+function createDots(nDots){
+    // Creates the Dot objects, populates the dots array
+    dots = [];
+    for (var i = 0; i < nDots; i++) {
+      var d = new Dot();
+      dots.push(d);
+    }
+}
+
+// This is the screen redraw function
+function draw() {
+  // Make sure the mouse position is set everytime
+    // draw() is called.
+  var x = mouse.x,
+      y = mouse.y;
+
+  // This loop is where all the 90s magic happens
+  dots.forEach(function(dot, index, dots) {
+    var nextDot = dots[index + 1] || dots[0];
+
+    dot.x = x;
+    dot.y = y;
+    dot.draw();
+    x += (nextDot.x - dot.x) * .6;
+    y += (nextDot.y - dot.y) * .6;
+
+  });
+}
+
+addEventListener("mousemove", function(event) {
+  //event.preventDefault();
+  mouse.x = event.pageX;
+  mouse.y = event.pageY;
+});
+
+// animate() calls draw() then recursively calls itself
+  // everytime the screen repaints via requestAnimationFrame().
+function animate() {
+    console.log("animate");
+  draw();
+  requestAnimationFrame(animate);
+}
+
+// And get it started by calling animate().

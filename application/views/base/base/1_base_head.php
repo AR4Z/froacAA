@@ -19,7 +19,7 @@
 
     <!--external css-->
     <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.css" type="text/css">
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
@@ -33,6 +33,7 @@
     <style>
         .card {
             min-height: 200px;
+            
             min-width: 200px;
             margin-right: 5px;
         }
@@ -83,7 +84,14 @@
             background-color: grey;
             transform: scale(1);
         }
-
+        .trail {
+            position: absolute;
+            height: 6px;
+            width: 6px;
+            border-radius: 3px;
+            background: teal;
+            z-index:10;
+        }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -181,36 +189,72 @@
                         </select>
                     </div>
                 </div>
-                <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+                <div class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
                     <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" style="color:green, font-size:16px;"></i></b></span></div>
                     <div class="card-body">
-                        <p>Cambiar configuración del cursor.</p>
-                        <b>TAMAÑO</b>
-                        <br/>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normal" checked>
-                            <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="16">
-                            <label class="form-check-label" for="cursorSize32">16 x 16</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="32">
-                            <label class="form-check-label" for="cursorSize80">32 x 32</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"  type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="40">
-                            <label class="form-check-label" for="cursorSize128">40 x 40</label>
-                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar configuración del cursor.</p>
 
-                        <div id="div-color-cursor" class="no-high-contrast" style="display:none">
-                            <b class="no-high-contrast">COLOR</b>
-                            <br/>
-                            <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
-                                <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
-                                <div class="input-group-append no-high-contrast">
-                                    <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                <b>TAMAÑO DEL CURSOR</b>
+                                <br/>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normal" checked>
+                                    <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="16">
+                                    <label class="form-check-label" for="cursorSize32">16 x 16</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="32">
+                                    <label class="form-check-label" for="cursorSize80">32 x 32</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="40">
+                                    <label class="form-check-label" for="cursorSize128">40 x 40</label>
+                                </div>
+
+                                <div id="div-color-cursor" class="no-high-contrast" style="display:none">
+                                    <b class="no-high-contrast">COLOR DEL CURSOR</b>
+                                    <br/>
+                                    <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
+                                        <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast" />
+                                        <div class="input-group-append no-high-contrast">
+                                            <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <b>TAMAÑO DEL RASTRO</b>
+                                <br/>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="0" checked>
+                                    <label class="form-check-label" for="normalSizeCursorTrails">Sin rastro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="12">
+                                    <label class="form-check-label" for="cursorSizeTrails12">12</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="24">
+                                    <label class="form-check-label" for="cursorSizeTrails24">24</label>
+                                </div>
+                                <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
+                                    <b class="no-high-contrast">COLOR DEL RASTRO</b>
+                                    <br/>
+                                    <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
+                                        <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast" />
+                                        <div class="input-group-append no-high-contrast">
+                                            <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -221,24 +265,37 @@
 
 
         </div>
-        <script type="text/javascript">
-
-        $('.formcolorpicker').each(function () {
-            $(this).colorpicker();
-        });
-
-
-        </script>
         <script>
-            $("input[name='colorMousePointer']").change(function(){
+            $('.formcolorpicker').each(function() {
+                $(this).colorpicker();
+            });
+
+            $("input[name='colorCursorTrails']").change(function(){
+                $('.trail').css('background', $("input[name='colorCursorTrails']").val());
+            });
+
+            $("input[name='radioOptionsSizeCursorTrails']").change(function(){
+                let size = parseInt($("input[name='radioOptionsSizeCursorTrails']:checked").val());
+                if(size){
+                    $('#div-color-cursor-trails').show();
+                    $('.trail').remove();
+                    createDots(size);
+                    $('.trail').css('background', $("input[name='colorCursorTrails']").val());
+                } else {
+                    $('#div-color-cursor-trails').hide();
+                    $('.trail').remove();
+                    createDots(0);
+                }
+            });
+            $("input[name='colorMousePointer']").change(function() {
                 let size = $("input[name='radioOptionsSizeCursor']:checked").val();
                 console.log(size);
                 changeMousePointer(size);
             })
-            $("input[name='radioOptionsSizeCursor']").change(function(){
+            $("input[name='radioOptionsSizeCursor']").change(function() {
                 let size = parseInt($("input[name='radioOptionsSizeCursor']:checked").val());
                 console.log(size);
-                if(size){
+                if (size) {
                     $('#div-color-cursor').show();
                     changeMousePointer(size);
                 } else {
@@ -246,7 +303,7 @@
                     $('body').css('cursor', 'auto');
                 }
             });
-            $("select[name='type-font']").change(function(){
+            $("select[name='type-font']").change(function() {
                 changeFontFamily($(this).val());
                 console.log("cambiando");
             });
