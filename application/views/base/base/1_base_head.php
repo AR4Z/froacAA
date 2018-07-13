@@ -26,6 +26,7 @@
     <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.min.js"></script>
@@ -33,7 +34,7 @@
     <style>
         .card {
             min-height: 200px;
-            
+
             min-width: 200px;
             margin-right: 5px;
         }
@@ -103,7 +104,7 @@
 
 </head>
 
-<body style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto'>
+<body style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
 
     <section id="container">
         <div class="collapse container-fluid" id="collapseExample">
@@ -112,81 +113,115 @@
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header text-center"><span><b>TAMAÑO DE FUENTE</b></span></div>
                     <div class="card-body">
-                        <p>Cambiar el tamaño de la fuente.</p>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[0]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar el tamaño de la fuente.</p>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[0]">
+                                            <span class="oi oi-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1" data-decimals="0" style="text-align:center">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
+                                            <span class="oi oi-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header text-center"><span><b>TAMAÑO DE INTERLINEADO</b></span></div>
                     <div class="card-body">
-                        <p>Cambiar el tamaño del interlineado.</p>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="1.5" min="1" max="2" step="0.1" data-decimals="1" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar el tamaño del interlineado.</p>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                                            <span class="oi oi-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="1.5" min="1" max="2" step="0.1" data-decimals="1" style="text-align:center">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                            <span class="oi oi-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
                     <div class="card-header text-center"><span><b>CONTRASTE</b></span></div>
                     <div class="card-body">
-                        <p>Cambiar el contraste.</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normal" checked>
-                            <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar el contraste.</p>
+                            </div>
+
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white">
-                            <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="white-black">
-                            <label class="form-check-label contrast-label" for="inlineRadio3"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" /></label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="black-yellow">
-                            <label class="form-check-label contrast-label" for="inlineRadio4"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" /></label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="yellow-black">
-                            <label class="form-check-label contrast-label" for="inlineRadio5"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" /></label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="gray">
-                            <label class="form-check-label contrast-label" for="inlineRadio6"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" /></label>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normal" checked>
+                                <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white">
+                                <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="white-black">
+                                <label class="form-check-label contrast-label" for="inlineRadio3"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" /></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="black-yellow">
+                                <label class="form-check-label contrast-label" for="inlineRadio4"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" /></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="yellow-black">
+                                <label class="form-check-label contrast-label" for="inlineRadio5"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" /></label>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="gray">
+                                <label class="form-check-label contrast-label" for="inlineRadio6"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" /></label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header text-center"><span><b>TIPO DE FUENTE</b></span></div>
                     <div class="card-body">
-                        <p>Cambiar el tipo de fuente.</p>
-                        <select name="type-font" class="custom-select">
-                            <option selected value="open-sans">Open Sans</option>
-                            <option value="serif">Serif</option>
-                            <option value="cantarell">Cantarell</option>
-                            <option value="source-code-pro">Source code PRO</option>
-                        </select>
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar el tipo de fuente.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <select name="type-font" class="custom-select">
+                                    <option selected value="open-sans">Open Sans</option>
+                                    <option value="serif">Serif</option>
+                                    <option value="cantarell">Cantarell</option>
+                                    <option value="source-code-pro">Source code PRO</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
@@ -195,12 +230,10 @@
                         <div class="row">
                             <div class="col">
                                 <p>Cambiar configuración del cursor.</p>
-
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-
                                 <b>TAMAÑO DEL CURSOR</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
@@ -258,14 +291,54 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                </div>
+                <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DE COLORES</i></b></span></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p>Cambiar configuración de colores.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <b>INVERTIR COLORES</b>
+                                <br/>
+                                <div class="form-check checkbox-slider--b">
+	                                   <label>
+		                                   <input name="invertImages" type="checkbox"><span>Imagenes</span>
+	                                   </label>
+                                </div>
+                                <br/>
+                                <div class="form-check checkbox-slider--b">
+	                                   <label>
+		                                   <input name="invertGeneral" type="checkbox"><span>General</span>
+	                                   </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
         <script>
+            $("input[name='invertImages']").change(function(){
+                if ($(this).prop("checked")) {
+                    $('img').css('filter', 'invert(1)');
+                    $('i').css('filter', 'invert(1)');
+                } else {
+                    $('img').css('filter', 'invert(0)');
+                    $('i').css('filter', 'invert(0)');
+                }
+            });
+            $("input[name='invertGeneral']").change(function(){
+                if ($(this).prop("checked")) {
+                    $('body').css('filter', 'invert(1)');
+                } else {
+                    $('body').css('filter', 'invert(0)');
+                }
+            });
             $('.formcolorpicker').each(function() {
                 $(this).colorpicker();
             });
