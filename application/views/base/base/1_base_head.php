@@ -269,15 +269,15 @@
                                 <b>TAMAÑO DEL RASTRO</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="0" checked>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="sizeCursorTrails0" checked>
                                     <label class="form-check-label" for="normalSizeCursorTrails">Sin rastro</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="12">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="sizeCursorTrails12">
                                     <label class="form-check-label" for="cursorSizeTrails12">12</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="24">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="sizeCursorTrails24">
                                     <label class="form-check-label" for="cursorSizeTrails24">24</label>
                                 </div>
                                 <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
@@ -347,6 +347,14 @@
                         $("input[name='colorMousePointer']").change();
                     }
                 });
+
+                $("input[value=" + (localStorage['sizeCursorTrails'] || 'sizeCursorTrails0') + "]").prop('checked', true);
+                createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val()));
+                if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
+                    $('#div-color-cursor-trails').show();
+                    $("input[name='colorCursorTrails']").val(localStorage['colorCursorTrails'] || 'red');
+                    $("input[name='colorCursorTrails']").change();
+                }
             });
             $('.formcolorpicker').each(function() {
                 $(this).colorpicker();
@@ -370,20 +378,18 @@
 
 
             $("input[name='colorCursorTrails']").change(function(){
-                $('.trail').css('background', $("input[name='colorCursorTrails']").val());
+                let optionSizeTrail = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
+                createTrail(optionSizeTrail, $(this).val());
             });
 
             $("input[name='radioOptionsSizeCursorTrails']").change(function(){
-                let size = parseInt($("input[name='radioOptionsSizeCursorTrails']:checked").val());
-                if(size){
+                let optionSize = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
+                if(optionSize != 'sizeCursorTrails0'){
                     $('#div-color-cursor-trails').show();
-                    $('.trail').remove();
-                    createDots(size);
-                    $('.trail').css('background', $("input[name='colorCursorTrails']").val());
+                    createTrail(optionSize, $("input[name='colorCursorTrails']").val());
                 } else {
                     $('#div-color-cursor-trails').hide();
-                    $('.trail').remove();
-                    createDots(0);
+                    createTrail(0);
                 }
             });
 
@@ -410,22 +416,6 @@
 
             $("input[name='radioOptionscontrast']").change(function() {
                 let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
-
-                if(optionCheckedContrast === 'normalContrast'){
-                    $('.colorpicker').removeClass('no-high-contrast');
-                    $('.colorpicker-saturation').removeClass('no-high-contrast');
-                    $('.colorpicker-guide').removeClass('no-high-contrast');
-                    $('.colorpicker-hue').removeClass('no-high-contrast');
-                    $('.colorpicker-alpha').removeClass('no-high-contrast');
-                    $('.colorpicker-bar').children().removeClass('no-high-contrast');
-                } else {
-                    $('.colorpicker').addClass('no-high-contrast');
-                    $('.colorpicker-saturation').addClass('no-high-contrast');
-                    $('.colorpicker-guide').addClass('no-high-contrast');
-                    $('.colorpicker-hue').addClass('no-high-contrast');
-                    $('.colorpicker-alpha').addClass('no-high-contrast');
-                    $('.colorpicker-bar').children().addClass('no-high-contrast');
-                }
                 highContrast(optionCheckedContrast);
             });
 

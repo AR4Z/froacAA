@@ -195,9 +195,9 @@ function changeFontSize(selector){
 function changeMousePointer(sizeCursor, colorCursor){
     let sizeOptionsCursor = {
         'normalCursor': 0,
-        'cursorSize16':16,
-        'cursorSize32':32,
-        'cursorSize40':48
+        'cursorSize16': 16,
+        'cursorSize32': 32,
+        'cursorSize40': 48
     }
     let sizeInt = sizeOptionsCursor[sizeCursor];
     if(sizeInt){
@@ -248,18 +248,28 @@ function highContrast(theme, selector){
 
     if(theme === 'normalContrast'){
         $('body').removeAttr('class');
+        $('*').removeClass('no-high-contrast');
     } else if(theme === 'white-black'){
         $('body').attr('class', 'fl-theme-wb');
-
     } else if(theme === 'black-white'){
         $('body').attr('class', 'fl-theme-bw');
-
     } else if(theme === 'yellow-black'){
         $('body').attr('class', 'fl-theme-yb');
     } else if(theme === 'black-yellow'){
         $('body').attr('class', 'fl-theme-by');
     } else if(theme === 'gray'){
         $('body').attr('class', 'fl-theme-lgdg');
+    }
+
+    if(theme != 'normalContrast'){
+        $('.colorpicker').ready(function(){
+            $('.colorpicker').addClass('no-high-contrast');
+            $('.colorpicker-saturation').addClass('no-high-contrast');
+            $('.colorpicker-guide').addClass('no-high-contrast');
+            $('.colorpicker-hue').addClass('no-high-contrast');
+            $('.colorpicker-alpha').addClass('no-high-contrast');
+            $('.colorpicker-bar').children().addClass('no-high-contrast');
+        });
     }
     localStorage['contrast'] = theme;
 }
@@ -369,13 +379,24 @@ Dot.prototype.draw = function() {
   this.node.style.top = this.y + "px";
 };
 
-function createDots(nDots){
-    // Creates the Dot objects, populates the dots array
-    dots = [];
-    for (var i = 0; i < nDots; i++) {
-      var d = new Dot();
-      dots.push(d);
+function createTrail(optionLenTrails, colorTrails){
+    $('.trail').remove();
+    let lenTrail = {
+        "sizeCursorTrails0": 0,
+        "sizeCursorTrails12": 12,
+        "sizeCursorTrails24": 24
     }
+    let lenInt = lenTrail[optionLenTrails];
+    dots = [];
+    if(lenInt){
+        for (var i = 0; i < lenInt; i++) {
+          var d = new Dot();
+          dots.push(d);
+        }
+        $('.trail').css('background', colorTrails);
+    }
+    localStorage['sizeCursorTrails'] = optionLenTrails;
+    localStorage['colorCursorTrails'] = colorTrails;
 }
 
 // This is the screen redraw function
