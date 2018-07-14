@@ -329,7 +329,7 @@
 
                 $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5);
                 changeInterlineSpace('#inputInterlineSize');
-                console.log(localStorage['contrast']);
+
 
                 $("input[value=" + (localStorage['contrast'] || 'normalContrast') + "]").prop('checked', true);
                 highContrast($("input[name='radioOptionscontrast']:checked").val());
@@ -337,12 +337,14 @@
                 $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
                 changeFontFamily($("select[name='type-font']").val());
 
-                /*$("input[value=" + ((''+localStorage['cursorSize']) || 'normalCursor') + ']').prop('checked', true);
-                changeMousePointer(parseInt($("input[name='radioOptionsSizeCursor']:checked").val()));
+                //$("input[name='colorMousePointer']").val(localStorage['cursorColor'] || 'red');
+                $("input[value=" + ((''+localStorage['cursorSize']) || 'normalCursor') + ']').prop('checked', true);
+                changeMousePointer(parseInt($("input[name='radioOptionsSizeCursor']:checked").val()), $("input[name='colorMousePointer']").val());
+
 
                 if(parseInt($("input[name='radioOptionsSizeCursor']:checked").val())){
                     $('#div-color-cursor').show();
-                }*/
+                }
             });
             $('.formcolorpicker').each(function() {
                 $(this).colorpicker();
@@ -384,40 +386,51 @@
             });
             $("input[name='colorMousePointer']").change(function() {
                 let size = $("input[name='radioOptionsSizeCursor']:checked").val();
-                console.log(size);
-                changeMousePointer(size);
+                let color = $(this).val();
+                localStorage['cursorColor'] = color;
+                changeMousePointer(size, color);
             })
+
             $("input[name='radioOptionsSizeCursor']").change(function() {
                 let size = parseInt($("input[name='radioOptionsSizeCursor']:checked").val());
                 console.log(size);
                 if (size) {
                     localStorage['cursorSize'] = size;
                     $('#div-color-cursor').show();
-                    changeMousePointer(size);
+                    localStorage['cursorColor'] = $("input[name='colorMousePointer']").val();
+                    changeMousePointer(size, localStorage['cursorColor']);
                 } else {
                     localStorage['cursorSize'] = 'normal';
                     $('#div-color-cursor').hide();
                     $('body').css('cursor', 'auto');
                 }
             });
+
             $("select[name='type-font']").change(function() {
                 localStorage['font-family'] = $(this).val();
                 changeFontFamily($(this).val());
-                console.log("cambiando");
             });
+
             $("input[name='radioOptionscontrast']").change(function() {
-                console.log("hang");
+                let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
 
-                $('.colorpicker').addClass('no-high-contrast');
-                $('.colorpicker-saturation').addClass('no-high-contrast');
-                $('.colorpicker-guide').addClass('no-high-contrast');
-                $('.colorpicker-hue').addClass('no-high-contrast');
-                $('.colorpicker-alpha').addClass('no-high-contrast');
-                $('.colorpicker-bar').children().addClass('no-high-contrast');
-
-                localStorage['contrast'] = $("input[name='radioOptionscontrast']:checked").val();
-                console.log(localStorage['contrast']);
-                highContrast($("input[name='radioOptionscontrast']:checked").val());
+                if(optionCheckedContrast === 'normalContrast'){
+                    $('.colorpicker').removeClass('no-high-contrast');
+                    $('.colorpicker-saturation').removeClass('no-high-contrast');
+                    $('.colorpicker-guide').removeClass('no-high-contrast');
+                    $('.colorpicker-hue').removeClass('no-high-contrast');
+                    $('.colorpicker-alpha').removeClass('no-high-contrast');
+                    $('.colorpicker-bar').children().removeClass('no-high-contrast');
+                } else {
+                    $('.colorpicker').addClass('no-high-contrast');
+                    $('.colorpicker-saturation').addClass('no-high-contrast');
+                    $('.colorpicker-guide').addClass('no-high-contrast');
+                    $('.colorpicker-hue').addClass('no-high-contrast');
+                    $('.colorpicker-alpha').addClass('no-high-contrast');
+                    $('.colorpicker-bar').children().addClass('no-high-contrast');
+                }
+                localStorage['contrast'] = optionCheckedContrast;
+                highContrast(optionCheckedContrast);
             });
             $('.btn-number').click(function(e) {
                 e.preventDefault();

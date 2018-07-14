@@ -192,8 +192,7 @@ function changeFontSize(selector){
     $('html').css('font-size', $(selector).val()+'px');
 }
 
-function changeMousePointer(sizePointer){
-    let colorPointer = $('#colorMousePointer').val();
+function changeMousePointer(sizePointer, colorPointer){
     if(sizePointer){
         $('body').awesomeCursor('mouse-pointer', {
             color: colorPointer,
