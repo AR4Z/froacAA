@@ -192,16 +192,24 @@ function changeFontSize(selector){
     $('html').css('font-size', $(selector).val()+'px');
 }
 
-function changeMousePointer(sizePointer, colorPointer){
-    if(sizePointer){
+function changeMousePointer(sizeCursor, colorCursor){
+    let sizeOptionsCursor = {
+        'normalCursor': 0,
+        'cursorSize16':16,
+        'cursorSize32':32,
+        'cursorSize40':48
+    }
+    let sizeInt = sizeOptionsCursor[sizeCursor];
+    if(sizeInt){
         $('body').awesomeCursor('mouse-pointer', {
-            color: colorPointer,
-            size: sizePointer
+            size: sizeInt,
+            color: colorCursor
         });
     } else {
-        $('body').css('cursor', 'auto');
+        $('body').css('cursor', '');
     }
-
+    localStorage['sizeCursor'] = sizeCursor;
+    localStorage['colorCursor'] = colorCursor;
 }
 
 function highContrast(theme, selector){

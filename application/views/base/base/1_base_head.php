@@ -12,7 +12,7 @@
     <title>FROAC</title>
     <!-- Bootstrap core CSS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-    <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
+
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -30,6 +30,7 @@
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.min.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
 
     <style>
         .card {
@@ -225,7 +226,7 @@
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
-                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" style="color:green, font-size:16px;"></i></b></span></div>
+                    <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" id="icon-pointer" style="color:green, font-size:16px;"></i></b></span></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -237,20 +238,20 @@
                                 <b>TAMAÑO DEL CURSOR</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normalCursor" checked>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normalCursor">
                                     <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="16">
-                                    <label class="form-check-label" for="cursorSize32">16 x 16</label>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="cursorSize16">
+                                    <label class="form-check-label" for="cursorSize16">16 x 16</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="32">
-                                    <label class="form-check-label" for="cursorSize80">32 x 32</label>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="cursorSize32">
+                                    <label class="form-check-label" for="cursorSize32">32 x 32</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="40">
-                                    <label class="form-check-label" for="cursorSize128">40 x 40</label>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="cursorSize40">
+                                    <label class="form-check-label" for="cursorSize40">40 x 40</label>
                                 </div>
 
                                 <div id="div-color-cursor" class="no-high-contrast" style="display:none">
@@ -323,7 +324,7 @@
             </div>
         </div>
         <script>
-            $().ready(function(){
+            $(document).ready(function(){
                 $('#inputFontSize').val(localStorage['fontSize'] || 12);
                 changeFontSize('#inputFontSize');
 
@@ -337,14 +338,15 @@
                 $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
                 changeFontFamily($("select[name='type-font']").val());
 
-                //$("input[name='colorMousePointer']").val(localStorage['cursorColor'] || 'red');
-                $("input[value=" + ((''+localStorage['cursorSize']) || 'normalCursor') + ']').prop('checked', true);
-                changeMousePointer(parseInt($("input[name='radioOptionsSizeCursor']:checked").val()), $("input[name='colorMousePointer']").val());
-
-
-                if(parseInt($("input[name='radioOptionsSizeCursor']:checked").val())){
-                    $('#div-color-cursor').show();
-                }
+                $("#icon-pointer").ready(function(){
+                    $("input[value=" + (localStorage['sizeCursor'] || 'normalCursor') + "]").prop('checked', true);
+                    changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['colorCursor'] || $("input[name='colorMousePointer']").val()));
+                    if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
+                        $('#div-color-cursor').show();
+                        $("input[name='colorMousePointer']").val(localStorage['colorCursor'] || 'red');
+                        $("input[name='colorMousePointer']").change();
+                    }
+                });
             });
             $('.formcolorpicker').each(function() {
                 $(this).colorpicker();
@@ -384,25 +386,21 @@
                     createDots(0);
                 }
             });
+
             $("input[name='colorMousePointer']").change(function() {
-                let size = $("input[name='radioOptionsSizeCursor']:checked").val();
+                let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
                 let color = $(this).val();
-                localStorage['cursorColor'] = color;
-                changeMousePointer(size, color);
+                changeMousePointer(optionSize, color);
             })
 
             $("input[name='radioOptionsSizeCursor']").change(function() {
-                let size = parseInt($("input[name='radioOptionsSizeCursor']:checked").val());
-                console.log(size);
-                if (size) {
-                    localStorage['cursorSize'] = size;
+                let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
+                if (optionSize != 'normalCursor') {
                     $('#div-color-cursor').show();
-                    localStorage['cursorColor'] = $("input[name='colorMousePointer']").val();
-                    changeMousePointer(size, localStorage['cursorColor']);
+                    changeMousePointer(optionSize, $("input[name='colorMousePointer']").val());
                 } else {
-                    localStorage['cursorSize'] = 'normal';
                     $('#div-color-cursor').hide();
-                    $('body').css('cursor', 'auto');
+                    changeMousePointer(optionSize);
                 }
             });
 
