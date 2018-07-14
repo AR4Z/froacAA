@@ -188,7 +188,7 @@ function changeFontSize(selector){
         this.css('font-size', actualSizeFloat + (($(selector).val() - 1) * 10) * 1.6);
         //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
     });*/
-
+    localStorage['fontSize'] = $(selector).val();
     $('html').css('font-size', $(selector).val()+'px');
 }
 
@@ -245,6 +245,7 @@ function highContrast(theme, selector){
             $('select#contrastNav').val(valueSelected);
         }
     });*/
+
     if(theme === 'normalContrast'){
         $('body').removeAttr('class');
     } else if(theme === 'white-black'){
@@ -260,6 +261,7 @@ function highContrast(theme, selector){
     } else if(theme === 'gray'){
         $('body').attr('class', 'fl-theme-lgdg');
     }
+    localStorage['contrast'] = theme;
 }
 
 function changeFontFamily(fontName, selector){
@@ -305,6 +307,7 @@ function changeFontFamily(fontName, selector){
     console.log(fontsName[fontName]);
     $('body').css('font-family', fontsName[fontName]);
     console.log($('body').css('font-family'));
+    localStorage['font-family'] = fontName;
 }
 
 function changeInterlineSpace(selector){
@@ -337,7 +340,9 @@ function changeInterlineSpace(selector){
             //console.log(newInterline);
         });
     });*/
+
     $('body').css('line-height', $(selector).val());
+    localStorage['interlineSize'] = $(selector).val();
 }
 
 

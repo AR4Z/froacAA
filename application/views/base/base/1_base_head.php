@@ -405,7 +405,6 @@
             });
 
             $("select[name='type-font']").change(function() {
-                localStorage['font-family'] = $(this).val();
                 changeFontFamily($(this).val());
             });
 
@@ -427,21 +426,17 @@
                     $('.colorpicker-alpha').addClass('no-high-contrast');
                     $('.colorpicker-bar').children().addClass('no-high-contrast');
                 }
-                localStorage['contrast'] = optionCheckedContrast;
                 highContrast(optionCheckedContrast);
             });
+
             $('.btn-number').click(function(e) {
                 e.preventDefault();
-                console.log("ejecuto");
-
                 fieldName = $(this).attr('data-field');
-                console.log(fieldName);
                 type = $(this).attr('data-type');
                 let input = $("input[name='" + fieldName + "']");
                 let currentVal = parseFloat(input.val());
                 let step = parseFloat(input.attr('step'));
                 let dataDecimals = parseFloat(input.attr('data-decimals')) || 0;
-                console.log(dataDecimals);
                 let newValue = 0;
                 let decimals = 10;
                 if (!isNaN(currentVal)) {
@@ -450,7 +445,6 @@
                         if (currentVal > input.attr('min')) {
                             newValue = currentVal - step;
                             decimals *= dataDecimals;
-                            console.log(decimals);
                             if (dataDecimals) {
                                 input.val(Math.round(newValue * decimals) / decimals).change();
                             } else {
@@ -482,11 +476,9 @@
                 }
             });
             $('.input-number').focusin(function() {
-                console.log("segunda");
                 $(this).data('oldValue', $(this).val());
             });
             $('.input-number').change(function() {
-                console.log("tercera");
                 if ($(this).attr('data-decimals') != 0) {
                     $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals'))) / (10 * $(this).attr('data-decimals')));
                 } else if ($(this).attr('data-decimals') == 0) {
@@ -499,28 +491,21 @@
                 if (valueCurrent >= minValue) {
                     $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled');
                 } else {
-                    //alert('Sorry, the minimum value was reached');
                     $(this).val($(this).data('oldValue'));
                 }
                 if (valueCurrent <= maxValue) {
                     $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled');
                 } else {
-                    //alert('Sorry, the maximum value was reached');
                     $(this).val($(this).data('oldValue'));
                 }
-                console.log($(this));
 
                 if ($(this).attr('id') == 'inputInterlineSize') {
-                    localStorage['interlineSize'] = $(this).val();
                     changeInterlineSpace('#inputInterlineSize');
                 } else {
-                    localStorage['fontSize'] = $(this).val();
-                    console.log("local", localStorage['fontSize']);
                     changeFontSize('#inputFontSize');
                 }
             });
             $(".input-number").keydown(function(e) {
-                console.log("cuarta");
                 // Allow: backspace, delete, tab, escape, enter and .
                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
                     // Allow: Ctrl+A
