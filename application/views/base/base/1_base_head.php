@@ -177,11 +177,11 @@
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normal" checked>
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normalContrast">
                                 <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white"  checked>
                                 <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
                             </div>
                             <div class="col-md-2">
@@ -237,7 +237,7 @@
                                 <b>TAMAÑO DEL CURSOR</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normal" checked>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normalCursor" checked>
                                     <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -326,17 +326,23 @@
             $().ready(function(){
                 $('#inputFontSize').val(localStorage['fontSize'] || 12);
                 changeFontSize('#inputFontSize');
+
                 $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5);
                 changeInterlineSpace('#inputInterlineSize');
-                $("input[value=" + (localStorage['contrast'] || 'normal') + ']').prop('checked', true);
+                console.log(localStorage['contrast']);
+
+                $("input[value=" + (localStorage['contrast'] || 'normalContrast') + "]").prop('checked', true);
                 highContrast($("input[name='radioOptionscontrast']:checked").val());
+
                 $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
                 changeFontFamily($("select[name='type-font']").val());
-                $("input[value=" + ((''+localStorage['cursorSize']) || 'normal') + ']').prop('checked', true);
+
+                /*$("input[value=" + ((''+localStorage['cursorSize']) || 'normalCursor') + ']').prop('checked', true);
                 changeMousePointer(parseInt($("input[name='radioOptionsSizeCursor']:checked").val()));
+
                 if(parseInt($("input[name='radioOptionsSizeCursor']:checked").val())){
                     $('#div-color-cursor').show();
-                }
+                }*/
             });
             $('.formcolorpicker').each(function() {
                 $(this).colorpicker();
@@ -401,12 +407,14 @@
             });
             $("input[name='radioOptionscontrast']").change(function() {
                 console.log("hang");
+
                 $('.colorpicker').addClass('no-high-contrast');
                 $('.colorpicker-saturation').addClass('no-high-contrast');
                 $('.colorpicker-guide').addClass('no-high-contrast');
                 $('.colorpicker-hue').addClass('no-high-contrast');
                 $('.colorpicker-alpha').addClass('no-high-contrast');
                 $('.colorpicker-bar').children().addClass('no-high-contrast');
+
                 localStorage['contrast'] = $("input[name='radioOptionscontrast']:checked").val();
                 console.log(localStorage['contrast']);
                 highContrast($("input[name='radioOptionscontrast']:checked").val());

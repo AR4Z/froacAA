@@ -238,7 +238,7 @@ function highContrast(theme, selector){
             $('select#contrastNav').val(valueSelected);
         }
     });*/
-    if(theme === 'normal'){
+    if(theme === 'normalContrast'){
         $('body').removeAttr('class');
     } else if(theme === 'white-black'){
         $('body').attr('class', 'fl-theme-wb');
