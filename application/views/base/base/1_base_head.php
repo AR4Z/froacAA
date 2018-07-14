@@ -93,6 +93,7 @@
             border-radius: 3px;
             background: teal;
             z-index:10;
+            pointer-events: none;
         }
     </style>
 
@@ -358,22 +359,28 @@
                     $("input[name='colorCursorTrails']").val(localStorage['colorCursorTrails'] || 'red');
                     $("input[name='colorCursorTrails']").change();
                 }
+                $("input[name='invertImages']").prop('checked', localStorage['invertColorsImages'] === "true").change();
+                $("input[name='invertGeneral']").prop('checked', localStorage['invertColorsGeneral'] === "true").change();
             });
 
             $("input[name='invertImages']").change(function(){
                 if ($(this).prop("checked")) {
                     $('img').css('filter', 'invert(1)');
                     $('i').css('filter', 'invert(1)');
+                    localStorage['invertColorsImages'] = true;
                 } else {
-                    $('img').css('filter', 'invert(0)');
                     $('i').css('filter', 'invert(0)');
+                    $('img').css('filter', 'invert(0)');
+                    localStorage['invertColorsImages'] = false;
                 }
             });
             $("input[name='invertGeneral']").change(function(){
                 if ($(this).prop("checked")) {
                     $('body').css('filter', 'invert(1)');
+                    localStorage['invertColorsGeneral'] = true;
                 } else {
                     $('body').css('filter', 'invert(0)');
+                    localStorage['invertColorsGeneral'] = false;
                 }
             });
 
