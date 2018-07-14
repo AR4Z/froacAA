@@ -212,7 +212,7 @@ function changeMousePointer(sizeCursor, colorCursor){
     localStorage['colorCursor'] = colorCursor;
 }
 
-function highContrast(theme, selector){
+function highContrast(optionContrast, selector){
     /*
     selector = (typeof selector == 'undefined') ? 'select#contrastNav' : selector ;
 
@@ -246,23 +246,26 @@ function highContrast(theme, selector){
         }
     });*/
 
-    if(theme === 'normalContrast'){
-        $('body').removeAttr('class');
-        $('*').removeClass('no-high-contrast');
-    } else if(theme === 'white-black'){
-        $('body').attr('class', 'fl-theme-wb');
-    } else if(theme === 'black-white'){
-        $('body').attr('class', 'fl-theme-bw');
-    } else if(theme === 'yellow-black'){
-        $('body').attr('class', 'fl-theme-yb');
-    } else if(theme === 'black-yellow'){
-        $('body').attr('class', 'fl-theme-by');
-    } else if(theme === 'gray'){
-        $('body').attr('class', 'fl-theme-lgdg');
+    let classNameContrastOptions = {
+        'white-black': 'fl-theme-wb',
+        'black-white':'fl-theme-bw',
+        'yellow-black':'fl-theme-yb',
+        'black-yellow':'fl-theme-by',
+        'gray': 'fl-theme-lgdg'
     }
+    let classNameContrast = classNameContrastOptions[optionContrast];
 
-    if(theme != 'normalContrast'){
-        $('.colorpicker').ready(function(){
+    if(optionContrast === 'normalContrast'){
+        $('body').removeAttr('class');
+        $('.colorpicker').removeClass('no-high-contrast');
+        $('.colorpicker-saturation').removeClass('no-high-contrast');
+        $('.colorpicker-guide').removeClass('no-high-contrast');
+        $('.colorpicker-hue').removeClass('no-high-contrast');
+        $('.colorpicker-alpha').removeClass('no-high-contrast');
+        $('.colorpicker-bar').children().removeClass('no-high-contrast');
+    } else {
+        $('body').addClass(classNameContrast);
+        $('.colopicker').ready(function(){
             $('.colorpicker').addClass('no-high-contrast');
             $('.colorpicker-saturation').addClass('no-high-contrast');
             $('.colorpicker-guide').addClass('no-high-contrast');
@@ -271,7 +274,7 @@ function highContrast(theme, selector){
             $('.colorpicker-bar').children().addClass('no-high-contrast');
         });
     }
-    localStorage['contrast'] = theme;
+    localStorage['contrast'] = optionContrast;
 }
 
 function changeFontFamily(fontName, selector){

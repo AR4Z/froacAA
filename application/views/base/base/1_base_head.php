@@ -325,6 +325,9 @@
         </div>
         <script>
             $(document).ready(function(){
+                $('.formcolorpicker').each(function() {
+                    $(this).colorpicker();
+                });
                 $('#inputFontSize').val(localStorage['fontSize'] || 12);
                 changeFontSize('#inputFontSize');
 
@@ -356,9 +359,7 @@
                     $("input[name='colorCursorTrails']").change();
                 }
             });
-            $('.formcolorpicker').each(function() {
-                $(this).colorpicker();
-            });
+
             $("input[name='invertImages']").change(function(){
                 if ($(this).prop("checked")) {
                     $('img').css('filter', 'invert(1)');
