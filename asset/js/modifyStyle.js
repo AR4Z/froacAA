@@ -18,7 +18,7 @@ $().ready(function(){
 
     //modifyButtonForm();
 
-    animate();
+    //animate();
     //loadInterfacePersonalization();
 
 });
@@ -106,7 +106,7 @@ function modifyButtonForm(){
 
     buttonForm.addClass('col-sm-4 col-sm-offset-4');
 }
-
+/*
 function loadInterfacePersonalization(){
 
     var target = document.querySelector('#tab5');
@@ -138,7 +138,7 @@ function loadInterfacePersonalization(){
         observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
     }
 
-}
+}*/
 
 
 function changeFontSize(selector){
@@ -189,7 +189,7 @@ function changeFontSize(selector){
         //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
     });*/
     localStorage['fontSize'] = $(selector).val();
-    $('html').css('font-size', $(selector).val()+'px');
+    $('html').css('font-size', $(selector).val() + 'px');
 }
 
 function changeMousePointer(sizeCursor, colorCursor){
@@ -264,6 +264,7 @@ function highContrast(optionContrast, selector){
         $('.colorpicker-alpha').removeClass('no-high-contrast');
         $('.colorpicker-bar').children().removeClass('no-high-contrast');
     } else {
+        $('body').removeAttr('class');
         $('body').addClass(classNameContrast);
         $('.colopicker').ready(function(){
             $('.colorpicker').addClass('no-high-contrast');

@@ -15,7 +15,7 @@
 
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
 
     <!--external css-->
     <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -27,15 +27,11 @@
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
-    <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
 
     <style>
         .card {
             min-height: 200px;
-
             min-width: 200px;
             margin-right: 5px;
         }
@@ -258,8 +254,8 @@
                                 <div id="div-color-cursor" class="no-high-contrast" style="display:none">
                                     <b class="no-high-contrast">COLOR DEL CURSOR</b>
                                     <br/>
-                                    <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
-                                        <input type="text" name="colorMousePointer" id="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast" />
+                                    <div id="cp1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
+                                        <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
                                         <div class="input-group-append no-high-contrast">
                                             <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
                                         </div>
@@ -284,8 +280,8 @@
                                 <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
                                     <b class="no-high-contrast">COLOR DEL RASTRO</b>
                                     <br/>
-                                    <div id="id1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
-                                        <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast" />
+                                    <div id="cp2" class="input-group colorpicker-component formcolorpicker no-high-contrast">
+                                        <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
                                         <div class="input-group-append no-high-contrast">
                                             <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
                                         </div>
@@ -324,10 +320,13 @@
                 </div>
             </div>
         </div>
+        <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
+        <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
+        <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
         <script>
             $(document).ready(function(){
-                $('.formcolorpicker').each(function() {
-                    $(this).colorpicker();
+                $(function () {
+                    $('#cp1, #cp2').colorpicker();
                 });
                 $('#inputFontSize').val(localStorage['fontSize'] || 12);
                 changeFontSize('#inputFontSize');
@@ -335,22 +334,20 @@
                 $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5);
                 changeInterlineSpace('#inputInterlineSize');
 
-
                 $("input[value=" + (localStorage['contrast'] || 'normalContrast') + "]").prop('checked', true);
                 highContrast($("input[name='radioOptionscontrast']:checked").val());
 
                 $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
                 changeFontFamily($("select[name='type-font']").val());
 
-                $("#icon-pointer").ready(function(){
-                    $("input[value=" + (localStorage['sizeCursor'] || 'normalCursor') + "]").prop('checked', true);
-                    changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['colorCursor'] || $("input[name='colorMousePointer']").val()));
-                    if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
-                        $('#div-color-cursor').show();
-                        $("input[name='colorMousePointer']").val(localStorage['colorCursor'] || 'red');
-                        $("input[name='colorMousePointer']").change();
-                    }
-                });
+
+                $("input[value=" + (localStorage['sizeCursor'] || 'normalCursor') + "]").prop('checked', true);
+                changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['colorCursor'] || 'red'));
+                if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
+                    $('#div-color-cursor').show();
+                    $("input[name='colorMousePointer']").val(localStorage['colorCursor'] || 'red');
+                    $("input[name='colorMousePointer']").change();
+                }
 
                 $("input[value=" + (localStorage['sizeCursorTrails'] || 'sizeCursorTrails0') + "]").prop('checked', true);
                 createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val()));
@@ -409,6 +406,7 @@
 
             $("input[name='radioOptionsSizeCursor']").change(function() {
                 let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
+                console.log(optionSize);
                 if (optionSize != 'normalCursor') {
                     $('#div-color-cursor').show();
                     changeMousePointer(optionSize, $("input[name='colorMousePointer']").val());
