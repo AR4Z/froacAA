@@ -12,7 +12,6 @@
     <title>FROAC</title>
     <!-- Bootstrap core CSS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
@@ -64,6 +63,7 @@
             line-height: 28px;
             transition-duration: 0.4s;
             transform: scale(0);
+            z-index: 10;
         }
 
         .contras-label img {
@@ -90,6 +90,9 @@
             background: teal;
             z-index:10;
             pointer-events: none;
+        }
+        .no-invert-color{
+            filter: invert(0);
         }
     </style>
 
@@ -254,10 +257,10 @@
                                 <div id="div-color-cursor" class="no-high-contrast" style="display:none">
                                     <b class="no-high-contrast">COLOR DEL CURSOR</b>
                                     <br/>
-                                    <div id="cp1" class="input-group colorpicker-component formcolorpicker no-high-contrast">
-                                        <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
-                                        <div class="input-group-append no-high-contrast">
-                                            <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
+                                    <div id="cp1" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                                        <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast no-invert-color"/>
+                                        <div class="input-group-append no-high-contrast no-invert-color">
+                                            <span class="input-group-text input-group-addon no-high-contrast no-invert-color"><i class="no-high-contrast no-invert-color"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -280,10 +283,10 @@
                                 <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
                                     <b class="no-high-contrast">COLOR DEL RASTRO</b>
                                     <br/>
-                                    <div id="cp2" class="input-group colorpicker-component formcolorpicker no-high-contrast">
-                                        <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast"/>
-                                        <div class="input-group-append no-high-contrast">
-                                            <span class="input-group-text input-group-addon no-high-contrast"><i class="no-high-contrast"></i></span>
+                                    <div id="cp2" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                                        <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast no-invert-color"/>
+                                        <div class="input-group-append no-high-contrast no-invert-color">
+                                            <span class="input-group-text input-group-addon no-high-contrast no-invert-color"><i class="no-high-contrast no-invert-color"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -356,27 +359,32 @@
                     $("input[name='colorCursorTrails']").val(localStorage['colorCursorTrails'] || 'red');
                     $("input[name='colorCursorTrails']").change();
                 }
-                $("input[name='invertImages']").prop('checked', localStorage['invertColorsImages'] === "true").change();
-                $("input[name='invertGeneral']").prop('checked', localStorage['invertColorsGeneral'] === "true").change();
+                $('.colorpicker').ready(function(){
+                    $("input[name='invertImages']").prop('checked', localStorage['invertColorsImages'] === "true").change();
+                    $("input[name='invertGeneral']").prop('checked', localStorage['invertColorsGeneral'] === "true").change();
+                });
             });
 
             $("input[name='invertImages']").change(function(){
                 if ($(this).prop("checked")) {
-                    $('img').css('filter', 'invert(1)');
-                    $('i').css('filter', 'invert(1)');
+                    $('img:not(.no-invert-color)').css('filter', 'invert(1)');
+                    $('i:not(.no-invert-color)').css('filter', 'invert(1)');
                     localStorage['invertColorsImages'] = true;
                 } else {
-                    $('i').css('filter', 'invert(0)');
-                    $('img').css('filter', 'invert(0)');
+                    $('i:not(.no-invert-color)').css('filter', 'invert(0)');
+                    $('img:not(.no-invert-color)').css('filter', 'invert(0)');
                     localStorage['invertColorsImages'] = false;
                 }
             });
             $("input[name='invertGeneral']").change(function(){
                 if ($(this).prop("checked")) {
                     $('body').css('filter', 'invert(1)');
+                    $('.colorpicker').addClass('no-invert-color');
+                    $('.no-invert-color').css('filter', 'invert(1)');
                     localStorage['invertColorsGeneral'] = true;
                 } else {
                     $('body').css('filter', 'invert(0)');
+                    $('.no-invert-color').css('filter', 'invert(0)');
                     localStorage['invertColorsGeneral'] = false;
                 }
             });
@@ -384,14 +392,14 @@
 
             $("input[name='colorCursorTrails']").change(function(){
                 let optionSizeTrail = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
-                createTrail(optionSizeTrail, $(this).val());
+                createTrail(optionSizeTrail, $(this).val(), localStorage['invertColorsGeneral']);
             });
 
             $("input[name='radioOptionsSizeCursorTrails']").change(function(){
                 let optionSize = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
                 if(optionSize != 'sizeCursorTrails0'){
                     $('#div-color-cursor-trails').show();
-                    createTrail(optionSize, $("input[name='colorCursorTrails']").val());
+                    createTrail(optionSize, $("input[name='colorCursorTrails']").val(), localStorage['invertColorsGeneral']);
                 } else {
                     $('#div-color-cursor-trails').hide();
                     createTrail(0);
@@ -476,7 +484,8 @@
             });
             $('.input-number').change(function() {
                 if ($(this).attr('data-decimals') != 0) {
-                    $(this).val(Math.round($(this).val() * (10 * $(this).attr('data-decimals'))) / (10 * $(this).attr('data-decimals')));
+                    $(this).val(Math.round($(this).val() *
+                    (10 * $(this).attr('data-decimals'))) / (10 * $(this).attr('data-decimals')));
                 } else if ($(this).attr('data-decimals') == 0) {
                     $(this).val(parseInt($(this).val()));
                 }
@@ -502,17 +511,14 @@
                 }
             });
             $(".input-number").keydown(function(e) {
-                // Allow: backspace, delete, tab, escape, enter and .
                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-                    // Allow: Ctrl+A
                     (e.keyCode == 65 && e.ctrlKey === true) ||
-                    // Allow: home, end, left, right
                     (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    // let it happen, don't do anything
                     return;
                 }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+                (e.keyCode < 96 || e.keyCode > 105)) {
                     e.preventDefault();
                 }
             });

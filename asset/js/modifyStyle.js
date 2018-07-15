@@ -18,7 +18,7 @@ $().ready(function(){
 
     //modifyButtonForm();
 
-    //animate();
+    animate();
     //loadInterfacePersonalization();
 
 });
@@ -259,20 +259,24 @@ function highContrast(optionContrast, selector){
         $('body').removeAttr('class');
         $('.colorpicker').removeClass('no-high-contrast');
         $('.colorpicker-saturation').removeClass('no-high-contrast');
+        $('.colorpicker-saturation').children().addClass('no-high-contrast');
+        $('.colorpicker-saturation').children().children().addClass('no-high-contrast');
         $('.colorpicker-guide').removeClass('no-high-contrast');
         $('.colorpicker-hue').removeClass('no-high-contrast');
         $('.colorpicker-alpha').removeClass('no-high-contrast');
-        $('.colorpicker-bar').children().removeClass('no-high-contrast');
+        $('.colorpicker-color').children().removeClass('no-high-contrast');
     } else {
         $('body').removeAttr('class');
         $('body').addClass(classNameContrast);
         $('.colopicker').ready(function(){
             $('.colorpicker').addClass('no-high-contrast');
             $('.colorpicker-saturation').addClass('no-high-contrast');
+            $('.colorpicker-saturation').children().addClass('no-high-contrast');
+            $('.colorpicker-saturation').children().children().addClass('no-high-contrast');
             $('.colorpicker-guide').addClass('no-high-contrast');
             $('.colorpicker-hue').addClass('no-high-contrast');
             $('.colorpicker-alpha').addClass('no-high-contrast');
-            $('.colorpicker-bar').children().addClass('no-high-contrast');
+            $('.colorpicker-color').children().addClass('no-high-contrast');
         });
     }
     localStorage['contrast'] = optionContrast;
@@ -371,7 +375,7 @@ let Dot = function() {
   this.y = 0;
   this.node = (function(){
     let n = document.createElement("div");
-    n.className = "trail no-high-contrast";
+    n.className = "trail no-high-contrast no-invert-color";
     document.body.appendChild(n);
     return n;
   }());
@@ -383,7 +387,7 @@ Dot.prototype.draw = function() {
   this.node.style.top = this.y + "px";
 };
 
-function createTrail(optionLenTrails, colorTrails){
+function createTrail(optionLenTrails, colorTrails, invertColorsGeneral){
     $('.trail').remove();
     let lenTrail = {
         "sizeCursorTrails0": 0,
@@ -397,7 +401,13 @@ function createTrail(optionLenTrails, colorTrails){
           var d = new Dot();
           dots.push(d);
         }
-        $('.trail').css('background', colorTrails);
+        if(invertColorsGeneral == "true"){
+            $('.trail').css('background', colorTrails);
+            $('.trail').css('filter', 'invert(1)');
+        } else {
+            $('.trail').css('background', colorTrails);
+        }
+
     }
     localStorage['sizeCursorTrails'] = optionLenTrails;
     localStorage['colorCursorTrails'] = colorTrails;
@@ -432,7 +442,6 @@ addEventListener("mousemove", function(event) {
 // animate() calls draw() then recursively calls itself
   // everytime the screen repaints via requestAnimationFrame().
 function animate() {
-    console.log("animate");
   draw();
   requestAnimationFrame(animate);
 }
