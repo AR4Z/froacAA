@@ -209,7 +209,7 @@ function changeMousePointer(sizeCursor, colorCursor){
         $('body').css('cursor', '');
     }
     localStorage['sizeCursor'] = sizeCursor;
-    localStorage['colorCursor'] = colorCursor;
+    localStorage['colorCursor'] = colorCursor || localStorage['colorCursor'];
 }
 
 function highContrast(optionContrast, selector){
@@ -388,18 +388,20 @@ Dot.prototype.draw = function() {
 };
 
 function createTrail(optionLenTrails, colorTrails, invertColorsGeneral){
-    $('.trail').remove();
     let lenTrail = {
         "sizeCursorTrails0": 0,
         "sizeCursorTrails12": 12,
         "sizeCursorTrails24": 24
     }
     let lenInt = lenTrail[optionLenTrails];
-    dots = [];
     if(lenInt){
-        for (var i = 0; i < lenInt; i++) {
-          var d = new Dot();
-          dots.push(d);
+        if(optionLenTrails != localStorage['sizeCursorTrails']){
+            $('.trail').remove();
+            dots = [];
+            for (var i = 0; i < lenInt; i++) {
+              var d = new Dot();
+              dots.push(d);
+            }
         }
         if(invertColorsGeneral == "true"){
             $('.trail').css('background', colorTrails);
@@ -410,7 +412,7 @@ function createTrail(optionLenTrails, colorTrails, invertColorsGeneral){
 
     }
     localStorage['sizeCursorTrails'] = optionLenTrails;
-    localStorage['colorCursorTrails'] = colorTrails;
+    localStorage['colorCursorTrails'] = colorTrails || localStorage['colorCursorTrails'];
 }
 
 // This is the screen redraw function

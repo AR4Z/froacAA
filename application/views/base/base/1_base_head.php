@@ -331,34 +331,34 @@
                 $(function () {
                     $('#cp1, #cp2').colorpicker();
                 });
-                $('#inputFontSize').val(localStorage['fontSize'] || 12);
-                changeFontSize('#inputFontSize');
+                $('#inputFontSize').val(localStorage['fontSize'] || 12).change();
+                //changeFontSize('#inputFontSize');
 
-                $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5);
-                changeInterlineSpace('#inputInterlineSize');
+                $('#inputInterlineSize').val(localStorage['interlineSize'] || 1.5).change();
+                //changeInterlineSpace('#inputInterlineSize');
 
-                $("input[value=" + (localStorage['contrast'] || 'normalContrast') + "]").prop('checked', true);
-                highContrast($("input[name='radioOptionscontrast']:checked").val());
+                $("input[value=" + (localStorage['contrast'] || 'normalContrast') + "]").prop('checked', true).change();
+                //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
-                $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans');
-                changeFontFamily($("select[name='type-font']").val());
+                $("select[name='type-font']").val(localStorage['font-family'] || 'open-sans').change();
+                //changeFontFamily($("select[name='type-font']").val());
 
 
-                $("input[value=" + (localStorage['sizeCursor'] || 'normalCursor') + "]").prop('checked', true);
-                changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['colorCursor'] || 'red'));
-                if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
+                $("input[value=" + (localStorage['sizeCursor'] || 'normalCursor') + "]").prop('checked', true).change();
+                //changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['colorCursor'] || 'red'));
+                /*if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
                     $('#div-color-cursor').show();
                     $("input[name='colorMousePointer']").val(localStorage['colorCursor'] || 'red');
                     $("input[name='colorMousePointer']").change();
-                }
+                }*/
 
-                $("input[value=" + (localStorage['sizeCursorTrails'] || 'sizeCursorTrails0') + "]").prop('checked', true);
-                createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val()));
-                if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
+                $("input[value=" + (localStorage['sizeCursorTrails'] || 'sizeCursorTrails0') + "]").prop('checked', true).change();
+                //createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val()));
+                /*if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
                     $('#div-color-cursor-trails').show();
                     $("input[name='colorCursorTrails']").val(localStorage['colorCursorTrails'] || 'red');
                     $("input[name='colorCursorTrails']").change();
-                }
+                }*/
                 $('.colorpicker').ready(function(){
                     $("input[name='invertImages']").prop('checked', localStorage['invertColorsImages'] === "true").change();
                     $("input[name='invertGeneral']").prop('checked', localStorage['invertColorsGeneral'] === "true").change();
@@ -381,6 +381,7 @@
                     $('body').css('filter', 'invert(1)');
                     $('.colorpicker').addClass('no-invert-color');
                     $('.no-invert-color').css('filter', 'invert(1)');
+                    $('i.no-invert-color').css('filter', 'invert(0)');
                     localStorage['invertColorsGeneral'] = true;
                 } else {
                     $('body').css('filter', 'invert(0)');
@@ -399,7 +400,8 @@
                 let optionSize = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
                 if(optionSize != 'sizeCursorTrails0'){
                     $('#div-color-cursor-trails').show();
-                    createTrail(optionSize, $("input[name='colorCursorTrails']").val(), localStorage['invertColorsGeneral']);
+                    //createTrail(optionSize, localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val(), localStorage['invertColorsGeneral']);
+                    $("input[name='colorCursorTrails']").val(localStorage['colorCursorTrails'] || $("input[name='colorCursorTrails']").val()).change();
                 } else {
                     $('#div-color-cursor-trails').hide();
                     createTrail(0);
@@ -414,10 +416,12 @@
 
             $("input[name='radioOptionsSizeCursor']").change(function() {
                 let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
-                console.log(optionSize);
+                console.log(localStorage['colorCursor']);
+
                 if (optionSize != 'normalCursor') {
                     $('#div-color-cursor').show();
-                    changeMousePointer(optionSize, $("input[name='colorMousePointer']").val());
+                    //changeMousePointer(optionSize, localStorage['colorCursor'] || $("input[name='colorMousePointer']").val());
+                    $("input[name='colorMousePointer']").val(localStorage['colorCursor'] || $("input[name='colorMousePointer']").val()).change();
                 } else {
                     $('#div-color-cursor').hide();
                     changeMousePointer(optionSize);
