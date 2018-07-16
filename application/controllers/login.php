@@ -13,7 +13,10 @@ class Login extends CI_Controller{
     }
 
     public function index() {
-        $this->load->view('base/login/login_view');
+        $data = array(
+            'view' => 'base/login/login_view'
+        );
+        $this->load->view('base/login/login_view', $data);
     }
 }
 ?>

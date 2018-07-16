@@ -1,9 +1,6 @@
 <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
 <link href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
-<script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
 
 <script type="text/javascript">
     /*
@@ -987,174 +984,175 @@
     </section>
 </section>
 <!--main content end-->
-
-
-
-<!--script for this page-->
+<script type="text/javascript" src="<?php echo base_url();?>asset/js/es-CO.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-    let today = new Date();
-    let dd = today.getDate() - 1;
-    let mm = today.getMonth() + 1;
-    let yyyy = today.getFullYear();
+let today = new Date();
+let dd = today.getDate() - 1;
+let mm = today.getMonth() + 1;
+let yyyy = today.getFullYear();
 
-    if (dd < 10) {
-        dd = '0' + dd
-    }
+if (dd < 10) {
+    dd = '0' + dd
+}
 
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-    $(document).ready(function() {
-        $('.birthdate').datepicker({
-            startView: 2,
-            inputFormat: ["yyyy/MM/dd"],
-            outputFormat: "yyyy/MM/dd",
-            min: '1975/01/01',
-            max: yyyy + "/" + mm + "/" + dd
+if (mm < 10) {
+    mm = '0' + mm
+}
+$(document).ready(function() {
+    $('.birthdate').datepicker({
+        startView: 2,
+        inputFormat: ["yyyy/MM/dd"],
+        outputFormat: "yyyy/MM/dd",
+        min: '1975/01/01',
+        max: yyyy + "/" + mm + "/" + dd
+    });
+
+    $('.name').focus();
+    $('.glyphicon-calendar').attr("class", "oi oi-calendar");
+    $('.glyphicon-triangle-right').attr('class', "oi oi-caret-right");
+    $('.glyphicon-triangle-left').attr('class', "oi oi-caret-left");
+    $('.glyphicon-backward').attr('class', "oi oi-media-skip-backward");
+    $('.glyphicon-forward').attr('class', "oi oi-media-skip-forward");
+    $(".datepicker-button").click(function() {
+        $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
+    });
+
+
+});
+    $(document).ready(function(){
+        function validateUsername(username){
+            let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
+            return re.test(username);
+        }
+        function validateEmail(email) {
+            let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+
+        function validateDate(date, infDate, supDate) {
+            return (infDate <= date) && (date <= supDate);
+        }
+
+        $.validator.addMethod('range_date', function(value) {
+            let date = new Date(value);
+            let infDate = new Date('1975-01-01');
+            return validateDate(date, infDate, today);
         });
 
-        $('.name').focus();
-        $('.glyphicon-calendar').attr("class", "oi oi-calendar");
-        $('.glyphicon-triangle-right').attr('class', "oi oi-caret-right");
-        $('.glyphicon-triangle-left').attr('class', "oi oi-caret-left");
-        $('.glyphicon-backward').attr('class', "oi oi-media-skip-backward");
-        $('.glyphicon-forward').attr('class', "oi oi-media-skip-forward");
-        $(".datepicker-button").click(function() {
-            $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
+        $.validator.addMethod("email_regex", function(value) {
+            return validateEmail(value);
         });
 
+        $.validator.addMethod("usernameValidation", function(value){
+            return validateUsername(value);
+        })
 
-    });
-</script>
-<script type="text/javascript">
-    function validateUsername(username){
-        let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
-        return re.test(username);
-    }
-    function validateEmail(email) {
-        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    }
+        $("#form").validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    minlength: 3
+                },
+                apellidos: {
+                    required: true,
+                    minlength: 3
+                },
+                fecha_nac: {
+                    required: true,
+                    dateISO: true,
+                    range_date: true
+                },
+                mail: {
+                    required: true,
+                    email_regex: true,
+                    remote: {
+                        type: 'POST',
+                        url: "<?php echo base_url()?>index.php/usuario/verify_email",
+                        dataType: 'json',
+                        data: {
+                            mail: function() {
+                                return $('#input_mail').val();
+                            }
+                        },
+                        dataFilter: function(resp) {
+                            let json = JSON.parse(resp);
+                            return !json.success;
+                        }
+                    }
+                },
+                username: {
+                    required: true,
+                    usernameValidation: true,
+                    minlength: 4,
+                    remote: {
+                        type: "POST",
+                        url: "<?php echo base_url()?>index.php/usuario/verify_username",
+                        dataType: 'json',
+                        data: {
+                            username: function() {
+                                return $("#input_username").val();
+                            }
+                        },
+                        dataFilter: function(resp) {
+                            let json = JSON.parse(resp);
+                            return !json.success;
+                        }
+                    }
+                },
+                passwd: {
+                    required: true,
+                    minlength: 6
+                },
+                passwd2: {
+                    required: true,
+                    equalTo: "#input_passwd"
+                }
+            },
+            messages: {
+                nombre: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
+                    minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+                },
+                apellidos: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
+                    minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
+                },
+                fecha_nac: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
+                    dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
+                    range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
+                },
+                mail: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
+                    email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
+                    remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
+                },
+                username: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
+                    minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
+                    usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es inválido.</div>",
+                    remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
 
-    function validateDate(date, infDate, supDate) {
-        return (infDate <= date) && (date <= supDate);
-    }
+                },
+                passwd: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
+                    minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
+                },
+                passwd2: {
+                    required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
+                    equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
+                }
+            },
+            errorPlacement: function(error, element) {
+                let name = element.attr('name');
+                error.appendTo($("#" + name + "-validate"));
+            },
+        });
 
-    $.validator.addMethod('range_date', function(value) {
-        let date = new Date(value);
-        let infDate = new Date('1975-01-01');
-        return validateDate(date, infDate, today);
-    });
-
-    $.validator.addMethod("email_regex", function(value) {
-        return validateEmail(value);
-    });
-
-    $.validator.addMethod("usernameValidation", function(value){
-        return validateUsername(value);
     })
-
-    $("#form").validate({
-        rules: {
-            nombre: {
-                required: true,
-                minlength: 3
-            },
-            apellidos: {
-                required: true,
-                minlength: 3
-            },
-            fecha_nac: {
-                required: true,
-                dateISO: true,
-                range_date: true
-            },
-            mail: {
-                required: true,
-                email_regex: true,
-                remote: {
-                    type: 'POST',
-                    url: "<?php echo base_url()?>index.php/usuario/verify_email",
-                    dataType: 'json',
-                    data: {
-                        mail: function() {
-                            return $('#input_mail').val();
-                        }
-                    },
-                    dataFilter: function(resp) {
-                        let json = JSON.parse(resp);
-                        return !json.success;
-                    }
-                }
-            },
-            username: {
-                required: true,
-                usernameValidation: true,
-                minlength: 4,
-                remote: {
-                    type: "POST",
-                    url: "<?php echo base_url()?>index.php/usuario/verify_username",
-                    dataType: 'json',
-                    data: {
-                        username: function() {
-                            return $("#input_username").val();
-                        }
-                    },
-                    dataFilter: function(resp) {
-                        let json = JSON.parse(resp);
-                        return !json.success;
-                    }
-                }
-            },
-            passwd: {
-                required: true,
-                minlength: 6
-            },
-            passwd2: {
-                required: true,
-                equalTo: "#input_passwd"
-            }
-        },
-        messages: {
-            nombre: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
-            },
-            apellidos: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
-            },
-            fecha_nac: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
-                dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
-                range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
-            },
-            mail: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
-                email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
-                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
-            },
-            username: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
-                usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es inválido.</div>",
-                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
-
-            },
-            passwd: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
-            },
-            passwd2: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
-                equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
-            }
-        },
-        errorPlacement: function(error, element) {
-            let name = element.attr('name');
-            error.appendTo($("#" + name + "-validate"));
-        },
-    });
 
     /*
         //######################################################################################################################

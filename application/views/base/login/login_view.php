@@ -1,35 +1,10 @@
-<!DOCTYPE html>
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Mosaddek">
-        <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-        <link rel="shortcut icon" href="img/favicon.png">
-
-        <title>FROAC | Login</title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
-        <!--external css-->
-        <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <!-- Custom styles for this template -->
-        <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
-
-    <body class="login-body">
-
-        <div class="container" role="main">
+        <?php $this->load->view('base/base/1_base_head');?>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-success pull-right" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
+            </div>
+        </div>
             <form role="form" aria-label="Iniciar seción en FROAC" class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
                 <p class="form-signin-heading">Federación de Repositorios de Objetos de Aprendizaje Colombia <br><br>
                     <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="50"></p>
@@ -63,14 +38,8 @@
 
             </form>
 
-        </div>
-
-
-
-        <!-- js placed at the end of the document so the pages load faster -->
+        <!-- js placed at the end of the document so the pages load faster
         <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
         <script src="<?php echo base_url() ?>asset/js/bootstrap.min.js"></script>
-
-
-    </body>
-</html>
+        <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>-->
+    <?php $this->load->view('base/base/4_base_footer');?>
