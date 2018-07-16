@@ -395,7 +395,7 @@ function createTrail(optionLenTrails, colorTrails, invertColorsGeneral){
     }
     let lenInt = lenTrail[optionLenTrails];
     if(lenInt){
-        if(optionLenTrails != localStorage['sizeCursorTrails']){
+        if(optionLenTrails != localStorage['sizeCursorTrails'] || (dots.length != lenInt)){
             $('.trail').remove();
             dots = [];
             for (var i = 0; i < lenInt; i++) {
@@ -410,6 +410,8 @@ function createTrail(optionLenTrails, colorTrails, invertColorsGeneral){
             $('.trail').css('background', colorTrails);
         }
 
+    } else {
+        $('.trail').remove();
     }
     localStorage['sizeCursorTrails'] = optionLenTrails;
     localStorage['colorCursorTrails'] = colorTrails || localStorage['colorCursorTrails'];
