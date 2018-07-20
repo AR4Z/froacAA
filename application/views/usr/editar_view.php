@@ -4,93 +4,96 @@
 <script type="text/javascript" src="<?php echo base_url();?>asset/js/datepicker.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<section id="main-content" role="main">
-    <section class="wrapper">
-        <!-- page start-->
-        <div class="row">
-            <div class="col-md-12">
-                <section class="card border-right-0 border-bottom-0 border-left-0 border-top-0" role="form" aria-label="Editar mis datos">
-                    <header class="card-heading">
-                        <h1>Editar mis datos</h1>
-                        <a onclick="chpasswd()" class="btn btn-warning pull-right" data-toggle="modal" href="#dialog_chpasswd" style="margin-right:10px;">
-                            <li class="icon-edit"> Cambiar contraseña</li>
-                        </a>
-                    </header>
-                    <div class="card-body">
 
-                        <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/update_user" enctype='multipart/form-data' id="form-update-info-user">
-                            <div class="col-lg-12">
-                                <section class="card  border-right-0 border-bottom-0 border-left-0 border-top-0">
-                                    <header class="card-heading">
-                                        <h6>Información personal</h6>
-                                    </header>
-                                    <div class="card-body">
-                                        <input type="hidden" value="2" name="tipoU">
-                                        <!--   <div class="form-group">
-                                                <label for="exampleInputEmail1">Usted es:</label>
-                                                <select class="form-control input-sm m-bot15" name="tipoU" required>
-                                                    <option value="<?php echo $usr_all_data[0]["use_rol_id"]?>" ><?php echo $usr_all_data[0]["use_rol_nombre"]?></option>
-                                                    <option value="2">Estudiante</option>
-                                                    <option value="3">Profesor</option>
-                                                </select>
+<div class="content-inner" role="main">
+
+        <div class="container-fluid">
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card border-0" role="form" aria-label="Editar mis datos">
+                            <h1 class="card-title">Editar mis datos</h1>
+
+
+                        <div class="card-body">
+
+                            <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/update_user" enctype='multipart/form-data' id="form-update-info-user">
+                                <div class="col-lg-12">
+                                    <div class="card border-0">
+
+                                            <h3 class="card-title">Información personal</h3>
+                                            <div class="text-right">
+                                                <a onclick="chpasswd()" class="btn btn-warning pull-right" data-toggle="modal" href="#dialog_chpasswd" style="margin-right:10px;">
+                                                       <i class="fa fa-pencil"> </i> Cambiar contraseña</a>
                                             </div>
-                                            -->
-                                        <div class="form-group">
-                                            <label for="nombre" id="nombre">Nombre:</label>
-                                            <input type="text" class="name form-control" value="<?php echo $usr_all_data[0]["use_nombre"]?>" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
-                                        </div>
-                                        <div id="nombre-validate">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="apellidos" id="apellidos">Apellidos:</label>
-                                            <input type="text" value="<?php echo $usr_all_data[0]["use_apellido"]?>" class="form-control" name="apellidos" placeholder="Apellidos" aria-labelledby="apellidos" aria-required="true">
-                                        </div>
-                                        <div id="apellidos-validate">
-                                        </div>
-                                        <div id="cont_fecha_nac" class="form-group">
-                                            <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
-                                            <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                            <input type="text" class="birthdate form-control" value="<?php echo $usr_all_data[0]['use_stu_datebirth']?>" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-labelledby="fecha_nac" aria-required="true"></input>
-                                        </div>
-                                        <div id="fecha_nac-validate">
-                                        </div>
-                                        <div class="form-group">
-                                            <label id="mail" for="mail">E-mail:</label>
-                                            <input value="<?php echo $usr_all_data[0]["use_email"]?>" type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" aria-required="true">
-                                        </div>
-                                        <div id="mail-validate">
-                                        </div>
+                                        <div class="card-body">
 
-                                        <div class="form-group">
-                                            <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
-                                            <select id="nivel-educacion" class="form-control input-sm m-bot15" name="nevel_ed"  aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
-                                                            <?php
-                                                            foreach ($nivel_educativo as $key) { ?>
-                                                                <?php if($key->use_id_level == $usr_all_data[0]["use_id_level"]):?>
-                                                                    <option name="level[]"  value= "<?php echo $key->use_id_level ?>" aria-select="true" selected><?php echo $key->use_level ?></option>
-                                                                <?php else:?>
-                                                                    <option name="level[]"  value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
-                                                                <?php endif?>
-                                                            <?php } ?>
-                                                        </select>
+                                            <input type="hidden" value="2" name="tipoU">
+                                            <!--   <div class="form-group">
+                                                    <label for="exampleInputEmail1">Usted es:</label>
+                                                    <select class="form-control input-sm m-bot15" name="tipoU" required>
+                                                        <option value="<?php echo $usr_all_data[0]["use_rol_id"]?>" ><?php echo $usr_all_data[0]["use_rol_nombre"]?></option>
+                                                        <option value="2">Estudiante</option>
+                                                        <option value="3">Profesor</option>
+                                                    </select>
+                                                </div>
+                                                -->
+                                            <div class="form-group">
+                                                <label for="nombre" id="nombre">Nombre:</label>
+                                                <input type="text" class="name form-control" value="<?php echo $usr_all_data[0]["use_nombre"]?>" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
+                                            </div>
+                                            <div id="nombre-validate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="apellidos" id="apellidos">Apellidos:</label>
+                                                <input type="text" value="<?php echo $usr_all_data[0]["use_apellido"]?>" class="form-control" name="apellidos" placeholder="Apellidos" aria-labelledby="apellidos" aria-required="true">
+                                            </div>
+                                            <div id="apellidos-validate">
+                                            </div>
+                                            <div id="cont_fecha_nac" class="form-group">
+                                                <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
+                                                <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
+                                                <input type="text" class="birthdate form-control" value="<?php echo $usr_all_data[0]['use_stu_datebirth']?>" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-labelledby="fecha_nac" aria-required="true"></input>
+                                            </div>
+                                            <div id="fecha_nac-validate">
+                                            </div>
+                                            <div class="form-group">
+                                                <label id="mail" for="mail">E-mail:</label>
+                                                <input value="<?php echo $usr_all_data[0]["use_email"]?>" type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-labelledby="mail" aria-required="true">
+                                            </div>
+                                            <div id="mail-validate">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
+                                                <select id="nivel-educacion" class="form-control input-sm m-bot15" name="nevel_ed"  aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
+                                                                <?php
+                                                                foreach ($nivel_educativo as $key) { ?>
+                                                                    <?php if($key->use_id_level == $usr_all_data[0]["use_id_level"]):?>
+                                                                        <option name="level[]"  value= "<?php echo $key->use_id_level ?>" aria-select="true" selected><?php echo $key->use_level ?></option>
+                                                                    <?php else:?>
+                                                                        <option name="level[]"  value= "<?php echo $key->use_id_level ?>"><?php echo $key->use_level ?></option>
+                                                                    <?php endif?>
+                                                                <?php } ?>
+                                                            </select>
+                                            </div>
+                                            <button id="sub" type="submit" class="btn btn-info">Actualizar mis datos</button>
+                                            <a class="btn btn-secondary pull-right" href="<?php echo base_url()?>usuario/perfil">
+                                                <i class="fa fa-reply"> </i> Volver
+                                            </a>
                                         </div>
-                                        <button id="sub" type="submit" class="btn btn-info">Actualizar mis datos</button>
-                                        <a class="btn btn-success pull-right" href="<?php echo base_url()?>usuario/perfil">
-                                            <li class="icon-reply"> Volver</li>
-                                        </a>
                                     </div>
-                                </section>
-                            </div>
-                        </form>
-
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </section>
+                </div>
             </div>
-
         </div>
-        <!-- page end-->
-    </section>
-</section>
+
+
+
 <!--main content end-->
 
 <!-- Modal chpassword -->
