@@ -6,14 +6,14 @@
 
           </div>
           <ul class="list-unstyled">
-                    <li class="active"><a href="<?php echo base_url()?>"> <i class="fa fa-search"></i>Buscador</a></li>
+                    <li id="searchOA"><a  href="<?php echo base_url()?>"> <i class="fa fa-search"></i>Buscador</a></li>
                     <?php if($usr_data == null):?>
-                          <li><a href="<?php echo base_url()?>usuario/registro"> <i class="fa fa-user"></i>Crear una cuenta </a></li>
+                          <li id="create-account"><a  href="<?php echo base_url()?>usuario/registro"> <i class="fa fa-user"></i>Crear una cuenta </a></li>
                     <?php endif; ?>
-                    <li><a href="<?php echo base_url()?>repositorio/lista"> <i class="fa fa-sitemap"></i>Repositorios</a></li>
-                    <li><a href="<?php echo base_url()?>usuario/equipo"> <i class="fa fa-users"></i>Equipo FROAC </a></li>
-                    <li><a href="<?php echo base_url()?>usuario/acerca"> <i class="fa fa-info-circle"></i>Acerca de</a></li>
-                    <li><a href="<?php echo base_url()?>usuario/glosario"> <i class="fa fa-book"></i>Glosario</a></li>
+                    <li id="repos"><a  href="<?php echo base_url()?>repositorio/lista"> <i class="fa fa-sitemap"></i>Repositorios</a></li>
+                    <li id="teamFROAC"><a  href="<?php echo base_url()?>usuario/equipo"> <i class="fa fa-users"></i>Equipo FROAC </a></li>
+                    <li id="aboutFROAC"><a  href="<?php echo base_url()?>usuario/acerca"> <i class="fa fa-info-circle"></i>Acerca de</a></li>
+                    <li id="glossary"><a  href="<?php echo base_url()?>usuario/glosario"> <i class="fa fa-book"></i>Glosario</a></li>
                     <li><a href="http://froac.manizales.unal.edu.co/GAIA/"> <i class="fa fa-globe"></i>GAIA</a></li>
 
         </nav>

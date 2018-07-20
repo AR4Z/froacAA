@@ -28,7 +28,8 @@ class Usuario extends CI_Controller {
                 "main_view" => "shared_views/acerca_view",
                 "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                 "encabezado" => "Acerca de",
-                "url" => "usuario/acerca/"
+                "url" => "usuario/acerca/",
+                'id_view'=> 'aboutFROAC'
                 );
 
         $this->load->view('base/est_template', $content);
@@ -37,7 +38,8 @@ class Usuario extends CI_Controller {
         $content = array(
                 "main_view" => "shared_views/acerca_view",
                 "encabezado" => "Acerca de",
-                "url" => "usuario/acerca/"
+                "url" => "usuario/acerca/",
+                'id_view'=> 'aboutFROAC'
                 );
 
         $this->load->view('base/base_template', $content);
@@ -47,7 +49,8 @@ class Usuario extends CI_Controller {
             $content = array(
                 "main_view" => "shared_views/acerca_view",
                 "encabezado" => "Acerca de",
-                "url" => "usuario/acerca/"
+                "url" => "usuario/acerca/",
+                'id_view'=> 'aboutFROAC'
                 );
 
         $this->load->view('base/base_template', $content);
@@ -75,7 +78,8 @@ class Usuario extends CI_Controller {
                 "main_view" => "shared_views/equipo_view",
                 "encabezado" => "Equipo FROAC",
                 "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
-                "url" => "usuario/equipo/"
+                "url" => "usuario/equipo/",
+                'id_view'=> 'teamFROAC'
             );
                 $this->load->view('base/est_template', $content);
     }
@@ -83,7 +87,8 @@ class Usuario extends CI_Controller {
         $content = array(
                 "main_view" => "shared_views/equipo_view",
                 "encabezado" => "Equipo FROAC",
-                "url" => "usuario/equipo/"
+                "url" => "usuario/equipo/",
+                'id_view'=> 'teamFROAC'
             );
                 $this->load->view('base/base_template', $content);
 
@@ -92,7 +97,8 @@ class Usuario extends CI_Controller {
             $content = array(
                 "main_view" => "shared_views/equipo_view",
                 "encabezado" => "Equipo FROAC",
-                "url" => "usuario/equipo/"
+                "url" => "usuario/equipo/",
+                'id_view'=> 'teamFROAC'
             );
                 $this->load->view('base/base_template', $content);
         }
@@ -109,7 +115,8 @@ class Usuario extends CI_Controller {
                 "main_view" => "shared_views/glosario_view",
                 "encabezado" => "Glosario",
                 "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
-                "url" => "usuario/glosario/"
+                "url" => "usuario/glosario/",
+                'id_view'=> 'glossary'
             );
                 $this->load->view('base/est_template', $content);
     }
@@ -117,7 +124,8 @@ class Usuario extends CI_Controller {
         $content = array(
                 "main_view" => "shared_views/glosario_view",
                 "encabezado" => "Glosario",
-                "url" => "usuario/glosario/"
+                "url" => "usuario/glosario/",
+                'id_view'=> 'glossary'
             );
                 $this->load->view('base/base_template', $content);
 
@@ -126,7 +134,8 @@ class Usuario extends CI_Controller {
              $content = array(
                 "main_view" => "shared_views/glosario_view",
                 "encabezado" => "Glosario",
-                "url" => "usuario/glosario/"
+                "url" => "usuario/glosario/",
+                'id_view'=> 'glossary'
             );
                 $this->load->view('base/base_template', $content);
         }
@@ -145,7 +154,8 @@ class Usuario extends CI_Controller {
             $content = array(
                 "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
-                "main_view" => "register/registro_view"
+                "main_view" => "register/registro_view",
+                'id_view'=> 'create-account'
             );
             $this->load->view('base/base_template', $content);
         }

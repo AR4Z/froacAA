@@ -24,7 +24,8 @@ class Repositorio extends CI_Controller{
                 "repos" => $this->repositorio_model->get_repos(),
                 "flag"  => "repo",
                 "encabezado" => "Resultados del repositorio",
-                "url" => "repositorio/lista/"
+                "url" => "repositorio/lista/",
+                'id_view' => 'repos'
             );
             if ($session_data ['username'] == "admin"){
                 $this->load->view('base/admin_template', $content);
@@ -39,7 +40,8 @@ class Repositorio extends CI_Controller{
                 "repos" => $this->repositorio_model->get_repos(),
                 "flag"  => "repo",
                 "encabezado" => "Resultados del repositorio",
-                "url" => "repositorio/lista/"
+                "url" => "repositorio/lista/",
+                'id_view' => 'repos'
             );
             $this->load->view('base/base_template', $content);
         }
@@ -176,12 +178,12 @@ class Repositorio extends CI_Controller{
           $url = "http://froac.manizales.unal.edu.co:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $lastupdate . "&fechafin=";
           if ($actualizar == "3") //Rango de Fechas
           $url = "http://froac.manizales.unal.edu.co:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $fechainicio . "&fechafin=" . $fechafin . "";
-         
+
         $tags = get_meta_tags($url);
         return $tags;
     }
 
-    public function actualizar_oas() 
+    public function actualizar_oas()
     {
         global $idrepository;
         $idrepository = $this->input->post("idrepository");
@@ -240,10 +242,10 @@ class Repositorio extends CI_Controller{
                                     'lo_lastmodified' => $datestamp,
                                     'lo_xml_lom' => $xmlo
                                 );
-                                $this->repositorio_model->insert_table($data, 'lo'); //---- Insertar en la tabla 'lo' lo correspondiente 
+                                $this->repositorio_model->insert_table($data, 'lo'); //---- Insertar en la tabla 'lo' lo correspondiente
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             foreach ($consult as $consu) {
                                 $last = $consu['lo_lastmodified'];
@@ -255,7 +257,7 @@ class Repositorio extends CI_Controller{
                                     //Datos que se van a modificar
                                     $data = array(
                                         'lo_lastmodified' => $lo_lastmodified,
-                                        'lo_xml_lom' => $xmlo 
+                                        'lo_xml_lom' => $xmlo
                                     );
 
                                     //Capos para poner en el where
@@ -270,11 +272,11 @@ class Repositorio extends CI_Controller{
                                         '1' => $lo_id
                                     );
 
-                                    $this->repositorio_model->update_table($data, 'lo', $campos, $valores); //---- Modifica en la tabla 'lo' lo correspondiente 
+                                    $this->repositorio_model->update_table($data, 'lo', $campos, $valores); //---- Modifica en la tabla 'lo' lo correspondiente
 
                                 }
-                            } 
-							else 
+                            }
+							else
 							{
                                 $data = array(
                                     'lo_deleted' => 'true',
@@ -305,16 +307,16 @@ class Repositorio extends CI_Controller{
                                 $this->importEducational($meta, $idrepository, $lo_id);
                             }
                         }
-                    }//foreach     
-                }//if    
+                    }//foreach
+                }//if
             }//for
         }//if
 
-        /////// Con esta secci�n se realiza actualizacion de fecha de ultima actualizacion en repositorio //////
+        /////// Con esta secci�n se realiza actualizacion de fecha de ultima actualizacion en repositorio //////
         //Datos que se van a modificar
-	$hoy = getdate(); 
+	$hoy = getdate();
 	$rep_lastupdate = $hoy['year']."-".$hoy['mon']."-".$hoy['mday'];
-        
+
 	$cantlo = $this->repositorio_model->get_cantlo_repo($idrepository);
 
 	$datar = array(
@@ -337,7 +339,7 @@ class Repositorio extends CI_Controller{
 
         $this->lista();
     }
-	
+
 	///////////////////// GENERAL  /////////////
 	function importGeneral($meta, $idrepository, $idlom) {
         $tagGeneral = $meta->getElementsByTagName('general');
@@ -351,32 +353,32 @@ class Repositorio extends CI_Controller{
             /***************************Title***************************/
             $titlet = $general->getElementsByTagName('title')->item(0)->nodeValue;
 			$title = $title."/".$titlet;
-			
+
             /***************************Language***********************/
             $tagLanguaje = $general->getElementsByTagName('language');
             foreach ($tagLanguaje as $l) {
                 $lang = $l->nodeValue;
 				$language = $language."/".$lang;
             }
-			
+
             /*************************Description**************************/
             $tagDescription = $general->getElementsByTagName('description');
             foreach ($tagDescription as $d) {
                 $descri = $d->nodeValue;
 				$description = $description."/".$descri;
             }
-			
+
             /*************************Keyword**************************/
             $tagKeyword = $general->getElementsByTagName('keyword');
             foreach ($tagKeyword as $k) {
                 $key = $k->nodeValue;
 				$keyword = $keyword."/".$key;
             }
-			
+
             /**************************Structure************************** */
             $structuret = $general->getElementsByTagName('structure')->item(0)->nodeValue;
 			$structure = $structure."/".$structuret;
-			
+
             /**************************Aggregationlevel************************** */
             $aggregationlevelt = $general->getElementsByTagName('aggregationlevel')->item(0)->nodeValue;
 			$aggregationlevel = $aggregationlevel."/".$aggregationlevelt;
@@ -387,7 +389,7 @@ class Repositorio extends CI_Controller{
 		$keyword = substr($keyword,1);
 		$structure = substr($structure,1);
 		$aggregationlevel = substr($aggregationlevel,1);
-		
+
             //Con esta sección almaceno en la tabla lo
             $data = array(
                 'lo_title' => $title,
@@ -411,9 +413,9 @@ class Repositorio extends CI_Controller{
 
             $this->repositorio_model->update_table($data, 'lo', $campos, $valores);
     }
-	
+
 	///////////////////// L I F E   C Y C L E/////////////
-    function importLifeCycle($meta, $idrepository, $idlom) 
+    function importLifeCycle($meta, $idrepository, $idlom)
 	{
 		$tagLifecycle = $meta->getElementsByTagName('lifecycle');
 		$date="";
@@ -424,7 +426,7 @@ class Repositorio extends CI_Controller{
             foreach ($tagContribute as $contribute) {
                 $datet = $contribute->getElementsByTagName('date')->item(0)->nodeValue;
 				$date = $date."/".$datet;
-				
+
 				$role = $contribute->getElementsByTagName('role')->item(0)->nodeValue;
 				if($role == "author")
 				{
@@ -456,7 +458,7 @@ class Repositorio extends CI_Controller{
         );
         $this->repositorio_model->update_table($data, 'lo', $campos, $valores);
     }
-	
+
 	///////////////////// T E C H N I C A L /////////////
     function importTechnical($meta, $idrepository, $idlom) {
         $tagTechnical = $meta->getElementsByTagName('technical');
@@ -496,7 +498,7 @@ class Repositorio extends CI_Controller{
         );
         $this->repositorio_model->update_table($data, 'lo', $campos, $valores);
     }
-	
+
 	///////////////////// E D U C A T I O N A L /////////////
     function importEducational($meta, $idrepository, $idlom) {
         $tagEducational = $meta->getElementsByTagName('educational');
@@ -508,28 +510,28 @@ class Repositorio extends CI_Controller{
             /**************************Interactivitytype************************** */
             $interactivitytypet = $educational->getElementsByTagName('interactivitytype')->item(0)->nodeValue;
 			$interactivitytype = $interactivitytype."/".$interactivitytypet;
-			
+
             /**************************Learningresourcetype************************** */
             $tagLearningresourcetype = $educational->getElementsByTagName('learningresourcetype');
             foreach ($tagLearningresourcetype as $lrt) {
                 $resourcetype = $lrt->nodeValue;
 				$learningresourcetype = $learningresourcetype."/".$resourcetype;
             }
-			
+
             /**************************Interactivitylevel************************** */
             $interactivitylevelt = $educational->getElementsByTagName('interactivitylevel')->item(0)->nodeValue;
 			$interactivitylevel = $interactivitylevel."/".$interactivitylevelt;
-			
+
             /**************************Difficulty************************** */
             $difficultyt = $educational->getElementsByTagName('difficulty')->item(0)->nodeValue;
 			$difficulty = $difficulty."/".$difficultyt;
 		}
-		
+
 		$interactivitytype = substr($interactivitytype,1);
 		$learningresourcetype = substr($learningresourcetype,1);
 		$interactivitylevel = substr($interactivitylevel,1);
 		$difficulty = substr($difficulty,1);
-		
+
         //Con esta sección almaceno en la tabla lom metadatos que no son multivaluados
         $data = array(
             'lo_interactivitytype' => $interactivitytype,
@@ -550,4 +552,3 @@ class Repositorio extends CI_Controller{
 		$this->repositorio_model->update_table($data, 'lo', $campos, $valores);
 	}
 }
-

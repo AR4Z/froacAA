@@ -34,7 +34,7 @@ class Main extends CI_Controller {
 
 
 	public function index() {
-        
+
         if(isset($_GET['usr']) && isset($_GET['pass'])){
            $this->load->view('base/login/login_view');
        }
@@ -59,6 +59,7 @@ class Main extends CI_Controller {
                     "total_rep" => $this->admin_model->get_total_rep(),
                     "total_lo" => $this->admin_model->get_total_lo(),
                     "total_lo_score" => $this->admin_model->get_total_lo_score(),
+					"id_view" => "searchOA"
 			)
 			;
 			$this->load->view ( 'base/'.$route.'_template', $content );
@@ -70,6 +71,7 @@ class Main extends CI_Controller {
                 "total_rep" => $this->admin_model->get_total_rep(),
                 "total_lo" => $this->admin_model->get_total_lo(),
                 "total_lo_score" => $this->admin_model->get_total_lo_score(),
+				"id_view" => "searchOA"
             )
             ;
             $this->load->view ( 'base/base_template', $content );

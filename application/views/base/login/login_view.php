@@ -31,7 +31,7 @@
         </div><br>
         <div class="registration text-center">
             <a class="" href="<?php echo base_url()?>">
-                <li class="fa fa-reply"><strong>Volver</strong></li>
+                <i class="fa fa-reply"></i>Volver
             </a>
         </div>
     </div>

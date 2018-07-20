@@ -110,7 +110,8 @@ $(window).resize(function() {
     setModalMaxHeight($('.modal.in'));
   }
 });
-
+    let idView = '<?php echo $id_view; ?>';
+    $("#"+idView).addClass('active');
     });
 </script>
 
