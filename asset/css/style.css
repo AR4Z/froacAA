@@ -386,3 +386,32 @@ footer.main-footer p {
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
 }
+
+.img-profile-user {
+	width: 112px;
+	height: 112px;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+
+.user-header {
+	background: #ff766c;
+	color: #fff;
+	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	padding: 30px;
+	text-align: center;
+}
+.bio-graph-info {
+	color: #89817e;
+}
+.bio-row {
+	width: 50%;
+	float: left;
+	margin-bottom: 10px;
+	padding: 0 15px;
+}
+
+.profile-nav  li > a {
+	color: #000;
+}
