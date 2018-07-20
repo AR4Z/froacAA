@@ -1,5 +1,4 @@
 <div class="content-inner">
-
         <div class="container-fluid">
 <!--main content start-->
     <br/>
