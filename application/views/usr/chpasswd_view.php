@@ -3,24 +3,18 @@
 </script>
 <h5>Luego de cambiar tu contraseña la sesión sera cerrada, y tendras que volver a ingresar con tus nuevas credenciales.</h5>
 <div class="col-lg-12">
-    <section class="panel" id="verify" role="form" aria-label="Verificación de contraseña actual" aria-hidden="false">
-        <header class="panel-heading">
+    <div class="card border-0" id="verify" role="form" aria-label="Verificación de contraseña actual" aria-hidden="false">
             <label id="current-password-label" for="current-password" >Ingrese su contraseña actual</label>
-        </header>
-        <div class="panel-body">
+        <div class="card-body">
                 <div class="form-group">
                     <input id="psswd_now" type="password" class="form-control" id="exampleInputPassword1" name="current-password" placeholder="Password" aria-labelledby="current-password-label" aria-required="true" autofocus>
                 </div>
                 <div id='invalid_password' aria-hidden='true' aria-live='assertive' role='alert' class='alert alert-danger' style='display:none'><strong>¡Lo sentimos!</strong> La contraseña es inválida.</div>
                 <input type="submit" class="btn btn-info" id="verificar" value="Verificar"></input>
         </div>
-    </section>
-
-
-    <section class="panel" id="form" role="form" aria-label="Ingreso de nueva contraseña" aria-hidden="true">
-        <header class="panel-heading">
+    </div>
+    <div class="card border-0" id="form" role="form" aria-label="Ingreso de nueva contraseña" aria-hidden="true">
             <label id="new-password-label" for="new_password">Ingrese su nueva contraseña</label>
-        </header>
         <div class="panel-body">
             <form class="form-horizontal tasi-form" method="POST" id="form_pass" action="<?php echo base_url()?>index.php/usuario/upd_passwd/">
                 <div class="form-group">
@@ -37,7 +31,7 @@
                 <input type="submit" id="update" class="btn btn-success" value="Actualizar">
             </form>
         </div>
-    </section>
+    </div>
 </div>
 
 
