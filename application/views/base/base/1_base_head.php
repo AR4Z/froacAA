@@ -10,22 +10,17 @@
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
+
     <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
-    <!--external css-->
-    <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="<?php echo base_url() ?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
-    <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.css" type="text/css">
-    <!-- Custom styles for this template -->
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
+
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
 
     <style>
@@ -106,15 +101,7 @@
         <![endif]-->
 
 </head>
-<?php if($view == 'base/login/login_view') : ?>
-
-<body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
-    <div class="container">
-        <?php else : ?>
-
-        <body style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
-            <section id="container">
-                <?php endif; ?>
+<body>
 
                 <div class="collapse container-fluid" id="collapseExample">
                     <br/>
@@ -234,7 +221,7 @@
                             </div>
                         </div>
                         <div class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
-                            <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" id="icon-pointer" style="color:green, font-size:18px;"></i></b></span></div>
+                            <div class="card-header text-center"><span><b>CONFIGURACIÓN DEL CURSOR <i class="fa fa-mouse-pointer" id="icon-pointer" style="font-size:1px;"></i></b></span></div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
@@ -331,3 +318,4 @@
                         </div>
                     </div>
                 </div>
+<div class="page">

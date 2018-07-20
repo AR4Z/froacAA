@@ -28,48 +28,31 @@
 
 
 </header>
-
-
-<div class="header white-bg col-lg-12" role="banner" aria-label="Barra FROAC">
-
-
-    <div class="sidebar-toggle-box">
-        <div data-original-title="Oculta barra lateral" data-placement="right" class="icon-reorder tooltips"></div>
-    </div>
-    <!--logo start-->
-    <a href="<?php echo base_url()?>" class="logo tooltips" data-placement="right"><span>FROAC</span></a>
-    <!--logo end-->
-
-    <div class="top-nav">
-
+<nav class="navbar navbar-static-top navbar-expand-lg navbar-light bg-light">
+    <a id="toggle-btn" href="#" class="menu-btn active"><i class="fa fa-bars" style="font-size: 2rem; color:black;"></i></a>
+    <a class="navbar-brand" href="<?php echo base_url()?>"><span style="color:#039700; font-size: 2.167rem;  margin-left: 15px;">FROAC</span></a>
+    <ul class="nav navbar-nav ml-auto">
         <?php if($usr_data == null) : ?>
-
-        <!--search & user info start-->
-        <ul class="nav pull-right top-menu">
-            <!-- user login dropdown start-->
-            <li class="dropdown">
-                <a data-toggle="" class="" href="<?php echo base_url()?>login">
-                    <span class="username" data-placement="right">Iniciar sesión</span>
-                </a>
-            </li>
-            <!-- user login dropdown end -->
-        </ul>
+        <li class="nav-item">
+            <a class="btn btn-outline-dark btn-lg" href="<?php echo base_url()?>login" role="button">
+                Iniciar sesión
+            </a>
+        </li>
         <?php else : ?>
         <?php foreach ($usr_data as $usr){} ?>
-        <div class="dropdown nav pull-right top-menu">
-            <button class="btn btn-outline-dark btn-lg  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span>
-                    <?php echo $usr['use_nombre'] ?></span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil"><i class=" icon-suitcase"></i> Perfil</a>
-                <a class="dropdown-item" href="<?php echo base_url()?>sesion/logout"><i class="icon-key"></i> Salir</a>
 
+        <li class="nav-item dropdown">
+            <button class="btn btn-outline-dark btn-lg dropdown-toggle" id="navbarDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php echo $usr['use_nombre'] ?></button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil">Perfil</a>
+                <a class="dropdown-item" href="<?php echo base_url()?>sesion/logout">Cerrar Sesión</a>
             </div>
-        </div>
-        <?php endif; ?>
-        <!--search & user info end-->
-    </div>
+        </li>
 
-</div>
-<!--header end-->
+        <?php endif; ?>
+    </ul>
+
+
+
+</nav>
