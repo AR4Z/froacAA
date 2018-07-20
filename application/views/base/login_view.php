@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Mosaddek">
-        <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
         <link rel="shortcut icon" href="img/favicon.png">
-
         <title>FROAC | Login</title>
-
         <!-- Bootstrap core CSS -->
         <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/bootstrap-reset.css" rel="stylesheet">
@@ -18,7 +12,6 @@
         <link href="<?php echo base_url() ?>asset/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>asset/css/style-responsive.css" rel="stylesheet" />
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>
@@ -28,7 +21,6 @@
     </head>
 
     <body class="login-body">
-
         <div class="container">
             <form class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
                 <?php
@@ -66,7 +58,7 @@
                         </a>
                     </div><br>
                     <div class="registration" align="center">
-                       
+
                         <a class="" href="<?php echo base_url()?>">
                             <li class="icon-reply"><b>Volver</b></li>
                         </a>

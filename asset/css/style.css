@@ -13,7 +13,6 @@
 
 /*boton youtube*/
 
-
 #unalTop ul.socialLinks{display:inline-block;float:right;margin:0 5px 0 20px;padding:0}
 #unalTop ul.socialLinks dd{float:left;margin:5px 2px;padding:0}
 #unalTop ul.socialLinks dd a{display:block;height:20px;width:20px}
@@ -26,7 +25,6 @@
 #unalTop ul.socialLinks dd a.rss{background-position:-63px 0}
 #unalTop ul.socialLinks dd a.rss:hover{background-position:-63px -21px}
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
 .navbar {
     padding: 15px 10px;
     background: #fff;
@@ -347,4 +345,44 @@ footer.main-footer p {
 
 .info-repo ul li a i {
     color: #bcb3aa;
+}
+.login-body{
+    background:#f1f2f7;
+}
+
+.form-signin {
+	max-width: 330px;
+	margin: 100px auto 0;
+	background: #fff;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.login-wrap {
+	padding: 20px;
+}
+.form-signin p.form-signin-heading {
+	margin: 0;
+	padding: 20px 15px;
+	text-align: center;
+	background: white;
+	border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+	color: #09757a;
+	font-size: 18px;
+	font-weight: 300;
+	font-family: 'Open Sans', sans-serif;
+}
+.form-signin input[type="text"], .form-signin input[type="password"] {
+	margin-bottom: 15px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid #eaeaea;
+	box-shadow: none;
+	font-size: 12px;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+	color: #000;
+	font-weight: 300;
+	font-family: 'Open Sans', sans-serif;
 }
