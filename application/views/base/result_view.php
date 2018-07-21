@@ -18,7 +18,7 @@ if ($sess == 1) {
     <div class="card border-0">
 
         <h4 class="card-title">Resultados que incluyen todas las palabras <b>(<?php echo $palabras ?> )</b></h4>
-
+        <p class="no-results" >No hay resultados.</p>
         <div id="show_oas" class="card-body">
 
         </div>
@@ -99,6 +99,7 @@ if ($sess == 1) {
 
 <script type="text/javascript">
     $(document).ready(function() {
+
         page();
     });
     function page() {
@@ -144,6 +145,11 @@ if ($sess == 1) {
 
                 });
                 $('#show_oas').html(dataHtml);
+                if(!(dataResult.length != 0)){
+                    $('.no-results').show();
+                } else {
+                    $('.no-results').hide();
+                }
             }
         };
         container.pagination(options);

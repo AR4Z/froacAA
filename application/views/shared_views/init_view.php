@@ -156,6 +156,7 @@
                verify_params();
                $("#info").hide("slow");
                $("#info").attr('aria-hidden', 'true');
+               
            }
        });
     </script>
