@@ -3,8 +3,9 @@ if ($sess == 1) {
     $logged = 1;
 }else $logged = 0;
 ?>
+
 <link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css">
-</script><script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
+<script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
 
 <div class="content-inner">
     <section>
@@ -16,6 +17,7 @@ if ($sess == 1) {
                         <h1 class="card-title"> <?php echo $encabezado?>:</h1>
                         <div class="card-body">
                             <?php
+
                             if (!empty($result)) {
                                 foreach ($result as $key) {
                                     $url = base64_encode($key['lo_location']);

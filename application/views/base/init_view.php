@@ -121,6 +121,7 @@
         <div class="row"  id="result">
 
         </div>
+
     </section>
 </section>
 <!--main content end-->
@@ -163,8 +164,6 @@
 </script>
 <!-- js placed at the end of the document so the pages load faster -->
 <!--<script src="js/jquery.js"></script>-->
-<script type="text/javascript" language="javascript"
-src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.js"></script>
 <script type="text/javascript" language="javascript"
 src="<?php echo base_url() ?>asset/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 

@@ -43,8 +43,10 @@ Class Lo extends CI_Controller {
         $params = implode("_", $arrayParams);
         $andParams = "('" . preg_replace('/_/', ' & ', $params) . "')";
         $orParams = "('" . preg_replace('/_/', ' | ', $params) . "')";
+        $result = $this->lo_model->get_oas_b($orParams,$andParams);
         $content = array(
-            "result" => $this->lo_model->get_oas_b($orParams,$andParams),
+            "result" => $result,
+            'js_result' => json_encode($result[0]),
             "palabras" => $palabras,
             "sess" => $sess,
             "user" => $user

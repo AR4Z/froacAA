@@ -5,16 +5,12 @@ if ($sess == 1) {
 ?>
 <link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css">
 </script><script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
-<section id="main-content">
-    <section class="wrapper">
+
 
 <div class="col-lg-12">
     <!-- page start-->
-    <section class="panel">
-        <header class="panel-heading">
-            <a href="<?php echo base_url().$url?>"><button type="button" class="btn btn-success btn-sm"><li class="icon-reply"><b> Volver</b></li></button></a> <?php echo $encabezado?>: </b>
-            <div id="prueba"></div>
-        </header>
+    <div class="card">
+
         <div class="panel-body">
             <?php
             if (!empty($result)) {
@@ -27,7 +23,7 @@ if ($sess == 1) {
                         <p><a target="_blank" class="titulo" id="<?php echo $key['lo_id'] ?>" rep_id="<?php echo $key['rep_id'] ?>" logged="<?php echo $logged ?>" href="<?php echo base_url().'lo/load_lo/'.$url.'/'.$lo_name ?>"><?php echo $key['lo_title'] ?></a>
                         </p>
                         <div>
-                            <b>Descripción: </b><?php echo $key['lo_description'] ?><br>
+                            <b>Descripcin: </b><?php echo $key['lo_description'] ?><br>
                             <b>Palabras claves: </b><?php echo $key['lo_keyword'] ?><br>
 
                             <a onclick="verMetadata('<?php echo $key['lo_id'] . '/' . $key['rep_id'] ?>')" class="btn btn-sm btn-info" data-toggle="modal" href="#dialog_medatada" txt="OA1">
@@ -48,11 +44,10 @@ if ($sess == 1) {
 
 
         </div>
-    </section>
+    </div>
     <!-- page end-->
 </div>
-    </section>
-</section>
+
 <!-- Modal Metadata -->
 <div class="modal fade" id="dialog_medatada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
