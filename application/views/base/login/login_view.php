@@ -7,9 +7,14 @@
 <form role="form" aria-label="Iniciar seción en FROAC" class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
     <p class="form-signin-heading">Federación de Repositorios de Objetos de Aprendizaje Colombia <br><br>
         <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="50"></p>
-    <?php echo validation_errors(); ?>
+
     <?php echo form_open('sesion'); ?>
     <div class="login-wrap">
+        <?php if(validation_errors()):?>
+        <div class="alert alert-danger" role="alert" aria-hidden='true' aria-live='assertive'>
+          <?php echo validation_errors(); ?>
+        </div>
+        <?php endif;?>
         <input type="text" title="Nombre de usuario FROAC" class="form-control" placeholder="Nombre de usuario" name="username" autofocus>
         <input type="password" title="Contraseña" class="form-control" name="password" placeholder="Contraseña">
 

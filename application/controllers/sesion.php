@@ -21,10 +21,13 @@ class Sesion extends CI_Controller {
 
         $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
-        
+
         if ($this->form_validation->run() == FALSE) {
             //Field validation failed.  User redirected to login page
-             $this->load->view('base/login/login_view');
+            $data = array(
+                'view' => 'base/login/login_view'
+            );
+            $this->load->view('base/login/login_view', $data);
         } else {
             //Go to private area
             $this->verificar_rol();
@@ -44,7 +47,7 @@ class Sesion extends CI_Controller {
             foreach ($result as $row) {
                 $sess_array = array(
                     'username' => $row->use_username
-                );               
+                );
                 $this->session->set_userdata('logged_in', $sess_array);
             }
             return TRUE;
@@ -53,12 +56,12 @@ class Sesion extends CI_Controller {
             return false;
         }
     }
-    
+
     public function verificar_rol() {
     	if ($this->session->userdata('logged_in')) {
     		$session_data = $this->session->userdata('logged_in');
     		$rol = $this->usuario_model->get_rol($session_data['username']);
-    
+
     		if ($rol[0]['use_rol_id']>1) {
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
@@ -68,24 +71,24 @@ class Sesion extends CI_Controller {
             }
     	}
     }
-    
+
     public function verificar_email($email) {
-    
+
     	$email = str_replace('|', '@', urldecode($email));
     	$res = $this->usuario_model->verificar_uername($email);
-    
+
     	if ($res == 1) {
     		$this->load->view('alert_acount_view');
     	}elseif ($res == 0) {
     		$this->load->view('pass_acount_view');
     	}
-    	 
+
     }
 
     public function logout() {
 
         $this->session->unset_userdata('logged_in');
-        
+
         redirect(base_url(), 'refresh');
     }
 

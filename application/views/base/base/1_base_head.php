@@ -21,7 +21,7 @@
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
+    <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
 
     <style>
         .card {
