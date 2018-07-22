@@ -98,8 +98,8 @@
 
 <!-- Modal chpassword -->
 <div class="modal fade" id="dialog_chpasswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para actualización de contraseña">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" >
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Actualizar Contraseña</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>

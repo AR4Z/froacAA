@@ -9,11 +9,6 @@ if ($sess == 1) {
 <link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css" />
 <script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
 <script src="<?php echo base_url()?>asset/js/pagination.min.js"></script>
-<div id="prueba"></div>
-<div class="col-lg-12">
-
-</div>
-
 <div class="col-lg-9">
     <div class="card border-0">
 
@@ -45,8 +40,8 @@ if ($sess == 1) {
 </div>-->
 
 <!-- Modal Metadata -->
-<div class="modal fade" id="dialog_medatada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para ver metadata del objeto de aprendizaje">
-    <div class="modal-dialog">
+<div class="modal fade" id="dialog_medatada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para ver metadata del objeto de aprendizaje" >
+    <div class="modal-dialog"  role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Metadatos estandar LOM</h4>
@@ -54,11 +49,7 @@ if ($sess == 1) {
             </div>
 
             <div class="modal-body" id="dialog_metadata_result">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="" style="" class="insideiframe embed-responsive-item" style="display: none">
 
-                    </iframe>
-                </div>
             </div>
         </div>
     </div>

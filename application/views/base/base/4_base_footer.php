@@ -78,7 +78,7 @@
         });
 
 
-        
+
         let idView = "<?php echo $id_view ?>" || "nada";
         $("#" + idView).addClass('active');
     });

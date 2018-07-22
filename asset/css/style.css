@@ -25,6 +25,7 @@
 #unalTop ul.socialLinks dd a.rss{background-position:-63px 0}
 #unalTop ul.socialLinks dd a.rss:hover{background-position:-63px -21px}
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
 .navbar {
     padding: 15px 10px;
     background: #fff;
@@ -414,23 +415,4 @@ footer.main-footer p {
 
 .profile-nav  li > a {
 	color: #000;
-}
-
-.modal {
-  text-align: center;
-  padding: 0!important;
-}
-
-.modal:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
-}
-
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
 }

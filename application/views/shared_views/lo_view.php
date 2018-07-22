@@ -3,6 +3,7 @@
 <section id="main-content">
     <section class="wrapper">
         <br>
+        <h1>hola</h1>
         <section class="panel">
             <header class="panel-heading">
                <?php echo base64_decode($lo_name);?></b>
