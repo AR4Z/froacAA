@@ -181,6 +181,8 @@ if ($this->input->post('cantidad6')!='') {
             'use_ls_cant_K' => $cantidad4,
             'use_ls_cant_G' => $cantidad5,
             'use_ls_cant_S' => $cantidad6,
+            'use_etnica' => $this->input->post('etnica'),
+            'use_institution'=> $this->input->post('institution_username'),
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -207,6 +209,16 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->insert('use_pre_stu', $data);
     }
 
+    //Guarda cada una de las discapacidades del estudiante en la tabla "use_dissability_stu"
+
+    public function insert_dissability($dissability, $id) {
+
+        $data = array(
+            'use_dissability_id' => $dissability,
+            'use_username' => $id,
+        );
+        $this->db->insert('use_dissability_stu', $data);
+    }
     //Si el usuario tiene una NEED se actualiza
 
     public function has_need($username){
@@ -244,7 +256,14 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result();
     }
 
+    // Se obtienen los registros de las discapacidades que hay en la tabla "use_dissabilities"
 
+    public function get_dissabilities() {
+
+        $query = $this->db->get('use_dissabilities');
+
+        return $query->result();
+    }
     // Se obtienen los registros de las preferencias que hay en la tabla "use_level"
 
     public function get_nivel_educativo() {
@@ -267,6 +286,14 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result();
     }
 
+    public function get_discapacidad_est($user) {
+       $this->db->select('*');
+       $this->db->from('use_dissability_stu');
+       $this->db->where('use_username', $user);
+       $this->db->join('use_dissabilities', 'use_dissability_stu.use_dissability_id = use_dissabilities.use_dissability_id');
+       $query = $this->db->get();
+       return $query->result();
+   }
 
     public function update_user($username){
         $data1 = array(

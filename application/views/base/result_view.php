@@ -93,6 +93,11 @@ if ($sess == 1) {
 
         page();
     });
+    function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode(parseInt(p1, 16))
+    }))
+}
     function page() {
         var container = $('#nav_oas');
         var info = dataResult;
@@ -126,7 +131,7 @@ if ($sess == 1) {
                             <a onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" class="btn btn-lg btn-info card-link d-inline" data-toggle="modal" href="#dialog_medatada">
                                 <i class="fa fa-eye"></i> Ver metadatos
                             </a>
-                            <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${btoa(item['lo_location'])}/${btoa(item['lo_title'])}">
+                            <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}">
                                 <i class="fa fa-eye"></i> Ver objeto
                             </a>
                         </div>

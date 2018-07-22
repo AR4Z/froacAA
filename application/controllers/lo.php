@@ -211,7 +211,7 @@ public function load_lo($url, $lo_name){
         if ($session_data ['username'] == "admin"){
             $this->load->view('layouts/admin_template', $content);
         }else{
-            $this->load->view('layouts/est_template', $content);
+            $this->load->view('layouts/base_template', $content);
         }
 
 

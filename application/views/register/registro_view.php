@@ -67,6 +67,33 @@
                             <div id="passwd2-validate">
                             </div>
                             <div class="form-group">
+                                <label for="etnica">Pertenece a una comunidad indigena:</label>
+                                <select class="form-control input-sm m-bot15" name="etnica" id="etnica">
+                                    <option value="ninguna">Ninguna</option>
+                                    <option value="embera">Embera Chamí</option>
+                                    <option value="otra">Otra comunidad</option>
+
+                                </select> </div>
+
+                            <div class="form-group">
+                                <label for="dissabilities">Presenta alguna de las siguientes discapacidades:</label>
+                                <br>
+                                <?php
+                                  foreach ($dissabilities as $key) { ?>
+                                <input type="checkbox" name="dissabilities[]" value=" <?php echo $key->use_dissability_id ?> " />
+                                <?php echo $key->use_dissability ?><br />
+                                <?php } ?>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="institution_username">Institución a la que pertenece:</label>
+                                <input aria-labelledby="institution_username" type="text" class="form-control" id="institution_username" name="institution_username" placeholder="Nombre de la institución a la que pertenece">
+                            </div>
+                            <div id="institution_username-validate">
+
+                            </div>
+
+                            <div class="form-group">
                                 <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
                                 <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
                                     <?php
@@ -78,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_preferences">
-                                <label id="label_preferences" for="pref">Preferencias:</label><br/>
+                                <label id="label_preferences" for="pref">Preferencias de tipo de recurso educativo</label><br/>
 
                                 <?php
                                                     foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
@@ -231,6 +258,9 @@
                     passwd2: {
                         required: true,
                         equalTo: "#input_passwd"
+                    },
+                    institution_username: {
+                        required: true
                     }
                 },
                 messages: {
@@ -266,6 +296,9 @@
                     passwd2: {
                         required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
                         equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
+                    },
+                    institution_username: {
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de la institucion educativa es obligatorio.</div>"
                     }
                 },
                 errorPlacement: function(error, element) {

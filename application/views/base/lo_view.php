@@ -2,7 +2,7 @@
     <section>
         <div class="container-fluid">
             <div class="card border-0">
-                <h1><?php echo base64_decode($lo_name);?></b></h1>
+                <h1><?php echo base64_decode($lo_name)?></b></h1>
 
                 <div class="card-body">
                     <div class="row">
@@ -24,8 +24,7 @@
     let lo_name = "<?php echo base64_decode($lo_name); ?>";
     let path = "<?php echo base_url()?>"
     let iframe_oa = document.getElementById("oa");*/
-</script>
-<script type='text/javascript'>
+
 /*
     console.log("desde afuera");
     $(document).ready(function () {
