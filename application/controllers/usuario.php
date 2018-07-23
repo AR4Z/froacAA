@@ -186,6 +186,7 @@ class Usuario extends CI_Controller {
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                     "usr_all_data" => $this->usuario_model->get_all_admin_data($session_data['username']),
+
                     "main_view" => "admin/perfil_view"
                 );
                 $this->load->view('base/admin_template', $content);
@@ -203,6 +204,7 @@ class Usuario extends CI_Controller {
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                         "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
+                        "data_adaptablity_interfaz" => $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']),
                         "main_view" => "usr/perfil_view"
                     );
                     $this->load->view('base/est_template', $content);
@@ -423,7 +425,7 @@ class Usuario extends CI_Controller {
 
     public function guardar() {
         // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
-        $optInterfaz = $this->input->post('personaliceInterfaz')
+        $optInterfaz = $this->input->post('personaliceInterfaz');
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));

@@ -1,9 +1,11 @@
 <!--<h1><?php var_dump($usr_all_data)?></h1>
 <h2><?php var_dump($usr_data)?>></h2>-->
+
 <?php foreach($usr_all_data as $usr_data){ ?>
       <!--main content start-->
 
       <div class="content-inner">
+          <h1><?php var_dump($data_adaptablity_interfaz) ?></h1>
           <section>
           <div class="container-fluid">
               <div class="row">
