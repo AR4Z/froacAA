@@ -356,8 +356,8 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->update('use_student', $data2);
     }
 
-    public function update_preferences_interfazDB($username){
-        $data = array(
+    public function update_preferences_interfazDB($username, $name_interfaz_preference){
+        /*$data = array(
             "cursor_size_id"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["cursor_size_id"] ,
             "color_cursor"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["color_cursor"],
             "trail_cursor_size_id"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["trail_cursor_size_id"],
@@ -368,6 +368,9 @@ if ($this->input->post('cantidad6')!='') {
             "font_size"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["font_size"],
             "font_type_id"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["font_type_id"],
             "size_line_spacing"=>$this->session->userdata('preferencesAdaptainterfaz')[0]["size_line_spacing"],
+        );*/
+        $data = array(
+            $name_interfaz_preference=>$this->session->userdata('preferencesAdaptainterfaz')[$name_interfaz_preference],
         );
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_interfaz', $data);

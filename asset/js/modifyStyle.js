@@ -17,7 +17,7 @@ $().ready(function(){
     $("input[value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
     //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
-    $("select[name='type-font']").val(localStorage['font_type_id'] || 'open-sans').change();
+    $("select[name='type-font']").val(localStorage['font_type_id'] || '1').change();
     //changeFontFamily($("select[name='type-font']").val());
 
     //changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['color_cursor'] || 'red'));
@@ -229,124 +229,6 @@ $(".input-number").keydown(function(e) {
 });
 
 
-function modifyTables(){
-    var table = $('table');
-
-    //Envuelve las tablas generadas para que estas sean responsivas
-    table.wrap('' +
-        '<div class="row">' +
-            '<div class="col-lg-12">' +
-                '<div class="panel panel-default table">' +
-                    //Table Head
-                    '<div class="panel-body">' +
-                        '<div class="dataTable_wrapper table-responsive">' +
-                            //Table
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
-        '</div>');
-
-
-    var tableHead = $('div.panel-default.table');
-
-    tableHead.prepend('<div class="panel-heading"></div>');
-
-    //Agrega el estilo definido a todas las tablas generadas
-    table.removeClass();
-    table.addClass('table table-striped table-bordered table-hover');
-}
-
-function modifyContentHeader(){
-    var contentHeader = $('div.contentHeader');
-
-    var titleContentHeader = $('div.contentHeader h1');
-    var linkContentHeader = $('div.contentHeader a');
-
-    var tableHeader = $('.table div.panel-heading');
-
-    tableHeader.html(titleContentHeader.text() +
-        '<a class="pull-right" href="' + linkContentHeader.attr('href') + '">' + linkContentHeader.text() + '</a>');
-
-    contentHeader.wrap('<div class="row"></div>');
-    contentHeader.removeClass();
-    contentHeader.addClass('col-lg-12');
-    titleContentHeader.removeClass();
-    titleContentHeader.addClass('page-header');
-    linkContentHeader.remove();
-}
-
-function modifyFieldForm(){
-    var fieldForm = $('div.fieldForm');
-
-    fieldForm.each(function(){
-        $(this).removeClass();
-        $(this).addClass('form-group');
-    });
-}
-
-function modifyFields(){
-
-    var labels = $('div.form-group label');
-
-    labels.addClass('control-label col-xs-12 col-sm-4 col-md-4');
-
-    var selectors = [];
-
-    selectors.push($('div.form-group :input'));
-    selectors.push($('div.form-group :file'));
-    selectors.push($('div.form-group :password'));
-    selectors.push($('div.form-group :radio'));
-    selectors.push($('div.form-group :checkbox'));
-
-    $.each(selectors, function(){
-        this.removeClass();
-        this.addClass('form-control');
-
-        this.wrap('<div class="col-xs-12 col-sm-8 col-md-8"></div>');
-    });
-}
-
-function modifyButtonForm(){
-    var buttonForm = $('div.buttonForm');
-
-    buttonForm.addClass('col-sm-4 col-sm-offset-4');
-}
-/*
-function loadInterfacePersonalization(){
-
-    var target = document.querySelector('#tab5');
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            console.log(mutation.type);
-            if($('#tab5').hasClass('active')){
-                $('li#accessibilityNav').css('display', 'none');
-
-                changeFontSize('input#font_size');
-                changeInterlineSpace('input#interline');
-
-                var contrastOptionSelected = $('select#contrastNav').find("option:selected");
-                var contrastValueSelected = contrastOptionSelected.val();
-                $('select#contrast').val(contrastValueSelected);
-                highContrast('select#contrast');
-
-                var fontOptionSelected = $('select#fontNav').find("option:selected");
-                var fontValueSelected = fontOptionSelected.val();
-                $('select#font').val(fontValueSelected);
-                changeFontFamily('select#font');
-            }else{
-                $('li#accessibilityNav').css('display', '');
-                observer.disconnect();
-            }
-        });
-    });
-    if(target){
-        observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
-    }
-
-}*/
-
-
 function changeFontSize(selector){
 
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector ;
@@ -395,6 +277,9 @@ function changeFontSize(selector){
         //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
     });*/
     localStorage['font_size'] = $(selector).val();
+    if(session_user && needPrefAdaptInterfaz){
+        updateValuesInterfazInSession(session_user['username'], 'font_size', localStorage['font_size']);
+    }
     $('html').css('font-size', $(selector).val() + 'px');
 }
 

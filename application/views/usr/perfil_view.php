@@ -8,7 +8,7 @@
           <!--<h1><?php var_dump($needAdaptaInterfaz) ?></h1>-->
           <br/>
           <h1><?php var_dump($this->session->userdata('adaptaInterfaz')) ?></h1>
-          <h1><?php var_dump($this->session->userdata('preferencesAdaptainterfaz'))?></h1>
+          <h1><?php var_dump($this->session->userdata('preferencesAdaptainterfaz')['font_size'])?></h1>
           <section>
           <div class="container-fluid">
               <div class="row">

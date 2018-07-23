@@ -346,8 +346,12 @@ class Usuario extends CI_Controller {
 
     // este metodo se encarga de actualizar los valores de adaptacion de la interfaz en la sesion
     // para que luego sean actualizados en la db
-    function update_session_data_adapta_interfaz($username, $cursor_size_id, $color_cursor, $trail_cursor_size_id, $trail_cursor_color, $invert_color_general, $invert_color_image, $contrast_colors_id, $font_size, $font_type_id, $size_line_spacing){
-        $newDataAdaptaInterfaz = array(
+    public function update_preferences_interfazSession(){
+        $arrayPreferencesInterfaz = $this->session->userdata('preferencesAdaptainterfaz');
+        $arrayPreferencesInterfaz[ $this->input->post('name_interfaz_preference')] = $this->input->post('value');
+
+
+        /*$newDataAdaptaInterfaz = array(
             'use_username'=> $username,
             'cursor_size_id'=> $cursor_size_id,
             'color_cursor' => $color_cursor,
@@ -359,10 +363,10 @@ class Usuario extends CI_Controller {
             "font_size"=> $font_size,
             "font_type_id"=> $font_type_id,
             "size_line_spacing"=> $size_line_spacing,
-        );
+        );*/
 
-        $this->session->set_userdata('preferencesAdaptainterfaz', $newDataAdaptaInterfaz);
-        $this->usuario_model->update_preferences_interfazDB($username);
+        $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
+        $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $this->input->post('name_interfaz_preference'));
     }
 
     public function chpasswd(){

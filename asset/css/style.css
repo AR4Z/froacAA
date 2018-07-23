@@ -34,19 +34,20 @@
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 body {
-    overflow-x:hidden
+    overflow-x:hidden;
+    font-family:"Open Sans", sans-serif !important;
 }
 
 section {
-    padding:50px 0
+    padding:50px 0;
 }
 
 .container-fluid {
-    padding:0 30px
+    padding:0 30px;
 }
 @media (max-width: 575px) {
     .container-fluid {
-        padding:0 15px
+        padding:0 15px;
     }
 }
 
