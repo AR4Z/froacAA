@@ -272,6 +272,19 @@ if ($this->input->post('cantidad6')!='') {
 
     }
 
+    public function get_need_adapta_interfaz($username){
+
+        $this->db->select('use_adapta_interfaz_id');
+    	$this->db->from('use_student');
+    	$this->db->where('use_username', $username);
+        $this->db->limit(1);
+    	$query = $this->db->get();
+
+
+        return $query->result_array();
+
+    }
+
     // Se obtienen los registros de las preferencias que hay en la tabla "use_preference"
 
     public function get_preferencias() {

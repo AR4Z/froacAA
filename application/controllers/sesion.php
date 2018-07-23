@@ -63,6 +63,15 @@ class Sesion extends CI_Controller {
     		$rol = $this->usuario_model->get_rol($session_data['username']);
 
     		if ($rol[0]['use_rol_id']>1) {
+                $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
+                $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+                if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
+                    $preferences_array = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+                    $this->session->set_userdata('adaptaInterfaz', true);
+                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferences_array);
+                } else {
+                    $this->session->set_userdata('adaptaInterfaz', false);
+                }
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
                 redirect(base_url().'admin', 'refresh'); // recordar configuración de enable_query_strings puede traer algunos problemas
@@ -88,6 +97,8 @@ class Sesion extends CI_Controller {
     public function logout() {
 
         $this->session->unset_userdata('logged_in');
+        $this->session->unset_userdata('adaptaInterfaz');
+        $this->session->unset_userdata('preferencesAdaptainterfaz');
 
         redirect(base_url(), 'refresh');
     }

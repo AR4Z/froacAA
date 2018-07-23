@@ -186,7 +186,6 @@ class Usuario extends CI_Controller {
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                     "usr_all_data" => $this->usuario_model->get_all_admin_data($session_data['username']),
-
                     "main_view" => "admin/perfil_view"
                 );
                 $this->load->view('base/admin_template', $content);
@@ -205,6 +204,7 @@ class Usuario extends CI_Controller {
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                         "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
                         "data_adaptablity_interfaz" => $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']),
+                        "needAdaptaInterfaz" => $this->usuario_model->get_need_adapta_interfaz($session_data['username']),
                         "main_view" => "usr/perfil_view"
                     );
                     $this->load->view('base/est_template', $content);
