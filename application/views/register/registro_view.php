@@ -73,7 +73,8 @@
                                     <option value="embera">Embera Chamí</option>
                                     <option value="otra">Otra comunidad</option>
 
-                                </select> </div>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label for="dissabilities">Presenta alguna de las siguientes discapacidades:</label>
@@ -113,6 +114,20 @@
                                 <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" aria-selected="true" name="pref[]" value=" <?php echo $key->use_pre_id ?> " /><label id="<?php echo $preferencia?>">
                                     <?php echo $key->use_pre_preferencia ?></label><br />
                                 <?php } ?>
+
+                            </div>
+                            <div class="form-group" role="group" aria-labelledby="label_interfaz">
+                                <label for="personaliceInterfaz" id="label_personalice_interfaz">¿Desea personalizar la interfaz?</label>
+                                <select class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdaptaInterfaz as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
 
                             </div>
                         </div>

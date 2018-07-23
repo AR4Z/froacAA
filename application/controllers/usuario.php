@@ -155,6 +155,7 @@ class Usuario extends CI_Controller {
                 'dissabilities' => $this->usuario_model->get_dissabilities(),
                 "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
+                'optsAdaptaInterfaz' => $this->usuario_model->get_opts_adapta_interfaz(),
                 "main_view" => "register/registro_view",
                 'id_view'=> 'create-account'
             );
@@ -421,11 +422,19 @@ class Usuario extends CI_Controller {
     // en la tabla usuario y estudiante
 
     public function guardar() {
-
+        // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
+        $optInterfaz = $this->input->post('personaliceInterfaz')
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
         }
+
+        // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
+        // se agregara a la tabla de preferencias de interfaz con los valores por default
+        if($optInterfaz == 1 || $optInterfaz == 2){
+            $this->usuario_model->insert_pref_interfaz($this->input->post('username'));
+        }
+
         if($_POST["necesidadespecial"]!=""){
             $this->usuario_model->has_need($this->input->post('username'));
             $need_vision = null;

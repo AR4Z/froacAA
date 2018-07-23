@@ -183,6 +183,7 @@ if ($this->input->post('cantidad6')!='') {
             'use_ls_cant_S' => $cantidad6,
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institution_username'),
+            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz')
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -197,6 +198,15 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
     }
+
+    // almacena los valores para adaptar la interfaz
+    public function insert_pref_interfaz($id){
+        $data = array(
+            'use_username' => $id,
+        );
+        $this->db->insert('use_pref_interfaz', $data);
+    }
+
 
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
 
@@ -274,7 +284,12 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result();
     }
 
+    // se obtienen las opciones para activar la personalización de la interfaz, el narrador y el lector de pantalla
 
+    public function get_opts_adapta_interfaz(){
+        $query = $this->db->get('options_use');
+        return $query->result();
+    }
     //Metodo que selecciona las preferencias de un estudiante dado
 
     public function get_preferencia_est($user) {
