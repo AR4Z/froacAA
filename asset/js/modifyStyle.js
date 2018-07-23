@@ -476,50 +476,29 @@ function highContrast(optionContrast){
     localStorage['contrast_colors_id'] = optionContrast;
 }
 
-function changeFontFamily(fontName, selector){
-    /*
-    selector = (typeof selector == 'undefined') ? 'select#fontNav' : selector ;
-
-    var selectors = [];
-
-    selectors.push($('body'));
-
-    $(selector).change(function(){
-
-        var optionSelected = $(this).find("option:selected");
-        var valueSelected = optionSelected.val();
-
-        //console.log(valueSelected);
-
-        $.each(selectors, function(){
-            this.css('font-family', valueSelected);
-        });
-
-        if(selector === 'select#fontNav'){
-            $('select#font').val(valueSelected);
-        }else if(selector === 'select#font'){
-            $('select#fontNav').val(valueSelected);
-        }
-    });*/
-
+function changeFontFamily(fontID){
+    let fontsID = {
+        '1':'open-sans',
+        '2':'serif',
+        '3':'cantarell',
+        '4':'source-code-pro'
+    }
     let fontsURL = {
         'open-sans':'https://fonts.googleapis.com/css?family=Open+Sans',
         'serif':'https://fonts.googleapis.com/css?family=PT+Serif',
         'cantarell':'https://fonts.googleapis.com/css?family=Cantarell',
         'source-code-pro': 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
     }
-    let fontsName = {
+    let fontsNameCSS = {
         'open-sans':"'Open Sans', sans-serif",
         'serif':"'PT Serif', serif",
         'cantarell':"'Cantarell', sans-serif",
         'source-code-pro': "'Source Code Pro', monospace"
     }
-    console.log(fontName);
+    let fontName = fontsID[fontID]
     $('#font').attr('href', fontsURL[fontName]);
-    console.log(fontsName[fontName]);
-    $('body').css('font-family', fontsName[fontName]);
-    console.log($('body').css('font-family'));
-    localStorage['font_type_id'] = fontName;
+    $('body').css('font-family', fontsNameCSS[fontName]);
+    localStorage['font_type_id'] = fontID;
 }
 
 function changeInterlineSpace(selector){

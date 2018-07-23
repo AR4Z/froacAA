@@ -442,10 +442,10 @@
                             <div class="row">
                                 <div class="col">
                                     <select name="type-font" class="custom-select">
-                                        <option selected value="open-sans">Open Sans</option>
-                                        <option value="serif">Serif</option>
-                                        <option value="cantarell">Cantarell</option>
-                                        <option value="source-code-pro">Source code PRO</option>
+                                        <option selected value="1">Open Sans</option>
+                                        <option value="2">Serif</option>
+                                        <option value="3">Cantarell</option>
+                                        <option value="4">Source code PRO</option>
                                     </select>
                                 </div>
                             </div>
