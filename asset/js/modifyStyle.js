@@ -1,26 +1,10 @@
 $().ready(function(){
     if(session_user){
-        /*localStorage['cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['cursor_size_id']?>"
-        localStorage['color_cursor'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['color_cursor']?>"
-        localStorage['trail_cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_size_id']?>"
-        localStorage['trail_cursor_color'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_color']?>"
-        localStorage['invert_color_general'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_general']?>"
-        localStorage['invert_color_image'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_image']?>"
-        localStorage['contrast_colors_id'] = <?php $this->session->userdata('preferencesAdaptainterfaz')['contrast_colors_id']?>
-        localStorage['font_size'] = <?php $this->session->userdata('preferencesAdaptainterfaz')['font_size']?>
-        localStorage['font_type_id'] = <?php $this->session->userdata('preferencesAdaptainterfaz')['font_type_id']?>
-        localStorage['size_line_spacing'] = <?php $this->session->userdata('preferencesAdaptainterfaz')['size_line_spacing']?>
-
-localStorage['invert_color_image'],
-localStorage['contrast_colors_id'],
-localStorage['font_size'],
-localStorage['font_type_id'],
-localStorage['size_line_spacing'] );*/
-console.log("swsws");
+        console.log("swsws");
     } else {
         console.log("nada");
     }
-/*
+
     $(function() {
         $('#cp1, #cp2').colorpicker();
     });
@@ -30,20 +14,20 @@ console.log("swsws");
     $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
     //changeInterlineSpace('#inputInterlineSize');
 
-    $("input[value=" + (localStorage['contrast_colors_id'] || 'normalContrast') + "]").prop('checked', true).change();
+    $("input[value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
     //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
     $("select[name='type-font']").val(localStorage['font_type_id'] || 'open-sans').change();
     //changeFontFamily($("select[name='type-font']").val());
-*/
+
     //changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['color_cursor'] || 'red'));
     /*if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
         $('#div-color-cursor').show();
         $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || 'red');
         $("input[name='colorMousePointer']").change();
     }*/
-/*
-    $("input[value=" + (localStorage['trail_cursor_size_id'] || 'sizeCursorTrails0') + "]").prop('checked', true).change();
+
+    $("input[value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
     //createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val()));
     /*if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
         $('#div-color-cursor-trails').show();
@@ -68,9 +52,10 @@ console.log("swsws");
 
     //modifyButtonForm();
 /*
-    animate();
+
     //loadInterfacePersonalization();
 */
+animate();
 });
 
 $('#fontAwesomess').ready(function(){
@@ -103,20 +88,22 @@ $("input[name='invertGeneral']").change(function(){
 });
 
 
-$("input[name='trail_cursor_color']").change(function(){
+$("input[name='colorCursorTrails']").change(function(){
     let optionSizeTrail = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
     createTrail(optionSizeTrail, $(this).val(), localStorage['invert_color_general']);
 });
 
 $("input[name='radioOptionsSizeCursorTrails']").change(function(){
     let optionSize = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
-    if(optionSize != 'sizeCursorTrails0'){
+    console.log(optionSize);
+    if(optionSize != '1'){
+        console.log("crear")
         $('#div-color-cursor-trails').show();
         //createTrail(optionSize, localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val(), localStorage['invert_color_general']);
-        $("input[name='trail_cursor_color']").val(localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val()).change();
+        $("input[name='colorCursorTrails']").val(localStorage['trail_cursor_color'] || $("input[name='colorCursorTrails']").val()).change();
     } else {
         $('#div-color-cursor-trails').hide();
-        createTrail(0);
+        createTrail('1');
     }
 });
 
@@ -562,11 +549,12 @@ Dot.prototype.draw = function() {
 
 function createTrail(optionLenTrails, colorTrails, invert_color_general){
     let lenTrail = {
-        "sizeCursorTrails0": 0,
-        "sizeCursorTrails12": 12,
-        "sizeCursorTrails24": 24
+        "1": 0,
+        "2": 12,
+        "3": 24
     }
     let lenInt = lenTrail[optionLenTrails];
+    console.log((lenInt));
     if(lenInt){
         if(optionLenTrails != localStorage['trail_cursor_size_id'] || (dots.length != lenInt)){
             $('.trail').remove();

@@ -144,7 +144,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -190,7 +189,7 @@
                                 <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="2">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="2" checked>
                                 <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
                             </div>
                             <div class="col-md-2">
@@ -223,10 +222,10 @@
                         <div class="row">
                             <div class="col">
                                 <select name="type-font" class="custom-select">
-                                    <option selected value="open-sans">Open Sans</option>
-                                    <option value="serif">Serif</option>
-                                    <option value="cantarell">Cantarell</option>
-                                    <option value="source-code-pro">Source code PRO</option>
+                                    <option selected value="1">Open Sans</option>
+                                    <option value="2">Serif</option>
+                                    <option value="3">Cantarell</option>
+                                    <option value="4">Source code PRO</option>
                                 </select>
                             </div>
                         </div>
@@ -246,19 +245,19 @@
                                 <b>TAMAÑO DEL CURSOR</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normalCursor">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="1">
                                     <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="cursorSize16">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="2">
                                     <label class="form-check-label" for="cursorSize16">16 x 16</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="cursorSize32">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="3">
                                     <label class="form-check-label" for="cursorSize32">32 x 32</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="cursorSize40">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="4">
                                     <label class="form-check-label" for="cursorSize40">40 x 40</label>
                                 </div>
 
@@ -277,15 +276,15 @@
                                 <b>TAMAÑO DEL RASTRO</b>
                                 <br/>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="sizeCursorTrails0" checked>
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="1" checked>
                                     <label class="form-check-label" for="normalSizeCursorTrails">Sin rastro</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="sizeCursorTrails12">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="2">
                                     <label class="form-check-label" for="cursorSizeTrails12">12</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="sizeCursorTrails24">
+                                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="3">
                                     <label class="form-check-label" for="cursorSizeTrails24">24</label>
                                 </div>
                                 <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
@@ -496,15 +495,15 @@
                                     <b>TAMAÑO DEL RASTRO</b>
                                     <br/>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="sizeCursorTrails0" checked>
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails" value="1" checked>
                                         <label class="form-check-label" for="normalSizeCursorTrails">Sin rastro</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="sizeCursorTrails12">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails12" value="2">
                                         <label class="form-check-label" for="cursorSizeTrails12">12</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="sizeCursorTrails24">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="cursorSizeTrails24" value="3">
                                         <label class="form-check-label" for="cursorSizeTrails24">24</label>
                                     </div>
                                     <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
