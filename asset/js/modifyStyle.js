@@ -130,7 +130,7 @@ $("input[name='radioOptionsSizeCursor']").change(function() {
     let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
     console.log(localStorage['color_cursor']);
 
-    if (optionSize != 'normalCursor') {
+    if (optionSize != '1') {
         $('#div-color-cursor').show();
         //changeMousePointer(optionSize, localStorage['color_cursor'] || $("input[name='colorMousePointer']").val());
         $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || $("input[name='colorMousePointer']").val()).change();
@@ -413,10 +413,10 @@ function changeFontSize(selector){
 
 function changeMousePointer(cursor_size_id, color_cursor){
     let sizeOptionsCursor = {
-        'normalCursor': 0,
-        'cursorSize16': 16,
-        'cursorSize32': 32,
-        'cursorSize40': 48
+        '1': 0,
+        '2': 16,
+        '3': 32,
+        '4': 48
     }
     let sizeInt = sizeOptionsCursor[cursor_size_id];
     if(sizeInt){

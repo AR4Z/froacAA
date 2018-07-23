@@ -465,19 +465,19 @@
                                     <b>TAMAÑO DEL CURSOR</b>
                                     <br/>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="normalCursor">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor" value="1">
                                         <label class="form-check-label" for="normalSizeCursor">No cambiar</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="cursorSize16">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="2">
                                         <label class="form-check-label" for="cursorSize16">16 x 16</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="cursorSize32">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="3">
                                         <label class="form-check-label" for="cursorSize32">32 x 32</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="cursorSize40">
+                                        <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="4">
                                         <label class="form-check-label" for="cursorSize40">40 x 40</label>
                                     </div>
 
