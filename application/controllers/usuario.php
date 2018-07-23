@@ -344,6 +344,27 @@ class Usuario extends CI_Controller {
         }
     }
 
+    // este metodo se encarga de actualizar los valores de adaptacion de la interfaz en la sesion
+    // para que luego sean actualizados en la db
+    function update_session_data_adapta_interfaz($username, $cursor_size_id, $color_cursor, $trail_cursor_size_id, $trail_cursor_color, $invert_color_general, $invert_color_image, $contrast_colors_id, $font_size, $font_type_id, $size_line_spacing){
+        $newDataAdaptaInterfaz = array(
+            'use_username'=> $username,
+            'cursor_size_id'=> $cursor_size_id,
+            'color_cursor' => $color_cursor,
+            'trail_cursor_size_id'=> $trail_cursor_size_id,
+            "trail_cursor_color"=> $trail_cursor_color,
+            "invert_color_general"=> $invert_color_general,
+            "invert_color_image"=> $invert_color_image,
+            "contrast_colors_id"=> $contrast_colors_id,
+            "font_size"=> $font_size,
+            "font_type_id"=> $font_type_id,
+            "size_line_spacing"=> $size_line_spacing,
+        );
+
+        $this->session->set_userdata('preferencesAdaptainterfaz', $newDataAdaptaInterfaz);
+        $this->usuario_model->update_preferences_interfazDB($username);
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');

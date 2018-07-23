@@ -68,7 +68,7 @@ class Sesion extends CI_Controller {
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferences_array = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
                     $this->session->set_userdata('adaptaInterfaz', true);
-                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferences_array);
+                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferences_array[0]);
                 } else {
                     $this->session->set_userdata('adaptaInterfaz', false);
                 }

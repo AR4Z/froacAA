@@ -98,7 +98,21 @@
           <script src="js/respond.min.js"></script>
 
         <![endif]-->
-
+<script type="text/javascript">
+    let session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
+    if(session_user){
+        localStorage['cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['cursor_size_id']?>"
+        localStorage['color_cursor'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['color_cursor']?>"
+        localStorage['trail_cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_size_id']?>"
+        localStorage['trail_cursor_color'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_color']?>"
+        localStorage['invert_color_general'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_general']?>"
+        localStorage['invert_color_image'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_image']?>"
+        localStorage['contrast_colors_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['contrast_colors_id']?>";
+        localStorage['font_size'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['font_size']?>";
+        localStorage['font_type_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['font_type_id']?>";
+        localStorage['size_line_spacing'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['size_line_spacing']?>";
+    }
+</script>
 </head>
 <?php if($view == 'base/login/login_view') : ?>
     <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
@@ -172,27 +186,27 @@
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normalContrast">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="1">
                                 <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white" checked>
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="2">
                                 <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="white-black">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="3">
                                 <label class="form-check-label contrast-label" for="inlineRadio3"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="black-yellow">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="4">
                                 <label class="form-check-label contrast-label" for="inlineRadio4"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="yellow-black">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="5">
                                 <label class="form-check-label contrast-label" for="inlineRadio5"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" /></label>
                             </div>
                             <div class="col-md-2">
-                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="gray">
+                                <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="6">
                                 <label class="form-check-label contrast-label" for="inlineRadio6"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" /></label>
                             </div>
                         </div>
@@ -391,27 +405,27 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="normalContrast">
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1" value="1">
                                     <label class="form-check-label contrast-label" for="inlineRadio1"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" /></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="black-white" checked>
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2" value="2" checked>
                                     <label class="form-check-label contrast-label" for="inlineRadio2"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" /></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="white-black">
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3" value="3">
                                     <label class="form-check-label contrast-label" for="inlineRadio3"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" /></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="black-yellow">
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4" value="4">
                                     <label class="form-check-label contrast-label" for="inlineRadio4"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" /></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="yellow-black">
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5" value="5">
                                     <label class="form-check-label contrast-label" for="inlineRadio5"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" /></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="gray">
+                                    <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6" value="6">
                                     <label class="form-check-label contrast-label" for="inlineRadio6"><img style="height: 64px; width: 64px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" /></label>
                                 </div>
                             </div>
