@@ -155,7 +155,7 @@ class Usuario extends CI_Controller {
                 'dissabilities' => $this->usuario_model->get_dissabilities(),
                 "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
-                'optsAdaptaInterfaz' => $this->usuario_model->get_opts_adapta_interfaz(),
+                'optsAdapta' => $this->usuario_model->get_opts_adapta(),
                 "main_view" => "register/registro_view",
                 'id_view'=> 'create-account'
             );

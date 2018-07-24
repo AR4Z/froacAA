@@ -1,6 +1,4 @@
-<link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet">
-</link>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
 
 
 <div class="content-inner" role="main">
@@ -120,7 +118,21 @@
                                 <label for="personaliceInterfaz" id="label_personalice_interfaz">¿Desea personalizar la interfaz?</label>
                                 <select class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
                                     <?php
-                                        foreach($optsAdaptaInterfaz as $key) {?>
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
+
+                            </div>
+                            <div class="form-group" role="group" aria-labelledby="label_narrator">
+                                <label for="useNarrator" id="label_use_narrator">¿Desea usar el narrador?</label>
+                                <select class="form-control input-sm m-bot15" name="useNarartor" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
                                             <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
                                         <?php else:?>

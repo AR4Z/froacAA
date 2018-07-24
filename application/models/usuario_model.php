@@ -49,6 +49,23 @@ function get_all_data_adaptability_interfaz($username) {
         return $query->result_array();
 }
 
+function get_all_data_adaptability_narrator($username) {
+    $query = $this->db->query("select use_pref_narrator.use_username, use_pref_narrator.speed_reading, use_pref_narrator.pitch_id, use_pref_narrator.volume_id, use_pref_narrator.voice_gender_id, use_pref_narrator.links_id, use_pref_narrator.highlight_id,
+    use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id
+    from use_pref_narrator
+    inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.pitch_id
+    inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.volume_id
+    inner join gender_options  on gender_options.gender_id=use_pref_narrator.voice_gender_id
+    inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_narrator.links_id
+    inner join reading_units on reading_units.unit_id=use_pref_narrator.highlight_id
+    inner join components_read_opts on components_read_opts.component_read_id=use_pref_narrator.speech_component_id
+    inner join reading_units on reading_units.unit_id=use_pref_narrator.reading_unit_id
+    inner join users on users.use_username=use_pref_narrator.use_username
+    where use_pref_narrator.use_username='".$username."'");
+
+        return $query->result_array();
+}
+
 
 
     // Metodo que obtiene los registros del administrador a partir del nombre de usuario a partir de la tabla usuario
@@ -216,12 +233,21 @@ if ($this->input->post('cantidad6')!='') {
 
     // almacena los valores para adaptar la interfaz
     public function insert_pref_interfaz($id){
+        // inicialmente son los valores por default
         $data = array(
             'use_username' => $id,
         );
         $this->db->insert('use_pref_interfaz', $data);
     }
 
+    // almacena los valores para usar el narrador
+    public function insert_pref_narrator($id){
+        // inicialmente son los valores por default
+        $data = array(
+            'use_username' => $id,
+        );
+        $this->db->insert('use_pref_narrator', $data);
+    }
 
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
 
@@ -272,6 +298,7 @@ if ($this->input->post('cantidad6')!='') {
 
     }
 
+    // me dice si un usuario necesita adaptar la interfaz o no
     public function get_need_adapta_interfaz($username){
 
         $this->db->select('use_adapta_interfaz_id');
@@ -284,6 +311,18 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
 
     }
+
+    // me dice si un usuario necesita usar el narrador
+    public function get_need_narrator($username){
+        $this->db->select('use_narrator_id');
+        $this->db->from('use_student');
+        $this->db->where('use_username', $username);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        return $query->reasult_array();
+    }
+
 
     // Se obtienen los registros de las preferencias que hay en la tabla "use_preference"
 
@@ -313,8 +352,7 @@ if ($this->input->post('cantidad6')!='') {
     }
 
     // se obtienen las opciones para activar la personalización de la interfaz, el narrador y el lector de pantalla
-
-    public function get_opts_adapta_interfaz(){
+    public function get_opts_adapta(){
         $query = $this->db->get('options_use');
         return $query->result();
     }
@@ -356,6 +394,7 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->update('use_student', $data2);
     }
 
+    // este metodo se encarga de actualizar las preferencias a la hora de adaptar la interfaz en la DB tabla: "use_pref_interfaz"
     public function update_preferences_interfazDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_interfaz', $data);
