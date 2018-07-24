@@ -4,19 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-    <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet'>
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
 
+    <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
-
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
@@ -142,6 +141,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -209,7 +209,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card bg-light mb-3" style="max-width: 20rem;">
                     <div class="card-header text-center"><span><b>TIPO DE FUENTE</b></span></div>
                     <div class="card-body">
                         <div class="row">
@@ -219,13 +219,52 @@
                         </div>
                         <div class="row">
                             <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type-font" id="defaultFont" value="1">
+                                            <label class="form-check-label sans" for="defaultFont">Open Sans</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type-font" id="serifFont" value="2">
+                                            <label class="form-check-label serif" for="serifFont">Serif</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type-font" id="cantarellFont" value="3">
+                                            <label class="form-check-label cantarell" for="cantarellFont">Cantarell</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type-font" id="sourceCodePROFont" value="4">
+                                            <label class="form-check-label sourceCodePRO" for="sourceCodePROFont">Source Code PRO</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--
                                 <select name="type-font" class="custom-select">
-                                    <option selected value="1">Open Sans</option>
-                                    <option value="2">Serif</option>
-                                    <option value="3">Cantarell</option>
-                                    <option value="4">Source code PRO</option>
-                                </select>
+                                    <option class="sans" selected value="1">Open Sans</option>
+                                    <option class="serif" value="2">Serif</option>
+                                    <option class="cantarell" value="3">Cantarell</option>
+                                    <option class="sourceCodePRO" value="4">Source code PRO</option>
+                                </select>-->
                             </div>
+
                         </div>
 
                     </div>
@@ -329,6 +368,7 @@
             </div>
         </div>
 
+
         <div class="container">
     <?php elseif (!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')) : ?>
         <body>
@@ -428,7 +468,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card bg-light mb-3" style="max-width: 20rem;">
                         <div class="card-header text-center"><span><b>TIPO DE FUENTE</b></span></div>
                         <div class="card-body">
                             <div class="row">
@@ -438,13 +478,52 @@
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="type-font" id="defaultFont" value="1">
+                                                <label class="form-check-label sans" for="defaultFont">Open Sans</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="type-font" id="serifFont" value="2">
+                                                <label class="form-check-label serif" for="serifFont">Serif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="type-font" id="cantarellFont" value="3">
+                                                <label class="form-check-label cantarell" for="cantarellFont">Cantarell</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="type-font" id="sourceCodePROFont" value="4">
+                                                <label class="form-check-label sourceCodePRO" for="sourceCodePROFont">Source Code PRO</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--
                                     <select name="type-font" class="custom-select">
-                                        <option selected value="1">Open Sans</option>
-                                        <option value="2">Serif</option>
-                                        <option value="3">Cantarell</option>
-                                        <option value="4">Source code PRO</option>
-                                    </select>
+                                        <option class="sans" selected value="1">Open Sans</option>
+                                        <option class="serif" value="2">Serif</option>
+                                        <option class="cantarell" value="3">Cantarell</option>
+                                        <option class="sourceCodePRO" value="4">Source code PRO</option>
+                                    </select>-->
                                 </div>
+
                             </div>
 
                         </div>

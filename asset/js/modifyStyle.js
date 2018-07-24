@@ -25,7 +25,7 @@ $(document).ready(function(){
     $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
     //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
-    $("select[name='type-font']").val(localStorage['font_type_id'] || '1').change();
+    $("input[name='type-font'][value="+(localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
     //changeFontFamily($("select[name='type-font']").val());
 
     //changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['color_cursor'] || 'red'));
@@ -146,8 +146,8 @@ $("input[name='radioOptionsSizeCursor']").change(function() {
     }
 });
 
-$("select[name='type-font']").change(function() {
-    changeFontFamily($(this).val());
+$("input[name='type-font']").change(function() {
+    changeFontFamily($("input[name='type-font']:checked").val());
 });
 
 $("input[name='radioOptionscontrast']").change(function() {
@@ -266,51 +266,6 @@ function updateValuesInterfazInSession(names_interfaz_preference, values){
 function changeFontSize(selector){
 
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector ;
-    /*
-    var selectors = [];
-
-    selectors.push($('body'));
-    selectors.push($('h1'));
-    selectors.push($('h2'));
-    selectors.push($('h3'));
-    selectors.push($('h4'));
-    selectors.push($('h5'));
-    selectors.push($('h6'));
-    selectors.push($('span'));
-    selectors.push($('p'));*/
-
-
-    /*$(selector).change(function(){
-        $.each(selectors, function(){
-            var actualSize = this.css('font-size');
-            var actualSizeFloat = parseFloat(actualSize);
-            console.log(actualSize)
-            //var newSize = (actualSizeFloat * $(selector).val())/change;
-            //change = $(selector).val();
-            if(increment){
-                this.css('font-size', actualSizeFloat + 1.6);
-            } else if(decrement) {
-                this.css('font-size', actualSizeFloat - 1.6);
-            }
-        });
-
-    });*/
-    /*$.each(selectors, function(){
-        let name  = this.prop("nodeName") || this.prop('tagName');
-        if(name == undefined){
-            return;
-        }
-        console.log(this);
-        //console.log(name);
-        var actualSize = elementFonts[name.toLowerCase()];
-        var actualSizeFloat = parseFloat(actualSize);
-        //var newSize = (actualSizeFloat * $(selector).val())/change;
-        //change = $(selector).val();
-
-        this.css('font-size', actualSizeFloat + (($(selector).val() - 1) * 10) * 1.6);
-        //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
-    });*/
-
     if(session_user && needPrefAdaptInterfaz && (localStorage['font_size'] != $(selector).val())){
         updateValuesInterfazInSession(['font_size'], [$(selector).val()]);
     }
@@ -416,8 +371,8 @@ function changeFontFamily(fontID){
         'cantarell':"'Cantarell', sans-serif",
         'source-code-pro': "'Source Code Pro', monospace"
     }
-    let fontName = fontsID[fontID]
-    $('#font').attr('href', fontsURL[fontName]);
+    let fontName = fontsID[fontID];
+
     $('body').css('font-family', fontsNameCSS[fontName]);
 
     if(session_user && needPrefAdaptInterfaz && (localStorage['font_type_id'] != fontID)){

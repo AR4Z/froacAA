@@ -24,7 +24,21 @@
 #unalTop ul.socialLinks dd a.email:hover{background-position:-42px -21px}
 #unalTop ul.socialLinks dd a.rss{background-position:-63px 0}
 #unalTop ul.socialLinks dd a.rss:hover{background-position:-63px -21px}
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.serif {
+    font-family:'PT Serif', serif !important;
+}
+
+.sans {
+    font-family:"Open Sans", sans-serif !important;
+}
+.cantarell {
+    font-family: 'Cantarell', sans-serif !important;
+}
+
+.sourceCodePRO {
+    font-family: 'Source Code Pro', monospace !important;
+}
 
 .navbar {
     padding: 15px 10px;
