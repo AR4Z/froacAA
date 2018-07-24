@@ -356,11 +356,7 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->update('use_student', $data2);
     }
 
-    public function update_preferences_interfazDB($username, $name_interfaz_preference){
-
-        $data = array(
-            $name_interfaz_preference=>$this->session->userdata('preferencesAdaptainterfaz')[$name_interfaz_preference],
-        );
+    public function update_preferences_interfazDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_interfaz', $data);
     }

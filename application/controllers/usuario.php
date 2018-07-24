@@ -356,7 +356,7 @@ class Usuario extends CI_Controller {
         }
         $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
         echo(json_encode($this->session->userdata('preferencesAdaptainterfaz')));
-        //$this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $this->input->post('name_interfaz_preference'));
+        $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $arrayCombineValues);
     }
 
     public function chpasswd(){

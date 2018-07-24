@@ -47,7 +47,7 @@
                 <?php echo $usr['use_nombre'] ?></button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil">Perfil</a>
-                <a class="dropdown-item" href="<?php echo base_url()?>sesion/logout">Cerrar Sesión</a>
+                <a onclick="localStorage.clear();" class="dropdown-item" href="<?php echo base_url()?>sesion/logout">Cerrar Sesión</a>
             </div>
         </li>
 

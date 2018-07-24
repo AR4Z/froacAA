@@ -34,6 +34,7 @@ $(document).ready(function(){
         $("input[name='colorMousePointer']").change();
     }*/
     console.log("trail_cursor_size_id" + localStorage['trail_cursor_size_id']);
+
     $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
     $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
     //createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val()));
@@ -41,29 +42,26 @@ $(document).ready(function(){
         $('#div-color-cursor-trails').show();
         $("input[name='trail_cursor_color']").val(localStorage['trail_cursor_color'] || 'red');
         $("input[name='trail_cursor_color']").change();
-    }*//*
+    }*/
+    if(localStorage['invert_color_image'] == 't'){
+        localStorage['invert_color_image'] = 'true';
+    } else if(localStorage['invert_color_image'] == 'f'){
+        localStorage['invert_color_image'] = 'false';
+    }
+
+    if(localStorage['invert_color_general']=='t'){
+        localStorage['invert_color_general'] = 'true';
+    } else if(localStorage['invert_color_general'] == 'f'){
+        localStorage['invert_color_general'] = 'false';
+    }
+
+    console.log("contrast image", localStorage['invert_color_image']);
     $('.colorpicker').ready(function(){
-        $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] === "true").change();
-        $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] === "true").change();
-    });*/
-    //Modifica el estilo de las tablas agregadas
-    //modifyTables();
+        $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
+        $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
+    });
 
-    //Modifica el estilo de los encabezados de los formularios
-    //modifyContentHeader();
-
-    //Modifica el estilo de los contenedores de los campos de los formularios
-    //modifyFieldForm();
-
-    //Modifica el estilo de los campos de los formularios
-    //modifyFields();
-
-    //modifyButtonForm();
-/*
-
-    //loadInterfacePersonalization();
-*/
-animate();
+    animate();
 });
 /*
 $('#fontAwesomess').ready(function(){
@@ -74,11 +72,17 @@ $("input[name='invertImages']").change(function(){
     if ($(this).prop("checked")) {
         $('img:not(.no-invert-color)').css('filter', 'invert(1)');
         $('i:not(.no-invert-color)').css('filter', 'invert(1)');
-        localStorage['invert_color_image'] = true;
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "true")){
+            updateValuesInterfazInSession(['invert_color_image'], ["true"]);
+        }
+        localStorage['invert_color_image'] = "true";
     } else {
         $('i:not(.no-invert-color)').css('filter', 'invert(0)');
         $('img:not(.no-invert-color)').css('filter', 'invert(0)');
-        localStorage['invert_color_image'] = false;
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "false")){
+            updateValuesInterfazInSession(['invert_color_image'], ["false"]);
+        }
+        localStorage['invert_color_image'] = "false";
     }
 });
 $("input[name='invertGeneral']").change(function(){
@@ -87,11 +91,17 @@ $("input[name='invertGeneral']").change(function(){
         $('.colorpicker').addClass('no-invert-color');
         $('.no-invert-color').css('filter', 'invert(1)');
         $('i.no-invert-color').css('filter', 'invert(0)');
-        localStorage['invert_color_general'] = true;
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "true")){
+            updateValuesInterfazInSession(['invert_color_general'], ["true"]);
+        }
+        localStorage['invert_color_general'] = "true";
     } else {
         $('body').css('filter', 'invert(0)');
         $('.no-invert-color').css('filter', 'invert(0)');
-        localStorage['invert_color_general'] = false;
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "false")){
+            updateValuesInterfazInSession(['invert_color_general'], ["false"]);
+        }
+        localStorage['invert_color_general'] = "false";
     }
 });
 
