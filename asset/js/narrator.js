@@ -31,7 +31,7 @@ $("input[name='volume-narrator']").change(function(){
 
 $("input[name='gender-narrator']").change(function(){
     let genderIDselected = $("input[name='gender-narrator']:checked").val();
-    setGenderNarrator(genderIDselected);
+    setVoiceGenderNarrator(genderIDselected);
 });
 
 $("input[name='link-narrator']").change(function(){
@@ -50,14 +50,14 @@ $("input[name='reading-unit-narrator']").change(function(){
 });
 
 
-function updateValuesInterfazInSession(names_interfaz_preference, values){
+function updateValuesNarratorInSession(names_preferences_narrator, values){
     console.log("update in session");
 
     $.ajax({
-        url : base_url+"usuario/update_preferences_interfazSession",
+        url : base_url+"usuario/update_preferences_narratorSession",
         type : "POST",
         dataType : "json",
-        data : { "username": session_user['username'], "names_interfaz_preference":names_interfaz_preference, "values":values},
+        data : { "username": session_user['username'], "names_preferences_narrator":names_preferences_narrator, "values":values},
         success : function(data) {
             console.log(data);
         },
@@ -65,4 +65,47 @@ function updateValuesInterfazInSession(names_interfaz_preference, values){
             console.log(data);
         }
     });
+}
+
+function setPitchNarrator(pitchID) {
+    if((pitchID != localStorage['pitch_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['pitch_id'], [pitchID]);
+    }
+    localStorage['pitch_id_nr'] = pitchID;
+}
+
+function setVolumeNarrator(volumeID) {
+    if((volumeID != localStorage['volume_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['volume_id'], [volumeID]);
+    }
+    localStorage['volume_id_nr'] = volumeID;
+}
+
+function setVoiceGenderNarrator(genderID) {
+    if((genderID != localStorage['voice_gender_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['voice_gender_id'], [genderID]);
+    }
+    localStorage['voice_gender_id_nr'] = genderID;
+}
+
+function setLinkNarrator(linkID) {
+    if((linkID != localStorage['links_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['links_id'], [linkID]);
+    }
+    localStorage['links_id_nr'] = linkID;
+
+}
+
+function setHighlightNarrator(highlightID) {
+    if((hightliID != localStorage['highlight_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['highlight_id'], [highlightID]);
+    }
+    localStorage['highlight_id_nr'] = highlightID;
+}
+
+function setReadingUnitNarrator(readingUnitID) {
+    if((readingUnitID != localStorage['reading_unit_id_nr']) && needNarrator) {
+        updateValuesNarratorInSession(['reading_unit_id'], [readingUnitID]);
+    }
+    localStorage['reading_unit_id_nr'] = readingUnitID;
 }
