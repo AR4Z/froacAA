@@ -359,12 +359,6 @@ function changeFontFamily(fontID){
         '3':'cantarell',
         '4':'source-code-pro'
     }
-    let fontsURL = {
-        'open-sans':'https://fonts.googleapis.com/css?family=Open+Sans',
-        'serif':'https://fonts.googleapis.com/css?family=PT+Serif',
-        'cantarell':'https://fonts.googleapis.com/css?family=Cantarell',
-        'source-code-pro': 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
-    }
     let fontsNameCSS = {
         'open-sans':"'Open Sans', sans-serif",
         'serif':"'PT Serif', serif",
