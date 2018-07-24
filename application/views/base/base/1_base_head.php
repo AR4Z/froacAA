@@ -99,35 +99,17 @@
 
         <![endif]-->
 <script type="text/javascript">
-    let session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
-    let needPrefAdaptInterfaz = <?php echo $this->session->userdata('adaptaInterfaz');?>;
-    if(session_user && needPrefAdaptInterfaz){
-        localStorage['cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['cursor_size_id']?>"
-        localStorage['color_cursor'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['color_cursor']?>"
-        localStorage['trail_cursor_size_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_size_id']?>"
-        localStorage['trail_cursor_color'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['trail_cursor_color']?>"
-        localStorage['invert_color_general'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_general']?>"
-        localStorage['invert_color_image'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['invert_color_image']?>"
-        localStorage['contrast_colors_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['contrast_colors_id']?>";
-        localStorage['font_size'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['font_size']?>";
-        localStorage['font_type_id'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['font_type_id']?>";
-        localStorage['size_line_spacing'] = "<?php echo $this->session->userdata('preferencesAdaptainterfaz')['size_line_spacing']?>";
-    }
+    let session_user;
+    let preferencesAdaptainterfaz;
+    let needPrefAdaptInterfaz;
+    let base_url;
 
-    function updateValuesInterfazInSession(username, name_interfaz_preference, value){
-        console.log("update in session");
-
-        $.ajax({
-            url : "<?php echo base_url(); ?>usuario/update_preferences_interfazSession",
-            type : "POST",
-            dataType : "json",
-            data : { "username": username, "name_interfaz_preference":name_interfaz_preference, "value":value},
-            success : function(data) {
-            },
-            error : function(data) {
-            }
-        });
-    }
+    $(document).ready(function(){
+        session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
+        preferencesAdaptainterfaz = <?php echo json_encode($this->session->userdata('preferencesAdaptainterfaz'));?>;
+        needPrefAdaptInterfaz = "<?php echo $this->session->userdata('adaptaInterfaz');?>" || false;
+        base_url = "<?php echo base_url()?>";
+    });
 </script>
 </head>
 <?php if($view == 'base/login/login_view') : ?>

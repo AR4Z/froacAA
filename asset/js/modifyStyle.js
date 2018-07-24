@@ -1,10 +1,17 @@
-$().ready(function(){
-    if(session_user){
-        console.log("swsws");
-    } else {
-        console.log("nada");
-    }
+$(document).ready(function(){
 
+    if(session_user && needPrefAdaptInterfaz){
+        localStorage['cursor_size_id'] = preferencesAdaptainterfaz['cursor_size_id'];
+        localStorage['color_cursor'] = preferencesAdaptainterfaz['color_cursor'];
+        localStorage['trail_cursor_size_id'] = preferencesAdaptainterfaz['trail_cursor_size_id'];
+        localStorage['trail_cursor_color'] = preferencesAdaptainterfaz['trail_cursor_color'];
+        localStorage['invert_color_general'] = preferencesAdaptainterfaz['invert_color_general'];
+        localStorage['invert_color_image'] = preferencesAdaptainterfaz['invert_color_image'];
+        localStorage['contrast_colors_id'] = preferencesAdaptainterfaz['contrast_colors_id'];
+        localStorage['font_size'] = preferencesAdaptainterfaz['font_size'];
+        localStorage['font_type_id'] = preferencesAdaptainterfaz['font_type_id'];
+        localStorage['size_line_spacing'] = preferencesAdaptainterfaz['size_line_spacing'];
+    }
     $(function() {
         $('#cp1, #cp2').colorpicker();
     });
@@ -14,7 +21,7 @@ $().ready(function(){
     $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
     //changeInterlineSpace('#inputInterlineSize');
 
-    $("input[value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
     //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
     $("select[name='type-font']").val(localStorage['font_type_id'] || '1').change();
@@ -26,8 +33,9 @@ $().ready(function(){
         $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || 'red');
         $("input[name='colorMousePointer']").change();
     }*/
-
-    $("input[value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
+    console.log("trail_cursor_size_id" + localStorage['trail_cursor_size_id']);
+    $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
     //createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val()));
     /*if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
         $('#div-color-cursor-trails').show();
@@ -57,10 +65,10 @@ $().ready(function(){
 */
 animate();
 });
-
+/*
 $('#fontAwesomess').ready(function(){
-    $("input[value=" + (localStorage['cursor_size_id'] || 'normalCursor') + "]").prop('checked', true).change();
-});
+
+});*/
 
 $("input[name='invertImages']").change(function(){
     if ($(this).prop("checked")) {
@@ -103,7 +111,7 @@ $("input[name='radioOptionsSizeCursorTrails']").change(function(){
         $("input[name='colorCursorTrails']").val(localStorage['trail_cursor_color'] || $("input[name='colorCursorTrails']").val()).change();
     } else {
         $('#div-color-cursor-trails').hide();
-        createTrail('1');
+        createTrail('1', localStorage['color_cursor'] || $("input[name='colorCursorTrails']").val());
     }
 });
 
@@ -123,7 +131,7 @@ $("input[name='radioOptionsSizeCursor']").change(function() {
         $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || $("input[name='colorMousePointer']").val()).change();
     } else {
         $('#div-color-cursor').hide();
-        changeMousePointer(optionSize);
+        changeMousePointer(optionSize, localStorage['color_cursor'] || $("input[name='colorMousePointer']").val());
     }
 });
 
@@ -132,7 +140,6 @@ $("select[name='type-font']").change(function() {
 });
 
 $("input[name='radioOptionscontrast']").change(function() {
-
     let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
     console.log(optionCheckedContrast);
     highContrast(optionCheckedContrast);
@@ -228,6 +235,22 @@ $(".input-number").keydown(function(e) {
     }
 });
 
+function updateValuesInterfazInSession(names_interfaz_preference, values){
+    console.log("update in session");
+
+    $.ajax({
+        url : base_url+"usuario/update_preferences_interfazSession",
+        type : "POST",
+        dataType : "json",
+        data : { "username": session_user['username'], "names_interfaz_preference":names_interfaz_preference, "values":values},
+        success : function(data) {
+            console.log(data);
+        },
+        error : function(data) {
+            console.log(data);
+        }
+    });
+}
 
 function changeFontSize(selector){
 
@@ -276,11 +299,12 @@ function changeFontSize(selector){
         this.css('font-size', actualSizeFloat + (($(selector).val() - 1) * 10) * 1.6);
         //this.css('font-size', actualSizeFloat - (($(selector).val() - 1) * 10) * 1.6);
     });*/
-    localStorage['font_size'] = $(selector).val();
-    if(session_user && needPrefAdaptInterfaz){
-        updateValuesInterfazInSession(session_user['username'], 'font_size', localStorage['font_size']);
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['font_size'] != $(selector).val())){
+        updateValuesInterfazInSession(['font_size'], [$(selector).val()]);
     }
     $('html').css('font-size', $(selector).val() + 'px');
+    localStorage['font_size'] = $(selector).val();
 }
 
 function changeMousePointer(cursor_size_id, color_cursor){
@@ -298,6 +322,10 @@ function changeMousePointer(cursor_size_id, color_cursor){
         });
     } else {
         $('body').css('cursor', '');
+    }
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor)){
+        updateValuesInterfazInSession(['cursor_size_id', 'color_cursor'], [cursor_size_id, color_cursor]);
     }
     localStorage['cursor_size_id'] = cursor_size_id;
     localStorage['color_cursor'] = color_cursor || localStorage['color_cursor'];
@@ -344,6 +372,10 @@ function highContrast(optionContrast){
             $('.colorpicker-color').children().addClass('no-high-contrast');
         });
     }
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['contrast_colors_id'] != optionContrast)){
+        updateValuesInterfazInSession(['contrast_colors_id'], [optionContrast]);
+    }
     // almaceno el valor elegido de contraste en el localStorage
     localStorage['contrast_colors_id'] = optionContrast;
 }
@@ -370,6 +402,10 @@ function changeFontFamily(fontID){
     let fontName = fontsID[fontID]
     $('#font').attr('href', fontsURL[fontName]);
     $('body').css('font-family', fontsNameCSS[fontName]);
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['font_type_id'] != fontID)){
+        updateValuesInterfazInSession(['font_type_id'], [fontID]);
+    }
     localStorage['font_type_id'] = fontID;
 }
 
@@ -405,6 +441,10 @@ function changeInterlineSpace(selector){
     });*/
 
     $('body').css('line-height', $(selector).val());
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['size_line_spacing'] != $(selector).val())) {
+        updateValuesInterfazInSession(['size_line_spacing'], [$(selector).val()]);
+    }
     localStorage['size_line_spacing'] = $(selector).val();
 }
 
@@ -458,6 +498,11 @@ function createTrail(optionLenTrails, colorTrails, invert_color_general){
 
     } else {
         $('.trail').remove();
+    }
+
+    if(session_user && needPrefAdaptInterfaz && (localStorage['trail_cursor_size_id'] != optionLenTrails || localStorage['trail_cursor_color'] != colorTrails)){
+        updateValuesInterfazInSession(['trail_cursor_size_id', 'trail_cursor_color'], [optionLenTrails, colorTrails]);
+
     }
     localStorage['trail_cursor_size_id'] = optionLenTrails;
     localStorage['trail_cursor_color'] = colorTrails || localStorage['trail_cursor_color'];
