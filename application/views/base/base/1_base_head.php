@@ -100,14 +100,113 @@
 <script type="text/javascript">
     let session_user;
     let preferencesAdaptainterfaz;
+    let preferencesNarrator;
     let needPrefAdaptInterfaz;
+    let needNarrator;
     let base_url;
 
     $(document).ready(function(){
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
         preferencesAdaptainterfaz = <?php echo json_encode($this->session->userdata('preferencesAdaptainterfaz'));?>;
+        preferencesNarrator = <?php echo json_encode($this->session->userdata('preferencesNarrator'));?>;
         needPrefAdaptInterfaz = "<?php echo $this->session->userdata('adaptaInterfaz');?>" || false;
+        needNarrator = "<?php echo $this->session->userdata('needNarrator');?>" || false;
         base_url = "<?php echo base_url()?>";
+
+
+        $('.btn-number').click(function(e) {
+            e.preventDefault();
+            fieldName = $(this).attr('data-field');
+            type = $(this).attr('data-type');
+            let input = $("input[name='" + fieldName + "']");
+            let currentVal = parseFloat(input.val());
+            let step = parseFloat(input.attr('step'));
+            let dataDecimals = parseFloat(input.attr('data-decimals')) || 0;
+            let newValue = 0;
+            let decimals = 10;
+            if (!isNaN(currentVal)) {
+                if (type == 'minus') {
+                    input.data('tipo', type);
+                    if (currentVal > input.attr('min')) {
+                        newValue = currentVal - step;
+                        decimals *= dataDecimals;
+                        if (dataDecimals) {
+                            input.val(Math.round(newValue * decimals) / decimals).change();
+                        } else {
+                            input.val(newValue).change();
+                        }
+                    }
+                    if (parseFloat(input.val()) == input.attr('min')) {
+                        $(this).attr('disabled', true);
+                    }
+
+
+                } else if (type == 'plus') {
+                    input.data('tipo', type);
+                    if (currentVal < input.attr('max')) {
+                        newValue = currentVal + step;
+                        decimals *= dataDecimals;
+                        if (dataDecimals) {
+                            input.val(Math.round(newValue * decimals) / decimals).change();
+                        } else {
+                            input.val(newValue).change();
+                        }
+                    }
+                    if (parseFloat(input.val()) == input.attr('max')) {
+                        $(this).attr('disabled', true);
+                    }
+                }
+            } else {
+                input.val(0);
+            }
+        });
+        $('.input-number').focusin(function() {
+            $(this).data('oldValue', $(this).val());
+        });
+        $('.input-number').change(function() {
+            if ($(this).attr('data-decimals') != 0) {
+                $(this).val(Math.round($(this).val() *
+                (10 * $(this).attr('data-decimals'))) / (10 * $(this).attr('data-decimals')));
+            } else if ($(this).attr('data-decimals') == 0) {
+                $(this).val(parseInt($(this).val()));
+            }
+            minValue = parseFloat($(this).attr('min'));
+            maxValue = parseFloat($(this).attr('max'));
+            valueCurrent = parseFloat($(this).val());
+            name = $(this).attr('name');
+            if (valueCurrent >= minValue) {
+                $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled');
+            } else {
+                $(this).val($(this).data('oldValue'));
+            }
+            if (valueCurrent <= maxValue) {
+                $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled');
+            } else {
+                $(this).val($(this).data('oldValue'));
+            }
+
+            if ($(this).attr('id') == 'inputInterlineSize') {
+                changeInterlineSpace('#inputInterlineSize');
+            } else if($(this).attr('id') == 'inputFontSize') {
+                changeFontSize('#inputFontSize');
+            } else if($(this).attr('id') == 'input-speed-speech-narrator'){
+                console.log("cambiando");
+                setSpeechSpeedNarrator($(this).val());
+            }
+        });
+        $(".input-number").keydown(function(e) {
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                return;
+            }
+
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+            (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
     });
 </script>
 </head>
@@ -648,13 +747,13 @@
                       <div class="col">
                           <div class="input-group">
                               <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[0]">
+                                  <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[2]">
                                       <span class="oi oi-minus"></span>
                                   </button>
                               </span>
-                              <input type="text" name="quant[0]" id="input-speed-speech-narrator" class="form-control input-number" value="180" min="80" max="450" step="1" data-decimals="0" style="text-align:center">
+                              <input type="text" name="quant[2]" id="input-speed-speech-narrator" class="form-control input-number" value="180" min="80" max="450" step="1" data-decimals="0" style="text-align:center">
                               <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
+                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[2]">
                                       <span class="oi oi-plus"></span>
                                   </button>
                               </span>

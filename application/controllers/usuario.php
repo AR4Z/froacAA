@@ -359,6 +359,22 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $arrayCombineValues);
     }
 
+    // este metodo se encarga de actualizar los valores del narrador en la sesion
+    // para que luego sean actualizados en la db
+    public function update_preferences_narratorSession(){
+        $arrayNamesPreferencesNarrator = $this->input->post('names_preferences_narrator');
+        $arrayValuesPreferencesNarrator = $this->input->post('values');
+        $arrayPreferencesNarrator = $this->session->userdata('preferencesNarrator');
+        $arrayCombineNameAndValuesNarrator = array_combine($arrayNamesPreferencesNarrator, $arrayValuesPreferencesNarrator);
+        foreach($arrayCombineNameAndValuesNarrator as $name => $value){
+            $arrayPreferencesNarrator[$name] = $value;
+        }
+        $this->session->set_userdata('preferencesNarrator', $arrayPreferencesNarrator);
+        echo(json_encode($this->session->userdata('preferencesNarrator')));
+
+        $this->usuario_model->update_preferences_narratorDB($this->input->post('username'), $arrayCombineNameAndValuesNarrator);
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -441,6 +457,7 @@ class Usuario extends CI_Controller {
     public function guardar() {
         // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
         $optInterfaz = $this->input->post('personaliceInterfaz');
+        $optNarrator = $this->input->post('useNarrator');
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
@@ -450,6 +467,12 @@ class Usuario extends CI_Controller {
         // se agregara a la tabla de preferencias de interfaz con los valores por default
         if($optInterfaz == 1 || $optInterfaz == 2){
             $this->usuario_model->insert_pref_interfaz($this->input->post('username'));
+        }
+
+        // en caso de que el usuario requiera o desee usar el narrador de forma opcional entonces
+        // se agregara a la tabla de preferencias de narardor con los valores por default
+        if($optNarrator == 1 || $optNarrator == 2){
+            $this->usuario_model->insert_pref_narrator($this->input->post('username'));
         }
 
         if($_POST["necesidadespecial"]!=""){

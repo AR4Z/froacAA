@@ -22,7 +22,10 @@
 
 <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
+
+
 <script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
+<script src="<?php echo base_url() ?>asset/js/narrator.js"></script>
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <!--common script for all pages

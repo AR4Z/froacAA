@@ -54,16 +54,16 @@ function get_all_data_adaptability_narrator($username) {
     use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id
     from use_pref_narrator
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.pitch_id
-    inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.volume_id
+    inner join scales_pitch_volume AS spv  on spv.scale_id=use_pref_narrator.volume_id
     inner join gender_options  on gender_options.gender_id=use_pref_narrator.voice_gender_id
     inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_narrator.links_id
     inner join reading_units on reading_units.unit_id=use_pref_narrator.highlight_id
+    inner join reading_units AS ru on ru.unit_id=use_pref_narrator.reading_unit_id
     inner join components_read_opts on components_read_opts.component_read_id=use_pref_narrator.speech_component_id
-    inner join reading_units on reading_units.unit_id=use_pref_narrator.reading_unit_id
     inner join users on users.use_username=use_pref_narrator.use_username
     where use_pref_narrator.use_username='".$username."'");
 
-        return $query->result_array();
+    return $query->result_array();
 }
 
 
@@ -215,7 +215,8 @@ if ($this->input->post('cantidad6')!='') {
             'use_ls_cant_S' => $cantidad6,
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institution_username'),
-            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz')
+            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
+            'use_narrator_id'=>$this->input->post('useNarrator')
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -320,7 +321,7 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->limit(1);
         $query = $this->db->get();
 
-        return $query->reasult_array();
+        return $query->result_array();
     }
 
 
@@ -398,6 +399,13 @@ if ($this->input->post('cantidad6')!='') {
     public function update_preferences_interfazDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_interfaz', $data);
+    }
+
+    // este metodo se encarga de actualizar las preferencias a la hora de usar el narrador en la DB tabla: "use_pref_narrator"
+
+    public function update_preferences_narratorDB($username, $data){
+        $this->db->where('use_username', $username);
+        $this->db->update('use_pref_narrator', $data);
     }
 
     //Se verifica si el correo electrónico ingresado existe en la base de datos

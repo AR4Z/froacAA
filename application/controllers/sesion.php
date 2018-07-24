@@ -63,14 +63,32 @@ class Sesion extends CI_Controller {
     		$rol = $this->usuario_model->get_rol($session_data['username']);
 
     		if ($rol[0]['use_rol_id']>1) {
+                // pregunto si el usuario necesita adaptaciones de la interfaz
                 $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
                 $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+
+                // pregunto si el usuario necesita usar narrador
+                $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
+                $use_narrator = $use_narrator[0]['use_narrator_id'];
+
+                // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
-                    $preferences_array = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+                    $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
                     $this->session->set_userdata('adaptaInterfaz', true);
-                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferences_array[0]);
+                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
                 } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('adaptaInterfaz', false);
+                }
+
+                // si el usuario necesita el narrador entonces lo almaceno en sesion y tambien sus preferencias
+                if($use_narrator == "1" || $use_narrator == "2") {
+                    $preferencesNarrator = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
+                    $this->session->set_userdata('needNarrator', true);
+                    $this->session->set_userdata('preferencesNarrator', $preferencesNarrator[0]);
+                } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
+                    $this->session->set_userdata('needNarrator', false);
                 }
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
@@ -99,6 +117,8 @@ class Sesion extends CI_Controller {
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('adaptaInterfaz');
         $this->session->unset_userdata('preferencesAdaptainterfaz');
+        $this->session->unset_userdata('preferencesNarrator');
+        $this->session->unset_userdata('needNarrator');
 
         redirect(base_url(), 'refresh');
     }

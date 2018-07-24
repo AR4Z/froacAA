@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // verifico si hay una sesion iniciada y si el usuario necesita usar narrador para cargar los valores desde la DB
     if(session_user && needNarrator){
-        localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading_id'];
+        localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading'];
         localStorage['pitch_id_nr'] = preferencesNarrator['pitch_id'];
         localStorage['volume_id_nr'] = preferencesNarrator['volume_id'];
         localStorage['voice_gender_id_nr'] = preferencesNarrator['voice_gender_id'];
@@ -67,6 +67,15 @@ function updateValuesNarratorInSession(names_preferences_narrator, values){
     });
 }
 
+function setSpeechSpeedNarrator(speed){
+    console.log("swswej");
+    if((speed != localStorage['speed_reading_nr']) && needNarrator){
+        console.log("trae" +localStorage['speed_reading_nr']);
+        updateValuesNarratorInSession(['speed_reading'], [speed]);
+    }
+    localStorage['speed_reading_nr'] = speed;
+}
+
 function setPitchNarrator(pitchID) {
     if((pitchID != localStorage['pitch_id_nr']) && needNarrator) {
         updateValuesNarratorInSession(['pitch_id'], [pitchID]);
@@ -97,7 +106,7 @@ function setLinkNarrator(linkID) {
 }
 
 function setHighlightNarrator(highlightID) {
-    if((hightliID != localStorage['highlight_id_nr']) && needNarrator) {
+    if((highlightID != localStorage['highlight_id_nr']) && needNarrator) {
         updateValuesNarratorInSession(['highlight_id'], [highlightID]);
     }
     localStorage['highlight_id_nr'] = highlightID;
