@@ -37,7 +37,7 @@ where users.use_username='".$username."'");
 
 function get_all_data_adaptability_interfaz($username) {
     $query = $this->db->query("select use_pref_interfaz.use_username, use_pref_interfaz.cursor_size_id, use_pref_interfaz.color_cursor, use_pref_interfaz.trail_cursor_size_id, use_pref_interfaz.trail_cursor_color, use_pref_interfaz.invert_color_general, use_pref_interfaz.invert_color_image,
-    use_pref_interfaz.contrast_colors_id, use_pref_interfaz.font_size, use_pref_interfaz.font_type_id, use_pref_interfaz.size_line_spacing
+    use_pref_interfaz.contrast_colors_id, use_pref_interfaz.font_size, use_pref_interfaz.font_type_id, use_pref_interfaz.size_line_spacing, use_pref_interfaz.cursor_url
     from use_pref_interfaz
     inner join use_opts_contr_colors on use_opts_contr_colors.contrast_colors_id=use_pref_interfaz.contrast_colors_id
     inner join use_opts_cursor_size on use_opts_cursor_size.cursor_size_id=use_pref_interfaz.cursor_size_id

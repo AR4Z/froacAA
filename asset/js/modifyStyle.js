@@ -11,6 +11,7 @@ $(document).ready(function(){
         localStorage['font_size'] = preferencesAdaptainterfaz['font_size'];
         localStorage['font_type_id'] = preferencesAdaptainterfaz['font_type_id'];
         localStorage['size_line_spacing'] = preferencesAdaptainterfaz['size_line_spacing'];
+        localStorage['cursor_url'] = preferencesAdaptainterfaz['cursor_url'];
     }
     $(function() {
         $('#cp1, #cp2').colorpicker();
@@ -326,19 +327,25 @@ function changeMousePointer(cursor_size_id, color_cursor){
     }
     let sizeInt = sizeOptionsCursor[cursor_size_id];
     if(sizeInt){
-        $('body').awesomeCursor('mouse-pointer', {
-            size: sizeInt,
-            color: color_cursor
-        });
+        if(localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor){
+            $('body').awesomeCursor('mouse-pointer', {
+                size: sizeInt,
+                color: color_cursor
+            });
+        } else {
+            $('body').css('cursor', localStorage['cursor_url']);
+        }
+
     } else {
         $('body').css('cursor', '');
     }
 
     if(session_user && needPrefAdaptInterfaz && (localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor)){
-        updateValuesInterfazInSession(['cursor_size_id', 'color_cursor'], [cursor_size_id, color_cursor]);
+        updateValuesInterfazInSession(['cursor_size_id', 'color_cursor', 'cursor_url'], [cursor_size_id, color_cursor, $('body').css('cursor')]);
     }
     localStorage['cursor_size_id'] = cursor_size_id;
     localStorage['color_cursor'] = color_cursor || localStorage['color_cursor'];
+    localStorage['cursor_url'] = $('body').css('cursor');
 }
 
 function highContrast(optionContrast){
