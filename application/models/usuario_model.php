@@ -66,6 +66,18 @@ function get_all_data_adaptability_narrator($username) {
     return $query->result_array();
 }
 
+function get_all_data_adaptability_sr($username) {
+    $query = $this->db->query("select use_pref_sr.use_username, use_pref_sr.speed_reading, use_pref_sr.pitch_id, use_pref_sr.volume_id, use_pref_sr.voice_gender_id, use_pref_sr.links_id,
+    from use_pref_sr
+    inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_sr.pitch_id
+    inner join scales_pitch_volume AS spv on spv.scale_id=use_pref_sr.volume_id
+    inner join gender_options on gender_options.gender_id=use_pref_sr.voice_gender_id
+    inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_narrator.links_id
+    inner join users on users.use_username=use_pref_narrator.use_username
+    where use_pref_narrator.use_username='".$username."'");
+
+    return $query->result_array();
+}
 
 
     // Metodo que obtiene los registros del administrador a partir del nombre de usuario a partir de la tabla usuario
@@ -216,7 +228,8 @@ if ($this->input->post('cantidad6')!='') {
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institution_username'),
             'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
-            'use_narrator_id'=>$this->input->post('useNarrator')
+            'use_narrator_id'=>$this->input->post('useNarrator'),
+            'use_screen_reader_id'=>$this->input->post('use_screen_reader'),
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -248,6 +261,15 @@ if ($this->input->post('cantidad6')!='') {
             'use_username' => $id,
         );
         $this->db->insert('use_pref_narrator', $data);
+    }
+
+    // almacena los valores para usar el screen reader
+    public function insert_pref_sr($id){
+        // inicialmente son los valores por default
+        $data = array(
+            'use_username' => $id,
+        );
+        $this->db->insert('use_pref_sr', $data);
     }
 
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
@@ -324,6 +346,16 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
     }
 
+    // me dice si un usuario necesita usar el screen reader
+    public function get_need_sr($username){
+        $this->db->select('use_screen_reader_id');
+        $this->db->from('use_student');
+        $this->db->where('use_username', $username);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 
     // Se obtienen los registros de las preferencias que hay en la tabla "use_preference"
 
@@ -406,6 +438,12 @@ if ($this->input->post('cantidad6')!='') {
     public function update_preferences_narratorDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_narrator', $data);
+    }
+
+    // este metodo se encarga de actualizar las preferencias a la hora de usar el lector de pantalla en la DB tabla: 'use_pref_sr'
+    public function update_preferences_narratorDB($username, $data){
+        $this->db->where('use_username', $username);
+        $this->db->update('use_pref_sr', $data);
     }
 
     //Se verifica si el correo electrónico ingresado existe en la base de datos
