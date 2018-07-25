@@ -1,6 +1,9 @@
 <?php
 
 $this->load->view('base/base/1_base_head');
+if($this->session->userdata('needSr') || $this->session->userdata('adaptaInterfaz') || $this->session->userdata('needNarrator')){
+    $this->load->view('base/base/accessibility/panel');
+}
 $this->load->view('base/base/2_base_header');
 $this->load->view('base/base/3_base_aside');
 $this->load->view($main_view);
