@@ -1,3 +1,96 @@
+$(document).ready(function(){
+    // verifico si hay una sesion iniciada y si el usuario necesita usar screen reader para cargar los valores desde la DB
+    if(session_user && needSr){
+        localStorage['speed_reading_sr'] = preferencesSr['speed_reading'];
+        localStorage['pitch_id_sr'] = preferencesSr['pitch_id'];
+        localStorage['volume_id_sr'] = preferencesSr['volume_id'];
+        localStorage['voice_gender_id_sr'] = preferencesSr['voice_gender_id'];
+        localStorage['links_id_sr'] = preferencesSr['links_id'];
+    }
+    // cada una de las configuraciones toma el valor que hay en cache o el default
+    $('#input-speed-speech-sr').val(localStorage['speed_reading_sr'] || 180).change();
+    $("input[name='pitch-sr'][value=" + (localStorage['pitch_id_sr'] || '2') + "]").prop('checked', true).change();
+    $("input[name='volume-sr'][value=" + (localStorage['volume_id_sr'] || '2') + "]").prop('checked', true).change();
+    $("input[name='gender-sr'][value=" + (localStorage['voice_gender_id_sr'] || '1') + "]").prop('checked', true).change();
+    $("input[name='link-sr'][value=" + (localStorage['links_id_sr'] || '1') + "]").prop('checked', true).change();
+});
+
+$("input[name='pitch-sr']").change(function(){
+    let pitchIDselected = $("input[name='pitch-sr']:checked").val();
+    setPitchSr(pitchIDselected);
+});
+
+$("input[name='volume-sr']").change(function(){
+    let volumeIDselected = $("input[name='volume-sr']:checked").val();
+    setVolumeSr(volumeIDselected);
+});
+
+$("input[name='gender-sr']").change(function(){
+    let genderIDselected = $("input[name='gender-sr']:checked").val();
+    setVoiceGenderSr(genderIDselected);
+});
+
+$("input[name='link-sr']").change(function(){
+    let linkIDselected = $("input[name='link-sr']:checked").val();
+    setLinkSr(linkIDselected);
+});
+
+function updateValuesSrInSession(names_preferences_sr, values){
+    console.log("update in session");
+
+    $.ajax({
+        url : base_url+"usuario/update_preferences_srSession",
+        type : "POST",
+        dataType : "json",
+        data : { "username": session_user['username'], "names_preferences_sr":names_preferences_sr, "values":values},
+        success : function(data) {
+            console.log(data);
+        },
+        error : function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function setSpeechSpeedSr(speed){
+    console.log("swswej");
+    if((speed != localStorage['speed_reading_sr']) && needSr){
+        console.log("trae" +localStorage['speed_reading_sr']);
+        updateValuesSrInSession(['speed_reading'], [speed]);
+    }
+    localStorage['speed_reading_nr'] = speed;
+}
+
+function setPitchSr(pitchID) {
+    if((pitchID != localStorage['pitch_id_sr']) && needSr) {
+        updateValuesSrInSession(['pitch_id'], [pitchID]);
+    }
+    localStorage['pitch_id_nr'] = pitchID;
+}
+
+function setVolumeSr(volumeID) {
+    if((volumeID != localStorage['volume_id_sr']) && needSr) {
+        updateValuesSrInSession(['volume_id'], [volumeID]);
+    }
+    localStorage['volume_id_sr'] = volumeID;
+}
+
+function setVoiceGenderSr(genderID) {
+    if((genderID != localStorage['voice_gender_id_sr']) && needSr) {
+        updateValuesSrInSession(['voice_gender_id'], [genderID]);
+    }
+    localStorage['voice_gender_id_sr'] = genderID;
+}
+
+function setLinkSr(linkID) {
+    if((linkID != localStorage['links_id_sr']) && needSr) {
+        updateValuesSrInSession(['links_id'], [linkID]);
+    }
+    localStorage['links_id_sr'] = linkID;
+
+}
+
+
 let currentNode;
 let previousNodes = [];
 let assistant;

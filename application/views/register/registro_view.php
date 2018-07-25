@@ -144,7 +144,7 @@
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_narrator">
                                 <label for="use_screen_reader" id="label_use_screen_reader">¿Desea usar el lector de pantalla?</label>
-                                <select class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
+                                <select class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>

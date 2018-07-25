@@ -474,7 +474,7 @@ class Usuario extends CI_Controller {
         // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
-        $optScreenReader = $this->input->post('use_screen_reader');
+        $optScreenReader = $this->input->post('useSr');
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
