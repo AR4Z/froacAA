@@ -30,7 +30,8 @@
                 <a class="dropdown-item" onclick="setDefaultValuesSr()" href="#">Lector de pantalla</a>
                 <?php endif?>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Todos</a>
+
+                <a class="dropdown-item" id="reset-all" onclick="setDefaultAllValues()" href="#">Todos</a>
             </div>
         </li>
     <?php endif;?>

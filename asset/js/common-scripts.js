@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function(){
     $('.btn-number').click(function(e) {
         e.preventDefault();
@@ -126,4 +123,24 @@ $(document).ready(function(){
       $('#screen-reader-tab').addClass('active');
       $('#screen-reader-tab').attr('aria-selected', true);
   }
+
+  if($('ul#accessibilityTab li').length == 2){
+      console.log("swsdefer");
+      $('#reset-all').hide();
+  }
+
 });
+
+// resetea los valores de la barra de accesibilidad
+function setDefaultAllValues(){
+    console.log("all");
+    if(needPrefAdaptInterfaz || !session_user){
+        setDefaultValuesInterfaz();
+    }
+    if(needNarrator || !session_user){
+        setDefaultValuesNarrator();
+    }
+    if(needSr || !session_user){
+        setDefaultValuesSr();
+    }
+}
