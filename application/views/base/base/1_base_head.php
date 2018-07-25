@@ -9,16 +9,18 @@
     <title>FROAC</title>
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet'>
-    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
-    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
-
+    <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')):?>
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet'>
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
+        <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
+    <?php endif;?>
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
+
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
 
     <style>

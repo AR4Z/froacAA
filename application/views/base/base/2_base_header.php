@@ -16,13 +16,16 @@
     </div>
 
     <div class="firstMenu">
+        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') || $this->session->userdata('adaptaInterfaz') || $this->session->userdata('needNarrator')):?>
+
         <ul class="socialLinks">
             <li>
-                <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
+                    <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
             </li>
-
         </ul>
+        <?php endif;?>
     </div>
+
     <div class="navigation">
 
     </div>
