@@ -21,32 +21,32 @@ $(document).ready(function(){
 
 $("input[name='pitch-narrator']").change(function(){
     let pitchIDselected = $("input[name='pitch-narrator']:checked").val();
-    setPitchNarrator(pitchIDselected);
+    setPitchNarrator(pitchIDselected, $(this).data('default'));
 });
 
 $("input[name='volume-narrator']").change(function(){
     let volumeIDselected = $("input[name='volume-narrator']:checked").val();
-    setVolumeNarrator(volumeIDselected);
+    setVolumeNarrator(volumeIDselected, $(this).data('default'));
 });
 
 $("input[name='gender-narrator']").change(function(){
     let genderIDselected = $("input[name='gender-narrator']:checked").val();
-    setVoiceGenderNarrator(genderIDselected);
+    setVoiceGenderNarrator(genderIDselected, $(this).data('default'));
 });
 
 $("input[name='link-narrator']").change(function(){
     let linkIDselected = $("input[name='link-narrator']:checked").val();
-    setLinkNarrator(linkIDselected);
+    setLinkNarrator(linkIDselected, $(this).data('default'));
 });
 
 $("input[name='highlight-narrator']").change(function(){
     let highlightIDselected = $("input[name='highlight-narrator']:checked").val();
-    setHighlightNarrator(highlightIDselected);
+    setHighlightNarrator(highlightIDselected, $(this).data('default'));
 });
 
 $("input[name='reading-unit-narrator']").change(function(){
     let readingUnitIDselected = $("input[name='reading-unit-narrator']:checked").val();
-    setReadingUnitNarrator(readingUnitIDselected);
+    setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
 });
 
 
@@ -68,63 +68,92 @@ function updateValuesNarratorInSession(names_preferences_narrator, values){
 }
 
 function setDefaultValuesNarrator(){
+    // el data-default sirve para realizar solo una peticion cuando se actualicen todos los valores
+    $("#input-speed-speech-narrator").data('default', true);
     $('#input-speed-speech-narrator').val(180).change();
+    $("input[name='pitch-narrator']").data('default', true);
     $("input[name='pitch-narrator'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='volume-narrator']").data('default', true);
     $("input[name='volume-narrator'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='gender-narrator']").data('default', true);
     $("input[name='gender-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='link-narrator']").data('default', true);
     $("input[name='link-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='highlight-narrator']").data('default', true);
     $("input[name='highlight-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='reading-unit-narrator']").data('default', true);
     $("input[name='reading-unit-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+
+    if(session_user){
+        let names_preferences_narrator = ['speed_reading', 'pitch_id', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id'];
+        let values = [180, 2, 2, 1, 1, 1, 1];
+        updateValuesNarratorInSession(names_preferences_narrator, values);
+    }
+
 }
 
-function setSpeechSpeedNarrator(speed){
+function setSpeechSpeedNarrator(speed, setDefault){
     console.log("swswej");
-    if((speed != localStorage['speed_reading_nr']) && needNarrator){
+    if((speed != localStorage['speed_reading_nr']) && needNarrator && !setDefault){
         console.log("trae" +localStorage['speed_reading_nr']);
+
         updateValuesNarratorInSession(['speed_reading'], [speed]);
     }
+    $("#input-speed-speech-narrator").data('default', false);
     localStorage['speed_reading_nr'] = speed;
 }
 
-function setPitchNarrator(pitchID) {
-    if((pitchID != localStorage['pitch_id_nr']) && needNarrator) {
+function setPitchNarrator(pitchID, setDefault) {
+    if((pitchID != localStorage['pitch_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['pitch_id'], [pitchID]);
     }
+    $("input[name='pitch-narrator']").data('default', false);
     localStorage['pitch_id_nr'] = pitchID;
 }
 
-function setVolumeNarrator(volumeID) {
-    if((volumeID != localStorage['volume_id_nr']) && needNarrator) {
+function setVolumeNarrator(volumeID, setDefault) {
+    if((volumeID != localStorage['volume_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['volume_id'], [volumeID]);
     }
+    $("input[name='volume-narrator']").data('default', false);
     localStorage['volume_id_nr'] = volumeID;
 }
 
-function setVoiceGenderNarrator(genderID) {
-    if((genderID != localStorage['voice_gender_id_nr']) && needNarrator) {
+function setVoiceGenderNarrator(genderID, setDefault) {
+    if((genderID != localStorage['voice_gender_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['voice_gender_id'], [genderID]);
     }
+    $("input[name='gender-narrator']").data('default', false);
     localStorage['voice_gender_id_nr'] = genderID;
 }
 
-function setLinkNarrator(linkID) {
-    if((linkID != localStorage['links_id_nr']) && needNarrator) {
+function setLinkNarrator(linkID, setDefault) {
+    if((linkID != localStorage['links_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['links_id'], [linkID]);
     }
+    $("input[name='link-narrator']").data('default', false);
     localStorage['links_id_nr'] = linkID;
 
 }
 
-function setHighlightNarrator(highlightID) {
-    if((highlightID != localStorage['highlight_id_nr']) && needNarrator) {
+function setHighlightNarrator(highlightID, setDefault) {
+    if((highlightID != localStorage['highlight_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['highlight_id'], [highlightID]);
     }
+    $("input[name='highlight-narrator']").data('default', false);
     localStorage['highlight_id_nr'] = highlightID;
 }
 
-function setReadingUnitNarrator(readingUnitID) {
-    if((readingUnitID != localStorage['reading_unit_id_nr']) && needNarrator) {
+function setReadingUnitNarrator(readingUnitID, setDefault) {
+    if((readingUnitID != localStorage['reading_unit_id_nr']) && needNarrator && !setDefault) {
+
         updateValuesNarratorInSession(['reading_unit_id'], [readingUnitID]);
     }
+    $("input[name='reading-unit-narrator']").data('default', false);
     localStorage['reading_unit_id_nr'] = readingUnitID;
 }

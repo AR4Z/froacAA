@@ -16,11 +16,22 @@ $(document).ready(function(){
 });
 
 function setDefaultValuesSr(){
+    $('#input-speed-speech-sr').data('default', true);
     $('#input-speed-speech-sr').val(180).change();
+    $("input[name='pitch-sr']").data('default', true);
     $("input[name='pitch-sr'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='volume-sr']").data('default', true);
     $("input[name='volume-sr'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='gender-sr']").data('default', true);
     $("input[name='gender-sr'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='link-sr']").data('default', true);
     $("input[name='link-sr'][value=" + ('1') + "]").prop('checked', true).change();
+
+    if(session_user){
+        let names_preferences_sr = ['speed_reading', 'pitch_id', 'volume_id', 'gender_id', 'link_id'];
+        let values = [180, 2, 2, 1, 1];
+        updateValuesSrInSession(names_preferences_sr, values);
+    }
 }
 
 $("input[name='pitch-sr']").change(function(){
@@ -60,41 +71,47 @@ function updateValuesSrInSession(names_preferences_sr, values){
     });
 }
 
-function setSpeechSpeedSr(speed){
+function setSpeechSpeedSr(speed, setDefault){
     console.log("swswej");
-    if((speed != localStorage['speed_reading_sr']) && needSr){
+    if((speed != localStorage['speed_reading_sr']) && needSr && !setDefault){
         console.log("trae" +localStorage['speed_reading_sr']);
         updateValuesSrInSession(['speed_reading'], [speed]);
     }
+    $('#input-speed-speech-sr').data('default', false);
     localStorage['speed_reading_nr'] = speed;
 }
 
-function setPitchSr(pitchID) {
-    if((pitchID != localStorage['pitch_id_sr']) && needSr) {
+function setPitchSr(pitchID, setDefault) {
+    if((pitchID != localStorage['pitch_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['pitch_id'], [pitchID]);
     }
+    $("input[name='pitch-sr']").data('default', false);
     localStorage['pitch_id_nr'] = pitchID;
 }
 
-function setVolumeSr(volumeID) {
-    if((volumeID != localStorage['volume_id_sr']) && needSr) {
+function setVolumeSr(volumeID, setDefault) {
+    if((volumeID != localStorage['volume_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['volume_id'], [volumeID]);
     }
+    $("input[name='volume-sr']").data('default', false);
     localStorage['volume_id_sr'] = volumeID;
 }
 
-function setVoiceGenderSr(genderID) {
-    if((genderID != localStorage['voice_gender_id_sr']) && needSr) {
+function setVoiceGenderSr(genderID, setDefault) {
+    if((genderID != localStorage['voice_gender_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['voice_gender_id'], [genderID]);
     }
+    $("input[name='gender-sr']").data('default', false);
     localStorage['voice_gender_id_sr'] = genderID;
 }
 
-function setLinkSr(linkID) {
-    if((linkID != localStorage['links_id_sr']) && needSr) {
+function setLinkSr(linkID, setDefault) {
+    if((linkID != localStorage['links_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['links_id'], [linkID]);
     }
+    $("input[name='link-sr']").data('default', false);
     localStorage['links_id_sr'] = linkID;
+
 
 }
 

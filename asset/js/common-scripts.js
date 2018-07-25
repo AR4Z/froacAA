@@ -74,14 +74,14 @@ $(document).ready(function(){
         }
 
         if ($(this).attr('id') == 'inputInterlineSize') {
-            changeInterlineSpace('#inputInterlineSize');
+            changeInterlineSpace('#inputInterlineSize', $(this).data('default'));
         } else if($(this).attr('id') == 'inputFontSize') {
-            changeFontSize('#inputFontSize');
+            changeFontSize('#inputFontSize', $(this).data('default'));
         } else if($(this).attr('id') == 'input-speed-speech-narrator'){
             console.log("cambiando");
             setSpeechSpeedNarrator($(this).val());
         } else if($(this).attr('id') == 'input-speed-speech-sr'){
-            setSpeechSpeedSr($(this).val());
+            setSpeechSpeedSr($(this).val(), $(this).data('default'));
         }
     });
     $(".input-number").keydown(function(e) {

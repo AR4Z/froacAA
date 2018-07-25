@@ -17,33 +17,15 @@ $(document).ready(function(){
         $('#cp1, #cp2').colorpicker();
     });
     $('#inputFontSize').val(localStorage['font_size'] || 12).change();
-    //changeFontSize('#inputFontSize');
 
     $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
-    //changeInterlineSpace('#inputInterlineSize');
 
     $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
-    //highContrast($("input[name='radioOptionscontrast']:checked").val());
 
     $("input[name='type-font'][value="+(localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
-    //changeFontFamily($("select[name='type-font']").val());
-
-    //changeMousePointer($("input[name='radioOptionsSizeCursor']:checked").val(), (localStorage['color_cursor'] || 'red'));
-    /*if($("input[name='radioOptionsSizeCursor']:checked").val() != 'normalCursor'){
-        $('#div-color-cursor').show();
-        $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || 'red');
-        $("input[name='colorMousePointer']").change();
-    }*/
-    console.log("trail_cursor_size_id" + localStorage['trail_cursor_size_id']);
 
     $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
     $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
-    //createTrail($("input[name='radioOptionsSizeCursorTrails']:checked").val(), (localStorage['trail_cursor_color'] || $("input[name='trail_cursor_color']").val()));
-    /*if($("input[name='radioOptionsSizeCursorTrails']:checked").val() != 'sizeCursorTrails0'){
-        $('#div-color-cursor-trails').show();
-        $("input[name='trail_cursor_color']").val(localStorage['trail_cursor_color'] || 'red');
-        $("input[name='trail_cursor_color']").change();
-    }*/
     if(localStorage['invert_color_image'] == 't'){
         localStorage['invert_color_image'] = 'true';
     } else if(localStorage['invert_color_image'] == 'f'){
@@ -64,27 +46,25 @@ $(document).ready(function(){
 
     animate();
 });
-/*
-$('#fontAwesomess').ready(function(){
 
-});*/
 
 $("input[name='invertImages']").change(function(){
     if ($(this).prop("checked")) {
         $('img:not(.no-invert-color)').css('filter', 'invert(1)');
         $('i:not(.no-invert-color)').css('filter', 'invert(1)');
-        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "true")){
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "true") && !($(this).data('default'))){
             updateValuesInterfazInSession(['invert_color_image'], ["true"]);
         }
         localStorage['invert_color_image'] = "true";
     } else {
         $('i:not(.no-invert-color)').css('filter', 'invert(0)');
         $('img:not(.no-invert-color)').css('filter', 'invert(0)');
-        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "false")){
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "false") && !($(this).data('default'))){
             updateValuesInterfazInSession(['invert_color_image'], ["false"]);
         }
         localStorage['invert_color_image'] = "false";
     }
+    $(this).data('default', false);
 });
 $("input[name='invertGeneral']").change(function(){
     if ($(this).prop("checked")) {
@@ -92,24 +72,25 @@ $("input[name='invertGeneral']").change(function(){
         $('.colorpicker').addClass('no-invert-color');
         $('.no-invert-color').css('filter', 'invert(1)');
         $('i.no-invert-color').css('filter', 'invert(0)');
-        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "true")){
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "true") && !($(this).data('default'))){
             updateValuesInterfazInSession(['invert_color_general'], ["true"]);
         }
         localStorage['invert_color_general'] = "true";
     } else {
         $('body').css('filter', 'invert(0)');
         $('.no-invert-color').css('filter', 'invert(0)');
-        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "false")){
+        if(session_user && needPrefAdaptInterfaz && (localStorage['invert_color_general'] != "false") && !($(this).data('default'))){
             updateValuesInterfazInSession(['invert_color_general'], ["false"]);
         }
         localStorage['invert_color_general'] = "false";
     }
+    $(this).data('default', false);
 });
 
 
 $("input[name='colorCursorTrails']").change(function(){
     let optionSizeTrail = $("input[name='radioOptionsSizeCursorTrails']:checked").val();
-    createTrail(optionSizeTrail, $(this).val(), localStorage['invert_color_general']);
+    createTrail(optionSizeTrail, $(this).val(), localStorage['invert_color_general'], $(this).data('default'));
 });
 
 $("input[name='radioOptionsSizeCursorTrails']").change(function(){
@@ -122,14 +103,14 @@ $("input[name='radioOptionsSizeCursorTrails']").change(function(){
         $("input[name='colorCursorTrails']").val(localStorage['trail_cursor_color'] || $("input[name='colorCursorTrails']").val()).change();
     } else {
         $('#div-color-cursor-trails').hide();
-        createTrail('1', localStorage['color_cursor'] || $("input[name='colorCursorTrails']").val());
+        createTrail('1', localStorage['color_cursor'] || $("input[name='colorCursorTrails']").val(), $(this).data('default'));
     }
 });
 
 $("input[name='colorMousePointer']").change(function() {
     let optionSize = $("input[name='radioOptionsSizeCursor']:checked").val();
     let color = $(this).val();
-    changeMousePointer(optionSize, color);
+    changeMousePointer(optionSize, color, $(this).data('default'));
 })
 
 $("input[name='radioOptionsSizeCursor']").change(function() {
@@ -142,29 +123,45 @@ $("input[name='radioOptionsSizeCursor']").change(function() {
         $("input[name='colorMousePointer']").val(localStorage['color_cursor'] || $("input[name='colorMousePointer']").val()).change();
     } else {
         $('#div-color-cursor').hide();
-        changeMousePointer(optionSize, localStorage['color_cursor'] || $("input[name='colorMousePointer']").val());
+        changeMousePointer(optionSize, localStorage['color_cursor'] || $("input[name='colorMousePointer']").val(), $(this).data('default'));
     }
 });
 
 $("input[name='type-font']").change(function() {
-    changeFontFamily($("input[name='type-font']:checked").val());
+    changeFontFamily($("input[name='type-font']:checked").val(), $(this).data('default'));
 });
 
 $("input[name='radioOptionscontrast']").change(function() {
     let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
     console.log(optionCheckedContrast);
-    highContrast(optionCheckedContrast);
+    highContrast(optionCheckedContrast, $(this).data('default'));
 });
 
 function setDefaultValuesInterfaz(){
+    $('#inputFontSize').data('default', true);
     $('#inputFontSize').val(12).change();
+    $('#inputInterlineSize').data('default', true);
     $('#inputInterlineSize').val(1.5).change();
+    $("input[name='radioOptionscontrast']").data('default', true);
     $("input[name='radioOptionscontrast'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='type-font']").data('default', true);
     $("input[name='type-font'][value="+('1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursorTrails']").data('default', true);
     $("input[name='radioOptionsSizeCursorTrails'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursor']").data('default', true);
     $("input[name='radioOptionsSizeCursor'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='invertImages']").data('default', true);
     $("input[name='invertImages']").prop('checked', false).change();
+    $("input[name='invertGeneral']").data('default', true);
     $("input[name='invertGeneral']").prop('checked', false).change();
+
+    if(session_user){
+        let names_interfaz_preference = ['cursor_size_id','color_cursor',
+        'trail_cursor_size_id','trail_cursor_color','invert_color_general',
+        'invert_color_image','contrast_colors_id','font_size','font_type_id','size_line_spacing','cursor_url']
+        let values = [1, "rgb(255, 18, 18)", 1, "rgb(255, 18, 18)", false, false, 1, 12, 1, 1.5, ''];
+        updateValuesInterfazInSession(names_interfaz_preference, values);
+    }
 }
 
 
@@ -185,17 +182,19 @@ function updateValuesInterfazInSession(names_interfaz_preference, values){
     });
 }
 
-function changeFontSize(selector){
+function changeFontSize(selector, setDefault){
 
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector ;
-    if(session_user && needPrefAdaptInterfaz && (localStorage['font_size'] != $(selector).val())){
+    if(session_user && needPrefAdaptInterfaz && (localStorage['font_size'] != $(selector).val()) && !setDefault){
         updateValuesInterfazInSession(['font_size'], [$(selector).val()]);
     }
     $('html').css('font-size', $(selector).val() + 'px');
+    $(selector).data('default', false);
     localStorage['font_size'] = $(selector).val();
+
 }
 
-function changeMousePointer(cursor_size_id, color_cursor){
+function changeMousePointer(cursor_size_id, color_cursor, setDefault){
     let sizeOptionsCursor = {
         '1': 0,
         '2': 16,
@@ -217,15 +216,16 @@ function changeMousePointer(cursor_size_id, color_cursor){
         $('body').css('cursor', '');
     }
 
-    if(session_user && needPrefAdaptInterfaz && (localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor)){
+    if(session_user && needPrefAdaptInterfaz && (localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor) && !setDefault){
         updateValuesInterfazInSession(['cursor_size_id', 'color_cursor', 'cursor_url'], [cursor_size_id, color_cursor, $('body').css('cursor')]);
     }
+    $("input[name='radioOptionsSizeCursor']").data('default', false);
     localStorage['cursor_size_id'] = cursor_size_id;
     localStorage['color_cursor'] = color_cursor || localStorage['color_cursor'];
     localStorage['cursor_url'] = $('body').css('cursor');
 }
 
-function highContrast(optionContrast){
+function highContrast(optionContrast, setDefault){
     // clase asociada a valores del contraste
     let classNameContrastOptions = {
         '1':'default',
@@ -267,14 +267,15 @@ function highContrast(optionContrast){
         });
     }
 
-    if(session_user && needPrefAdaptInterfaz && (localStorage['contrast_colors_id'] != optionContrast)){
+    if(session_user && needPrefAdaptInterfaz && (localStorage['contrast_colors_id'] != optionContrast) && !setDefault){
         updateValuesInterfazInSession(['contrast_colors_id'], [optionContrast]);
     }
+    $("input[name='radioOptionscontrast']").data('default', false);
     // almaceno el valor elegido de contraste en el localStorage
     localStorage['contrast_colors_id'] = optionContrast;
 }
 
-function changeFontFamily(fontID){
+function changeFontFamily(fontID, setDefault){
     let fontsID = {
         '1':'open-sans',
         '2':'serif',
@@ -291,48 +292,22 @@ function changeFontFamily(fontID){
 
     $('body').css('font-family', fontsNameCSS[fontName]);
 
-    if(session_user && needPrefAdaptInterfaz && (localStorage['font_type_id'] != fontID)){
+    if(session_user && needPrefAdaptInterfaz && (localStorage['font_type_id'] != fontID) && !setDefault){
         updateValuesInterfazInSession(['font_type_id'], [fontID]);
     }
+    $("input[name='type-font']").data('default', false);
     localStorage['font_type_id'] = fontID;
 }
 
-function changeInterlineSpace(selector){
+function changeInterlineSpace(selector, setDefault){
 
     selector = (typeof selector == 'undefined') ? '#interlineNav' : selector ;
-    /*
-    var selectors = [];
-
-    selectors.push($('body'));
-    selectors.push($('header'));
-    selectors.push($('nav'));
-    selectors.push($('section'));
-    selectors.push($('footer'));
-    selectors.push($('td'));
-
-    $(selector).val(parseInt($('body').css('line-height')));
-
-    $(selector).change(function(){
-
-        var interline = parseInt($(selector).val());
-
-        $.each(selectors, function(){
-
-            /*var actualInterline = this.css('line-height');
-            var actualInterlineFloat = parseFloat(actualInterline);
-            var newInterline = actualInterlineFloat + 1;
-            this.css('line-height', interline + 'px');
-
-            //console.log(this.selector);
-            //console.log(newInterline);
-        });
-    });*/
-
     $('body').css('line-height', $(selector).val());
 
-    if(session_user && needPrefAdaptInterfaz && (localStorage['size_line_spacing'] != $(selector).val())) {
+    if(session_user && needPrefAdaptInterfaz && (localStorage['size_line_spacing'] != $(selector).val()) && !setDefault) {
         updateValuesInterfazInSession(['size_line_spacing'], [$(selector).val()]);
     }
+    $(selector).data('default', false);
     localStorage['size_line_spacing'] = $(selector).val();
 }
 
@@ -360,7 +335,7 @@ Dot.prototype.draw = function() {
   this.node.style.top = this.y + "px";
 };
 
-function createTrail(optionLenTrails, colorTrails, invert_color_general){
+function createTrail(optionLenTrails, colorTrails, invert_color_general, setDefault){
     let lenTrail = {
         "1": 0,
         "2": 12,
@@ -388,7 +363,7 @@ function createTrail(optionLenTrails, colorTrails, invert_color_general){
         $('.trail').remove();
     }
 
-    if(session_user && needPrefAdaptInterfaz && (localStorage['trail_cursor_size_id'] != optionLenTrails || localStorage['trail_cursor_color'] != colorTrails)){
+    if(session_user && needPrefAdaptInterfaz && (localStorage['trail_cursor_size_id'] != optionLenTrails || localStorage['trail_cursor_color'] != colorTrails) && !setDefault){
         updateValuesInterfazInSession(['trail_cursor_size_id', 'trail_cursor_color'], [optionLenTrails, colorTrails]);
 
     }
