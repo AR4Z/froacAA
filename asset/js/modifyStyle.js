@@ -156,6 +156,17 @@ $("input[name='radioOptionscontrast']").change(function() {
     highContrast(optionCheckedContrast);
 });
 
+function setDefaultValuesInterfaz(){
+    $('#inputFontSize').val(12).change();
+    $('#inputInterlineSize').val(1.5).change();
+    $("input[name='radioOptionscontrast'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='type-font'][value="+('1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursorTrails'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursor'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='invertImages']").prop('checked', false).change();
+    $("input[name='invertGeneral']").prop('checked', false).change();
+}
+
 
 function updateValuesInterfazInSession(names_interfaz_preference, values){
     console.log("update in session");

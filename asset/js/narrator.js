@@ -67,6 +67,16 @@ function updateValuesNarratorInSession(names_preferences_narrator, values){
     });
 }
 
+function setDefaultValuesNarrator(){
+    $('#input-speed-speech-narrator').val(180).change();
+    $("input[name='pitch-narrator'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='volume-narrator'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='gender-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='link-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='highlight-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='reading-unit-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+}
+
 function setSpeechSpeedNarrator(speed){
     console.log("swswej");
     if((speed != localStorage['speed_reading_nr']) && needNarrator){

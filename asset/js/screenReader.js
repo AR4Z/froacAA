@@ -15,6 +15,14 @@ $(document).ready(function(){
     $("input[name='link-sr'][value=" + (localStorage['links_id_sr'] || '1') + "]").prop('checked', true).change();
 });
 
+function setDefaultValuesSr(){
+    $('#input-speed-speech-sr').val(180).change();
+    $("input[name='pitch-sr'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='volume-sr'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='gender-sr'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='link-sr'][value=" + ('1') + "]").prop('checked', true).change();
+}
+
 $("input[name='pitch-sr']").change(function(){
     let pitchIDselected = $("input[name='pitch-sr']:checked").val();
     setPitchSr(pitchIDselected);
