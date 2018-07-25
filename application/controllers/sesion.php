@@ -71,6 +71,10 @@ class Sesion extends CI_Controller {
                 $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
                 $use_narrator = $use_narrator[0]['use_narrator_id'];
 
+                // pregunto si el usuario necesita usar screen reader
+                $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
+                $use_sr = $use_sr[0]['use_screen_reader_id'];
+
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
@@ -89,6 +93,16 @@ class Sesion extends CI_Controller {
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('needNarrator', false);
+                }
+
+                // si el usuario necesita el screen reader entonces lo almaceno en sesion y tambien sus preferencias
+                if($use_sr == "1" || $use_sr == "2") {
+                    $preferencesSr = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
+                    $this->session->set_userdata('needSr', true);
+                    $this->session->set_userdata('preferencesSr', $preferencesSr[0]);
+                } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
+                    $this->session->set_userdata('needSr', false);
                 }
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
@@ -119,6 +133,8 @@ class Sesion extends CI_Controller {
         $this->session->unset_userdata('preferencesAdaptainterfaz');
         $this->session->unset_userdata('preferencesNarrator');
         $this->session->unset_userdata('needNarrator');
+        $this->session->unset_userdata('preferencesSr');
+        $this->session->unset_userdata('needSr');
 
         redirect(base_url(), 'refresh');
     }
