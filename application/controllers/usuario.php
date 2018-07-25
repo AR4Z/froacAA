@@ -375,6 +375,22 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_narratorDB($this->input->post('username'), $arrayCombineNameAndValuesNarrator);
     }
 
+    // este metodo se encarga de actualizar los valores del screen reader en la sesion
+    // para que luego sean actualizados en la db
+    public function update_preferences_srSession(){
+        $arrayNamesPreferencesSr = $this->input->post('names_preferences_sr');
+        $arrayValuesPreferencesSr = $this->input->post('values');
+        $arrayPreferencesSr = $this->session->userdata('preferencesSr');
+        $arrayCombineNameAndValuesSr = array_combine($arrayNamesPreferencesSr, $arrayValuesPreferencesSr);
+        foreach($arrayCombineNameAndValuesSr as $name => $value){
+            $arrayPreferencesSr[$name] = $value;
+        }
+        $this->session->set_userdata('preferencesSr', $arrayPreferencesSr);
+        echo(json_encode($this->session->userdata('preferencesSr')));
+
+        $this->usuario_model->update_preferences_srDB($this->input->post('username'), $arrayCombineNameAndValuesSr);
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -458,6 +474,7 @@ class Usuario extends CI_Controller {
         // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
+        $optScreenReader = $this->input->post('use_screen_reader');
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
@@ -473,6 +490,12 @@ class Usuario extends CI_Controller {
         // se agregara a la tabla de preferencias de narardor con los valores por default
         if($optNarrator == 1 || $optNarrator == 2){
             $this->usuario_model->insert_pref_narrator($this->input->post('username'));
+        }
+
+        // en caso de que el usuario requiera o desee usar el screen reader de forma opcional entonces
+        // se agregara a la tabla de preferencias de screen reade con los valores por default
+        if($optScreenReader == 1 || $optScreenReader == 2){
+            $this->usuario_model->insert_pref_sr($this->input->post('username'));
         }
 
         if($_POST["necesidadespecial"]!=""){
