@@ -216,7 +216,7 @@ if ($this->input->post('cantidad6')!='') {
 
         $data = array(
             'use_username' => $this->input->post('username'),
-            'use_stu_datebirth' => $this->input->post('fecha_nac'),
+            'use_stu_datebirth' => $today,
             'use_ls_id' => $result_test,
             'use_stu_level' => $this->input->post('nevel_ed'),
             'use_ls_cant_V' => $cantidad1,
@@ -238,7 +238,7 @@ if ($this->input->post('cantidad6')!='') {
             'use_clave' => md5($this->input->post('passwd')),
             'use_email' => ($this->input->post('mail')),
             'use_fecha_registro' => $today,
-            'use_rol_id'=> $this->input->post('tipoU'),
+            'use_rol_id'=> 2,
         );
 
         $this->db->insert('users', $data2);
@@ -246,29 +246,36 @@ if ($this->input->post('cantidad6')!='') {
     }
 
     // almacena los valores para adaptar la interfaz
-    public function insert_pref_interfaz($id){
-        // inicialmente son los valores por default
-        $data = array(
-            'use_username' => $id,
-        );
+    public function insert_pref_interfaz($id, $data){
+
+        /*if(!$data){
+            // valores por default
+            $data = array(
+                'use_username' => $id,
+            );
+        }*/
         $this->db->insert('use_pref_interfaz', $data);
     }
 
     // almacena los valores para usar el narrador
-    public function insert_pref_narrator($id){
-        // inicialmente son los valores por default
-        $data = array(
-            'use_username' => $id,
-        );
+    public function insert_pref_narrator($id, $data){
+        /*if(!$data){
+            // valores por default
+            $data = array(
+                'use_username' => $id,
+            );
+        }*/
         $this->db->insert('use_pref_narrator', $data);
     }
 
     // almacena los valores para usar el screen reader
-    public function insert_pref_sr($id){
-        // inicialmente son los valores por default
-        $data = array(
-            'use_username' => $id,
-        );
+    public function insert_pref_sr($id, $data){
+        /*if(!$data){
+            // valores por default
+            $data = array(
+                'use_username' => $id,
+            );
+        }*/
         $this->db->insert('use_pref_sr', $data);
     }
 

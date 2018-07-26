@@ -78,7 +78,7 @@ function setSpeechSpeedSr(speed, setDefault){
         updateValuesSrInSession(['speed_reading'], [speed]);
     }
     $('#input-speed-speech-sr').data('default', false);
-    localStorage['speed_reading_nr'] = speed;
+    localStorage['speed_reading_sr'] = speed;
 }
 
 function setPitchSr(pitchID, setDefault) {
@@ -86,7 +86,7 @@ function setPitchSr(pitchID, setDefault) {
         updateValuesSrInSession(['pitch_id'], [pitchID]);
     }
     $("input[name='pitch-sr']").data('default', false);
-    localStorage['pitch_id_nr'] = pitchID;
+    localStorage['pitch_id_sr'] = pitchID;
 }
 
 function setVolumeSr(volumeID, setDefault) {

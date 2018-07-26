@@ -391,6 +391,23 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_srDB($this->input->post('username'), $arrayCombineNameAndValuesSr);
     }
 
+    // este metodo se encarga de guardar las preferencias de un nuevo usuario
+    public function update_preferences_new_user(){
+
+        if($this->input->post('needNarrator')){
+            $dataNarrator = $this->input->post('dataNarrator');
+            $this->usuario_model->update_preferences_narratorDB($this->input->post('username'), $dataNarrator);
+        }
+        if($this->input->post('needSr')){
+            $dataSr = $this->input->post('dataSr');
+            $this->usuario_model->update_preferences_srDB($this->input->post('username'), $dataSr);
+        }
+        if($this->input->post('needInterfaz')){
+            $dataInterfaz = $this->input->post('dataInterfaz');
+            $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $dataInterfaz);
+        }
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -481,21 +498,21 @@ class Usuario extends CI_Controller {
         }
 
         // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
-        // se agregara a la tabla de preferencias de interfaz con los valores por default
+        // se agregara a la tabla de preferencias de interfaz
         if($optInterfaz == 1 || $optInterfaz == 2){
-            $this->usuario_model->insert_pref_interfaz($this->input->post('username'));
+            $this->usuario_model->insert_pref_interfaz($this->input->post('username'), json_decode($this->input->post('interfazPreferences'), TRUE));
         }
 
         // en caso de que el usuario requiera o desee usar el narrador de forma opcional entonces
-        // se agregara a la tabla de preferencias de narardor con los valores por default
+        // se agregara a la tabla de preferencias de narardor
         if($optNarrator == 1 || $optNarrator == 2){
-            $this->usuario_model->insert_pref_narrator($this->input->post('username'));
+            $this->usuario_model->insert_pref_narrator($this->input->post('username'), json_decode($this->input->post('narratorPreferences'), TRUE));
         }
 
         // en caso de que el usuario requiera o desee usar el screen reader de forma opcional entonces
-        // se agregara a la tabla de preferencias de screen reade con los valores por default
+        // se agregara a la tabla de preferencias de screen reader
         if($optScreenReader == 1 || $optScreenReader == 2){
-            $this->usuario_model->insert_pref_sr($this->input->post('username'));
+            $this->usuario_model->insert_pref_sr($this->input->post('username'), json_decode($this->input->post('screenReaderPreferences'), TRUE));
         }
 
         if($_POST["necesidadespecial"]!=""){
@@ -664,18 +681,37 @@ class Usuario extends CI_Controller {
             }
         }
         $name = $this->input->post('nombre') . ' ' . $this->input->post('apellido');
-        $this->exito($this->input->post('username'), $name);
+        $this->session->set_flashdata('username', $this->input->post('username'));
+        $this->session->set_flashdata('name', $name);
+        redirect(base_url().'usuario/exito', 'refresh');
     }
 
     // Metodo que muestra un mensaje de exito cuando se crea una cuenta correctamente
 
     public function exito($id, $name) {
+        $id = $this->session->flashdata('username');
+        $name = $this->session->flashdata('name');
+        // pregunto si el usuario necesita adaptaciones de la interfaz
+
+        $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($id);
+        $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+
+        // pregunto si el usuario necesita usar narrador
+        $use_narrator = $this->usuario_model->get_need_narrator($id);
+        $use_narrator = $use_narrator[0]['use_narrator_id'];
+
+        // pregunto si el usuario necesita usar screen reader
+        $use_sr = $this->usuario_model->get_need_sr($id);
+        $use_sr = $use_sr[0]['use_screen_reader_id'];
 
         $content = array(
             "title" => "Registro éxitoso",
             "main_view" => "register/exito_view",
             "username" => $id,
-            "name" => $name
+            "name" => $name,
+            "needNarrator" => $use_narrator,
+            "needPrefInterfaz"=> $use_adapta_interfaz,
+            "needSr" => $use_sr
         );
         $this->load->view('base/base_template', $content);
     }

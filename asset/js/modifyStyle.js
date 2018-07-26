@@ -13,6 +13,7 @@ $(document).ready(function(){
         localStorage['size_line_spacing'] = preferencesAdaptainterfaz['size_line_spacing'];
         localStorage['cursor_url'] = preferencesAdaptainterfaz['cursor_url'];
     }
+
     $(function() {
         $('#cp1, #cp2').colorpicker();
     });

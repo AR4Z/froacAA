@@ -101,8 +101,9 @@
     let needNarrator;
     let needSr;
     let base_url;
-    let idView
+    let idView;
     $(document).ready(function(){
+
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
         preferencesAdaptainterfaz = <?php echo json_encode($this->session->userdata('preferencesAdaptainterfaz'));?>;
         preferencesNarrator = <?php echo json_encode($this->session->userdata('preferencesNarrator'));?>;
@@ -110,6 +111,7 @@
         needPrefAdaptInterfaz = "<?php echo $this->session->userdata('adaptaInterfaz');?>" || false;
         needNarrator = "<?php echo $this->session->userdata('needNarrator');?>" || false;
         needSr = "<?php echo $this->session->userdata('needSr');?>" || false;
+
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
         $("#" + idView).addClass('active');

@@ -8,7 +8,7 @@
             <h1>Crear cuenta en FROAC</h1>
             <!--FORMULARIO DE REGISTRO DE USUARIO-->
             <div class="card-body">
-                <form method="POST" role="form" action="<?php echo base_url();?>index.php/usuario/guardar" enctype='multipart/form-data' id="form">
+                <form method="POST" action="<?php echo base_url();?>index.php/usuario/guardar"  role="form" enctype='multipart/form-data' id="form">
 
                     <div class="card border-0">
                         <h3>Información personal</h3>
@@ -116,7 +116,7 @@
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_interfaz">
                                 <label for="personaliceInterfaz" id="label_personalice_interfaz">¿Desea personalizar la interfaz?</label>
-                                <select class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
+                                <select id="useAdaptInterfaz" class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_narrator">
                                 <label for="useNarrator" id="label_use_narrator">¿Desea usar el narrador?</label>
-                                <select class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
+                                <select id="useNarrator" class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
@@ -144,7 +144,7 @@
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_narrator">
                                 <label for="use_screen_reader" id="label_use_screen_reader">¿Desea usar el lector de pantalla?</label>
-                                <select class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
+                                <select id="useSr" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
@@ -182,11 +182,9 @@
         let dd = today.getDate() - 1;
         let mm = today.getMonth() + 1;
         let yyyy = today.getFullYear();
-
         if (dd < 10) {
             dd = '0' + dd
         }
-
         if (mm < 10) {
             mm = '0' + mm
         }
@@ -198,7 +196,6 @@
                 min: '1975/01/01',
                 max: yyyy + "/" + mm + "/" + dd
             });
-
             $('.name').focus();
             $('.glyphicon-calendar').attr("class", "fa fa-calendar");
             $('.glyphicon-triangle-right').attr('class', "fa fa-caret-right");
@@ -208,38 +205,30 @@
             $(".datepicker-button").click(function() {
                 $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
             });
-
-
         });
         $(document).ready(function() {
             function validateUsername(username) {
                 let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
                 return re.test(username);
             }
-
             function validateEmail(email) {
                 let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
             }
-
             function validateDate(date, infDate, supDate) {
                 return (infDate <= date) && (date <= supDate);
             }
-
             $.validator.addMethod('range_date', function(value) {
                 let date = new Date(value);
                 let infDate = new Date('1975-01-01');
                 return validateDate(date, infDate, today);
             });
-
             $.validator.addMethod("email_regex", function(value) {
                 return validateEmail(value);
             });
-
             $.validator.addMethod("usernameValidation", function(value) {
                 return validateUsername(value);
             })
-
             $("#form").validate({
                 rules: {
                     nombre: {
@@ -328,7 +317,6 @@
                         minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
                         usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es inválido.</div>",
                         remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
-
                     },
                     passwd: {
                         required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
@@ -348,4 +336,80 @@
                 },
             });
         })
+    </script>
+
+    <script type="text/javascript">
+
+    $('#form').submit(function(e) {
+        // con esta información sabemos que preferencias de usuario guardar
+        // si cada una de las caracteristicas es requerida(1) u opcional(2) seran guardadas
+        let newUserAdaptInfo = {
+            needAdaptInterfaz: $("#useAdaptInterfaz").val() ==  1 || $("#useAdaptInterfaz").val() ==  2,
+            needSr: $('#useSr').val() ==  1 || $("#useSr").val() ==  2,
+            needNarrator: $("#useNarrator").val() == 1 || $("#useNarrator").val() == 2,
+        }
+        // verificamos si el nuevo usuario desea usar las adaptaciones de interfaz
+        if(newUserAdaptInfo.needAdaptInterfaz){
+            let interfazPreferences = {
+                'use_username':$("input[name='username']").val(),
+                "cursor_size_id":localStorage['cursor_size_id'],
+                'color_cursor':localStorage['color_cursor'],
+                'trail_cursor_size_id':localStorage['trail_cursor_size_id'],
+                'trail_cursor_color':localStorage['trail_cursor_color'],
+                'invert_color_image':localStorage['invert_color_image'],
+                'invert_color_general':localStorage['invert_color_general'],
+                'contrast_colors_id':localStorage['contrast_colors_id'],
+                'font_size':localStorage['font_size'],
+                'font_type_id':localStorage['font_type_id'],
+                'size_line_spacing':localStorage['size_line_spacing'],
+                'cursor_url':localStorage['cursor_url'],
+            }
+            let inputInterfazPreferences = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "interfazPreferences").val(JSON.stringify(interfazPreferences));
+               $(this).append($(inputInterfazPreferences));
+        }
+        // verificamos si el nuevo usuario desea usar el narrador
+        if(newUserAdaptInfo.needNarrator){
+            let narratorPreferences = {
+                'use_username':$("input[name='username']").val(),
+                'speed_reading':localStorage['speed_reading_nr'],
+                'pitch_id':localStorage['pitch_id_nr'],
+                'volume_id': localStorage['volume_id_nr'],
+                'voice_gender_id':localStorage['voice_gender_id_nr'],
+                'links_id':localStorage['links_id_nr'],
+                'highlight_id':localStorage['highlight_id_nr'],
+                'reading_unit_id':localStorage['reading_unit_id_nr'],
+            }
+            let inputNarratorPreferences = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "narratorPreferences").val(JSON.stringify(narratorPreferences));
+               $(this).append($(inputNarratorPreferences));
+
+        }
+        // verificamos si el nuevo usuario desea usar el screen reader
+        if(newUserAdaptInfo.needSr){
+            let screenReaderPreferences = {
+                    'use_username':$("input[name='username']").val(),
+                    'speed_reading':localStorage['speed_reading_sr'],
+                    'pitch_id':localStorage['pitch_id_sr'],
+                    'volume_id':localStorage['volume_id_sr'],
+                    'voice_gender_id':localStorage['voice_gender_id_sr'],
+                    'links_id':localStorage['links_id_sr'],
+                }
+
+            let inputScreenReaderPreferences = $("<input>")
+                  .attr("type", "hidden")
+                  .attr("name", "screenReaderPreferences").val(JSON.stringify(screenReaderPreferences));
+            $(this).append($(inputScreenReaderPreferences));
+
+
+        }
+
+
+        return true;
+
+    });
+
+
     </script>
