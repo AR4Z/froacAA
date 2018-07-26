@@ -245,38 +245,64 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->insert('use_student', $data);
     }
 
+    public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $dataInterfaz, $dataNarrator, $dataScreenReader){
+        // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
+        // se agregara a la tabla de preferencias de interfaz
+        if($optInterfaz == 1 || $optInterfaz == 2){
+            $this->usuario_model->insert_pref_interfaz($username, $dataInterfaz);
+        }
+
+        // en caso de que el usuario requiera o desee usar el narrador de forma opcional entonces
+        // se agregara a la tabla de preferencias de narardor
+        if($optNarrator == 1 || $optNarrator == 2){
+            $this->usuario_model->insert_pref_narrator($username, $dataNarrator);
+        }
+
+        // en caso de que el usuario requiera o desee usar el screen reader de forma opcional entonces
+        // se agregara a la tabla de preferencias de screen reader
+        if($optScreenReader == 1 || $optScreenReader == 2){
+            $this->usuario_model->insert_pref_sr($username, $dataScreenReader);
+        }
+    }
+
     // almacena los valores para adaptar la interfaz
     public function insert_pref_interfaz($id, $data){
-
-        /*if(!$data){
-            // valores por default
-            $data = array(
-                'use_username' => $id,
-            );
-        }*/
-        $this->db->insert('use_pref_interfaz', $data);
+        if(!($this->usuario_model->alreadyExists($id, 'use_pref_interfaz'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_interfaz', $data);
+        }
     }
 
     // almacena los valores para usar el narrador
     public function insert_pref_narrator($id, $data){
-        /*if(!$data){
-            // valores por default
-            $data = array(
-                'use_username' => $id,
-            );
-        }*/
-        $this->db->insert('use_pref_narrator', $data);
+        if(!($this->usuario_model->alreadyExists($id, 'use_pref_narrator'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_narrator', $data);
+        }
     }
 
     // almacena los valores para usar el screen reader
     public function insert_pref_sr($id, $data){
-        /*if(!$data){
-            // valores por default
-            $data = array(
-                'use_username' => $id,
-            );
-        }*/
-        $this->db->insert('use_pref_sr', $data);
+        if(!($this->usuario_model->alreadyExists($id, 'use_pref_sr'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_sr', $data);
+        }
+
     }
 
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
@@ -364,6 +390,13 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
     }
 
+    public function alreadyExists($username, $typeAdapt){
+        $this->db->from($typeAdapt);
+        $this->db->where('use_username',$username);
+        $query = $this->db->get();
+        return $query->num_rows() == 1;
+    }
+
     // Se obtienen los registros de las preferencias que hay en la tabla "use_preference"
 
     public function get_preferencias() {
@@ -417,6 +450,10 @@ if ($this->input->post('cantidad6')!='') {
    }
 
     public function update_user($username){
+        $optInterfaz = $this->input->post('personaliceInterfaz');
+        $optNarrator = $this->input->post('useNarrator');
+        $optScreenReader = $this->input->post('useSr');
+
         $data1 = array(
             "use_nombre"          =>  $this->input->post("nombre"),
             "use_apellido"        =>  $this->input->post("apellidos"),
@@ -425,8 +462,15 @@ if ($this->input->post('cantidad6')!='') {
         );
         $data2 = array(
             "use_stu_level"       =>  $this->input->post("nevel_ed"),
-            "use_stu_datebirth"       =>  $this->input->post("fecha_nac")
+            "use_stu_datebirth"       =>  $this->input->post("fecha_nac"),
+            "use_adapta_interfaz_id" => $optInterfaz,
+            "use_narrator_id" => $optNarrator,
+            "use_screen_reader_id" => $optScreenReader,
         );
+
+        // actualiza las adaptaciones que el usuario requiere
+        // por ejemplo: si el usuario ya necesita el screen reader
+        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader);
 
         $this->db->where('use_username', $username);
         $this->db->update('users', $data1);

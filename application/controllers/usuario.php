@@ -319,11 +319,27 @@ class Usuario extends CI_Controller {
                 );
                 $this->load->view('base/admin_template', $content);
             } else {
+                // pregunto si el usuario necesita adaptaciones de la interfaz
+                $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
+                $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+
+                // pregunto si el usuario necesita usar narrador
+                $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
+                $use_narrator = $use_narrator[0]['use_narrator_id'];
+
+                // pregunto si el usuario necesita usar screen reader
+                $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
+                $use_sr = $use_sr[0]['use_screen_reader_id'];
+
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                     "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                     "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
+                    'optsAdapta' => $this->usuario_model->get_opts_adapta(),
+                    'selectedOptInterfaz'=> $use_adapta_interfaz,
+                    'selectedOptNarrator'=> $use_narrator,
+                    'selectedOptScreenReader'=>$use_sr,
                     "main_view" => "usr/editar_view"
                 );
                 $this->load->view('base/est_template', $content);
@@ -338,9 +354,60 @@ class Usuario extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $this->usuario_model->update_user($session_data["username"]);
-            $this->perfil();
+            // pregunto si el usuario necesita adaptaciones de la interfaz
+            $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
+            $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+
+            // pregunto si el usuario necesita usar narrador
+            $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
+            $use_narrator = $use_narrator[0]['use_narrator_id'];
+
+            // pregunto si el usuario necesita usar screen reader
+            $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
+            $use_sr = $use_sr[0]['use_screen_reader_id'];
+            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr);
+            redirect(base_url().'usuario/perfil', 'refresh');
         } else {
             redirect(base_url(), 'refresh');
+        }
+    }
+
+    public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr){
+        $session_data = $this->session->userdata('logged_in');
+        $this->session->unset_userdata('adaptaInterfaz');
+        $this->session->unset_userdata('preferencesAdaptainterfaz');
+        $this->session->unset_userdata('preferencesNarrator');
+        $this->session->unset_userdata('needNarrator');
+        $this->session->unset_userdata('preferencesSr');
+        $this->session->unset_userdata('needSr');
+        // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
+        if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
+            $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+            $this->session->set_userdata('adaptaInterfaz', true);
+            $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('adaptaInterfaz', false);
+        }
+
+        // si el usuario necesita el narrador entonces lo almaceno en sesion y tambien sus preferencias
+        if($use_narrator == "1" || $use_narrator == "2") {
+            $preferencesNarrator = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
+            $this->session->set_userdata('needNarrator', true);
+            $this->session->set_userdata('preferencesNarrator', $preferencesNarrator[0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('needNarrator', false);
+        }
+
+        // si el usuario necesita el screen reader entonces lo almaceno en sesion y tambien sus preferencias
+        if($use_sr == "1" || $use_sr == "2") {
+            $preferencesSr = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
+            $this->session->set_userdata('needSr', true);
+            $this->session->set_userdata('preferencesSr', $preferencesSr[0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('needSr', false);
         }
     }
 
@@ -488,32 +555,23 @@ class Usuario extends CI_Controller {
     // en la tabla usuario y estudiante
 
     public function guardar() {
-        // esta variable almacena si el usuario quiere usar las adaptaciones de interfaz
+
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
+        $dataInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
+        $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
+        $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
+
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
         }
 
-        // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
-        // se agregara a la tabla de preferencias de interfaz
-        if($optInterfaz == 1 || $optInterfaz == 2){
-            $this->usuario_model->insert_pref_interfaz($this->input->post('username'), json_decode($this->input->post('interfazPreferences'), TRUE));
-        }
+        // esto agrega al usuario para usar las adaptaciones de interfaz el narrador
+        // o el screen segun lo que el necesite
+        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader,$dataInterfaz, $dataNarrator, $dataScreenReader);
 
-        // en caso de que el usuario requiera o desee usar el narrador de forma opcional entonces
-        // se agregara a la tabla de preferencias de narardor
-        if($optNarrator == 1 || $optNarrator == 2){
-            $this->usuario_model->insert_pref_narrator($this->input->post('username'), json_decode($this->input->post('narratorPreferences'), TRUE));
-        }
-
-        // en caso de que el usuario requiera o desee usar el screen reader de forma opcional entonces
-        // se agregara a la tabla de preferencias de screen reader
-        if($optScreenReader == 1 || $optScreenReader == 2){
-            $this->usuario_model->insert_pref_sr($this->input->post('username'), json_decode($this->input->post('screenReaderPreferences'), TRUE));
-        }
 
         if($_POST["necesidadespecial"]!=""){
             $this->usuario_model->has_need($this->input->post('username'));
@@ -685,6 +743,7 @@ class Usuario extends CI_Controller {
         $this->session->set_flashdata('name', $name);
         redirect(base_url().'usuario/exito', 'refresh');
     }
+
 
     // Metodo que muestra un mensaje de exito cuando se crea una cuenta correctamente
 

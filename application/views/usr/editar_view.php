@@ -78,6 +78,49 @@
                                                                 <?php } ?>
                                                             </select>
                                             </div>
+                                            <div class="form-group" role="group" aria-labelledby="label_interfaz">
+                                                <label for="personaliceInterfaz" id="label_personalice_interfaz">¿Desea personalizar la interfaz?</label>
+                                                <select id="useAdaptInterfaz" class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
+                                                    <?php
+                                                        foreach($optsAdapta as $key) {?>
+                                                            <?php if($key->option_use_id == 3): ?>
+                                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                                        <?php else:?>
+                                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                                        <?php endif?>
+                                                <?php }?>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group" role="group" aria-labelledby="label_narrator">
+                                                <label for="useNarrator" id="label_use_narrator">¿Desea usar el narrador?</label>
+                                                <select id="useNarrator" class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
+                                                    <?php
+                                                        foreach($optsAdapta as $key) {?>
+                                                            <?php if($key->option_use_id == 3): ?>
+                                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                                        <?php else:?>
+                                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                                        <?php endif?>
+                                                <?php }?>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group" role="group" aria-labelledby="label_narrator">
+                                                <label for="use_screen_reader" id="label_use_screen_reader">¿Desea usar el lector de pantalla?</label>
+                                                <select id="useSr" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
+                                                    <?php
+                                                        foreach($optsAdapta as $key) {?>
+                                                            <?php if($key->option_use_id == 3): ?>
+                                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                                        <?php else:?>
+                                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                                        <?php endif?>
+                                                <?php }?>
+                                                </select>
+
+                                            </div>
+
                                             <button id="sub" type="submit" class="btn btn-info">Actualizar mis datos</button>
                                             <a class="btn btn-secondary pull-right" href="<?php echo base_url()?>usuario/perfil">
                                                 <i class="fa fa-reply"> </i> Volver
@@ -116,6 +159,10 @@
 <!-- modal -->
 <!--script for this page-->
 <script type="text/javascript">
+    let selectedOptInterfaz = "<?php echo $selectedOptInterfaz;?>";
+    let selectedOptNarrator = "<?php echo $selectedOptNarrator;?>";
+    let selectedOptScreenReader = "<?php echo $selectedOptScreenReader;?>";
+
     let today = new Date();
     let dd = today.getDate() - 1;
     let mm = today.getMonth() + 1;
@@ -251,4 +298,8 @@
     $("#aceptar").click(function() {
         window.location = "<?php echo base_url()?>";
     })
+
+    $('#useAdaptInterfaz').val(selectedOptInterfaz);
+    $('#useSr').val(selectedOptScreenReader);
+    $('#useNarrator').val(selectedOptNarrator);
 </script>
