@@ -1,4 +1,4 @@
-<?php if(!($view == 'base/login/login_view')) : ?>
+<?php if(!($id_view == 'login')) : ?>
 <footer class="main-footer">
     <div class="container-fluid">
         <div class="row">

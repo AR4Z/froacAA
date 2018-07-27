@@ -36,7 +36,7 @@
     <a id="toggle-btn" href="#" class="menu-btn active"><i class="fa fa-bars" style="font-size: 2rem; color:black;"></i></a>
     <a class="navbar-brand" href="<?php echo base_url()?>"><span style="color:#039700; font-size: 2.167rem;  margin-left: 15px;">FROAC</span></a>
     <ul class="nav navbar-nav ml-auto">
-        <?php if($usr_data == null) : ?>
+        <?php if(!$this->session->userdata('logged_in')): ?>
         <li class="nav-item">
             <a class="btn btn-outline-dark btn-lg" href="<?php echo base_url()?>login" role="button">
                 Iniciar sesión

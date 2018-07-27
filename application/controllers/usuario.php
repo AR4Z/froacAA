@@ -203,8 +203,6 @@ class Usuario extends CI_Controller {
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                         "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
-                        "data_adaptablity_interfaz" => $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']),
-                        "needAdaptaInterfaz" => $this->usuario_model->get_need_adapta_interfaz($session_data['username']),
                         "main_view" => "usr/perfil_view"
                     );
                     $this->load->view('base/est_template', $content);
@@ -374,12 +372,7 @@ class Usuario extends CI_Controller {
 
     public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr){
         $session_data = $this->session->userdata('logged_in');
-        $this->session->unset_userdata('adaptaInterfaz');
-        $this->session->unset_userdata('preferencesAdaptainterfaz');
-        $this->session->unset_userdata('preferencesNarrator');
-        $this->session->unset_userdata('needNarrator');
-        $this->session->unset_userdata('preferencesSr');
-        $this->session->unset_userdata('needSr');
+
         // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
         if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
             $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);

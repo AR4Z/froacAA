@@ -7,7 +7,7 @@
           </div>
           <ul class="list-unstyled">
                     <li id="searchOA"><a  href="<?php echo base_url()?>"> <i class="fa fa-search"></i>Buscador</a></li>
-                    <?php if($usr_data == null):?>
+                    <?php if(!$this->session->userdata('logged_in')):?>
                           <li id="create-account"><a  href="<?php echo base_url()?>usuario/registro"> <i class="fa fa-user"></i>Crear una cuenta </a></li>
                     <?php endif; ?>
                     <li id="repos"><a  href="<?php echo base_url()?>repositorio/lista"> <i class="fa fa-sitemap"></i>Repositorios</a></li>

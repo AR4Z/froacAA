@@ -1,4 +1,4 @@
-<?php if($user){$sess = 1; $usr = $user;}else{ $sess = 0; $usr=0;} ?>
+<?php if($this->session->userdata('logged_in')){$sess = 1; $usr = $user;}else{ $sess = 0; $usr=0;} ?>
 <div class="content-inner" role="main">
     <section>
         <div class="container-fluid">

@@ -14,7 +14,7 @@ class Login extends CI_Controller{
 
     public function index() {
         $data = array(
-            'view' => 'base/login/login_view'
+            'id_view'=> 'login'
         );
         $this->load->view('base/login/login_view', $data);
     }
