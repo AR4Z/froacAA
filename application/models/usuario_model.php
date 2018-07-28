@@ -86,7 +86,7 @@ function get_all_data_adaptability_sr($username) {
 // metodo que se encarga de obtener los colores en caso de que el usuario seleccione la opcion
 // customized
 function get_custom_colors($username) {
-    $query = $this->db->query("select use_custom_colors.use_username, use_custom_colors.foregound_colour,
+    $query = $this->db->query("select use_custom_colors.use_username, use_custom_colors.foreground_colour,
     use_custom_colors.background_colour, use_custom_colors.highlight_colour, use_custom_colors.link_colour
     from use_custom_colors
     inner join users on users.use_username=use_custom_colors.use_username
@@ -290,6 +290,7 @@ if ($this->input->post('cantidad6')!='') {
                 );
             }
             $this->db->insert('use_pref_interfaz', $data);
+            $this->insert_custom_colors($id);
         }
     }
 

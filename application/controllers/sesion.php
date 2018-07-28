@@ -25,7 +25,7 @@ class Sesion extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             //Field validation failed.  User redirected to login page
             $data = array(
-                'view' => 'base/login/login_view'
+                'id_view' => 'login'
             );
             $this->load->view('base/login/login_view', $data);
         } else {

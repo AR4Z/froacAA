@@ -1045,22 +1045,6 @@
   margin-bottom: -0.1em;
   margin-left: -0.1em;
 }
-.fl-font-arial:not([class*='icon']),
-.fl-font-arial *:not([class*='icon']) {
-  font-family: Arial !important;
-}
-.fl-font-verdana:not([class*='icon']),
-.fl-font-verdana *:not([class*='icon']) {
-  font-family: Verdana !important;
-}
-.fl-font-times:not([class*='icon']),
-.fl-font-times *:not([class*='icon']) {
-  font-family: Georgia, Times, Times New Roman, serif !important;
-}
-.fl-font-comic-sans:not([class*='icon']),
-.fl-font-comic-sans *:not([class*='icon']) {
-  font-family: Comic Sans MS, sans-serif !important;
-}
 
 :root {
   --background-color: rgb(255,255,255);

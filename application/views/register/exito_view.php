@@ -27,7 +27,7 @@
             <br></br>
             <a href="<?php echo base_url() ?>"><input type="button" value="No, tal vez mas tarde" class="btn btn-info"></a>
 
-            <?php if($user){$sess = 1; $usr = $user;}else{ $sess = 0; $usr=0;} ?>
+            <?php if($this->session->userdata('logged_in')){$sess = 1; $usr = $user;}else{ $sess = 0; $usr=0;} ?>
 
         </section>
 </section>

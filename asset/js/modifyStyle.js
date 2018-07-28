@@ -163,7 +163,8 @@ $("input[name='radioOptionscontrast']").change(function () {
         $('#div-color-foreground').hide();
         $('#div-color-background').hide();
         $('#div-color-link').hide();
-        $('#div-color-highlight').hide();  
+        $('#div-color-highlight').hide(); 
+        needCustomColors = false;
     } else {
         $('#div-color-foreground').show();
         $('#div-color-background').show();
@@ -173,6 +174,7 @@ $("input[name='radioOptionscontrast']").change(function () {
         $("input[name='backgroundColor']").val(localStorage['background_colour'] || 'rgb(255,255,255)').change();
         $("input[name='highlightColor']").val(localStorage['highlight_colour'] || 'rgb(211,211,211)').change();
         $("input[name='linkColor']").val(localStorage['link_colour'] || 'rgb(255,255,0)').change();
+        needCustomColors = "1";
     }
     highContrast(optionCheckedContrast, $(this).data('default'));
 });
@@ -205,6 +207,22 @@ function setDefaultValuesInterfaz() {
     }
 }
 
+function updateCustomColorsInSession(colors){
+    $.ajax({
+        url: base_url + 'usuario/update_custom_colorsSession',
+        type:'POST',
+        data: {
+            'username':session_user['username'],
+            'customColors': colors
+        },
+        success: function(data){
+            console.log(data);
+        },
+        error: function (data){
+            console.log(data);
+        }
+    })
+}
 
 function updateValuesInterfazInSession(names_interfaz_preference, values) {
     console.log("update in session");
@@ -323,21 +341,33 @@ function highContrast(optionContrast, setDefault) {
 
 function setForegroundColor(color, setDefault){
     document.documentElement.style.setProperty('--foreground-color', color);
+    if(localStorage['foreground_colour'] != color && session_user){
+        updateCustomColorsInSession({foreground_colour:color});
+    }
     localStorage['foreground_colour'] = color;
 }
 
 function setBackgroundColor(color, setDefault){
     document.documentElement.style.setProperty('--background-color', color);
+    if(localStorage['background_colour'] != color && session_user){
+        updateCustomColorsInSession({background_colour:color});
+    }
     localStorage['background_colour'] = color;
 }
 
 function setLinkColor(color, setDefault){
     document.documentElement.style.setProperty('--link-color', color);
+    if(localStorage['link_colour'] != color && session_user){
+        updateCustomColorsInSession({link_colour:color});
+    }
     localStorage['link_colour'] = color;
 }
 
 function setHighlightColor(color, setDefault){
     document.documentElement.style.setProperty('--highlight-color', color);
+    if(localStorage['highlight_colour'] != color && session_user){
+        updateCustomColorsInSession({highlight_colour:color});
+    }
     localStorage['highlight_colour'] = color;
 }
 

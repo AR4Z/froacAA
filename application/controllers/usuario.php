@@ -421,7 +421,11 @@ class Usuario extends CI_Controller {
         foreach ($arrayCombineValues as $name => $value) {
             $arrayPreferencesInterfaz[$name] = $value;
         }
-        if(!($arrayPreferencesInterfaz['contrast_colors_id'] == '7')){
+        if($arrayPreferencesInterfaz['contrast_colors_id'] == '7'){
+            $customColors = $this->usuario_model->get_custom_colors($this->input->post('username'))[0];
+            $this->session->set_userdata('needcustomColors', true);
+            $this->session->set_userdata('customColors', $customColors);
+        } else {
             $this->session->set_userdata('needCustomColors', false);
         }
         $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
@@ -432,8 +436,6 @@ class Usuario extends CI_Controller {
     public function update_custom_colorsSession(){
         $username = $this->input->post('username');
         $arrayCustomColors = $this->input->post('customColors');
-        $this->session->set_userdata('needCustomColors', true);
-        
         $this->usuario_model->update_custom_colors($username, $arrayCustomColors);
         $this->session->set_userdata('customColors', $this->usuario_model->get_custom_colors($username)[0]);
     }
@@ -759,7 +761,7 @@ class Usuario extends CI_Controller {
 
     // Metodo que muestra un mensaje de exito cuando se crea una cuenta correctamente
 
-    public function exito($id, $name) {
+    public function exito() {
         $id = $this->session->flashdata('username');
         $name = $this->session->flashdata('name');
         // pregunto si el usuario necesita adaptaciones de la interfaz
@@ -782,7 +784,8 @@ class Usuario extends CI_Controller {
             "name" => $name,
             "needNarrator" => $use_narrator,
             "needPrefInterfaz"=> $use_adapta_interfaz,
-            "needSr" => $use_sr
+            "needSr" => $use_sr,
+            'id_view' => 'exito'
         );
         $this->load->view('base/base_template', $content);
     }
