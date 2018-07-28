@@ -80,6 +80,17 @@ class Sesion extends CI_Controller {
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
                     $this->session->set_userdata('adaptaInterfaz', true);
                     $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
+                    
+                    // si el usuario necesita usar colores personalizados
+                    if($preferencesInterfaz[0]['contrast_colors_id'] == '7'){
+                        // pido los colores y los almaceno en sesion
+                        $customColors = $this->usuario_model->get_custom_colors($session_data['username'])[0];
+                        $this->session->set_userdata('needcustomColors', true);
+                        $this->session->set_userdata('customColors', $customColors);
+                    } else {
+                        // en caso de que no necesite colores personalizados lo almaceno en sesion
+                        $this->session->set_userdata('needcustomColors', false);
+                    }
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('adaptaInterfaz', false);

@@ -49,6 +49,7 @@ function get_all_data_adaptability_interfaz($username) {
         return $query->result_array();
 }
 
+// este metodo se encarga de obtener las preferencias del usuario para usar el narrador
 function get_all_data_adaptability_narrator($username) {
     $query = $this->db->query("select use_pref_narrator.use_username, use_pref_narrator.speed_reading, use_pref_narrator.pitch_id, use_pref_narrator.volume_id, use_pref_narrator.voice_gender_id, use_pref_narrator.links_id, use_pref_narrator.highlight_id,
     use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id
@@ -66,6 +67,8 @@ function get_all_data_adaptability_narrator($username) {
     return $query->result_array();
 }
 
+
+// este metodo se encarga de obtener las preferencias del usuario para usar el screen reader
 function get_all_data_adaptability_sr($username) {
     $query = $this->db->query("select use_pref_sr.use_username, use_pref_sr.speed_reading, use_pref_sr.pitch_id, use_pref_sr.volume_id, use_pref_sr.voice_gender_id, use_pref_sr.links_id
     from use_pref_sr
@@ -79,6 +82,18 @@ function get_all_data_adaptability_sr($username) {
     return $query->result_array();
 }
 
+
+// metodo que se encarga de obtener los colores en caso de que el usuario seleccione la opcion
+// customized
+function get_custom_colors($username) {
+    $query = $this->db->query("select use_custom_colors.use_username, use_custom_colors.foregound_colour,
+    use_custom_colors.background_colour, use_custom_colors.highlight_colour, use_custom_colors.link_colour
+    from use_custom_colors
+    inner join users on users.use_username=use_custom_colors.use_username
+    where use_custom_colors.use_username='".$username."'");
+    
+    return $query->result_array();
+}
 
     // Metodo que obtiene los registros del administrador a partir del nombre de usuario a partir de la tabla usuario
 
@@ -275,6 +290,19 @@ if ($this->input->post('cantidad6')!='') {
                 );
             }
             $this->db->insert('use_pref_interfaz', $data);
+        }
+    }
+
+    // almacena los colores seleccionados por el usuario en la opcion customized
+    public function insert_custom_colors($id, $data){
+        if(!($this->usuario_model->alreadyExists($id, 'use_custom_colors'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_custom_colors', $data);
         }
     }
 
@@ -482,6 +510,12 @@ if ($this->input->post('cantidad6')!='') {
     public function update_preferences_interfazDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_interfaz', $data);
+    }
+
+    // este metodo se encarga de actualizar los colores para la seleccion customized
+    public function update_custom_colors($username, $data){
+        $this->db->where('use_username', $username);
+        $this->db->update('use_custom_colors', $data);
     }
 
     // este metodo se encarga de actualizar las preferencias a la hora de usar el narrador en la DB tabla: "use_pref_narrator"
