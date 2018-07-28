@@ -140,27 +140,19 @@ $("input[name='type-font']").change(function () {
 });
 
 $("input[name='foregroundColor']").change(function () {
-    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
-    localStorage['foregroundColor'] = $(this).val();
-    highContrast(optionCheckedContrast);
+    setForegroundColor($(this).val());
 });
 
 $("input[name='backgroundColor']").change(function () {
-    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
-    localStorage['backgroundColor'] = $(this).val();
-    highContrast(optionCheckedContrast);
+    setBackgroundColor($(this).val());
 });
 
 $("input[name='highlightColor']").change(function () {
-    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
-    localStorage['highlightColor'] = $(this).val();
-    highContrast(optionCheckedContrast);
+    setHighlightColor($(this).val());
 });
 
 $("input[name='linkColor']").change(function () {
-    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
-    localStorage['linkColor'] = $(this).val();
-    highContrast(optionCheckedContrast);
+    setLinkColor($(this).val());
 });
 
 $("input[name='radioOptionscontrast']").change(function () {
@@ -171,17 +163,16 @@ $("input[name='radioOptionscontrast']").change(function () {
         $('#div-color-foreground').hide();
         $('#div-color-background').hide();
         $('#div-color-link').hide();
-        $('#div-color-highlight').hide();
-        
+        $('#div-color-highlight').hide();  
     } else {
         $('#div-color-foreground').show();
         $('#div-color-background').show();
         $('#div-color-link').show();
         $('#div-color-highlight').show();
-        $("input[name='foregroundColour]").val(localStorage['foreground_colour'] || 'rgb(0,0,0)');
-        $("input[name='backgroundColour]").val(localStorage['background_colour'] || 'rgb(255,255,255)');
-        $("input[name='highlightColour]").val(localStorage['highlight_colour'] || 'rgb(211,211,211)');
-        $("input[name='linkColour]").val(localStorage['link_colour'] || 'rgb(255,255,0)');
+        $("input[name='foregroundColor']").val(localStorage['foreground_colour'] || 'rgb(0,0,0)').change();
+        $("input[name='backgroundColor']").val(localStorage['background_colour'] || 'rgb(255,255,255)').change();
+        $("input[name='highlightColor']").val(localStorage['highlight_colour'] || 'rgb(211,211,211)').change();
+        $("input[name='linkColor']").val(localStorage['link_colour'] || 'rgb(255,255,0)').change();
     }
     highContrast(optionCheckedContrast, $(this).data('default'));
 });
@@ -305,34 +296,9 @@ function highContrast(optionContrast, setDefault) {
         $('.colorpicker-hue').removeClass('no-high-contrast');
         $('.colorpicker-alpha').removeClass('no-high-contrast');
         $('.colorpicker-color').children().removeClass('no-high-contrast');
-        $('html').remove('#customized');
 
-    } else if(optionContrast === '7'){
-        $('html').remove('#customized');
-        let customStyle =`
-            <style id="customized">
-                body {
-                    color: ${localStorage['foreground_colour']};
-                    background-color: ${localStorage['background_colour']}
-                }
-                a {
-                    color: ${localStorage['link_colour']};
-                }
-                ::selection {
-                    background: ${localStorage['highlight_colour']};
-                  }
-                  
-                ::-moz-selection {
-                    background: ${localStorage['highlight_colour']};
-                }
-
-            </style>
-        `
-        $('html').append(customStyle);
-        
-    } else {
+    }  else {
         // agrego la clase obtenida al body para cambiar los colores
-        $('html').remove('#customized');
         $('body').addClass(classNameContrast);
         // no quiero aplicar el alto contraste al colorpicker
         $('.colopicker').ready(function () {
@@ -353,6 +319,26 @@ function highContrast(optionContrast, setDefault) {
     $("input[name='radioOptionscontrast']").data('default', false);
     // almaceno el valor elegido de contraste en el localStorage
     localStorage['contrast_colors_id'] = optionContrast;
+}
+
+function setForegroundColor(color, setDefault){
+    document.documentElement.style.setProperty('--foreground-color', color);
+    localStorage['foreground_colour'] = color;
+}
+
+function setBackgroundColor(color, setDefault){
+    document.documentElement.style.setProperty('--background-color', color);
+    localStorage['background_colour'] = color;
+}
+
+function setLinkColor(color, setDefault){
+    document.documentElement.style.setProperty('--link-color', color);
+    localStorage['link_colour'] = color;
+}
+
+function setHighlightColor(color, setDefault){
+    document.documentElement.style.setProperty('--highlight-color', color);
+    localStorage['highlight_colour'] = color;
 }
 
 function changeFontFamily(fontID, setDefault) {

@@ -200,7 +200,7 @@
                             <b class="no-high-contrast">COLOR ENLACES</b>
                             <br/>
                             <div id="cp6" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="colorLink" value="rgb(255, 255, 0)" class="form-control no-high-contrast no-invert-color"
+                                <input type="text" name="linkColor" value="rgb(255, 255, 0)" class="form-control no-high-contrast no-invert-color"
                                 />
                                 <div class="input-group-append no-high-contrast no-invert-color">
                                     <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
