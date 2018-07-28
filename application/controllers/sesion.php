@@ -89,7 +89,7 @@ class Sesion extends CI_Controller {
                         $this->session->set_userdata('customColors', $customColors);
                     } else {
                         // en caso de que no necesite colores personalizados lo almaceno en sesion
-                        $this->session->set_userdata('needcustomColors', false);
+                        $this->session->set_userdata('needCustomColors', false);
                     }
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion

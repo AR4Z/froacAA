@@ -363,13 +363,19 @@ class Usuario extends CI_Controller {
             // pregunto si el usuario necesita usar screen reader
             $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
             $use_sr = $use_sr[0]['use_screen_reader_id'];
+
+            // actualizo valores sesion, desde alla son aztualizados en DB
             $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr);
+            
+            // redirecciono al perfil del usuario
             redirect(base_url().'usuario/perfil', 'refresh');
         } else {
             redirect(base_url(), 'refresh');
         }
     }
 
+    // este metodo se encarga de cargar los valores de adaptabilidad y accesibilidad en sesion
+    // despues de que hayan sido actualizados por el usuario
     public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr){
         $session_data = $this->session->userdata('logged_in');
 
@@ -411,12 +417,25 @@ class Usuario extends CI_Controller {
         $arrayValuesInterfazPreference = $this->input->post('values');
         $arrayPreferencesInterfaz = $this->session->userdata('preferencesAdaptainterfaz');
         $arrayCombineValues = array_combine($arrayNamesInterfazPreference, $arrayValuesInterfazPreference);
+        
         foreach ($arrayCombineValues as $name => $value) {
             $arrayPreferencesInterfaz[$name] = $value;
+        }
+        if(!($arrayPreferencesInterfaz['contrast_colors_id'] == '7')){
+            $this->session->set_userdata('needCustomColors', false);
         }
         $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
         echo(json_encode($this->session->userdata('preferencesAdaptainterfaz')));
         $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $arrayCombineValues);
+    }
+
+    public function update_custom_colorsSession(){
+        $username = $this->input->post('username');
+        $arrayCustomColors = $this->input->post('customColors');
+        $this->session->set_userdata('needCustomColors', true);
+        
+        $this->usuario_model->update_custom_colors($username, $arrayCustomColors);
+        $this->session->set_userdata('customColors', $this->usuario_model->get_custom_colors($username)[0]);
     }
 
     // este metodo se encarga de actualizar los valores del narrador en la sesion
