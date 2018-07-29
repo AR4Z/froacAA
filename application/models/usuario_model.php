@@ -504,7 +504,7 @@ if ($this->input->post('cantidad6')!='') {
 
         // actualiza las adaptaciones que el usuario requiere
         // por ejemplo: si el usuario ya necesita el screen reader
-        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader);
+        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, NULL, NULL, NULL);
 
         $this->db->where('use_username', $username);
         $this->db->update('users', $data1);
