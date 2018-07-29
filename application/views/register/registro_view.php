@@ -364,10 +364,25 @@
                 'size_line_spacing':localStorage['size_line_spacing'],
                 'cursor_url':localStorage['cursor_url'],
             }
+            
+            let customColors = {
+                'use_username':$("input[name='username']").val(),
+                'foreground_colour':localStorage['foreground_colour'],
+                'background_colour':localStorage['background_colour'],
+                'highlight_colour':localStorage['highlight_colour'],
+                'link_colour':localStorage['link_colour']
+            }
+
+            let inputCustomColors = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "customColors").val(JSON.stringify(customColors));
+
             let inputInterfazPreferences = $("<input>")
                .attr("type", "hidden")
                .attr("name", "interfazPreferences").val(JSON.stringify(interfazPreferences));
+
                $(this).append($(inputInterfazPreferences));
+               $(this).append($(inputCustomColors));
         }
         // verificamos si el nuevo usuario desea usar el narrador
         if(newUserAdaptInfo.needNarrator){

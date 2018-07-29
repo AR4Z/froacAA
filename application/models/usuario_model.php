@@ -283,14 +283,19 @@ if ($this->input->post('cantidad6')!='') {
     // almacena los valores para adaptar la interfaz
     public function insert_pref_interfaz($id, $data){
         if(!($this->usuario_model->alreadyExists($id, 'use_pref_interfaz'))){
-            if(!$data){
+            if(!$data['prefInterfaz']){
                 // valores por default
-                $data = array(
+                $data['prefInterfaz'] = array(
                     'use_username' => $id,
                 );
             }
-            $this->db->insert('use_pref_interfaz', $data);
-            $this->insert_custom_colors($id);
+            if(!$data['customColors']){
+                $data['customColors'] = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_interfaz', $data['prefInterfaz']);
+            $this->insert_custom_colors($id, $data['customColors']);
         }
     }
 

@@ -15,5 +15,6 @@
                     <li id="aboutFROAC"><a  href="<?php echo base_url()?>usuario/acerca"> <i class="fa fa-info-circle"></i>Acerca de</a></li>
                     <li id="glossary"><a  href="<?php echo base_url()?>usuario/glosario"> <i class="fa fa-book"></i>Glosario</a></li>
                     <li><a href="http://froac.manizales.unal.edu.co/GAIA/"> <i class="fa fa-globe"></i>GAIA</a></li>
+            </ul>
 
         </nav>

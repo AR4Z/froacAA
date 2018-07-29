@@ -471,23 +471,6 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_srDB($this->input->post('username'), $arrayCombineNameAndValuesSr);
     }
 
-    // este metodo se encarga de guardar las preferencias de un nuevo usuario
-    public function update_preferences_new_user(){
-
-        if($this->input->post('needNarrator')){
-            $dataNarrator = $this->input->post('dataNarrator');
-            $this->usuario_model->update_preferences_narratorDB($this->input->post('username'), $dataNarrator);
-        }
-        if($this->input->post('needSr')){
-            $dataSr = $this->input->post('dataSr');
-            $this->usuario_model->update_preferences_srDB($this->input->post('username'), $dataSr);
-        }
-        if($this->input->post('needInterfaz')){
-            $dataInterfaz = $this->input->post('dataInterfaz');
-            $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $dataInterfaz);
-        }
-    }
-
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -573,7 +556,12 @@ class Usuario extends CI_Controller {
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
-        $dataInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
+        $prefInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
+        $customColors = json_decode($this->input->post('customColors'), TRUE);
+        $dataInterfaz = array(
+            "prefInterfaz" => $prefInterfaz,
+            "customColors" => $customColors
+        );
         $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
 
@@ -584,6 +572,8 @@ class Usuario extends CI_Controller {
 
         // esto agrega al usuario para usar las adaptaciones de interfaz el narrador
         // o el screen segun lo que el necesite
+        // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
+        // en $data--- va las preferencias del usuario para cada adaptacion
         $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader,$dataInterfaz, $dataNarrator, $dataScreenReader);
 
 
@@ -753,8 +743,9 @@ class Usuario extends CI_Controller {
             }
         }
         $name = $this->input->post('nombre') . ' ' . $this->input->post('apellido');
-        $this->session->set_flashdata('username', $this->input->post('username'));
-        $this->session->set_flashdata('name', $name);
+        
+        $this->session->set_userdata('username', $this->input->post('username'));
+        $this->session->set_userdata('name', $name);
         redirect(base_url().'usuario/exito', 'refresh');
     }
 
@@ -762,10 +753,10 @@ class Usuario extends CI_Controller {
     // Metodo que muestra un mensaje de exito cuando se crea una cuenta correctamente
 
     public function exito() {
-        $id = $this->session->flashdata('username');
-        $name = $this->session->flashdata('name');
+        $id = $this->session->userdata('username');
+        $name = $this->session->userdata('name');
+        
         // pregunto si el usuario necesita adaptaciones de la interfaz
-
         $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($id);
         $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
 

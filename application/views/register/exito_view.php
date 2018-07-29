@@ -18,7 +18,7 @@
                 <?php echo $name ?>
             </h4>
             <br>
-            <form autocomplete="off"  method="post" name="login" id="form-login" >
+            <form autocomplete="off"  action="<?php echo base_url()?>index.php/sesion" method="post" name="login" id="form-login" >
                 <h5>Si desea iniciar su sesión digite su contraseña:</h5>
                 <input id="username" type="hidden" name="username" alt="username" size="18" value="<?php echo $username ?>" aria-hidden="true"/>
                 <label id="pass">Contraseña: <input type="password" name="password" id="passwd" alt="username" placeholder="Contraseña" aria-labelledby="pass" autofocus/></label>
@@ -32,7 +32,7 @@
         </section>
 </section>
 <script type="text/javascript">
-
+/*
 $('#form-login').submit(function(event) {
 
     let dataInterfaz ={};
@@ -100,5 +100,5 @@ $('#form-login').submit(function(event) {
             console.log(data);
         }
     });
-});
+});*/
 </script>

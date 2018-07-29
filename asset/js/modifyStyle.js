@@ -345,16 +345,21 @@ function highContrast(optionContrast, setDefault) {
 
 function setForegroundColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--foreground-color', color);
-    if(localStorage['foreground_colour'] != color && session_user && optionContrast == '7'){
-        updateCustomColorsInSession({foreground_colour:color});
+    if(localStorage['foreground_colour'] != color && optionContrast == '7'){
+        if(session_user){
+            updateCustomColorsInSession({foreground_colour:color});
+        }
+        
         localStorage['foreground_colour'] = color;
     }
 }
 
 function setBackgroundColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--background-color', color);
-    if(localStorage['background_colour'] != color && session_user && optionContrast == '7'){
-        updateCustomColorsInSession({background_colour:color});
+    if(localStorage['background_colour'] != color && optionContrast == '7'){
+        if(session_user){
+            updateCustomColorsInSession({background_colour:color});
+        }
         localStorage['background_colour'] = color;
     }
     
@@ -362,16 +367,20 @@ function setBackgroundColor(color, optionContrast,setDefault){
 
 function setLinkColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--link-color', color);
-    if(localStorage['link_colour'] != color && session_user && optionContrast == '7'){
-        updateCustomColorsInSession({link_colour:color});
+    if(localStorage['link_colour'] != color  && optionContrast == '7'){
+        if(session_user){
+            updateCustomColorsInSession({link_colour:color});
+        }
         localStorage['link_colour'] = color;
     }
 }
 
 function setHighlightColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--highlight-color', color);
-    if(localStorage['highlight_colour'] != color && session_user && optionContrast == '7'){
-        updateCustomColorsInSession({highlight_colour:color});
+    if(localStorage['highlight_colour'] != color  && optionContrast == '7'){
+        if(session_user){
+            updateCustomColorsInSession({highlight_colour:color});
+        }
         localStorage['highlight_colour'] = color;
     }
 }
