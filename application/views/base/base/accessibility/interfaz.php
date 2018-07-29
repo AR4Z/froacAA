@@ -85,7 +85,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio1"
                                 value="1">
-                            <label class="form-check-label contrast-label" for="inlineRadio1">
+                            <label class="form-check-label contrast-label" for="inlineRadio1" data-toggle="tooltip" data-placement="bottom" title="NORMAL">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
                             </label>
                         </div>
@@ -94,7 +94,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio2"
                                 value="2" checked>
-                            <label class="form-check-label contrast-label" for="inlineRadio2">
+                            <label class="form-check-label contrast-label" for="inlineRadio2" data-toggle="tooltip" data-placement="bottom" title="NEGRO-BLANCO">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
                             </label>
                         </div>
@@ -103,7 +103,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio3"
                                 value="3">
-                            <label class="form-check-label contrast-label" for="inlineRadio3">
+                            <label class="form-check-label contrast-label" for="inlineRadio3" data-toggle="tooltip" data-placement="bottom" title="BLANCO-NEGRO">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
                             </label>
                         </div>
@@ -112,7 +112,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio4"
                                 value="4">
-                            <label class="form-check-label contrast-label" for="inlineRadio4">
+                            <label class="form-check-label contrast-label" for="inlineRadio4" data-toggle="tooltip" data-placement="bottom" title="NEGRO-AMARILLO">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" />
                             </label>
                         </div>
@@ -121,7 +121,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio5"
                                 value="5">
-                            <label class="form-check-label contrast-label" for="inlineRadio5">
+                            <label class="form-check-label contrast-label" for="inlineRadio5" data-toggle="tooltip" data-placement="bottom" title="AMARILLO-NEGRO">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" />
                             </label>
                         </div>
@@ -131,7 +131,7 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio6"
                                 value="6">
-                            <label class="form-check-label contrast-label" for="inlineRadio6">
+                            <label class="form-check-label contrast-label" for="inlineRadio6" data-toggle="tooltip" data-placement="bottom" title="GRIS">
                                 <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
                             </label>
                         </div>
@@ -140,8 +140,8 @@
                         <div class="">
                             <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast" id="inlineRadio7"
                                 value="7">
-                            <label class="form-check-label contrast-label" for="inlineRadio7">
-                                <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
+                            <label class="form-check-label contrast-label" for="inlineRadio7" data-toggle="tooltip" data-placement="bottom" title="PERSONALIZADO">
+                                <i class="fa fa-wrench" style="font-size:40px;"></i>
                             </label>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                 <div class="row">
                     <div class="col">
                     <div id="div-color-foreground" class="no-high-contrast" style="display:none">
-                            <b class="no-high-contrast">COLOR FUENTE</b>
+                            <b class="no-high-contrast">COLOR DE FUENTE</b>
                             <br/>
                             <div id="cp3" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
                                 <input type="text" name="foregroundColor" value="rgb(0,0,0)" class="form-control no-high-contrast no-invert-color"

@@ -78,19 +78,13 @@ class Sesion extends CI_Controller {
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+                    $customColors = $this->usuario_model->get_custom_colors($session_data['username']);
                     $this->session->set_userdata('adaptaInterfaz', true);
                     $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
-                    
-                    // si el usuario necesita usar colores personalizados
-                    if($preferencesInterfaz[0]['contrast_colors_id'] == '7'){
-                        // pido los colores y los almaceno en sesion
-                        $customColors = $this->usuario_model->get_custom_colors($session_data['username'])[0];
-                        $this->session->set_userdata('needcustomColors', true);
-                        $this->session->set_userdata('customColors', $customColors);
-                    } else {
-                        // en caso de que no necesite colores personalizados lo almaceno en sesion
-                        $this->session->set_userdata('needCustomColors', false);
-                    }
+                    $this->session->set_userdata('customColors', $customColors[0]);
+
+
+                   
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('adaptaInterfaz', false);
@@ -146,6 +140,7 @@ class Sesion extends CI_Controller {
         $this->session->unset_userdata('needNarrator');
         $this->session->unset_userdata('preferencesSr');
         $this->session->unset_userdata('needSr');
+        $this->session->unset_userdata('customColors');
 
         redirect(base_url(), 'refresh');
     }

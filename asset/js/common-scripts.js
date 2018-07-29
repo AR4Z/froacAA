@@ -128,7 +128,10 @@ $(document).ready(function(){
       console.log("swsdefer");
       $('#reset-all').hide();
   }
-
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+  
 });
 
 // resetea los valores de la barra de accesibilidad

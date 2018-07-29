@@ -186,7 +186,8 @@ class Usuario extends CI_Controller {
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                     "usr_all_data" => $this->usuario_model->get_all_admin_data($session_data['username']),
-                    "main_view" => "admin/perfil_view"
+                    "main_view" => "admin/perfil_view",
+                    "id_view" => "profile_user"
                 );
                 $this->load->view('base/admin_template', $content);
             } else {
@@ -195,7 +196,8 @@ class Usuario extends CI_Controller {
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                         "usr_all_data" => $this->usuario_model->get_all_admin_data($session_data['username']),
-                        "main_view" => "admin/perfil_view"
+                        "main_view" => "admin/perfil_view",
+                        "id_view" => "profile_user"
                     );
                     $this->load->view('base/rep_template', $content);
                 }else {
@@ -203,7 +205,8 @@ class Usuario extends CI_Controller {
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                         "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
-                        "main_view" => "usr/perfil_view"
+                        "main_view" => "usr/perfil_view",
+                        "id_view" => "profile_user"
                     );
                     $this->load->view('base/est_template', $content);
                 }
@@ -313,7 +316,8 @@ class Usuario extends CI_Controller {
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
                     "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                     "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
-                    "main_view" => "admin/perfil_view"
+                    "main_view" => "admin/perfil_view",
+                    "id_view" => "edit_user"
                 );
                 $this->load->view('base/admin_template', $content);
             } else {
@@ -338,7 +342,8 @@ class Usuario extends CI_Controller {
                     'selectedOptInterfaz'=> $use_adapta_interfaz,
                     'selectedOptNarrator'=> $use_narrator,
                     'selectedOptScreenReader'=>$use_sr,
-                    "main_view" => "usr/editar_view"
+                    "main_view" => "usr/editar_view",
+                    "id_view" => "edit_user"
                 );
                 $this->load->view('base/est_template', $content);
             }
@@ -421,13 +426,7 @@ class Usuario extends CI_Controller {
         foreach ($arrayCombineValues as $name => $value) {
             $arrayPreferencesInterfaz[$name] = $value;
         }
-        if($arrayPreferencesInterfaz['contrast_colors_id'] == '7'){
-            $customColors = $this->usuario_model->get_custom_colors($this->input->post('username'))[0];
-            $this->session->set_userdata('needcustomColors', true);
-            $this->session->set_userdata('customColors', $customColors);
-        } else {
-            $this->session->set_userdata('needCustomColors', false);
-        }
+        
         $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
         echo(json_encode($this->session->userdata('preferencesAdaptainterfaz')));
         $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $arrayCombineValues);
@@ -540,7 +539,8 @@ class Usuario extends CI_Controller {
                     "encabezado" => "Objetos calificados",
                     "url" => "usuario/perfil/",
                     "result" => $this->lo_model->get_lo_usr($session_data['username']),
-                    "sess" => 1
+                    "sess" => 1,
+                    "id_view" => "my_los"
                 );
                 $this->load->view('base/est_template', $content);
 

@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     if (session_user && needPrefAdaptInterfaz) {
+        console.log("update custom colors");
         localStorage['cursor_size_id'] = preferencesAdaptainterfaz['cursor_size_id'];
         localStorage['color_cursor'] = preferencesAdaptainterfaz['color_cursor'];
         localStorage['trail_cursor_size_id'] = preferencesAdaptainterfaz['trail_cursor_size_id'];
@@ -13,14 +14,14 @@ $(document).ready(function () {
         localStorage['size_line_spacing'] = preferencesAdaptainterfaz['size_line_spacing'];
         localStorage['cursor_url'] = preferencesAdaptainterfaz['cursor_url'];
 
-        if(needCustomColors) {
-            localStorage['foreground_colour'] = customColors['foreground_colour'];
-            localStorage['background_colour'] = customColors['background_colour'];
-            localStorage['highlight_colour'] = customColors['highlight_colour'];
-            localStorage['link_colour'] = customColors['link_colour'];
-        }
+        // cargo los colores personalziados del usuario
+        localStorage['foreground_colour'] = customColors['foreground_colour'];
+        localStorage['background_colour'] = customColors['background_colour'];
+        localStorage['highlight_colour'] = customColors['highlight_colour'];
+        localStorage['link_colour'] = customColors['link_colour'];
+        
     }
-
+    // iniciar los colorpickers
     $(function () {
         $('#cp1, #cp2, #cp3, #cp4, #cp5, #cp6').colorpicker();
     });
@@ -140,19 +141,23 @@ $("input[name='type-font']").change(function () {
 });
 
 $("input[name='foregroundColor']").change(function () {
-    setForegroundColor($(this).val());
+    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
+    setForegroundColor($(this).val(), optionCheckedContrast);
 });
 
 $("input[name='backgroundColor']").change(function () {
-    setBackgroundColor($(this).val());
+    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
+    setBackgroundColor($(this).val(), optionCheckedContrast);
 });
 
 $("input[name='highlightColor']").change(function () {
-    setHighlightColor($(this).val());
+    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
+    setHighlightColor($(this).val(), optionCheckedContrast);
 });
 
 $("input[name='linkColor']").change(function () {
-    setLinkColor($(this).val());
+    let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
+    setLinkColor($(this).val(), optionCheckedContrast);
 });
 
 $("input[name='radioOptionscontrast']").change(function () {
@@ -164,17 +169,16 @@ $("input[name='radioOptionscontrast']").change(function () {
         $('#div-color-background').hide();
         $('#div-color-link').hide();
         $('#div-color-highlight').hide(); 
-        needCustomColors = false;
     } else {
         $('#div-color-foreground').show();
         $('#div-color-background').show();
         $('#div-color-link').show();
         $('#div-color-highlight').show();
+        console.log("changeeee");
         $("input[name='foregroundColor']").val(localStorage['foreground_colour'] || 'rgb(0,0,0)').change();
         $("input[name='backgroundColor']").val(localStorage['background_colour'] || 'rgb(255,255,255)').change();
         $("input[name='highlightColor']").val(localStorage['highlight_colour'] || 'rgb(211,211,211)').change();
         $("input[name='linkColor']").val(localStorage['link_colour'] || 'rgb(255,255,0)').change();
-        needCustomColors = "1";
     }
     highContrast(optionCheckedContrast, $(this).data('default'));
 });
@@ -339,36 +343,37 @@ function highContrast(optionContrast, setDefault) {
     localStorage['contrast_colors_id'] = optionContrast;
 }
 
-function setForegroundColor(color, setDefault){
+function setForegroundColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--foreground-color', color);
-    if(localStorage['foreground_colour'] != color && session_user){
+    if(localStorage['foreground_colour'] != color && session_user && optionContrast == '7'){
         updateCustomColorsInSession({foreground_colour:color});
+        localStorage['foreground_colour'] = color;
     }
-    localStorage['foreground_colour'] = color;
 }
 
-function setBackgroundColor(color, setDefault){
+function setBackgroundColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--background-color', color);
-    if(localStorage['background_colour'] != color && session_user){
+    if(localStorage['background_colour'] != color && session_user && optionContrast == '7'){
         updateCustomColorsInSession({background_colour:color});
+        localStorage['background_colour'] = color;
     }
-    localStorage['background_colour'] = color;
+    
 }
 
-function setLinkColor(color, setDefault){
+function setLinkColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--link-color', color);
-    if(localStorage['link_colour'] != color && session_user){
+    if(localStorage['link_colour'] != color && session_user && optionContrast == '7'){
         updateCustomColorsInSession({link_colour:color});
+        localStorage['link_colour'] = color;
     }
-    localStorage['link_colour'] = color;
 }
 
-function setHighlightColor(color, setDefault){
+function setHighlightColor(color, optionContrast,setDefault){
     document.documentElement.style.setProperty('--highlight-color', color);
-    if(localStorage['highlight_colour'] != color && session_user){
+    if(localStorage['highlight_colour'] != color && session_user && optionContrast == '7'){
         updateCustomColorsInSession({highlight_colour:color});
+        localStorage['highlight_colour'] = color;
     }
-    localStorage['highlight_colour'] = color;
 }
 
 function changeFontFamily(fontID, setDefault) {
