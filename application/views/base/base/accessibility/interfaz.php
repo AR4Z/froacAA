@@ -355,7 +355,7 @@
         <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
             <div class="card-header text-center">
                 <span>
-                    <b>CONFIGURACIÓN DE COLORES</i>
+                    <b>CONFIGURACIÓN DE COLORES
                     </b>
                 </span>
             </div>

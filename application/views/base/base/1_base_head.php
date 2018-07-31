@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
     <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')):?>
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet'>
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
         <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
@@ -128,4 +128,6 @@
 
     <?php elseif (!($this->session->userdata('logged_in'))) : ?>
         <body>
+        <div class="page">
 <?php endif;?>
+

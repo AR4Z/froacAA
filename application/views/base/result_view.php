@@ -9,6 +9,8 @@ if ($sess == 1) {
 <link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css" />
 <script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
 <script src="<?php echo base_url()?>asset/js/pagination.min.js"></script>
+
+
 <div class="col-lg-9">
     <div class="card border-0">
 
@@ -39,9 +41,38 @@ if ($sess == 1) {
 
 </div>-->
 
-<!-- Modal Metadata -->
+
+<!-- Modal -->
+
+<div class="modal fade" id="dialog_medatada"  tabindex="-1" role="dialog" aria-labelledby="metadataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" role="document">
+            <div class="modal-header">
+                
+                <h4 class="modal-title" id="metadataModal">Metadatos estandar LOM</h4>
+                <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">
+                    &times;
+                    </span>
+                </button>
+            </div>
+
+            <div class="modal-body"  id="dialog_metadata_result">
+                <div class="embed-responsive embed-responsive-21by9">
+                <iframe src="" class="insideiframe embed-responsive-item" style="display: none"></iframe>
+                </div>
+               
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal"  class="btn btn-success" type="button">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Metadata
 <div class="modal fade" id="dialog_medatada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para ver metadata del objeto de aprendizaje" >
-    <div class="modal-dialog"  role="document">
+    <div class="modal-dialog modal-dialog-centered"  role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Metadatos estandar LOM</h4>
@@ -53,11 +84,11 @@ if ($sess == 1) {
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- modal -->
 
 
-<!-- Modal indicadores -->
+<!-- Modal indicadores 
 <div class="modal fade" id="dialog_indicaores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -78,40 +109,44 @@ if ($sess == 1) {
                 Si desea calificar este objeto y agregarlo a su lista de favoritos, debe crear una cuenta e iniciar sesión!
                 <?php }?>
 
-                <!--<div id="dialog_inidicadores_result"></div>-->
+                <div id="dialog_inidicadores_result"></div>
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-success" type="button">Aceptar</button>
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- modal-->
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
+       
+
 
         page();
     });
+
     function b64EncodeUnicode(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode(parseInt(p1, 16))
-    }))
-}
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+            return String.fromCharCode(parseInt(p1, 16))
+        }))
+    }
+
     function page() {
         var container = $('#nav_oas');
         var info = dataResult;
         var options = {
             dataSource: info,
             pageSize: 5,
-            callback: function(response, pagination) {
+            callback: function (response, pagination) {
                 $('.paginationjs-pages ul').addClass('pagination justify-content-center');
                 $('.paginationjs-pages ul li').addClass('page-item');
                 $('.paginationjs-pages ul li a').addClass('page-link');
 
                 window.console && console.log(response, pagination);
                 var dataHtml = '';
-                $.each(response, function(index, item) {
+                $.each(response, function (index, item) {
                     dataHtml += `
                     <div class="card">
                         <div class="card-header">
@@ -128,9 +163,9 @@ if ($sess == 1) {
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" class="btn btn-lg btn-info card-link d-inline" data-toggle="modal" href="#dialog_medatada">
+                            <button onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" type="button" class="btn btn-lg btn-info card-link d-inline"  data-toggle="modal" data-target="#dialog_medatada">
                                 <i class="fa fa-eye"></i> Ver metadatos
-                            </a>
+                            </button>
                             <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}">
                                 <i class="fa fa-eye"></i> Ver objeto
                             </a>
@@ -141,7 +176,7 @@ if ($sess == 1) {
 
                 });
                 $('#show_oas').html(dataHtml);
-                if(!(dataResult.length != 0)){
+                if (!(dataResult.length != 0)) {
                     $('.no-results').show();
                 } else {
                     $('.no-results').hide();
@@ -151,7 +186,7 @@ if ($sess == 1) {
         container.pagination(options);
     }
 
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         console.log("AR4Z");
         if ($("#dialog_medatada").hasClass('show') && (e.keycode == 13 || e.which == 13)) {
             $('#dialog_medatada').modal('hide');
@@ -180,13 +215,13 @@ if ($sess == 1) {
             username: username,
             lo_id: lo_id,
             rep_id: rep_id
-        }).done(function(data) {
+        }).done(function (data) {
             // $.fn.raty.defaults.path = 'asset/raty/images/';
             $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
             $(".raty").attr("id", lo_id).attr("rep_id", rep_id).attr("username", username).raty({
                 score: data,
                 cancel: true,
-                click: function(score, evt) {
+                click: function (score, evt) {
                     $.ajax({
                         type: "POST",
                         url: "<?php echo base_url() ?>index.php/usuario/set_score",
@@ -196,7 +231,7 @@ if ($sess == 1) {
                             username: $(this).attr('username'),
                             score: score
                         },
-                        success: function(datos) {}
+                        success: function (datos) {}
                     });
                 }
             });
@@ -205,7 +240,7 @@ if ($sess == 1) {
         $.post("<?php echo base_url() ?>index.php/lo/get_score_avg/", {
             lo_id: lo_id,
             rep_id: rep_id
-        }).done(function(data) {
+        }).done(function (data) {
 
             $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
             $(".raty").attr("id", lo_id).attr("rep_id", rep_id).raty({
@@ -217,12 +252,12 @@ if ($sess == 1) {
         <?php }?>
 
     }
-    $(".titulo").click(function() { //cargando datos de lo elegido en las opciones de las busquedas
+    $(".titulo").click(function () { //cargando datos de lo elegido en las opciones de las busquedas
         $.ajax({
             type: "POST",
             url: "<?php echo base_url() ?>index.php/lo/set_visita",
             data: "lo_id=" + this.id + "&rep_id=" + $(this).attr('rep_id') + "&logged=" + $(this).attr('logged') + "",
-            success: function(datos) {
+            success: function (datos) {
                 // alert("Se guardaron los datos: " + datos);
             }
         });

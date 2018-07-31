@@ -131,6 +131,7 @@
             </div>
         </div>
     </section>
+    
     <script>
        function verify_params() {
            var params = $("#hide-input").val();
@@ -138,7 +139,7 @@
            $("#result").load("<?php echo base_url(); ?>index.php/lo/buscar_lo/" + params + "/" + <?php echo $sess ?> + "/" + "<?php echo $usr ?>");
        }
        $("#result").show();
-       $("#search").keyup(function() {
+       $("#search").keyup(function () {
            $("#hide-s").show("slow");
            $("#hide-s").attr('aria-hidden', 'false');
            $("#show-s").hide("slow");
@@ -146,17 +147,17 @@
            $("#hide-input").val($("#search").val());
            $("#hide-input").focus();
        });
-       $(".buscar").click(function() {
+       $(".buscar").click(function () {
            verify_params();
            $("#info").hide("slow");
            $("#info").attr('aria-hidden', 'true');
        });
-       $(document).keypress(function(e) {
+       $(document).keypress(function (e) {
            if (e.which == 13 && ($("#hide-input").val().length > 0)) {
                verify_params();
                $("#info").hide("slow");
                $("#info").attr('aria-hidden', 'true');
-               
+
            }
        });
     </script>
