@@ -198,20 +198,21 @@ public function load_lo($url, $lo_name){
     if ($this->session->userdata('logged_in')) {
         $session_data = $this->session->userdata('logged_in');
 
-        $content = [
+        $content = array (
             "user" => $session_data['username'],
             "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
             "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
             "main_view" => "base/lo_view",
             "sess" => 1,
             "url" => $url,
-            "lo_name" => $lo_name
-        ];
+            "lo_name" => $lo_name,
+            "id_view" => "lo_view",
+        );
 
         if ($session_data ['username'] == "admin"){
             $this->load->view('layouts/admin_template', $content);
         }else{
-            $this->load->view('layouts/base_template', $content);
+            $this->load->view('base/base_template', $content);
         }
 
 
@@ -220,9 +221,10 @@ public function load_lo($url, $lo_name){
             "main_view" => "base/lo_view",
             "sess" => 0,
             "url" => $url,
-            "lo_name" => $lo_name
+            "lo_name" => $lo_name,
+            "id_view" => "lo_view",
         );
-        $this->load->view('layouts/base_template', $content);
+        $this->load->view('base/base_template', $content);
     }
 }
 
