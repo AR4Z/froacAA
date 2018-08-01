@@ -4,7 +4,7 @@ if ($sess == 1) {
 }else $logged = 0;
 ?>
 <script type="text/javascript">
-    var dataResult = <?php echo $js_result?>
+    var dataResult = <?php echo json_encode($result[0]);?>
 </script>
 <link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css" />
 <script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
@@ -69,23 +69,6 @@ if ($sess == 1) {
         </div>
     </div>
 </div>
-
-<!-- Modal Metadata
-<div class="modal fade" id="dialog_medatada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-label="Dialogo para ver metadata del objeto de aprendizaje" >
-    <div class="modal-dialog modal-dialog-centered"  role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Metadatos estandar LOM</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body" id="dialog_metadata_result">
-
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- modal -->
 
 
 <!-- Modal indicadores 

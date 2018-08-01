@@ -242,9 +242,6 @@ if ($this->input->post('cantidad6')!='') {
             'use_ls_cant_S' => $cantidad6,
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institution_username'),
-            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
-            'use_narrator_id'=>$this->input->post('useNarrator'),
-            'use_screen_reader_id'=>$this->input->post('useSr'),
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -254,6 +251,9 @@ if ($this->input->post('cantidad6')!='') {
             'use_email' => ($this->input->post('mail')),
             'use_fecha_registro' => $today,
             'use_rol_id'=> 2,
+            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
+            'use_narrator_id'=>$this->input->post('useNarrator'),
+            'use_screen_reader_id'=>$this->input->post('useSr'),
         );
 
         $this->db->insert('users', $data2);
@@ -392,7 +392,7 @@ if ($this->input->post('cantidad6')!='') {
     public function get_need_adapta_interfaz($username){
 
         $this->db->select('use_adapta_interfaz_id');
-    	$this->db->from('use_student');
+    	$this->db->from('users');
     	$this->db->where('use_username', $username);
         $this->db->limit(1);
     	$query = $this->db->get();
@@ -405,7 +405,7 @@ if ($this->input->post('cantidad6')!='') {
     // me dice si un usuario necesita usar el narrador
     public function get_need_narrator($username){
         $this->db->select('use_narrator_id');
-        $this->db->from('use_student');
+        $this->db->from('users');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -416,7 +416,7 @@ if ($this->input->post('cantidad6')!='') {
     // me dice si un usuario necesita usar el screen reader
     public function get_need_sr($username){
         $this->db->select('use_screen_reader_id');
-        $this->db->from('use_student');
+        $this->db->from('users');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -493,13 +493,13 @@ if ($this->input->post('cantidad6')!='') {
             "use_apellido"        =>  $this->input->post("apellidos"),
             "use_email"           =>  $this->input->post("mail"),
             "use_rol_id"          =>  $this->input->post("tipoU"),
+            "use_adapta_interfaz_id" => $optInterfaz,
+            "use_narrator_id" => $optNarrator,
+            "use_screen_reader_id" => $optScreenReader,
         );
         $data2 = array(
             "use_stu_level"       =>  $this->input->post("nevel_ed"),
             "use_stu_datebirth"       =>  $this->input->post("fecha_nac"),
-            "use_adapta_interfaz_id" => $optInterfaz,
-            "use_narrator_id" => $optNarrator,
-            "use_screen_reader_id" => $optScreenReader,
         );
 
         // actualiza las adaptaciones que el usuario requiere

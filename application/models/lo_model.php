@@ -6,7 +6,7 @@ Class Lo_model extends CI_Model {
 
         $andQuery = $this->db->query(
             "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
-                    lo_keyword, lo_location, lo_xml_lom,
+                    lo_keyword, lo_location, 
                     ts_rank_cd(campo_busqueda_index_col, query) AS rank
                     FROM lo, to_tsquery" . $andParams . "query
                         WHERE query @@ campo_busqueda_index_col

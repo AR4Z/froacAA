@@ -15,7 +15,7 @@
 |
 */
 //$config['base_url']	= 'http://gaia.manizales.unal.edu.co/froacAA';
-$config['base_url']	= 'http://localhost/froacn/';
+$config['base_url']	= 'http://localhost/froacAA/';
 //$config['base_url']	= 'http://froac.manizales.unal.edu.co/froacn/';
 /*
 |--------------------------------------------------------------------------
