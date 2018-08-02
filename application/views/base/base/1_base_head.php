@@ -14,7 +14,7 @@
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
         <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
+        <link id="contrast-styles" href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
     <?php endif;?>
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
@@ -103,7 +103,7 @@
     let customColors;
     let base_url;
     let idView;
-    
+
     $(document).ready(function(){
 
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;

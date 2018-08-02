@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col embed-responsive embed-responsive-21by9">
-                            <iframe title="<?php echo base64_decode($lo_name);?>" aria-label="Objeto de aprendizaje" class="embed-responsive-item"  src="<?php echo base64_decode($url);?>" ></iframe>
+                            <iframe id="oa" title="<?php echo base64_decode($lo_name);?>" aria-label="Objeto de aprendizaje" class="embed-responsive-item"  src="" ></iframe>
                         </div>
                         <!-- Esto es una prueba de vizualización de el objeto -->
 
@@ -19,13 +19,13 @@
 
 
 <script type="text/javascript">
-/*
+
     let url = "<?php echo base64_decode($url); ?>";
     let lo_name = "<?php echo base64_decode($lo_name); ?>";
     let path = "<?php echo base_url()?>"
-    let iframe_oa = document.getElementById("oa");*/
+    let iframe_oa = document.getElementById("oa");
 
-/*
+
     console.log("desde afuera");
     $(document).ready(function () {
         console.log("LOOOOL");
@@ -46,5 +46,5 @@
                 iframe_oa.src = path + "LOs/" + dataJSON.path_lo;
             }
         })
-    });*/
+    });
 </script>

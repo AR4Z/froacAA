@@ -19,41 +19,81 @@ $(document).ready(function () {
         localStorage['background_colour'] = customColors['background_colour'];
         localStorage['highlight_colour'] = customColors['highlight_colour'];
         localStorage['link_colour'] = customColors['link_colour'];
-        
+
     }
     // iniciar los colorpickers
     $(function () {
         $('#cp1, #cp2, #cp3, #cp4, #cp5, #cp6').colorpicker();
     });
-    $('#inputFontSize').val(localStorage['font_size'] || 12).change();
 
-    $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
+    if (idView == "lo_view") {
+        $("iframe").on('load', function () {
+            $('#inputFontSize').val(localStorage['font_size'] || 12).change();
 
-    $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
+            $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
 
-    $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
+            $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
 
-    $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
-    $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
-    if (localStorage['invert_color_image'] == 't') {
-        localStorage['invert_color_image'] = 'true';
-    } else if (localStorage['invert_color_image'] == 'f') {
-        localStorage['invert_color_image'] = 'false';
+            $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
+
+            $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
+            $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
+            if (localStorage['invert_color_image'] == 't') {
+                localStorage['invert_color_image'] = 'true';
+            } else if (localStorage['invert_color_image'] == 'f') {
+                localStorage['invert_color_image'] = 'false';
+            }
+
+            if (localStorage['invert_color_general'] == 't') {
+                localStorage['invert_color_general'] = 'true';
+            } else if (localStorage['invert_color_general'] == 'f') {
+                localStorage['invert_color_general'] = 'false';
+            }
+
+            console.log("contrast image", localStorage['invert_color_image']);
+            $('.colorpicker').ready(function () {
+                $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
+                $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
+            });
+
+            animate();
+        });
+
+
+
+    } else {
+        $('#inputFontSize').val(localStorage['font_size'] || 12).change();
+
+        $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
+
+        $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
+
+        $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
+
+        $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
+        $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
+        if (localStorage['invert_color_image'] == 't') {
+            localStorage['invert_color_image'] = 'true';
+        } else if (localStorage['invert_color_image'] == 'f') {
+            localStorage['invert_color_image'] = 'false';
+        }
+
+        if (localStorage['invert_color_general'] == 't') {
+            localStorage['invert_color_general'] = 'true';
+        } else if (localStorage['invert_color_general'] == 'f') {
+            localStorage['invert_color_general'] = 'false';
+        }
+
+        console.log("contrast image", localStorage['invert_color_image']);
+        $('.colorpicker').ready(function () {
+            $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
+            $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
+        });
+
+        animate();
     }
 
-    if (localStorage['invert_color_general'] == 't') {
-        localStorage['invert_color_general'] = 'true';
-    } else if (localStorage['invert_color_general'] == 'f') {
-        localStorage['invert_color_general'] = 'false';
-    }
 
-    console.log("contrast image", localStorage['invert_color_image']);
-    $('.colorpicker').ready(function () {
-        $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
-        $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
-    });
-
-    animate();
 });
 
 
@@ -164,11 +204,11 @@ $("input[name='radioOptionscontrast']").change(function () {
     let optionCheckedContrast = $("input[name='radioOptionscontrast']:checked").val();
     console.log(optionCheckedContrast);
 
-    if(optionCheckedContrast != '7'){
+    if (optionCheckedContrast != '7') {
         $('#div-color-foreground').hide();
         $('#div-color-background').hide();
         $('#div-color-link').hide();
-        $('#div-color-highlight').hide(); 
+        $('#div-color-highlight').hide();
     } else {
         $('#div-color-foreground').show();
         $('#div-color-background').show();
@@ -211,18 +251,18 @@ function setDefaultValuesInterfaz() {
     }
 }
 
-function updateCustomColorsInSession(colors){
+function updateCustomColorsInSession(colors) {
     $.ajax({
         url: base_url + 'usuario/update_custom_colorsSession',
-        type:'POST',
+        type: 'POST',
         data: {
-            'username':session_user['username'],
+            'username': session_user['username'],
             'customColors': colors
         },
-        success: function(data){
+        success: function (data) {
             console.log(data);
         },
-        error: function (data){
+        error: function (data) {
             console.log(data);
         }
     })
@@ -250,12 +290,12 @@ function updateValuesInterfazInSession(names_interfaz_preference, values) {
 }
 
 function changeFontSize(selector, setDefault) {
-
     selector = (typeof selector == 'undefined') ? 'input#fontSizeNav' : selector;
     if (session_user && needPrefAdaptInterfaz && (localStorage['font_size'] != $(selector).val()) && !setDefault) {
         updateValuesInterfazInSession(['font_size'], [$(selector).val()]);
     }
     $('html').css('font-size', $(selector).val() + 'px');
+    $('iframe').contents().find("html").css('font-size', $(selector).val() + 'px');
     $(selector).data('default', false);
     localStorage['font_size'] = $(selector).val();
 
@@ -308,6 +348,7 @@ function highContrast(optionContrast, setDefault) {
     console.log(classNameContrast);
     // elimino la clase que tenia el body
     $('body').removeClass(classNameContrastOptions[localStorage['contrast_colors_id']]);
+    $('iframe').contents().find("body").removeClass(classNameContrastOptions[localStorage['contrast_colors_id']]);
 
     if (optionContrast === '1') {
         $('.colorpicker').removeClass('no-high-contrast');
@@ -319,9 +360,12 @@ function highContrast(optionContrast, setDefault) {
         $('.colorpicker-alpha').removeClass('no-high-contrast');
         $('.colorpicker-color').children().removeClass('no-high-contrast');
 
-    }  else {
+    } else {
         // agrego la clase obtenida al body para cambiar los colores
         $('body').addClass(classNameContrast);
+        $('iframe').contents().find('head').append($('#contrast-styles').get(0).outerHTML);
+        $('iframe').contents().find("body").addClass(classNameContrast);
+
         // no quiero aplicar el alto contraste al colorpicker
         $('.colopicker').ready(function () {
             $('.colorpicker').addClass('no-high-contrast');
@@ -343,43 +387,59 @@ function highContrast(optionContrast, setDefault) {
     localStorage['contrast_colors_id'] = optionContrast;
 }
 
-function setForegroundColor(color, optionContrast,setDefault){
+function setForegroundColor(color, optionContrast, setDefault) {
+    let nodeIframe =  document.getElementById('oa');
+    let iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
     document.documentElement.style.setProperty('--foreground-color', color);
-    if(localStorage['foreground_colour'] != color && optionContrast == '7'){
-        if(session_user){
-            updateCustomColorsInSession({foreground_colour:color});
+    iframeDocument.documentElement.style.setProperty('--foreground-color', color);
+    
+    if (localStorage['foreground_colour'] != color && optionContrast == '7') {
+        if (session_user) {
+            updateCustomColorsInSession({
+                foreground_colour: color
+            });
         }
-        
+
         localStorage['foreground_colour'] = color;
     }
 }
 
-function setBackgroundColor(color, optionContrast,setDefault){
+function setBackgroundColor(color, optionContrast, setDefault) {
+    let nodeIframe =  document.getElementById('oa');
+    let iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
     document.documentElement.style.setProperty('--background-color', color);
-    if(localStorage['background_colour'] != color && optionContrast == '7'){
-        if(session_user){
-            updateCustomColorsInSession({background_colour:color});
+    iframeDocument.documentElement.style.setProperty('--background-color', color);
+
+    if (localStorage['background_colour'] != color && optionContrast == '7') {
+        if (session_user) {
+            updateCustomColorsInSession({
+                background_colour: color
+            });
         }
         localStorage['background_colour'] = color;
     }
-    
+
 }
 
-function setLinkColor(color, optionContrast,setDefault){
+function setLinkColor(color, optionContrast, setDefault) {
     document.documentElement.style.setProperty('--link-color', color);
-    if(localStorage['link_colour'] != color  && optionContrast == '7'){
-        if(session_user){
-            updateCustomColorsInSession({link_colour:color});
+    if (localStorage['link_colour'] != color && optionContrast == '7') {
+        if (session_user) {
+            updateCustomColorsInSession({
+                link_colour: color
+            });
         }
         localStorage['link_colour'] = color;
     }
 }
 
-function setHighlightColor(color, optionContrast,setDefault){
+function setHighlightColor(color, optionContrast, setDefault) {
     document.documentElement.style.setProperty('--highlight-color', color);
-    if(localStorage['highlight_colour'] != color  && optionContrast == '7'){
-        if(session_user){
-            updateCustomColorsInSession({highlight_colour:color});
+    if (localStorage['highlight_colour'] != color && optionContrast == '7') {
+        if (session_user) {
+            updateCustomColorsInSession({
+                highlight_colour: color
+            });
         }
         localStorage['highlight_colour'] = color;
     }
@@ -410,10 +470,9 @@ function changeFontFamily(fontID, setDefault) {
 }
 
 function changeInterlineSpace(selector, setDefault) {
-
     selector = (typeof selector == 'undefined') ? '#interlineNav' : selector;
     $('body').css('line-height', $(selector).val());
-
+    $('iframe').contents().find("html").css('line-height', $(selector).val());
     if (session_user && needPrefAdaptInterfaz && (localStorage['size_line_spacing'] != $(selector).val()) && !setDefault) {
         updateValuesInterfazInSession(['size_line_spacing'], [$(selector).val()]);
     }
