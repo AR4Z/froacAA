@@ -8,11 +8,11 @@
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
+    <link id='open-sans' href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
     <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')):?>
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
+        <link id='serif' rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
+        <link id='cantarell' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
+        <link id='source-code-pro' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
         <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
         <link id="contrast-styles" href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">

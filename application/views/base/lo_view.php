@@ -62,7 +62,7 @@
                 success: function (data) {
                     console.log(data);
                     let dataJSON = JSON.parse(data);
-                    iframe_oa.src = path + "LOs/" + dataJSON.path_lo;
+                    iframe_oa.src = path + "LOs/" + dataJSON.path_lo+'?time='+Date.now();
                     $('#loading').fadeOut(50);
                     $('#div-lo').fadeIn(600);
 

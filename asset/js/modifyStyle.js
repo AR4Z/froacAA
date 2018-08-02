@@ -448,6 +448,8 @@ function changeFontFamily(fontID, setDefault) {
     let fontName = fontsID[fontID];
 
     $('body').css('font-family', fontsNameCSS[fontName]);
+    $('iframe').contents().find("body").css('cssText', 'font-family: '+ fontsNameCSS[fontName] + ' !important;');
+    $('iframe').contents().find('head').append($('#'+fontName).get(0).outerHTML);
 
     if (session_user && needPrefAdaptInterfaz && (localStorage['font_type_id'] != fontID) && !setDefault) {
         updateValuesInterfazInSession(['font_type_id'], [fontID]);
