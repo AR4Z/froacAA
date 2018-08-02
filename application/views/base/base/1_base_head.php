@@ -103,6 +103,8 @@
     let customColors;
     let base_url;
     let idView;
+    let nodeIframe;
+    let iframeDocument;
 
     $(document).ready(function(){
 

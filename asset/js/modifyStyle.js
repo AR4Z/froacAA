@@ -21,79 +21,20 @@ $(document).ready(function () {
         localStorage['link_colour'] = customColors['link_colour'];
 
     }
-    // iniciar los colorpickers
-    $(function () {
-        $('#cp1, #cp2, #cp3, #cp4, #cp5, #cp6').colorpicker();
-    });
 
-    if (idView == "lo_view") {
+    // en la vista de LOS (id: lo_view) se tiene un iframe asi que para poder cargar los estilos del usuario
+    // se debe esperar a que el iframe haya cargado de modo que el usuario pueda ver sus estilos
+    // en ambos html
+    if (idView == 'lo_view') {
+        loadInterfazPersonalization();
         $("iframe").on('load', function () {
-            $('#inputFontSize').val(localStorage['font_size'] || 12).change();
-
-            $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
-
-            $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
-
-            $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
-
-            $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
-            $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
-            if (localStorage['invert_color_image'] == 't') {
-                localStorage['invert_color_image'] = 'true';
-            } else if (localStorage['invert_color_image'] == 'f') {
-                localStorage['invert_color_image'] = 'false';
-            }
-
-            if (localStorage['invert_color_general'] == 't') {
-                localStorage['invert_color_general'] = 'true';
-            } else if (localStorage['invert_color_general'] == 'f') {
-                localStorage['invert_color_general'] = 'false';
-            }
-
-            console.log("contrast image", localStorage['invert_color_image']);
-            $('.colorpicker').ready(function () {
-                $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
-                $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
-            });
-
-            animate();
+            nodeIframe = document.getElementsByTagName('IFRAME')[0];
+            iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
+            loadInterfazPersonalization();
         });
-
-
-
     } else {
-        $('#inputFontSize').val(localStorage['font_size'] || 12).change();
-
-        $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
-
-        $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
-
-        $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
-
-        $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
-        $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
-        if (localStorage['invert_color_image'] == 't') {
-            localStorage['invert_color_image'] = 'true';
-        } else if (localStorage['invert_color_image'] == 'f') {
-            localStorage['invert_color_image'] = 'false';
-        }
-
-        if (localStorage['invert_color_general'] == 't') {
-            localStorage['invert_color_general'] = 'true';
-        } else if (localStorage['invert_color_general'] == 'f') {
-            localStorage['invert_color_general'] = 'false';
-        }
-
-        console.log("contrast image", localStorage['invert_color_image']);
-        $('.colorpicker').ready(function () {
-            $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
-            $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
-        });
-
-        animate();
+        loadInterfazPersonalization();
     }
-
-
 });
 
 
@@ -222,6 +163,45 @@ $("input[name='radioOptionscontrast']").change(function () {
     }
     highContrast(optionCheckedContrast, $(this).data('default'));
 });
+
+function loadInterfazPersonalization(){
+    // iniciar los colorpickers
+    $(function () {
+        $('#cp1, #cp2, #cp3, #cp4, #cp5, #cp6').colorpicker();
+    });
+
+    $('#inputFontSize').val(localStorage['font_size'] || 12).change();
+
+    $('#inputInterlineSize').val(localStorage['size_line_spacing'] || 1.5).change();
+
+    $("input[name='radioOptionscontrast'][value=" + (localStorage['contrast_colors_id'] || '1') + "]").prop('checked', true).change();
+
+    $("input[name='type-font'][value=" + (localStorage['font_type_id'] || '1') + "]").prop('checked', true).change();
+
+    $("input[name='radioOptionsSizeCursorTrails'][value=" + (localStorage['trail_cursor_size_id'] || '1') + "]").prop('checked', true).change();
+    $("input[name='radioOptionsSizeCursor'][value=" + (localStorage['cursor_size_id'] || '1') + "]").prop('checked', true).change();
+    if (localStorage['invert_color_image'] == 't') {
+        localStorage['invert_color_image'] = 'true';
+    } else if (localStorage['invert_color_image'] == 'f') {
+        localStorage['invert_color_image'] = 'false';
+    }
+
+    if (localStorage['invert_color_general'] == 't') {
+        localStorage['invert_color_general'] = 'true';
+    } else if (localStorage['invert_color_general'] == 'f') {
+        localStorage['invert_color_general'] = 'false';
+    }
+
+    console.log("contrast image", localStorage['invert_color_image']);
+    $('.colorpicker').ready(function () {
+        $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
+        $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
+    });
+
+    animate();
+}
+
+
 
 function setDefaultValuesInterfaz() {
     $('#inputFontSize').data('default', true);
@@ -388,11 +368,11 @@ function highContrast(optionContrast, setDefault) {
 }
 
 function setForegroundColor(color, optionContrast, setDefault) {
-    let nodeIframe =  document.getElementById('oa');
-    let iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
+    if (nodeIframe != undefined) {
+        iframeDocument.documentElement.style.setProperty('--foreground-color', color);
+    }
     document.documentElement.style.setProperty('--foreground-color', color);
-    iframeDocument.documentElement.style.setProperty('--foreground-color', color);
-    
+
     if (localStorage['foreground_colour'] != color && optionContrast == '7') {
         if (session_user) {
             updateCustomColorsInSession({
@@ -405,10 +385,11 @@ function setForegroundColor(color, optionContrast, setDefault) {
 }
 
 function setBackgroundColor(color, optionContrast, setDefault) {
-    let nodeIframe =  document.getElementById('oa');
-    let iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
+    if (nodeIframe != undefined) {
+        iframeDocument.documentElement.style.setProperty('--background-color', color);
+    }
+
     document.documentElement.style.setProperty('--background-color', color);
-    iframeDocument.documentElement.style.setProperty('--background-color', color);
 
     if (localStorage['background_colour'] != color && optionContrast == '7') {
         if (session_user) {
@@ -422,6 +403,9 @@ function setBackgroundColor(color, optionContrast, setDefault) {
 }
 
 function setLinkColor(color, optionContrast, setDefault) {
+    if (nodeIframe != undefined) {
+        iframeDocument.documentElement.style.setProperty('--link-color', color);
+    }
     document.documentElement.style.setProperty('--link-color', color);
     if (localStorage['link_colour'] != color && optionContrast == '7') {
         if (session_user) {
@@ -434,6 +418,9 @@ function setLinkColor(color, optionContrast, setDefault) {
 }
 
 function setHighlightColor(color, optionContrast, setDefault) {
+    if (nodeIframe != undefined) {
+        iframeDocument.documentElement.style.setProperty('--highlight-color', color);
+    }
     document.documentElement.style.setProperty('--highlight-color', color);
     if (localStorage['highlight_colour'] != color && optionContrast == '7') {
         if (session_user) {

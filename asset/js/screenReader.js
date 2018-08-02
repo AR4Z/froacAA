@@ -115,7 +115,7 @@ function setLinkSr(linkID, setDefault) {
 
 }
 
-
+/*
 let currentNode;
 let previousNodes = [];
 let assistant;
@@ -325,3 +325,4 @@ function restElements(element, body) {
 
 document.onkeydown = pulsarTecla;
 //window.onclick = clicked;
+*/
