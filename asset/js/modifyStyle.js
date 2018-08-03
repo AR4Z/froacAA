@@ -30,6 +30,14 @@ $(document).ready(function () {
         $("iframe").on('load', function () {
             nodeIframe = document.getElementsByTagName('IFRAME')[0];
             iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
+            
+            $("iframe").contents().find("body").mousemove(function(event){
+               
+                //event.preventDefault();
+                mouse.x = event.clientX + nodeIframe.getBoundingClientRect().x;
+                mouse.y = event.clientY + nodeIframe.getBoundingClientRect().y;
+            });
+            
             loadInterfazPersonalization();
         });
     } else {
@@ -42,6 +50,8 @@ $("input[name='invertImages']").change(function () {
     if ($(this).prop("checked")) {
         $('img:not(.no-invert-color)').css('filter', 'invert(1)');
         $('i:not(.no-invert-color)').css('filter', 'invert(1)');
+        $('iframe').contents().find('img:not(.no-invert-color)').css('filter', 'invert(1)');
+        $('iframe').contents().find('i:not(.no-invert-color)').css('filter', 'invert(1)');
         if (session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "true") && !($(this).data('default'))) {
             updateValuesInterfazInSession(['invert_color_image'], ["true"]);
         }
@@ -49,6 +59,8 @@ $("input[name='invertImages']").change(function () {
     } else {
         $('i:not(.no-invert-color)').css('filter', 'invert(0)');
         $('img:not(.no-invert-color)').css('filter', 'invert(0)');
+        $('iframe').contents().find('img:not(.no-invert-color)').css('filter', 'invert(0)');
+        $('iframe').contents().find('i:not(.no-invert-color)').css('filter', 'invert(0)');
         if (session_user && needPrefAdaptInterfaz && (localStorage['invert_color_image'] != "false") && !($(this).data('default'))) {
             updateValuesInterfazInSession(['invert_color_image'], ["false"]);
         }
@@ -295,12 +307,15 @@ function changeMousePointer(cursor_size_id, color_cursor, setDefault) {
                 size: sizeInt,
                 color: color_cursor
             });
+            $('iframe').contents().find("body").css('cursor', $('body').css('cursor'));
         } else {
             $('body').css('cursor', localStorage['cursor_url']);
+            $('iframe').contents().find("body").css('cursor', localStorage['cursor_url']);
         }
 
     } else {
         $('body').css('cursor', '');
+        $('iframe').contents().find("body").css('cursor', '');
     }
 
     if (session_user && needPrefAdaptInterfaz && (localStorage['cursor_size_id'] != cursor_size_id || localStorage['color_cursor'] != color_cursor) && !setDefault) {
@@ -477,10 +492,11 @@ let dots = [],
     };
 
 
-let Dot = function () {
+let Dot = function (iframe) {
     this.x = 0;
     this.y = 0;
     this.node = (function () {
+        console.log(iframe);
         let n = document.createElement("div");
         n.className = "trail no-high-contrast no-invert-color";
         document.body.appendChild(n);
@@ -507,9 +523,10 @@ function createTrail(optionLenTrails, colorTrails, invert_color_general, setDefa
             $('.trail').remove();
             dots = [];
             for (var i = 0; i < lenInt; i++) {
-                var d = new Dot();
+                var d = new Dot(false);
                 dots.push(d);
             }
+            
         }
         if (invert_color_general == "true") {
             $('.trail').css('background', colorTrails);
@@ -517,7 +534,6 @@ function createTrail(optionLenTrails, colorTrails, invert_color_general, setDefa
         } else {
             $('.trail').css('background', colorTrails);
         }
-
     } else {
         $('.trail').remove();
     }
@@ -528,6 +544,7 @@ function createTrail(optionLenTrails, colorTrails, invert_color_general, setDefa
     }
     localStorage['trail_cursor_size_id'] = optionLenTrails;
     localStorage['trail_cursor_color'] = colorTrails || localStorage['trail_cursor_color'];
+    localStorage['size_trail'] = lenInt;
 }
 
 // This is the screen redraw function
@@ -555,6 +572,8 @@ addEventListener("mousemove", function (event) {
     mouse.x = event.pageX;
     mouse.y = event.pageY;
 });
+
+
 
 // animate() calls draw() then recursively calls itself
 // everytime the screen repaints via requestAnimationFrame().

@@ -2,7 +2,7 @@
     <section>
         <div class="container-fluid">
             <div class="card border-0">
-                <h1>
+                <h1 id="name-lo">
                     <?php echo base64_decode($lo_name)?>
                     </b>
                 </h1>
@@ -21,16 +21,30 @@
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col-6 mx-auto d-flex justify-content-center flex-wrap">
+                                    <div class="col-4 mx-auto text-center">
                                         <img alt="Cargando objeto de aprendizaje" src="<?php echo base_url()?>asset/img/ajax-loader.gif" width="250" height="30"
                                         />
+                                        <p>Esto puede tardar algunos minutos...</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            
+                            </div>
                         <!-- Esto es una prueba de vizualización de el objeto -->
                     </div>
+                    <div id="error" class="jumbotron jumbotron-fluid">
+                                <div class="container">
+                                    <h1 class="display-4">¡Error!</h1>
+                                    <p class="lead">Al parecer el objeto ya no existe :(</p>
+                                    <hr class="my-4">
+                                    <a class="btn btn-success btn-lg" href="<?php echo base_url()?>" role="button">
+                                    Volver a buscar
+                                    <i class="fa fa-undo" ></i>
+                                    </a>
+                                 </div>
+                            </div>
                 </div>
+                
             </div>
         </div>
     </section>
@@ -50,6 +64,7 @@
             formData.append("url", url);
             formData.append("name", lo_name);
             $('#div-lo').hide();
+            $('#error').hide();
             $('#loading').show();
             $.ajax({
                 url: "http://127.0.0.1:5000/downloadLO/",
@@ -59,13 +74,23 @@
                 cache: false,
                 contentType: false,
                 processData: false,
+                async: true,
                 success: function (data) {
                     console.log(data);
                     let dataJSON = JSON.parse(data);
-                    iframe_oa.src = path + "LOs/" + dataJSON.path_lo+'?time='+Date.now();
-                    $('#loading').fadeOut(50);
-                    $('#div-lo').fadeIn(600);
-
+                    if (dataJSON.path_lo == '404') {
+                        $('#loading').fadeOut(500);
+                        $('#name-lo').fadeOut(50);
+                        $('#error').fadeIn(600);
+                    } else {
+                        iframe_oa.src = path + "LOs/" + dataJSON.path_lo+'?time='+Date.now();
+                        $('#loading').fadeOut(50);
+                        $('#div-lo').fadeIn(600);
+                    }
+                },
+                error: function (data){
+                    console.log(data);
+                    
                 }
             })
         });

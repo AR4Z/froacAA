@@ -128,7 +128,7 @@
 <?php if($id_view == 'login') : ?>
     <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
 
-    <?php elseif (!($this->session->userdata('logged_in'))) : ?>
+    <?php else : ?>
         <body>
         <div class="page">
 <?php endif;?>
