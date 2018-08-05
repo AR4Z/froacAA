@@ -55,7 +55,7 @@
         let lo_name = "<?php echo base64_decode($lo_name); ?>";
         let path = "<?php echo base_url()?>"
         let iframe_oa = document.getElementById("oa");
-
+        let dataj;
 
         console.log("desde afuera");
         $(document).ready(function () {
@@ -67,9 +67,9 @@
             $('#error').hide();
             $('#loading').show();
             $.ajax({
-                url: "http://127.0.0.1:5000/downloadLO/",
+                url: "<?php echo base_url()?>lo/getLO/",
                 type: "post",
-                dataType: "html",
+                dataType: "json",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -77,9 +77,10 @@
                 async: true,
                 success: function (data) {
                     console.log(data);
+                    dataj = data;
                     let dataJSON = JSON.parse(data);
                     if (dataJSON.path_lo == '404') {
-                        $('#loading').fadeOut(500);
+                        $('#loading').fadeOut(50);
                         $('#name-lo').fadeOut(50);
                         $('#error').fadeIn(600);
                     } else {

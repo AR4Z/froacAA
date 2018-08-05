@@ -227,6 +227,20 @@ public function load_lo($url, $lo_name){
     }
 }
 
+public function getLO(){
+    $this->load->library('curl');
+    $url = "http://127.0.0.1:5000/downloadLO/"; 
+    $post_data = array ( 
+        'url' => $this->input->post('url'), 
+        'name' =>  $this->input->post('name')
+    );
+    $output = $this->curl->simple_post($url, $post_data);
+    header('Content-Type: application/json');
+    $json = json_encode($output);
+    echo($json);
+}
+
+
 public function get_score_avg(){
     $result = $this->lo_model->get_avg_score();
     $avg = round($result[0]['avg']);
