@@ -181,17 +181,27 @@ function setHighlightNarrator(highlightID, setDefault) {
 }
 
 function loadLineStyle(){
-    let style =  `<style id='line-style'> 
-    p .line-narrator[last] {
-        color: red;
-    }
+    let style =  `
+    <style id='line-style'>
 
-    p .line-narrator[index="3"] {
-        background-color: #FFFF00;
-    } </style>`
+        p .line-narrator[last] {
+            color: red;
+        }
+
+        p text-line#reading {
+            background-color: #FFFF00;
+        } 
+    </style>`
 
     $('iframe').contents().find('head').append(style);
 }
+
+function changeLine(){
+    let indexCurrentLine = $('iframe').contents().find('#reading').attr('index');
+    $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
+    $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) + 1) + "']").attr('id', 'reading');
+}
+
 
 function separateInLines(ps){
     let pLining = lining(ps, {
