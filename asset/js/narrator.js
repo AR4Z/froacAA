@@ -9,14 +9,18 @@ $(document).ready(function(){
         localStorage['highlight_id_nr'] = preferencesNarrator['highlight_id'];
         localStorage['reading_unit_id_nr'] = preferencesNarrator['reading_unit_id'];
     }
-    // cada una de las configuraciones toma el valor que hay en cache o el default
-    $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
-    $("input[name='pitch-narrator'][value=" + (localStorage['pitch_id_nr'] || '2') + "]").prop('checked', true).change();
-    $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
-    $("input[name='gender-narrator'][value=" + (localStorage['voice_gender_id_nr'] || '1') + "]").prop('checked', true).change();
-    $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
-    $("input[name='highlight-narrator'][value=" + (localStorage['highlight_id_nr'] || '1') + "]").prop('checked', true).change();
-    $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
+
+
+    // en la vista de LOS (id: lo_view) se tiene un iframe asi que para poder cargar los estilos del usuario
+    // se debe esperar a que el iframe haya cargado de modo que el usuario pueda ver sus estilos
+    // en ambos html
+    if (idView == 'lo_view') {
+        $("iframe").on('load', function () {
+            loadNarrator();
+        });
+    } else {
+        loadNarrator();
+    }   
 });
 
 $("input[name='pitch-narrator']").change(function(){
@@ -48,6 +52,17 @@ $("input[name='reading-unit-narrator']").change(function(){
     let readingUnitIDselected = $("input[name='reading-unit-narrator']:checked").val();
     setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
 });
+
+function loadNarrator(){
+     // cada una de las configuraciones toma el valor que hay en cache o el default
+     $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
+     $("input[name='pitch-narrator'][value=" + (localStorage['pitch_id_nr'] || '2') + "]").prop('checked', true).change();
+     $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
+     $("input[name='gender-narrator'][value=" + (localStorage['voice_gender_id_nr'] || '1') + "]").prop('checked', true).change();
+     $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
+     $("input[name='highlight-narrator'][value=" + (localStorage['highlight_id_nr'] || '1') + "]").prop('checked', true).change();
+     $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
+}
 
 
 function updateValuesNarratorInSession(names_preferences_narrator, values){
@@ -141,12 +156,51 @@ function setLinkNarrator(linkID, setDefault) {
 }
 
 function setHighlightNarrator(highlightID, setDefault) {
+    let optsHighlight= {
+        '1':'word',
+        '2':'line',
+        '3':'sentence',
+        '4':'paragraph'
+    }
+    let selectedOptHighlight = optsHighlight[highlightID];
+
+    if(selectedOptHighlight == 'line'){
+        console.log('linesss');
+        let ps = iframeDocument.getElementsByTagName('p')[6];
+        separateInLines(ps);
+        loadLineStyle();
+    }
+
+
     if((highlightID != localStorage['highlight_id_nr']) && needNarrator && !setDefault) {
 
         updateValuesNarratorInSession(['highlight_id'], [highlightID]);
     }
     $("input[name='highlight-narrator']").data('default', false);
     localStorage['highlight_id_nr'] = highlightID;
+}
+
+function loadLineStyle(){
+    let style =  `<style id='line-style'> 
+    p .line-narrator[last] {
+        color: red;
+    }
+
+    p .line-narrator[index="3"] {
+        background-color: #FFFF00;
+    } </style>`
+
+    $('iframe').contents().find('head').append(style);
+}
+
+function separateInLines(ps){
+    let pLining = lining(ps, {
+        'autoResize':true,
+        'lineClass':'line-narrator'
+    });
+
+    
+    pLining.relining();
 }
 
 function setReadingUnitNarrator(readingUnitID, setDefault) {

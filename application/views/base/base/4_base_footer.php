@@ -21,6 +21,7 @@
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
+<script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <?php if($this->session->userdata('adaptaInterfaz') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>

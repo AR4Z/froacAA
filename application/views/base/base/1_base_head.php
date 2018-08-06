@@ -92,6 +92,8 @@
             filter: invert(0);
         }
     </style>
+
+    
     <script type="text/javascript">
     let session_user;
     let preferencesAdaptainterfaz;
