@@ -29,6 +29,7 @@
 <?php endif;?>
 
 <?php if($this->session->userdata('needNarrator') || !($this->session->userdata('logged_in'))):?>
+<script src="<?php echo base_url()?>asset/js/mespeak.js"></script>
 <script src="<?php echo base_url() ?>asset/js/narrator.js"></script>
 <?php endif;?>
 

@@ -107,6 +107,9 @@
     let idView;
     let nodeIframe;
     let iframeDocument;
+    let nParagraph;
+    let pLining;
+    let treeNarrator;
 
     $(document).ready(function(){
 

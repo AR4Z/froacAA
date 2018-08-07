@@ -16,11 +16,24 @@ $(document).ready(function(){
     // en ambos html
     if (idView == 'lo_view') {
         $("iframe").on('load', function () {
+            let filter = {
+                acceptNode: function (n) {
+                    if (isValidNode(n)) {
+                        return NodeFilter.FILTER_ACCEPT;
+                    } else {
+                        return NodeFilter.FILTER_SKIP;     
+                    }
+                }
+            }
+            treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
+            treeNarrator.nextNode();
+            loadVoice();
             loadNarrator();
         });
     } else {
+        loadVoice();
         loadNarrator();
-    }   
+    }
 });
 
 $("input[name='pitch-narrator']").change(function(){
@@ -53,7 +66,23 @@ $("input[name='reading-unit-narrator']").change(function(){
     setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
 });
 
-function loadNarrator(){
+function loadVoice(){
+    // carga configuración para speak y la voz en el idioma es-la
+    meSpeak.loadConfig(base_url+"asset/js/mespeak_config.json");
+    meSpeak.loadVoice(base_url+"asset/js/es-la.json");
+}
+
+function speakNow(txt){
+    meSpeak.speak(txt, {
+        amplitud: 100,
+        wordgap:0,
+        pitch:100,
+        speed: 175,
+        variant:'None',
+    });
+}
+
+function loadNarrator(){    
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
      $("input[name='pitch-narrator'][value=" + (localStorage['pitch_id_nr'] || '2') + "]").prop('checked', true).change();
@@ -166,9 +195,6 @@ function setHighlightNarrator(highlightID, setDefault) {
 
     if(selectedOptHighlight == 'line'){
         console.log('linesss');
-        let ps = iframeDocument.getElementsByTagName('p')[6];
-        separateInLines(ps);
-        loadLineStyle();
     }
 
 
@@ -188,7 +214,7 @@ function loadLineStyle(){
             color: red;
         }
 
-        p text-line#reading {
+        p text-line#reading-line {
             background-color: #FFFF00;
         } 
     </style>`
@@ -196,21 +222,42 @@ function loadLineStyle(){
     $('iframe').contents().find('head').append(style);
 }
 
-function changeLine(){
-    let indexCurrentLine = $('iframe').contents().find('#reading').attr('index');
-    $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
-    $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) + 1) + "']").attr('id', 'reading');
+function readNthLine(nthline){
+    let indexCurrentLine = $('iframe').contents().find('#reading-line').attr('index');
+    if(indexCurrentLine != nthline){
+        $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
+        $('iframe').contents().find("text-line[index='" + nthline + "']").attr('id', 'reading-line');
+    }
 }
 
+function nextOrPrevLine(next, prev){
+    let indexCurrentLine = $('iframe').contents().find('#reading-line').attr('index') || 0;
+    $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
+    if(next){
+        $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) + 1) + "']").attr('id', 'reading-line');
+    } else if(prev) {
+        $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) - 1) + "']").attr('id', 'reading-line');
+    }
+}
+
+function changeParent(){
+    treeNarrator.nextSibling();
+    treeNarratorChild = iframeDocument.createTreeWalker(treeNarrator.currentNode, NodeFilter.SHOW_ELEMENT, filter, false);
+    separateInLines(treeNarrator.currentNode);
+    loadLineStyle();
+}
 
 function separateInLines(ps){
-    let pLining = lining(ps, {
+    if(pLining){
+        pLining.unlining();
+    }
+    pLining = lining(ps, {
         'autoResize':true,
         'lineClass':'line-narrator'
     });
-
     
     pLining.relining();
+    //nextOrPrevLine(true, false);
 }
 
 function setReadingUnitNarrator(readingUnitID, setDefault) {
@@ -221,3 +268,47 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
     $("input[name='reading-unit-narrator']").data('default', false);
     localStorage['reading_unit_id_nr'] = readingUnitID;
 }
+
+function isValidNode(node) {
+    if(!$(node).is(':visible')) {
+        return false;
+    }
+    if($(node).is(':empty')){
+        return false;
+    }
+
+    return true;
+}
+/*
+function getTextNodesIn(elem, opt_fnFilter) {
+    var textNodes = [];
+    if (elem) {
+      for (var nodes = elem.childNodes, i = nodes.length; i--;) {
+        var node = nodes[i], nodeType = node.nodeType;
+        if (nodeType == 3) {
+          if (!opt_fnFilter || opt_fnFilter(node, elem)) {
+            textNodes.push(node);
+          }
+        }
+        else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
+          textNodes = textNodes.concat(getTextNodesIn(node, opt_fnFilter));
+        }
+      }
+    }
+    return textNodes;
+  }
+  function textNodesUnder(el){
+    var Filtro = {
+        acceptNode : function(n) {
+           if (n.nodeType == 1) {
+              return NodeFilter.FILTER_ACCEPT;
+              }
+           else return NodeFilter.FILTER_SKIP;
+           }
+        }
+    var a=[],n,walk=document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT,Filtro,true);
+    while(n=walk.nextNode()) a.push(n);
+    return a;
+  }*/
+
+  //walk=iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT,null,false);
