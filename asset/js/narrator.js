@@ -74,13 +74,53 @@ function loadVoice(){
 
 function speakNow(txt){
     meSpeak.speak(txt, {
-        amplitud: 100,
+        amplitud: 150,
         wordgap:0,
-        pitch:100,
+        pitch:50,
         speed: 175,
         variant:'None',
     });
 }
+
+
+function textIsALink(node) {
+    let currentNode = node;
+    while (currentNode) {
+        if (currentNode.tagName == 'A'){
+            return true;
+        } else {
+            currentNode = currentNode.parentNode;
+        }    
+    }
+    return false;
+}
+
+
+function nodeTypeIsText(node){
+    let chNodes = node.childNodes;
+    console.log(chNodes);
+    for (let indexNode = 0; indexNode < chNodes.length; indexNode++) {
+        const chNode = chNodes[indexNode];
+        //console.log("is text?");
+        if(chNode.nodeType === 3){
+            textReading = chNode.nodeValue;
+            //console.log(textReading)
+        }
+        return (chNode.nodeType === 3) && (chNode.nodeValue != '\n');
+    }
+    return false;
+}
+
+
+function narrator(){
+    treeNarrator.nextNode();
+    while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
+        console.log(treeNarrator.currentNode);
+        treeNarrator.nextNode();
+    }
+    speakNow(textReading);
+}
+
 
 function loadNarrator(){    
      // cada una de las configuraciones toma el valor que hay en cache o el default
@@ -199,7 +239,6 @@ function setHighlightNarrator(highlightID, setDefault) {
 
 
     if((highlightID != localStorage['highlight_id_nr']) && needNarrator && !setDefault) {
-
         updateValuesNarratorInSession(['highlight_id'], [highlightID]);
     }
     $("input[name='highlight-narrator']").data('default', false);
@@ -273,6 +312,7 @@ function isValidNode(node) {
     if(!$(node).is(':visible')) {
         return false;
     }
+
     if($(node).is(':empty')){
         return false;
     }

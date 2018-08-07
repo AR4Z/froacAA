@@ -110,6 +110,7 @@
     let nParagraph;
     let pLining;
     let treeNarrator;
+    let textReading;
 
     $(document).ready(function(){
 
