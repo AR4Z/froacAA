@@ -16,19 +16,11 @@ $(document).ready(function(){
     // en ambos html
     if (idView == 'lo_view') {
         $("iframe").on('load', function () {
-            let filter = {
-                acceptNode: function (n) {
-                    if (isValidNode(n)) {
-                        return NodeFilter.FILTER_ACCEPT;
-                    } else {
-                        return NodeFilter.FILTER_SKIP;     
-                    }
-                }
-            }
-            treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
+            loadTreeNarrator();
             treeNarrator.nextNode();
             loadVoice();
             loadNarrator();
+            loadObserver();
         });
     } else {
         loadVoice();
@@ -73,6 +65,10 @@ function loadVoice(){
 }
 
 function speakNow(txt){
+    // se detiene la reproduccion que este en curso
+    meSpeak.stop();
+
+    // reproduce el nuevo texto
     meSpeak.speak(txt, {
         amplitud: 150,
         wordgap:0,
@@ -87,12 +83,17 @@ function textIsALink(node) {
     let currentNode = node;
     while (currentNode) {
         if (currentNode.tagName == 'A'){
-            return true;
+            return {
+                isLink:true, 
+                nodeLink:currentNode,
+            };
         } else {
             currentNode = currentNode.parentNode;
         }    
     }
-    return false;
+    return {
+        isLink:false,
+    };
 }
 
 
@@ -118,12 +119,14 @@ function narrator(){
         console.log(treeNarrator.currentNode);
         treeNarrator.nextNode();
     }
+    observer.disconnect();
+    loadObserver();
     speakNow(textReading);
 }
 
 
 function loadNarrator(){    
-     // cada una de las configuraciones toma el valor que hay en cache o el default
+     // cada una de las configuraciones toma el valor que hay en localStorage o el default
      $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
      $("input[name='pitch-narrator'][value=" + (localStorage['pitch_id_nr'] || '2') + "]").prop('checked', true).change();
      $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
@@ -317,6 +320,14 @@ function isValidNode(node) {
         return false;
     }
 
+    if($(node).prop('tagName') == 'OPTION' && $(node).attr('selected') != 'selected'){
+        return false;
+    }
+    
+    if($(node).prop('tagName') == 'LABEL'){
+        return false;
+    }
+
     return true;
 }
 /*
@@ -352,3 +363,37 @@ function getTextNodesIn(elem, opt_fnFilter) {
   }*/
 
   //walk=iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT,null,false);
+
+function loadTreeNarrator(){
+    let filter = {
+        acceptNode: function (n) {
+            if (isValidNode(n)) {
+                return NodeFilter.FILTER_ACCEPT;
+            } else {
+                return NodeFilter.FILTER_SKIP;     
+            }
+        }
+    }
+    treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
+}
+
+function loadObserver(){
+    let currentNodeIsLink = textIsALink(treeNarrator.currentNode);
+
+    if(currentNodeIsLink.isLink){
+        target = currentNodeIsLink.nodeLink;
+    } else {
+        target = treeNarrator.currentNode;
+    }
+     // configuration of the observer:
+     var config = { attributes: true, subtree: false };
+     // pass in the target node, as well as the observer options
+     observer.observe(target, config);
+}
+
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+    treeNarrator.currentNode = mutations[mutations.length - 1].target;
+});
+ 
+

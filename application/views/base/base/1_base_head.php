@@ -111,6 +111,7 @@
     let pLining;
     let treeNarrator;
     let textReading;
+    let target;
 
     $(document).ready(function(){
 
