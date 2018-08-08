@@ -16,7 +16,7 @@ $(document).ready(function(){
     // verifico si hay una sesion iniciada y si el usuario necesita usar narrador para cargar los valores desde la DB
     if(session_user && needNarrator){
         localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading'];
-        localStorage['pitch_id_nr'] = preferencesNarrator['pitch_id'];
+        localStorage['pitch_nr'] = preferencesNarrator['pitch_nr'];
         localStorage['volume_id_nr'] = preferencesNarrator['volume_id'];
         localStorage['voice_gender_id_nr'] = preferencesNarrator['voice_gender_id'];
         localStorage['links_id_nr'] = preferencesNarrator['links_id'];
@@ -40,11 +40,6 @@ $(document).ready(function(){
         loadVoice();
         loadNarrator();
     }
-});
-
-$("input[name='pitch-narrator']").change(function(){
-    let pitchIDselected = $("input[name='pitch-narrator']:checked").val();
-    setPitchNarrator(pitchIDselected, $(this).data('default'));
 });
 
 $("input[name='volume-narrator']").change(function(){
@@ -148,7 +143,7 @@ function narrator(){
 function loadNarrator(){    
      // cada una de las configuraciones toma el valor que hay en localStorage o el default
      $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
-     $("input[name='pitch-narrator'][value=" + (localStorage['pitch_id_nr'] || '2') + "]").prop('checked', true).change();
+     $('#input-pitch-narrator').val(localStorage['pitch_nr'] || 50).change();
      $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
      $("input[name='gender-narrator'][value=" + (localStorage['voice_gender_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
@@ -178,8 +173,8 @@ function setDefaultValuesNarrator(){
     // el data-default sirve para realizar solo una peticion cuando se actualicen todos los valores
     $("#input-speed-speech-narrator").data('default', true);
     $('#input-speed-speech-narrator').val(180).change();
-    $("input[name='pitch-narrator']").data('default', true);
-    $("input[name='pitch-narrator'][value=" + ('2') + "]").prop('checked', true).change();
+    $("#input-pitch-narrator").data('default', true);
+    $('#input-pitch-narrator').val(50).change();
     $("input[name='volume-narrator']").data('default', true);
     $("input[name='volume-narrator'][value=" + ('2') + "]").prop('checked', true).change();
     $("input[name='gender-narrator']").data('default', true);
@@ -192,8 +187,8 @@ function setDefaultValuesNarrator(){
     $("input[name='reading-unit-narrator'][value=" + ('1') + "]").prop('checked', true).change();
 
     if(session_user){
-        let names_preferences_narrator = ['speed_reading', 'pitch_id', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id'];
-        let values = [180, 2, 2, 1, 1, 1, 1];
+        let names_preferences_narrator = ['speed_reading', 'pitch_nr', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id'];
+        let values = [180, 50, 2, 1, 1, 1, 1];
         updateValuesNarratorInSession(names_preferences_narrator, values);
     }
 
@@ -203,20 +198,18 @@ function setSpeechSpeedNarrator(speed, setDefault){
     console.log("swswej");
     if((speed != localStorage['speed_reading_nr']) && needNarrator && !setDefault){
         console.log("trae" +localStorage['speed_reading_nr']);
-
         updateValuesNarratorInSession(['speed_reading'], [speed]);
     }
     $("#input-speed-speech-narrator").data('default', false);
     localStorage['speed_reading_nr'] = speed;
 }
 
-function setPitchNarrator(pitchID, setDefault) {
-    if((pitchID != localStorage['pitch_id_nr']) && needNarrator && !setDefault) {
-
-        updateValuesNarratorInSession(['pitch_id'], [pitchID]);
+function setPitchNarrator(pitch, setDefault) {
+    if((pitch != localStorage['pitch_nr']) && needNarrator && !setDefault) {
+        updateValuesNarratorInSession(['pitch_nr'], [pitch]);
     }
-    $("input[name='pitch-narrator']").data('default', false);
-    localStorage['pitch_id_nr'] = pitchID;
+    $("#input-pitch-narrator").data('default', false);
+    localStorage['pitch_nr'] = pitch;
 }
 
 function setVolumeNarrator(volumeID, setDefault) {

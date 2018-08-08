@@ -389,7 +389,7 @@
             let narratorPreferences = {
                 'use_username':$("input[name='username']").val(),
                 'speed_reading':localStorage['speed_reading_nr'],
-                'pitch_id':localStorage['pitch_id_nr'],
+                'pitch_nr':localStorage['pitch_nr'],
                 'volume_id': localStorage['volume_id_nr'],
                 'voice_gender_id':localStorage['voice_gender_id_nr'],
                 'links_id':localStorage['links_id_nr'],

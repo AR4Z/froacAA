@@ -79,6 +79,8 @@ $(document).ready(function () {
             setSpeechSpeedNarrator($(this).val());
         } else if ($(this).attr('id') == 'input-speed-speech-sr') {
             setSpeechSpeedSr($(this).val(), $(this).data('default'));
+        } else if($(this).attr('id') == 'input-pitch-narrator'){
+            setPitchNarrator($(this).val(), $(this).data('default'));
         }
     });
     $(".input-number").keydown(function (e) {

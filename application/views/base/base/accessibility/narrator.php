@@ -39,32 +39,18 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="pitch-narrator" id="pitchBajo" value="1">
-                                    <label class="form-check-label" for="pitchBajo">Bajo</label>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="pitch-narrator" id="pitchMedio" value="2">
-                                    <label class="form-check-label" for="pitchMedio">Medio</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="pitch-narrator" id="pitchAlto" value="3">
-                                    <label class="form-check-label" for="pitchAlto">Alto</label>
-                                </div>
-
-                            </div>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[4]">
+                                    <span class="oi oi-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" name="quant[4]" id="input-pitch-narrator" class="form-control input-number" value="50" min="0" max="99" step="1" data-decimals="0" style="text-align:center">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[4]">
+                                    <span class="oi oi-plus"></span>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
