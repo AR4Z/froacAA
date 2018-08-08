@@ -1,4 +1,14 @@
 $(document).ready(function(){
+    
+    cfgVoiceNarrator = {
+        amplitud: 100,
+        wordgap: 0,
+        pitch: 50,
+        speed: 175,
+        variant:'None',
+        volume:1,
+    }
+
     srClass = {
         'sr-av': true,
         'js-sr-av': true,
@@ -73,13 +83,7 @@ function speakNow(txt){
     meSpeak.stop();
 
     // reproduce el nuevo texto
-    meSpeak.speak(txt, {
-        amplitud: 150,
-        wordgap:0,
-        pitch:50,
-        speed: 175,
-        variant:'None',
-    });
+    meSpeak.speak(txt, cfgVoiceNarrator);
 }
 
 
@@ -216,12 +220,29 @@ function setPitchNarrator(pitchID, setDefault) {
 }
 
 function setVolumeNarrator(volumeID, setDefault) {
-    if((volumeID != localStorage['volume_id_nr']) && needNarrator && !setDefault) {
+    // volumes supported by the voice
+    let validVolumes = {
+        '1': 0.2,
+        '2': 0.5,
+        '3': 1,
+    }
+    // volume selected
+    let validVolume = validVolumes[volumeID];
 
+    // decide if a user is logged in to save their preferences in the db
+    if((volumeID != localStorage['volume_id_nr']) && needNarrator && !setDefault) {
         updateValuesNarratorInSession(['volume_id'], [volumeID]);
     }
+
+    /* to not make many requests when the default values 
+    are set a parameter is sent then in the others it is false */
     $("input[name='volume-narrator']").data('default', false);
+
+    // save volume in local storage
     localStorage['volume_id_nr'] = volumeID;
+
+    // set voice volume with selected
+    cfgVoiceNarrator['volume'] = validVolume;
 }
 
 function setVoiceGenderNarrator(genderID, setDefault) {

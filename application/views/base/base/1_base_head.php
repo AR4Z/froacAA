@@ -113,6 +113,7 @@
     let textReading;
     let target;
     let srClass;
+    let cfgVoiceNarrator;
 
     $(document).ready(function(){
 
