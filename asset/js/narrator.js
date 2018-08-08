@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    srClass = {
+        'sr-av': true,
+        'js-sr-av': true,
+    }
     // verifico si hay una sesion iniciada y si el usuario necesita usar narrador para cargar los valores desde la DB
     if(session_user && needNarrator){
         localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading'];
@@ -94,6 +98,18 @@ function textIsALink(node) {
     return {
         isLink:false,
     };
+}
+
+function shouldBeignored(node){
+    let currentNode = node;
+    while(currentNode){
+        if(srClass[$(currentNode).attr('class')]){
+            return true;
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+    return false;
 }
 
 
@@ -313,11 +329,6 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
 
 
 function isValidNode(node) {
-    let srClass = {
-        'sr-av': true,
-        'js-sr-av': true,
-    }
-
     if(!$(node).is(':visible')) {
         return false;
     }
@@ -334,7 +345,7 @@ function isValidNode(node) {
         return false;
     }
 
-    if(srClass[$(node).attr('class')]){
+    if(shouldBeignored(node)){
         return false;
     }
 

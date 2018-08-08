@@ -112,6 +112,7 @@
     let treeNarrator;
     let textReading;
     let target;
+    let srClass;
 
     $(document).ready(function(){
 
