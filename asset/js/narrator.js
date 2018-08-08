@@ -311,7 +311,13 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
     localStorage['reading_unit_id_nr'] = readingUnitID;
 }
 
+
 function isValidNode(node) {
+    let srClass = {
+        'sr-av': true,
+        'js-sr-av': true,
+    }
+
     if(!$(node).is(':visible')) {
         return false;
     }
@@ -328,41 +334,13 @@ function isValidNode(node) {
         return false;
     }
 
+    if(srClass[$(node).attr('class')]){
+        return false;
+    }
+
     return true;
 }
-/*
-function getTextNodesIn(elem, opt_fnFilter) {
-    var textNodes = [];
-    if (elem) {
-      for (var nodes = elem.childNodes, i = nodes.length; i--;) {
-        var node = nodes[i], nodeType = node.nodeType;
-        if (nodeType == 3) {
-          if (!opt_fnFilter || opt_fnFilter(node, elem)) {
-            textNodes.push(node);
-          }
-        }
-        else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
-          textNodes = textNodes.concat(getTextNodesIn(node, opt_fnFilter));
-        }
-      }
-    }
-    return textNodes;
-  }
-  function textNodesUnder(el){
-    var Filtro = {
-        acceptNode : function(n) {
-           if (n.nodeType == 1) {
-              return NodeFilter.FILTER_ACCEPT;
-              }
-           else return NodeFilter.FILTER_SKIP;
-           }
-        }
-    var a=[],n,walk=document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT,Filtro,true);
-    while(n=walk.nextNode()) a.push(n);
-    return a;
-  }*/
 
-  //walk=iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT,null,false);
 
 function loadTreeNarrator(){
     let filter = {
