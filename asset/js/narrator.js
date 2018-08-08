@@ -74,20 +74,46 @@ $("input[name='reading-unit-narrator']").change(function(){
     setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
 });
 
+$("input[name='punctSigns']").change(function(){
+    $("input[name='readPuncts']").change();    
+});
+
 $("input[name='readPuncts']").change(function () {
+    // decided if user use read puntutation 
     if ($(this).prop("checked")) {
+        // decide if a user is logged in to save their preferences in the db
         if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "true") && !($(this).data('default'))) {
             updateValuesInterfazInSession(['readPuncts'], ["true"]);
         }
+        // show input signs for user can change the signs
+        $('#div-punct-signs').show();
+        
+        // save decision in local storage
         localStorage['readPuncts'] = "true";
+
+        // set signs punct in config voice
+        // when its true then send puncts that want to read
+        cfgVoiceNarrator['punct'] = $("input[name='punctSigns']").val(); 
     } else {
+        // decide if a user is logged in to save their preferences in the db
         if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "false") && !($(this).data('default'))) {
             updateValuesInterfazInSession(['readPuncts'], ["false"]);
         }
+
+        // hide signs input for user cannot change the signs
+        $('#div-punct-signs').hide();
+
+        // save in local storage 
         localStorage['readPuncts'] = "false";
+
+        // set signs punct in config voice = false
+        cfgVoiceNarrator['punct'] = $(this).prop('checked');
     }
+    
+    /* to not make many requests when the default values 
+    are set a parameter is sent then in the others it is false */
     $(this).data('default', false);
-    cfgVoiceNarrator['punct'] = $(this).prop('checked');
+    localStorage['punctSigns'] = $("input[name='punctSigns']").val();
 });
 //*******************************************************************************************/
 

@@ -299,6 +299,12 @@
                             </label>
                         </div>
                         <br/>
+                        <div id="div-punct-signs" class="form-check">
+                            <label for="punctSigns" aria-labelledby="punctSigns">
+                                <input type="text" class="form-control" value=".,;?" style="text-align:center" name="punctSigns" id="punctSigns">
+                            </label>
+                        </div>
+                        <br/>
                     </div>
                 </div>
             </div>
