@@ -7,6 +7,7 @@ $(document).ready(function(){
         speed: 175,
         variant:'f1',
         volume:1,
+        punct:true,
     }
 
     // class that should ignored for narrator
@@ -24,6 +25,8 @@ $(document).ready(function(){
         localStorage['links_id_nr'] = preferencesNarrator['links_id'];
         localStorage['highlight_id_nr'] = preferencesNarrator['highlight_id'];
         localStorage['reading_unit_id_nr'] = preferencesNarrator['reading_unit_id'];
+        localStorage['readPunct'] = preferencesNarrator['readPunct'];
+        localStorage['punctSigns'] = preferencesNarrator['punctSigns'];
     }
 
 
@@ -69,6 +72,22 @@ $("input[name='highlight-narrator']").change(function(){
 $("input[name='reading-unit-narrator']").change(function(){
     let readingUnitIDselected = $("input[name='reading-unit-narrator']:checked").val();
     setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
+});
+
+$("input[name='readPuncts']").change(function () {
+    if ($(this).prop("checked")) {
+        if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "true") && !($(this).data('default'))) {
+            updateValuesInterfazInSession(['readPuncts'], ["true"]);
+        }
+        localStorage['readPuncts'] = "true";
+    } else {
+        if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "false") && !($(this).data('default'))) {
+            updateValuesInterfazInSession(['readPuncts'], ["false"]);
+        }
+        localStorage['readPuncts'] = "false";
+    }
+    $(this).data('default', false);
+    cfgVoiceNarrator['punct'] = $(this).prop('checked');
 });
 //*******************************************************************************************/
 
@@ -157,6 +176,7 @@ function loadNarrator(){
      $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='highlight-narrator'][value=" + (localStorage['highlight_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
+     $("input[name='readPuncts']").prop('checked', localStorage['readPuncts'] == "true").change();
 }
 
 

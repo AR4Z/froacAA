@@ -15,8 +15,8 @@
         <link id='source-code-pro' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
         <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
         <link id="contrast-styles" href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
     <?php endif;?>
+    <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">

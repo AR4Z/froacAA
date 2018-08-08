@@ -127,18 +127,17 @@ $(document).ready(function () {
     }
 
     if ($('ul#accessibilityTab li').length == 2) {
-        console.log("swsdefer");
         $('#reset-all').hide();
     }
+
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 });
 
 // resetea los valores de la barra de accesibilidad
 function setDefaultAllValues() {
-    console.log("all");
     if (needPrefAdaptInterfaz || !session_user) {
         setDefaultValuesInterfaz();
     }

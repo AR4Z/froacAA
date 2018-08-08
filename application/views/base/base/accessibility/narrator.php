@@ -277,5 +277,31 @@
                 </div>
             </div>
         </div>
+        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+            <div class="card-header text-center">
+                <span>
+                    <b>LEER PUNTUACIÓN
+                    </b>
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p>Permite leer el nombre de un signo de puntuación cuando se encuentre en el texto.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check checkbox-slider--b">
+                            <label>
+                                <input name="readPuncts" type="checkbox"/>
+                                <span></span>
+                            </label>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
