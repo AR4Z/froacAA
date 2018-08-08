@@ -1,18 +1,20 @@
 $(document).ready(function(){
-    
+    // voice narrator config
     cfgVoiceNarrator = {
         amplitud: 100,
         wordgap: 0,
         pitch: 50,
         speed: 175,
-        variant:'None',
+        variant:'f1',
         volume:1,
     }
 
+    // class that should ignored for narrator
     srClass = {
         'sr-av': true,
         'js-sr-av': true,
     }
+
     // verifico si hay una sesion iniciada y si el usuario necesita usar narrador para cargar los valores desde la DB
     if(session_user && needNarrator){
         localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading'];
@@ -42,6 +44,8 @@ $(document).ready(function(){
     }
 });
 
+// changes methods for narrator settings
+//**********************************************************************************************/
 $("input[name='volume-narrator']").change(function(){
     let volumeIDselected = $("input[name='volume-narrator']:checked").val();
     setVolumeNarrator(volumeIDselected, $(this).data('default'));
@@ -66,18 +70,22 @@ $("input[name='reading-unit-narrator']").change(function(){
     let readingUnitIDselected = $("input[name='reading-unit-narrator']:checked").val();
     setReadingUnitNarrator(readingUnitIDselected, $(this).data('default'));
 });
+//*******************************************************************************************/
 
+
+// load config files for narrator voice
 function loadVoice(){
     // carga configuración para speak y la voz en el idioma es-la
     meSpeak.loadConfig(base_url+"asset/js/mespeak_config.json");
     meSpeak.loadVoice(base_url+"asset/js/es-la.json");
 }
 
+// spaeak function
 function speakNow(txt){
-    // se detiene la reproduccion que este en curso
+    // stop current speaking
     meSpeak.stop();
 
-    // reproduce el nuevo texto
+    // speak
     meSpeak.speak(txt, cfgVoiceNarrator);
 }
 
@@ -142,7 +150,7 @@ function narrator(){
 
 function loadNarrator(){    
      // cada una de las configuraciones toma el valor que hay en localStorage o el default
-     $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 180).change();
+     $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 175).change();
      $('#input-pitch-narrator').val(localStorage['pitch_nr'] || 50).change();
      $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
      $("input[name='gender-narrator'][value=" + (localStorage['voice_gender_id_nr'] || '1') + "]").prop('checked', true).change();
@@ -172,7 +180,7 @@ function updateValuesNarratorInSession(names_preferences_narrator, values){
 function setDefaultValuesNarrator(){
     // el data-default sirve para realizar solo una peticion cuando se actualicen todos los valores
     $("#input-speed-speech-narrator").data('default', true);
-    $('#input-speed-speech-narrator').val(180).change();
+    $('#input-speed-speech-narrator').val(175).change();
     $("#input-pitch-narrator").data('default', true);
     $('#input-pitch-narrator').val(50).change();
     $("input[name='volume-narrator']").data('default', true);
@@ -188,28 +196,45 @@ function setDefaultValuesNarrator(){
 
     if(session_user){
         let names_preferences_narrator = ['speed_reading', 'pitch_nr', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id'];
-        let values = [180, 50, 2, 1, 1, 1, 1];
+        let values = [175, 50, 2, 1, 1, 1, 1];
         updateValuesNarratorInSession(names_preferences_narrator, values);
     }
 
 }
 
 function setSpeechSpeedNarrator(speed, setDefault){
-    console.log("swswej");
+    // decide if a user is logged in to save their preferences in the db
     if((speed != localStorage['speed_reading_nr']) && needNarrator && !setDefault){
         console.log("trae" +localStorage['speed_reading_nr']);
         updateValuesNarratorInSession(['speed_reading'], [speed]);
     }
+
+    /* to not make many requests when the default values 
+    are set a parameter is sent then in the others it is false */
     $("#input-speed-speech-narrator").data('default', false);
+
+    // save in local storage
     localStorage['speed_reading_nr'] = speed;
+    
+    // save in voice config
+    cfgVoiceNarrator['speed'] = speed;
 }
 
 function setPitchNarrator(pitch, setDefault) {
+    // decide if a user is logged in to save their preferences in the db
     if((pitch != localStorage['pitch_nr']) && needNarrator && !setDefault) {
         updateValuesNarratorInSession(['pitch_nr'], [pitch]);
     }
+
+     /* to not make many requests when the default values 
+    are set a parameter is sent then in the others it is false */
     $("#input-pitch-narrator").data('default', false);
+    
+    // save in local storage
     localStorage['pitch_nr'] = pitch;
+
+    // save in voice config
+    cfgVoiceNarrator['pitch'] = pitch;
 }
 
 function setVolumeNarrator(volumeID, setDefault) {
@@ -239,12 +264,19 @@ function setVolumeNarrator(volumeID, setDefault) {
 }
 
 function setVoiceGenderNarrator(genderID, setDefault) {
+    let validVoicesGender = {
+        '1':'f5',
+        '2':'m7'
+    }
+
+    let validVoiceGender = validVoicesGender[genderID];
     if((genderID != localStorage['voice_gender_id_nr']) && needNarrator && !setDefault) {
 
         updateValuesNarratorInSession(['voice_gender_id'], [genderID]);
     }
     $("input[name='gender-narrator']").data('default', false);
     localStorage['voice_gender_id_nr'] = genderID;
+    cfgVoiceNarrator['variant'] = validVoiceGender;
 }
 
 function setLinkNarrator(linkID, setDefault) {

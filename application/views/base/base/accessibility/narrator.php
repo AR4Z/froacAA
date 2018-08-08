@@ -17,7 +17,7 @@
                                     <span class="oi oi-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" name="quant[2]" id="input-speed-speech-narrator" class="form-control input-number" value="180" min="80" max="450" step="1" data-decimals="0" style="text-align:center">
+                            <input type="text" name="quant[2]" id="input-speed-speech-narrator" class="form-control input-number" value="175" min="80" max="500" step="1" data-decimals="0" style="text-align:center">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[2]">
                                     <span class="oi oi-plus"></span>
