@@ -75,6 +75,12 @@ $("input[name='reading-unit-narrator']").change(function(){
 });
 
 $("input[name='punctSigns']").change(function(){
+    let punctSigns = $(this).val();
+    let noLetters = punctSigns.replace(/[^,.;:¿?¡!\(\)\[\]\"\-\*\']/g, '');
+    if(noLetters == ''){
+        noLetters = ".,;?";
+    }
+    $(this).val(noLetters);
     $("input[name='readPuncts']").change();    
 });
 
@@ -207,7 +213,7 @@ function loadNarrator(){
      $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='highlight-narrator'][value=" + (localStorage['highlight_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
-     $("input[name='punctSigns']").val(localStorage['punct_signs'] || ".,;?");
+     $("input[name='punctSigns']").val(localStorage['punct_signs'] || ".,;?").change();
      $("input[name='readPuncts']").prop('checked', localStorage['read_puncts'] == 'true').change();
      
 }

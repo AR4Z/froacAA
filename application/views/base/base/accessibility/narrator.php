@@ -300,8 +300,9 @@
                         </div>
                         <br/>
                         <div id="div-punct-signs" class="form-check">
+                            <p>Escriba lo signos:</p>
                             <label for="punctSigns" aria-labelledby="punctSigns">
-                                <input type="text" class="form-control" value=".,;?" style="text-align:center" name="punctSigns" id="punctSigns">
+                                <input type="text" class="form-control"  value=".,;?" style="text-align:center" name="punctSigns" id="punctSigns">
                             </label>
                         </div>
                         <br/>
