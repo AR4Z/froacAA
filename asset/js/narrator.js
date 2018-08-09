@@ -25,8 +25,8 @@ $(document).ready(function(){
         localStorage['links_id_nr'] = preferencesNarrator['links_id'];
         localStorage['highlight_id_nr'] = preferencesNarrator['highlight_id'];
         localStorage['reading_unit_id_nr'] = preferencesNarrator['reading_unit_id'];
-        localStorage['readPunct'] = preferencesNarrator['readPunct'];
-        localStorage['punctSigns'] = preferencesNarrator['punctSigns'];
+        localStorage['read_puncts'] = preferencesNarrator['read_puncts'];
+        localStorage['punct_signs'] = preferencesNarrator['punct_signs'];
     }
 
 
@@ -82,29 +82,29 @@ $("input[name='readPuncts']").change(function () {
     // decided if user use read puntutation 
     if ($(this).prop("checked")) {
         // decide if a user is logged in to save their preferences in the db
-        if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "true") && !($(this).data('default'))) {
-            updateValuesInterfazInSession(['readPuncts'], ["true"]);
+        if (session_user && needPrefAdaptInterfaz && (localStorage['read_puncts'] != "true" || localStorage['punct_signs'] != $("input[name='punctSigns']").val()) && !($(this).data('default'))) {
+            updateValuesNarratorInSession(['read_puncts', 'punct_signs'], ["true", $("input[name='punctSigns']").val()]);
         }
         // show input signs for user can change the signs
         $('#div-punct-signs').show();
         
         // save decision in local storage
-        localStorage['readPuncts'] = "true";
+        localStorage['read_puncts'] = "true";
 
         // set signs punct in config voice
         // when its true then send puncts that want to read
         cfgVoiceNarrator['punct'] = $("input[name='punctSigns']").val(); 
     } else {
         // decide if a user is logged in to save their preferences in the db
-        if (session_user && needPrefAdaptInterfaz && (localStorage['readPuncts'] != "false") && !($(this).data('default'))) {
-            updateValuesInterfazInSession(['readPuncts'], ["false"]);
+        if (session_user && needPrefAdaptInterfaz && (localStorage['read_puncts'] != "false") && !($(this).data('default'))) {
+            updateValuesNarratorInSession(['read_puncts'], ["false"]);
         }
 
         // hide signs input for user cannot change the signs
         $('#div-punct-signs').hide();
 
         // save in local storage 
-        localStorage['readPuncts'] = "false";
+        localStorage['read_puncts'] = "false";
 
         // set signs punct in config voice = false
         cfgVoiceNarrator['punct'] = $(this).prop('checked');
@@ -113,7 +113,7 @@ $("input[name='readPuncts']").change(function () {
     /* to not make many requests when the default values 
     are set a parameter is sent then in the others it is false */
     $(this).data('default', false);
-    localStorage['punctSigns'] = $("input[name='punctSigns']").val();
+    localStorage['punct_signs'] = $("input[name='punctSigns']").val();
 });
 //*******************************************************************************************/
 
@@ -193,7 +193,12 @@ function narrator(){
 }
 
 
-function loadNarrator(){    
+function loadNarrator(){
+    if (localStorage['read_puncts'] == 't') {
+        localStorage['read_puncts'] = 'true';
+    } else if (localStorage['read_puncts'] == 'f') {
+        localStorage['read_puncts'] = 'false';
+    }
      // cada una de las configuraciones toma el valor que hay en localStorage o el default
      $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 175).change();
      $('#input-pitch-narrator').val(localStorage['pitch_nr'] || 50).change();
@@ -202,13 +207,13 @@ function loadNarrator(){
      $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='highlight-narrator'][value=" + (localStorage['highlight_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
-     $("input[name='readPuncts']").prop('checked', localStorage['readPuncts'] == "true").change();
+     $("input[name='punctSigns']").val(localStorage['punct_signs'] || ".,;?");
+     $("input[name='readPuncts']").prop('checked', localStorage['read_puncts'] == 'true').change();
+     
 }
 
 
 function updateValuesNarratorInSession(names_preferences_narrator, values){
-    console.log("update in session");
-
     $.ajax({
         url : base_url+"usuario/update_preferences_narratorSession",
         type : "POST",
@@ -239,10 +244,14 @@ function setDefaultValuesNarrator(){
     $("input[name='highlight-narrator'][value=" + ('1') + "]").prop('checked', true).change();
     $("input[name='reading-unit-narrator']").data('default', true);
     $("input[name='reading-unit-narrator'][value=" + ('1') + "]").prop('checked', true).change();
+    $("input[name='readPuncts']").data('default', true);
+    $("input[name='readPuncts']").prop('checked', false).change();
+    $("input[name='punctSigns']").data('default', true);
+    $("input[name='punctSigns']").val(".,;?").change();
 
     if(session_user){
-        let names_preferences_narrator = ['speed_reading', 'pitch_nr', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id'];
-        let values = [175, 50, 2, 1, 1, 1, 1];
+        let names_preferences_narrator = ['speed_reading', 'pitch_nr', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id', 'read_puncts', 'punct_signs'];
+        let values = [175, 50, 2, 1, 1, 1, 1, false, ".,;?"];
         updateValuesNarratorInSession(names_preferences_narrator, values);
     }
 

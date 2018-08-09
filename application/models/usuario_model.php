@@ -52,7 +52,7 @@ function get_all_data_adaptability_interfaz($username) {
 // este metodo se encarga de obtener las preferencias del usuario para usar el narrador
 function get_all_data_adaptability_narrator($username) {
     $query = $this->db->query("select use_pref_narrator.use_username, use_pref_narrator.speed_reading, use_pref_narrator.pitch_nr, use_pref_narrator.volume_id, use_pref_narrator.voice_gender_id, use_pref_narrator.links_id, use_pref_narrator.highlight_id,
-    use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id
+    use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id, use_pref_narrator.read_puncts, use_pref_narrator.punct_signs
     from use_pref_narrator
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.volume_id
     inner join gender_options  on gender_options.gender_id=use_pref_narrator.voice_gender_id

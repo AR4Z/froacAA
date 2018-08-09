@@ -1,6 +1,4 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
-
-
 <div class="content-inner" role="main">
     <div class="container-fluid">
         <br/>
@@ -395,6 +393,8 @@
                 'links_id':localStorage['links_id_nr'],
                 'highlight_id':localStorage['highlight_id_nr'],
                 'reading_unit_id':localStorage['reading_unit_id_nr'],
+                'read_puncts':localStorage['read_puncts'],
+                'punct_signs':localStorage['punct_signs'],
             }
             let inputNarratorPreferences = $("<input>")
                .attr("type", "hidden")
@@ -417,14 +417,7 @@
                   .attr("type", "hidden")
                   .attr("name", "screenReaderPreferences").val(JSON.stringify(screenReaderPreferences));
             $(this).append($(inputScreenReaderPreferences));
-
-
         }
-
-
         return true;
-
     });
-
-
     </script>
