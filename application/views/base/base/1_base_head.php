@@ -114,6 +114,8 @@
     let target;
     let srClass;
     let cfgVoiceNarrator;
+    let reproductor;
+    let cfgReproductor;
 
     $(document).ready(function(){
 
@@ -141,4 +143,3 @@
         <body>
         <div class="page">
 <?php endif;?>
-

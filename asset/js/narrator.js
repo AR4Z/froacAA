@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    cfgReproductor = {
+        src: [],
+        format: ['wav'],
+    }
+    reproductor = new Howl(cfgReproductor);
     // voice narrator config
     cfgVoiceNarrator = {
         amplitud: 100,
@@ -8,6 +13,7 @@ $(document).ready(function(){
         variant:'f1',
         volume:1,
         punct:true,
+        rawdata:'base64',
     }
 
     // class that should ignored for narrator
@@ -137,7 +143,8 @@ function speakNow(txt){
     meSpeak.stop();
 
     // speak
-    meSpeak.speak(txt, cfgVoiceNarrator);
+    return meSpeak.speak(txt, cfgVoiceNarrator);
+     
 }
 
 
@@ -186,18 +193,31 @@ function nodeTypeIsText(node){
     return false;
 }
 
-
 function narrator(){
-    treeNarrator.nextNode();
-    while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
-        console.log(treeNarrator.currentNode);
+    if(reproductor.state()){
+        reproductor.stop();
+    }
+    if(treeNarrator.currentNode.nextSibling && (treeNarrator.currentNode.nextSibling.textContent != '\n') && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
+        treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
+    } else {
         treeNarrator.nextNode();
+    }
+    
+    while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
+        treeNarrator.nextNode();
+    }
+    
+    if(treeNarrator.currentNode.nodeType === 3){
+        textReading = treeNarrator.currentNode.nodeValue;
     }
     observer.disconnect();
     loadObserver();
-    speakNow(textReading);
+    cfgReproductor.src[0] = "data:audio/wav;base64,"+ speakNow(textReading);
+    reproductor.init(cfgReproductor);
+    reproductor.play();
 }
 
+  
 
 function loadNarrator(){
     if (localStorage['read_puncts'] == 't') {
@@ -233,6 +253,7 @@ function updateValuesNarratorInSession(names_preferences_narrator, values){
         }
     });
 }
+
 
 function setDefaultValuesNarrator(){
     // el data-default sirve para realizar solo una peticion cuando se actualicen todos los valores
@@ -444,7 +465,7 @@ function isValidNode(node) {
         return false;
     }
 
-    if($(node).prop('tagName') == 'OPTION' && $(node).attr('selected') != 'selected'){
+    if($(node).prop('tagName') == 'OPTION' && ($(node).attr('selected') != 'selected')){
         return false;
     }
     
@@ -455,10 +476,17 @@ function isValidNode(node) {
     if(shouldBeignored(node)){
         return false;
     }
-
+    if(is_all_ws(node)){
+        return false;
+    }
     return true;
 }
 
+function is_all_ws( nod )
+{
+  // Use ECMA-262 Edition 3 String and RegExp features
+  return !(/[^\t\n\r ]/.test(nod.textContent));
+}
 
 function loadTreeNarrator(){
     let filter = {
