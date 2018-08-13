@@ -114,6 +114,8 @@
     let target;
     let srClass;
     let cfgVoiceNarrator;
+    let cfgReproductor;
+    let player;
 
     $(document).ready(function(){
 

@@ -88179,7 +88179,7 @@ var meSpeak = (function () {
 					return;
 				}
 			}
-		}
+		}/*
 		if (!AudioAPI) {
 			var audioElement = document.createElement('audio');
 			if (audioElement && audioElement.canPlayType && (audioElement.canPlayType('audio/wav') || audioElement.canPlayType('audio/x-wav'))) {
@@ -88188,7 +88188,7 @@ var meSpeak = (function () {
 				canPlay = false;
 				if (self.console) console.log('meSpeak: Muted. No support for HTMLAudioElement with MIME "audio/x-wav" dected.');
 			}
-		}
+		}*/
 	}
 	resolveAudioApi();
 
@@ -88446,7 +88446,7 @@ var meSpeak = (function () {
 		audioPool = {};
 		webSoundPool = {};
 	}
-	window.addEventListener('unload', unloadHandler, false);
+	//window.addEventListener('unload', unloadHandler, false);
 	return {
 		speak: speak,
 		speakMultipart: speakMultipart,

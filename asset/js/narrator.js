@@ -1,5 +1,12 @@
 $(document).ready(function(){
+    cfgReproductor = {
+        src: [],
+        format: ['wav'],
+    }
+    player = new Howl(cfgReproductor);
+   
     // voice narrator config
+
     cfgVoiceNarrator = {
         amplitud: 100,
         wordgap: 0,
@@ -87,7 +94,7 @@ $("input[name='readPuncts']").change(function () {
     // decided if user use read puntutation 
     if ($(this).prop("checked")) {
         // decide if a user is logged in to save their preferences in the db
-        if (session_user && needPrefAdaptInterfaz && (localStorage['read_puncts'] != "true" || localStorage['punct_signs'] != $("input[name='punctSigns']").val()) && !($(this).data('default'))) {
+        if (session_user && needNarrator && (localStorage['read_puncts'] != "true" || localStorage['punct_signs'] != $("input[name='punctSigns']").val()) && !($(this).data('default'))) {
             updateValuesNarratorInSession(['read_puncts', 'punct_signs'], ["true", $("input[name='punctSigns']").val()]);
         }
         // show input signs for user can change the signs
@@ -101,7 +108,7 @@ $("input[name='readPuncts']").change(function () {
         cfgVoiceNarrator['punct'] = $("input[name='punctSigns']").val(); 
     } else {
         // decide if a user is logged in to save their preferences in the db
-        if (session_user && needPrefAdaptInterfaz && (localStorage['read_puncts'] != "false") && !($(this).data('default'))) {
+        if (session_user && needNarrator && (localStorage['read_puncts'] != "false") && !($(this).data('default'))) {
             updateValuesNarratorInSession(['read_puncts'], ["false"]);
         }
 
@@ -168,6 +175,9 @@ function nodeTypeIsText(node){
 }
 
 function narrator(){
+    if(player.state()){
+        player.stop();
+    }
     if(treeNarrator.currentNode.nextSibling && (treeNarrator.currentNode.nextSibling.textContent != '\n') && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
         treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
     } else {
@@ -186,12 +196,31 @@ function narrator(){
     if (typeof(Worker) !== "undefined") {
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({'txt':textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
+
+        narratorWorker.onmessage = function(event) {
+            narratorWorker.terminate();
+            setSrcCfgPlayer(event.data);
+            player.init(cfgReproductor);
+            player.play();
+            player.on('end', function(){
+                if(treeNarrator.nextNode()){
+                    narrator();
+                } else {
+                    return;
+                }
+              });
+            
+        }
     } else {
-        console.log("not support web worker")
-    } 
+        console.log("not support web worker :(!")
+    }
+
+
 }
 
-  
+function setSrcCfgPlayer(src) {
+    cfgReproductor.src[0] = "data:audio/wav;base64," + src;
+}
 
 function loadNarrator(){
     if (localStorage['read_puncts'] == 't') {
@@ -431,7 +460,7 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
 
 
 function isValidNode(node) {
-    if(!$(node).is(':visible')) {
+    if(!$(node).is(':visible') && $(node).is(':hidden')) {
         return false;
     }
 
