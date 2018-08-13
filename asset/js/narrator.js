@@ -1,9 +1,4 @@
 $(document).ready(function(){
-    cfgReproductor = {
-        src: [],
-        format: ['wav'],
-    }
-    reproductor = new Howl(cfgReproductor);
     // voice narrator config
     cfgVoiceNarrator = {
         amplitud: 100,
@@ -43,12 +38,10 @@ $(document).ready(function(){
         $("iframe").on('load', function () {
             loadTreeNarrator();
             treeNarrator.nextNode();
-            loadVoice();
             loadNarrator();
             loadObserver();
         });
     } else {
-        loadVoice();
         loadNarrator();
     }
 });
@@ -129,25 +122,6 @@ $("input[name='readPuncts']").change(function () {
 });
 //*******************************************************************************************/
 
-
-// load config files for narrator voice
-function loadVoice(){
-    // carga configuración para speak y la voz en el idioma es-la
-    meSpeak.loadConfig(base_url+"asset/js/mespeak_config.json");
-    meSpeak.loadVoice(base_url+"asset/js/es-la.json");
-}
-
-// spaeak function
-function speakNow(txt){
-    // stop current speaking
-    meSpeak.stop();
-
-    // speak
-    return meSpeak.speak(txt, cfgVoiceNarrator);
-     
-}
-
-
 function textIsALink(node) {
     let currentNode = node;
     while (currentNode) {
@@ -194,9 +168,6 @@ function nodeTypeIsText(node){
 }
 
 function narrator(){
-    if(reproductor.state()){
-        reproductor.stop();
-    }
     if(treeNarrator.currentNode.nextSibling && (treeNarrator.currentNode.nextSibling.textContent != '\n') && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
         treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
     } else {
@@ -212,9 +183,12 @@ function narrator(){
     }
     observer.disconnect();
     loadObserver();
-    cfgReproductor.src[0] = "data:audio/wav;base64,"+ speakNow(textReading);
-    reproductor.init(cfgReproductor);
-    reproductor.play();
+    if (typeof(Worker) !== "undefined") {
+        let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
+        narratorWorker.postMessage({'txt':textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
+    } else {
+        console.log("not support web worker")
+    } 
 }
 
   
