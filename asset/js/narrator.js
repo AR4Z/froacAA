@@ -177,12 +177,7 @@ function nodeTypeIsText(node){
 function narrator(){
     if(player.state()){
         player.stop();
-    }
-    if(treeNarrator.currentNode.nextSibling && (treeNarrator.currentNode.nextSibling.textContent != '\n') && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
-        treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
-    } else {
-        treeNarrator.nextNode();
-    }
+    } 
     
     while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
         treeNarrator.nextNode();
@@ -203,7 +198,10 @@ function narrator(){
             player.init(cfgReproductor);
             player.play();
             player.on('end', function(){
-                if(treeNarrator.nextNode()){
+                if(treeNarrator.currentNode.nextSibling  && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
+                    treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
+                    narrator();
+                } else if(treeNarrator.nextNode()) {
                     narrator();
                 } else {
                     return;
@@ -461,25 +459,31 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
 
 function isValidNode(node) {
     if(!$(node).is(':visible') && $(node).is(':hidden')) {
+        console.log("invisible")
         return false;
     }
 
     if($(node).is(':empty')){
+        console.log("vacio")
         return false;
     }
 
     if($(node).prop('tagName') == 'OPTION' && ($(node).attr('selected') != 'selected')){
+        console.log("no selected")
         return false;
     }
     
     if($(node).prop('tagName') == 'LABEL'){
+        console.log("label")
         return false;
     }
 
     if(shouldBeignored(node)){
+        console.log("deberia ser ignorado")
         return false;
     }
     if(is_all_ws(node)){
+        console.log("son solo espacios")
         return false;
     }
     return true;
