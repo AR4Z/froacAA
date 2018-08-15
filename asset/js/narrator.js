@@ -48,17 +48,15 @@ $(document).ready(function(){
             treeNarrator.nextNode();
             loadNarrator();
             loadObserver();
-            
+            $(window).keydown(function(event) {
+                if(event.ctrlKey && event.keyCode == 69) {
+                    narrator();
+                    event.preventDefault();
+                }
+            });
         });
     } else {
         loadNarrator();
-    }
-});
-
-$(window).keydown(function(event) {
-    if(event.ctrlKey && event.keyCode == 69) {
-        narrator();
-        event.preventDefault();
     }
 });
 
@@ -97,11 +95,11 @@ $("input[name='punctSigns']").change(function(){
         noLetters = ".,;?";
     }
     $(this).val(noLetters);
-    $("input[name='readPuncts']").change();    
+    $("input[name='readPuncts']").prop('checked', localStorage['read_puncts'] == 'true').change();
 });
 
 $("input[name='readPuncts']").change(function () {
-    // decided if user use read puntutation 
+    // decided if user use read punctutation 
     if ($(this).prop("checked")) {
         // decide if a user is logged in to save their preferences in the db
         if (session_user && needNarrator && (localStorage['read_puncts'] != "true" || localStorage['punct_signs'] != $("input[name='punctSigns']").val()) && !($(this).data('default'))) {
@@ -193,7 +191,6 @@ function narrator(){
     }
     catch(error) {
         console.error(error);
-        return;
     }
     while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
         treeNarrator.nextNode();
@@ -238,8 +235,10 @@ function setSrcCfgPlayer(src) {
 
 function loadNarrator(){
     if (localStorage['read_puncts'] == 't') {
+        console.log("change value");
         localStorage['read_puncts'] = 'true';
     } else if (localStorage['read_puncts'] == 'f') {
+        console.log("change value1");
         localStorage['read_puncts'] = 'false';
     }
      // cada una de las configuraciones toma el valor que hay en localStorage o el default
