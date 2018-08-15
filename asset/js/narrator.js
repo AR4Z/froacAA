@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    
     cfgReproductor = {
         src: [],
         format: ['wav'],
@@ -47,11 +48,20 @@ $(document).ready(function(){
             treeNarrator.nextNode();
             loadNarrator();
             loadObserver();
+            
         });
     } else {
         loadNarrator();
     }
 });
+
+$(window).keydown(function(event) {
+    if(event.ctrlKey && event.keyCode == 69) {
+        narrator();
+        event.preventDefault();
+    }
+});
+
 
 // changes methods for narrator settings
 //**********************************************************************************************/
@@ -175,10 +185,16 @@ function nodeTypeIsText(node){
 }
 
 function narrator(){
-    if(player.state()){
-        player.stop();
-    } 
-    
+    try {
+        if(player.playing()){
+            player.stop();
+            return;
+        }
+    }
+    catch(error) {
+        console.error(error);
+        return;
+    }
     while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
         treeNarrator.nextNode();
     }
