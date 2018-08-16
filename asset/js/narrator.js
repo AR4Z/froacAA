@@ -203,18 +203,19 @@ function narrator(){
     observer.disconnect();
     loadObserver();
     if (typeof(Worker) !== "undefined") {
+        if(textIsALink(treeNarrator.currentNode)['isLink']){
+            readLink();
+        } 
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({'txt':textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
-
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
-            if(textIsALink(treeNarrator.currentNode)['isLink']){
-                readLink();
-            } 
+            
             setSrcCfgPlayer("data:audio/wav;base64," + event.data);
             player.init(cfgReproductor);
             player.play();
             player.on('end', function(){
+                loadNarrator();
                 if(treeNarrator.currentNode.nextSibling  && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
                     treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
                     narrator();
@@ -235,10 +236,10 @@ function narrator(){
 
 function readLink(){
     switch (localStorage['links_id_nr']) {
-        case '1':
+        case '1':  
             break;
         case '2':
-            
+            cfgVoiceNarrator.variant = 'whisper';
             break;
         case '3':
             let playerClick = new Howl({
