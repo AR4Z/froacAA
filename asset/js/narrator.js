@@ -2,7 +2,7 @@ $(document).ready(function(){
     
     cfgReproductor = {
         src: [],
-        format: ['wav'],
+        format: ['wav']
     }
     player = new Howl(cfgReproductor);
    
@@ -143,14 +143,14 @@ function textIsALink(node) {
         if (currentNode.tagName == 'A'){
             return {
                 isLink:true, 
-                nodeLink:currentNode,
+                nodeLink: currentNode,
             };
         } else {
             currentNode = currentNode.parentNode;
         }    
     }
     return {
-        isLink:false,
+        isLink: false,
     };
 }
 
@@ -183,6 +183,7 @@ function nodeTypeIsText(node){
 }
 
 function narrator(){
+    cfgReproductor.src = [];
     try {
         if(player.playing()){
             player.stop();
@@ -207,7 +208,10 @@ function narrator(){
 
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
-            setSrcCfgPlayer(event.data);
+            if(textIsALink(treeNarrator.currentNode)['isLink']){
+                readLink();
+            } 
+            setSrcCfgPlayer("data:audio/wav;base64," + event.data);
             player.init(cfgReproductor);
             player.play();
             player.on('end', function(){
@@ -229,8 +233,29 @@ function narrator(){
 
 }
 
+function readLink(){
+    switch (localStorage['links_id_nr']) {
+        case '1':
+            break;
+        case '2':
+            
+            break;
+        case '3':
+            let playerClick = new Howl({
+                src: [base_url + "asset/audios/click.mp3"]
+            });
+            playerClick.play();
+            break;
+        case '4':
+            break;
+        default:
+            break;
+    }
+}
+
+
 function setSrcCfgPlayer(src) {
-    cfgReproductor.src[0] = "data:audio/wav;base64," + src;
+    cfgReproductor['src'].push(src);
 }
 
 function loadNarrator(){
