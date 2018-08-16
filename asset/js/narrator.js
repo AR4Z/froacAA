@@ -2,7 +2,8 @@ $(document).ready(function(){
     
     cfgReproductor = {
         src: [],
-        format: ['wav']
+        format: ['wav'],
+        onend: nextElement
     }
     player = new Howl(cfgReproductor);
    
@@ -206,26 +207,15 @@ function narrator(){
         if(textIsALink(treeNarrator.currentNode)['isLink']){
             readLink();
         } 
+        
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({'txt':textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
+        
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
-            
             setSrcCfgPlayer("data:audio/wav;base64," + event.data);
             player.init(cfgReproductor);
             player.play();
-            player.on('end', function(){
-                loadNarrator();
-                if(treeNarrator.currentNode.nextSibling  && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
-                    treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
-                    narrator();
-                } else if(treeNarrator.nextNode()) {
-                    narrator();
-                } else {
-                    return;
-                }
-              });
-            
         }
     } else {
         console.log("not support web worker :(!")
@@ -233,6 +223,18 @@ function narrator(){
 
 
 }
+
+function nextElement(){
+    loadNarrator();
+    if(treeNarrator.currentNode.nextSibling  && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
+        treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
+        narrator();
+    } else if(treeNarrator.nextNode()) {
+        narrator();
+    } else {
+        return;
+    }
+  }
 
 function readLink(){
     switch (localStorage['links_id_nr']) {
@@ -525,6 +527,9 @@ function isValidNode(node) {
     }
     if(is_all_ws(node)){
         console.log("son solo espacios")
+        return false;
+    }
+    if(textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4){
         return false;
     }
     return true;
