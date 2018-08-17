@@ -45,6 +45,7 @@ $(document).ready(function(){
     // en ambos html
     if (idView == 'lo_view') {
         $("iframe").on('load', function () {
+            loadLineStyle();
             loadTreeNarrator();
             treeNarrator.nextNode();
             elmLining = lining(treeNarrator.currentNode, {'autoResize': true, 'lineClass': 'my-class'})
@@ -195,8 +196,7 @@ function narrator(){
             player.stop();
             return;
         }
-    }
-    catch(error) {
+    } catch(error) {
         console.error(error);
     }
 
@@ -206,7 +206,10 @@ function narrator(){
         if(textIsALink(treeNarrator.currentNode)['isLink']){
             readLink();
         }
-        
+        if(localStorage['highlight_id_nr'] == '2'){
+            removeHighlightToText();
+            setHighlightToText([treeNarrator.currentNode]);
+        }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({'txt':treeNarrator.currentNode.textContent, 'cfgVoiceNarrator':cfgVoiceNarrator});
         
@@ -220,6 +223,18 @@ function narrator(){
         console.log("not support web worker :(!")
     }
 }
+
+function removeHighlightToText(){
+    $('iframe').contents().find('.reading-line').removeClass('reading-line');
+}
+
+function setHighlightToText(lines){
+    for (let index = 0; index < lines.length; lines++) {
+        const element = lines[index];
+        element.classList.add('reading-line');
+    }
+}
+
 
 function nextElement(){
     loadNarrator();
@@ -433,7 +448,7 @@ function setHighlightNarrator(highlightID, setDefault) {
 function loadLineStyle(){
     let style =  `
     <style id='line-style'>
-        p text-line#reading-line {
+        text-line.reading-line {
             background-color: #FFFF00;
         } 
     </style>`
