@@ -111,11 +111,13 @@
     let pLining;
     let treeNarrator;
     let textReading;
+    let parentElementText;
     let target;
     let srClass;
     let cfgVoiceNarrator;
     let cfgReproductor;
     let player;
+    let elmLining
 
     $(document).ready(function(){
 

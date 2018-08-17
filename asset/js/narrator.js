@@ -47,6 +47,10 @@ $(document).ready(function(){
         $("iframe").on('load', function () {
             loadTreeNarrator();
             treeNarrator.nextNode();
+            elmLining = lining(treeNarrator.currentNode, {'autoResize': true, 'lineClass': 'my-class'})
+            treeNarrator.currentNode.setAttribute('data-auto-resize', '');
+            elmLining.relining();
+            treeNarrator.nextNode();
             loadNarrator();
             loadObserver();
             $(window).keydown(function(event) {
@@ -175,6 +179,7 @@ function nodeTypeIsText(node){
         const chNode = chNodes[indexNode];
         //console.log("is text?");
         if(chNode.nodeType === 3){
+            parentElementText = chNode.parentElement;
             textReading = chNode.nodeValue;
             //console.log(textReading)
         }
@@ -194,22 +199,16 @@ function narrator(){
     catch(error) {
         console.error(error);
     }
-    while(treeNarrator.currentNode.hasChildNodes() && !nodeTypeIsText(treeNarrator.currentNode)){
-        treeNarrator.nextNode();
-    }
-    
-    if(treeNarrator.currentNode.nodeType === 3){
-        textReading = treeNarrator.currentNode.nodeValue;
-    }
+
     observer.disconnect();
     loadObserver();
     if (typeof(Worker) !== "undefined") {
         if(textIsALink(treeNarrator.currentNode)['isLink']){
             readLink();
-        } 
+        }
         
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
-        narratorWorker.postMessage({'txt':textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
+        narratorWorker.postMessage({'txt':treeNarrator.currentNode.textContent, 'cfgVoiceNarrator':cfgVoiceNarrator});
         
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
@@ -220,16 +219,11 @@ function narrator(){
     } else {
         console.log("not support web worker :(!")
     }
-
-
 }
 
 function nextElement(){
     loadNarrator();
-    if(treeNarrator.currentNode.nextSibling  && (treeNarrator.currentNode.nextSibling.parentNode == treeNarrator.currentNode.parentNode) && isValidNode(treeNarrator.currentNode.nextSibling)){
-        treeNarrator.currentNode = treeNarrator.currentNode.nextSibling;
-        narrator();
-    } else if(treeNarrator.nextNode()) {
+    if(treeNarrator.nextNode()) {
         narrator();
     } else {
         return;
@@ -416,7 +410,7 @@ function setLinkNarrator(linkID, setDefault) {
 }
 
 function setHighlightNarrator(highlightID, setDefault) {
-    let optsHighlight= {
+    let optsHighlight = {
         '1':'word',
         '2':'line',
         '3':'sentence',
@@ -439,55 +433,12 @@ function setHighlightNarrator(highlightID, setDefault) {
 function loadLineStyle(){
     let style =  `
     <style id='line-style'>
-
-        p .line-narrator[last] {
-            color: red;
-        }
-
         p text-line#reading-line {
             background-color: #FFFF00;
         } 
     </style>`
 
     $('iframe').contents().find('head').append(style);
-}
-
-function readNthLine(nthline){
-    let indexCurrentLine = $('iframe').contents().find('#reading-line').attr('index');
-    if(indexCurrentLine != nthline){
-        $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
-        $('iframe').contents().find("text-line[index='" + nthline + "']").attr('id', 'reading-line');
-    }
-}
-
-function nextOrPrevLine(next, prev){
-    let indexCurrentLine = $('iframe').contents().find('#reading-line').attr('index') || 0;
-    $('iframe').contents().find("text-line[index='" + indexCurrentLine + "']").removeAttr('id');
-    if(next){
-        $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) + 1) + "']").attr('id', 'reading-line');
-    } else if(prev) {
-        $('iframe').contents().find("text-line[index='" + (parseInt(indexCurrentLine) - 1) + "']").attr('id', 'reading-line');
-    }
-}
-
-function changeParent(){
-    treeNarrator.nextSibling();
-    treeNarratorChild = iframeDocument.createTreeWalker(treeNarrator.currentNode, NodeFilter.SHOW_ELEMENT, filter, false);
-    separateInLines(treeNarrator.currentNode);
-    loadLineStyle();
-}
-
-function separateInLines(ps){
-    if(pLining){
-        pLining.unlining();
-    }
-    pLining = lining(ps, {
-        'autoResize':true,
-        'lineClass':'line-narrator'
-    });
-    
-    pLining.relining();
-    //nextOrPrevLine(true, false);
 }
 
 function setReadingUnitNarrator(readingUnitID, setDefault) {
@@ -530,6 +481,9 @@ function isValidNode(node) {
         return false;
     }
     if(textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4){
+        return false;
+    }
+    if($(node).prop('tagName') != 'TEXT-LINE'){
         return false;
     }
     return true;
