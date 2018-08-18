@@ -1,5 +1,4 @@
-$(document).ready(function () {
-
+function dataInterfaz(){
     if (session_user && needPrefAdaptInterfaz) {
         console.log("update custom colors");
         localStorage['cursor_size_id'] = preferencesAdaptainterfaz['cursor_size_id'];
@@ -20,30 +19,17 @@ $(document).ready(function () {
         localStorage['highlight_colour'] = customColors['highlight_colour'];
         localStorage['link_colour'] = customColors['link_colour'];
 
-    }
 
-    // en la vista de LOS (id: lo_view) se tiene un iframe asi que para poder cargar los estilos del usuario
-    // se debe esperar a que el iframe haya cargado de modo que el usuario pueda ver sus estilos
-    // en ambos html
-    if (idView == 'lo_view') {
-        loadInterfazPersonalization();
-        $("iframe").on('load', function () {
-            nodeIframe = document.getElementsByTagName('IFRAME')[0];
-            iframeDocument = nodeIframe.contentDocument || nodeIframe.contentWindow.document;
-            
-            $("iframe").contents().find("body").mousemove(function(event){
-               
-                //event.preventDefault();
-                mouse.x = event.clientX + nodeIframe.getBoundingClientRect().x;
-                mouse.y = event.clientY + nodeIframe.getBoundingClientRect().y;
-            });
-            
-            loadInterfazPersonalization();
-        });
-    } else {
-        loadInterfazPersonalization();
+        
     }
-});
+    $("iframe").contents().find("body").mousemove(function(event){
+               
+        //event.preventDefault();
+        mouse.x = event.clientX + nodeIframe.getBoundingClientRect().x;
+        mouse.y = event.clientY + nodeIframe.getBoundingClientRect().y;
+    });
+    loadInterfazPersonalization();
+}
 
 
 $("input[name='invertImages']").change(function () {
@@ -209,7 +195,6 @@ function loadInterfazPersonalization(){
         $("input[name='invertImages']").prop('checked', localStorage['invert_color_image'] == "true").change();
         $("input[name='invertGeneral']").prop('checked', localStorage['invert_color_general'] == "true").change();
     });
-
     animate();
 }
 

@@ -1,12 +1,11 @@
-$(document).ready(function(){
-    
+function dataNarrator() {
     cfgReproductor = {
         src: [],
         format: ['wav'],
         onend: nextElement
     }
     player = new Howl(cfgReproductor);
-   
+
     // voice narrator config
 
     cfgVoiceNarrator = {
@@ -14,10 +13,10 @@ $(document).ready(function(){
         wordgap: 0,
         pitch: 50,
         speed: 175,
-        variant:'f1',
-        volume:1,
-        punct:true,
-        rawdata:'base64',
+        variant: 'f1',
+        volume: 1,
+        punct: true,
+        rawdata: 'base64',
     }
 
     // class that should ignored for narrator
@@ -27,7 +26,7 @@ $(document).ready(function(){
     }
 
     // verifico si hay una sesion iniciada y si el usuario necesita usar narrador para cargar los valores desde la DB
-    if(session_user && needNarrator){
+    if (session_user && needNarrator) {
         localStorage['speed_reading_nr'] = preferencesNarrator['speed_reading'];
         localStorage['pitch_nr'] = preferencesNarrator['pitch_nr'];
         localStorage['volume_id_nr'] = preferencesNarrator['volume_id'];
@@ -39,34 +38,25 @@ $(document).ready(function(){
         localStorage['punct_signs'] = preferencesNarrator['punct_signs'];
     }
 
-
-    // en la vista de LOS (id: lo_view) se tiene un iframe asi que para poder cargar los estilos del usuario
-    // se debe esperar a que el iframe haya cargado de modo que el usuario pueda ver sus estilos
-    // en ambos html
-    if (idView == 'lo_view') {
-        $("iframe").on('load', function () {
-            loadLineStyle();
-            loadTreeNarrator();
-            treeNarrator.nextNode();
-            elmLining = lining(treeNarrator.currentNode, {'autoResize': true, 'lineClass': 'my-class'})
-            treeNarrator.currentNode.setAttribute('data-auto-resize', '');
-            elmLining.relining();
-            treeNarrator.nextNode();
-            loadNarrator();
-            loadObserver();
-            $(window).keydown(function(event) {
-                if(event.ctrlKey && event.keyCode == 69) {
-                    narrator();
-                    event.preventDefault();
-                }
-            });
-        });
-    } else {
-        loadNarrator();
-    }
-});
-
-
+    loadLineStyle();
+    loadTreeNarrator();
+    treeNarrator.nextNode();
+    elmLining = lining(treeNarrator.currentNode, {
+        'autoResize': true,
+        'lineClass': 'my-class'
+    })
+    treeNarrator.currentNode.setAttribute('data-auto-resize', '');
+    elmLining.relining();
+    treeNarrator.nextNode();
+    loadNarrator();
+    loadObserver();
+    $(window).keydown(function (event) {
+        if (event.ctrlKey && event.keyCode == 69) {
+            narrator();
+            event.preventDefault();
+        }
+    });
+}
 // changes methods for narrator settings
 //**********************************************************************************************/
 $("input[name='volume-narrator']").change(function(){
