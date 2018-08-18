@@ -209,6 +209,7 @@ function narrator(){
         if(localStorage['highlight_id_nr'] == '2'){
             removeHighlightToText();
             setHighlightToText([treeNarrator.currentNode]);
+            textReading = treeNarrator.currentNode.textContent;
         } else if(localStorage['highlight_id_nr'] == '4'){
             removeHighlightToText();
             let nodes = paragraph(treeNarrator.currentNode);
