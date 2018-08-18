@@ -200,8 +200,8 @@ function narrator(){
         console.error(error);
     }
 
-    observer.disconnect();
-    loadObserver();
+    /*observer.disconnect();
+    loadObserver();*/
     if (typeof(Worker) !== "undefined") {
         if(textIsALink(treeNarrator.currentNode)['isLink']){
             readLink();
@@ -209,9 +209,14 @@ function narrator(){
         if(localStorage['highlight_id_nr'] == '2'){
             removeHighlightToText();
             setHighlightToText([treeNarrator.currentNode]);
+        } else if(localStorage['highlight_id_nr'] == '4'){
+            removeHighlightToText();
+            let nodes = paragraph(treeNarrator.currentNode);
+            setHighlightToText(nodes);
+            textReading = getTextFromParagraph(nodes);
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
-        narratorWorker.postMessage({'txt':treeNarrator.currentNode.textContent, 'cfgVoiceNarrator':cfgVoiceNarrator});
+        narratorWorker.postMessage({'txt': textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
         
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
@@ -224,12 +229,33 @@ function narrator(){
     }
 }
 
+function getTextFromParagraph(nodes){
+    let text = "";
+    for (let index = 0; index < nodes.length; index++) {
+        const element = nodes[index];
+        text += element.textContent;
+    }
+    return text;
+}
+
+function paragraph(node){
+    //let parent = node.parentNode;
+    let paragraphNodes = [];
+    do {
+        paragraphNodes.push(treeNarrator.currentNode);
+        treeNarrator.nextNode();
+    } while (!treeNarrator.currentNode.hasAttribute('first-in-element'));
+    treeNarrator.currentNode = paragraphNodes[paragraphNodes.length - 1];
+    console.log(treeNarrator.currentNode);
+    return paragraphNodes;
+}
+
 function removeHighlightToText(){
     $('iframe').contents().find('.reading-line').removeClass('reading-line');
 }
 
 function setHighlightToText(lines){
-    for (let index = 0; index < lines.length; lines++) {
+    for (let index = 0; index < lines.length; index++) {
         const element = lines[index];
         element.classList.add('reading-line');
     }
