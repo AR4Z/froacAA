@@ -39,24 +39,30 @@ function dataNarrator() {
     }
 
     loadLineStyle();
-    loadTreeNarrator();
-    treeNarrator.nextNode();
-    elmLining = lining(treeNarrator.currentNode, {
+    let bodyIframe = iframeDocument.getElementsByTagName('body')[0];
+    elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
         'autoResize': true,
         'lineClass': 'my-class'
     })
-    treeNarrator.currentNode.setAttribute('data-auto-resize', '');
+    bodyIframe.setAttribute('data-auto-resize', '');
+
+    bodyIframe.addEventListener('afterlining', function () {
+        loadTreeNarrator();
+        treeNarrator.nextNode();
+    }, false);
+
     elmLining.relining();
-    treeNarrator.nextNode();
     loadNarrator();
-    loadObserver();
-    $(window).keydown(function (event) {
-        if (event.ctrlKey && event.keyCode == 69) {
-            narrator();
-            event.preventDefault();
-        }
-    });
 }
+
+
+$(window).keydown(function (event) {
+    if (event.ctrlKey && event.keyCode == 69) {
+        narrator();
+        event.preventDefault();
+    }
+});
+
 // changes methods for narrator settings
 //**********************************************************************************************/
 $("input[name='volume-narrator']").change(function(){
@@ -189,7 +195,7 @@ function narrator(){
     } catch(error) {
         console.error(error);
     }
-
+    
     /*observer.disconnect();
     loadObserver();*/
     if (typeof(Worker) !== "undefined") {
