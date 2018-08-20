@@ -40,19 +40,7 @@ function dataNarrator() {
     }
 
     loadLineStyle();
-    let bodyIframe = iframeDocument.getElementsByTagName('body')[0];
-    elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
-        'autoResize': true,
-        'lineClass': 'my-class'
-    })
-    bodyIframe.setAttribute('data-auto-resize', '');
-
-    bodyIframe.addEventListener('afterlining', function () {
-        loadTreeNarrator();
-        treeNarrator.nextNode();
-    }, false);
-
-    elmLining.relining();
+    splitText();
     loadNarrator();
 }
 
@@ -139,6 +127,45 @@ $("input[name='readPuncts']").change(function () {
     localStorage['punct_signs'] = $("input[name='punctSigns']").val();
 });
 //*******************************************************************************************/
+
+function splitText() {
+    let bodyIframe = iframeDocument.getElementsByTagName('body')[0];
+    switch (localStorage['reading_unit_id_nr']) {
+        case '1':
+            $(bodyIframe).blast({
+                delimiter: "word", // Set the delimiter type (see left)
+                search: false, // Perform a search *instead* of delimiting
+                tag: "span", // Set the wrapping element type (e.g. "div")
+                customClass: "word", // Add a custom class to wrappers
+                generateIndexID: true, // Add #customClass-i to wrappers
+                generateValueClass: false, // Add .blast-word-val to wrappers
+                stripHTMLTags: false, // Strip HTML before blasting
+                returnGenerated: false, // Return generated elements to stack
+                aria: true, // Avoid speechflow disruption for screenreaders
+            });
+            loadTreeNarrator();
+            treeNarrator.nextNode();
+            break;
+        case '2':
+            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                'autoResize': true,
+                'lineClass': 'my-class'
+            })
+            bodyIframe.setAttribute('data-auto-resize', '');
+
+            bodyIframe.addEventListener('afterlining', function () {
+                loadTreeNarrator();
+                treeNarrator.nextNode();
+            }, false);
+
+            elmLining.relining();
+            break;
+        default:
+            break;
+    }
+
+
+}
 
 function textIsALink(node) {
     let currentNode = node;
@@ -365,7 +392,6 @@ function loadNarrator(){
      $("input[name='reading-unit-narrator'][value=" + (localStorage['reading_unit_id_nr'] || '1') + "]").prop('checked', true).change();
      $("input[name='punctSigns']").val(localStorage['punct_signs'] || ".,;?").change();
      $("input[name='readPuncts']").prop('checked', localStorage['read_puncts'] == 'true').change();
-     
 }
 
 
@@ -575,9 +601,15 @@ function isValidNode(node) {
     if(textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4){
         return false;
     }
-    if($(node).prop('tagName') != 'TEXT-LINE'){
-        return false;
+    if(localStorage['reading_unit_id_nr'] == '1'){
+        if($(node).prop('tagName') != 'SPAN'){
+            return false;
+        }
+        if(!$(node).hasClass('word')) {
+            return false;
+        }
     }
+    
     return true;
 }
 
