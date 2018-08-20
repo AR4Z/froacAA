@@ -117,7 +117,9 @@
     let cfgVoiceNarrator;
     let cfgReproductor;
     let player;
-    let elmLining
+    let elmLining;
+    let audioSrcs;
+    let htmlElements;
 
     $(document).ready(function(){
 

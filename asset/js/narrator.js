@@ -2,7 +2,8 @@ function dataNarrator() {
     cfgReproductor = {
         src: [],
         format: ['wav'],
-        onend: nextElement
+        onplay: clearQueue,
+        onend: nextElement,
     }
     player = new Howl(cfgReproductor);
 
@@ -211,19 +212,66 @@ function narrator(){
             let nodes = paragraph(treeNarrator.currentNode);
             setHighlightToText(nodes);
             textReading = getTextFromParagraph(nodes);
+        } else if(localStorage['highlight_id_nr'] == '1') {
+            removeHighlightToText();
+            queueForSpeech = [];
+            wordElements = separateWords(treeNarrator.currentNode);
+            wordElements.forEach(wordElement => {
+                queueForSpeech.push(wordElement.textContent);
+            });
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
-        narratorWorker.postMessage({'txt': textReading, 'cfgVoiceNarrator':cfgVoiceNarrator});
+        narratorWorker.postMessage({'texts': queueForSpeech, 'cfgVoiceNarrator': cfgVoiceNarrator});
         
         narratorWorker.onmessage = function(event) {
             narratorWorker.terminate();
-            setSrcCfgPlayer("data:audio/wav;base64," + event.data);
-            player.init(cfgReproductor);
-            player.play();
+            console.log(event.data);
+            audioSrcs = event.data;
+            htmlElements = wordElements;
+            playQueue();
         }
     } else {
         console.log("not support web worker :(!")
     }
+}
+
+function playQueue() {
+    setSrcCfgPlayer(audioSrcs[0]);
+    player.init(cfgReproductor);
+    player.play();
+}
+
+function clearQueue(){
+    console.log("CLEAR!")
+    highlightWord(htmlElements[0]);
+    audioSrcs.splice(0, 1);
+    htmlElements.splice(0, 1);
+}
+
+function highlightWord(nodeWord){
+    console.log("change word")
+    removeHighlightToText();
+    $(nodeWord).attr('class', $(nodeWord).attr('class') + ' reading')
+}
+
+function separateWords(node) {
+    let wordsElements = [];
+    let generated = $(node).blast({
+        delimiter: "word", // Set the delimiter type (see left)
+        search: false, // Perform a search *instead* of delimiting
+        tag: "span", // Set the wrapping element type (e.g. "div")
+        customClass: "word", // Add a custom class to wrappers
+        generateIndexID: true, // Add #customClass-i to wrappers
+        generateValueClass: false, // Add .blast-word-val to wrappers
+        stripHTMLTags: false, // Strip HTML before blasting
+        returnGenerated: true, // Return generated elements to stack
+        aria: true, // Avoid speechflow disruption for screenreaders
+    });
+    
+    for (let index = 0; index < generated['length']; index++) {
+        wordsElements.push(generated[index]);
+    }
+    return wordsElements;
 }
 
 function getTextFromParagraph(nodes){
@@ -248,7 +296,7 @@ function paragraph(node){
 }
 
 function removeHighlightToText(){
-    $('iframe').contents().find('.reading-line').removeClass('reading-line');
+    $('iframe').contents().find('.reading').removeClass('reading');
 }
 
 function setHighlightToText(lines){
@@ -261,12 +309,18 @@ function setHighlightToText(lines){
 
 function nextElement(){
     loadNarrator();
-    if(treeNarrator.nextNode()) {
-        narrator();
+    
+    if(audioSrcs.length >= 1){
+        console.log("OTRO!!")
+        playQueue();
     } else {
-        return;
+        if(treeNarrator.nextNode()) {
+            narrator();
+        } else {
+            return;
+        }
     }
-  }
+}
 
 function readLink(){
     switch (localStorage['links_id_nr']) {
@@ -290,7 +344,7 @@ function readLink(){
 
 
 function setSrcCfgPlayer(src) {
-    cfgReproductor['src'].push(src);
+    cfgReproductor['src'][0] = src;
 }
 
 function loadNarrator(){
@@ -471,9 +525,9 @@ function setHighlightNarrator(highlightID, setDefault) {
 function loadLineStyle(){
     let style =  `
     <style id='line-style'>
-        text-line.reading-line {
-            background-color: #FFFF00;
-        } 
+        .reading {
+            background-color: yellow;
+        }
     </style>`
 
     $('iframe').contents().find('head').append(style);
