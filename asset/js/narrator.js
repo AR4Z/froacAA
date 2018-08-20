@@ -309,6 +309,14 @@ function narrator() {
                     queueForSpeech = [treeNarrator.currentNode.textContent];
                     htmlElements = [[treeNarrator.currentNode]];
                     break;
+                case '3':
+                    htmlElements = separateSentences(treeNarrator.currentNode);
+                    queueForSpeech = [];
+                    for (let index = 0; index < htmlElements.length; index++) {
+                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    }
+                    break;
+
             }
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
@@ -372,6 +380,26 @@ function separateWords(node) {
     return wordsElements;
 }
 
+function separateSentences(node) {
+    let sentenceElements = [];
+    let generated = $(node).blast({
+        delimiter: "sentence", // Set the delimiter type (see left)
+        search: false, // Perform a search *instead* of delimiting
+        tag: "span", // Set the wrapping element type (e.g. "div")
+        customClass: "sentence", // Add a custom class to wrappers
+        generateIndexID: true, // Add #customClass-i to wrappers
+        generateValueClass: false, // Add .blast-word-val to wrappers
+        stripHTMLTags: false, // Strip HTML before blasting
+        returnGenerated: true, // Return generated elements to stack
+        aria: true, // Avoid speechflow disruption for screenreaders
+    });
+
+    for (let index = 0; index < generated['length']; index++) {
+        sentenceElements.push([generated[index]]);
+    }
+    return sentenceElements;
+}
+
 function getTextFromParagraph(nodes) {
     let text = "";
     for (let index = 0; index < nodes.length; index++) {
@@ -407,7 +435,6 @@ function setHighlightToText(listElements) {
 
 function nextElement() {
     loadNarrator();
-
     if (audioSrcs.length >= 1) {
         console.log("OTRO!!")
         playQueue();
@@ -696,6 +723,7 @@ function isValidNode(node) {
         switch (localStorage['highlight_id_nr']) {
             case '1':
             case '2':
+            case '3':
                 if ($(node).prop('tagName') != 'TEXT-LINE') {
                     return false;
                 }
