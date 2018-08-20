@@ -316,6 +316,15 @@ function narrator() {
                         queueForSpeech.push(htmlElements[index][0].textContent);
                     }
                     break;
+                case '4':
+                    let nodesParagraph = paragraph(treeNarrator.currentNode);
+                    queueForSpeech = [];
+                    htmlElements = [];
+                    for (let index = 0; index < nodesParagraph.length; index++) {
+                        queueForSpeech.push(nodesParagraph[index].textContent);
+                        htmlElements.push(nodesParagraph);
+                    }
+                    break;
 
             }
         }
@@ -720,18 +729,11 @@ function isValidNode(node) {
                 break;
         }
     } else if(localStorage['reading_unit_id_nr'] == '2'){
-        switch (localStorage['highlight_id_nr']) {
-            case '1':
-            case '2':
-            case '3':
-                if ($(node).prop('tagName') != 'TEXT-LINE') {
-                    return false;
-                }
-                break;
-            default:
-                break;
+        if ($(node).prop('tagName') != 'TEXT-LINE') {
+            return false;
         }
     }
+    
     return true;
 }
 
