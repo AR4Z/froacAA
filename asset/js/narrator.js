@@ -198,6 +198,7 @@ function splitText() {
             break;
         default:
             break;
+        
     }
 
 
@@ -276,12 +277,14 @@ function narrator() {
                 case '2':
                     queueForSpeech = [treeNarrator.currentNode.textContent];
                     htmlElements = [getParentWord(treeNarrator.currentNode)];
+                    break;
                 case '3':
                     htmlElements = [];
                     queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
                     for (let index = 0; index < queueForSpeech.length; index++) {
                         htmlElements.push(treeNarrator.currentNode);
                     }
+                    break;
                 case '4':
                     let nodesParagraph = paragraph(treeNarrator.currentNode);
                     htmlElements = [];
@@ -289,7 +292,18 @@ function narrator() {
                     for (let index = 0; index < queueForSpeech.length; index++) {
                         htmlElements.push(nodesParagraph);
                     }
+                    break;
                 default:
+                    break;
+            }
+        } else if(localStorage['reading_unit_id_nr'] == '2'){
+            switch (localStorage['highlight_id_nr']){
+                case '1':
+                    htmlElements = separateWords(treeNarrator.currentNode);
+                    queueForSpeech = [];
+                    for (let index = 0; index < htmlElements.length; index++) {
+                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    }
                     break;
             }
         }
@@ -328,6 +342,7 @@ function playQueue() {
 
 function clearQueue() {
     console.log("CLEAR!")
+    removeHighlightToText();
     setHighlightToText(htmlElements[0]);
     audioSrcs.splice(0, 1);
     htmlElements.splice(0, 1);
@@ -348,7 +363,7 @@ function separateWords(node) {
     });
 
     for (let index = 0; index < generated['length']; index++) {
-        wordsElements.push(generated[index]);
+        wordsElements.push([generated[index]]);
     }
     return wordsElements;
 }
@@ -670,6 +685,16 @@ function isValidNode(node) {
                 if ($(node).prop('tagName') != 'TEXT-LINE') {
                     return false;
                 }
+            default:
+                break;
+        }
+    } else if(localStorage['reading_unit_id_nr'] == '2'){
+        switch (localStorage['highlight_id_nr']) {
+            case '1':
+                if ($(node).prop('tagName') != 'TEXT-LINE') {
+                    return false;
+                }
+                break;
             default:
                 break;
         }
