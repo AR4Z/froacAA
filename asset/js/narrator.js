@@ -143,8 +143,18 @@ function splitText() {
                 returnGenerated: false, // Return generated elements to stack
                 aria: true, // Avoid speechflow disruption for screenreaders
             });
-            loadTreeNarrator();
-            treeNarrator.nextNode();
+            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                'autoResize': true,
+                'lineClass': 'my-class'
+            })
+            bodyIframe.setAttribute('data-auto-resize', '');
+
+            bodyIframe.addEventListener('afterlining', function () {
+                loadTreeNarrator();
+                treeNarrator.nextNode();
+            }, false);
+
+            elmLining.relining();
             break;
         case '2':
             elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
@@ -230,6 +240,18 @@ function narrator(){
         if(textIsALink(treeNarrator.currentNode)['isLink']){
             readLink();
         }
+        if(localStorage['highlight_id_nr'] == '1' && localStorage['reading_unit_id_nr'] == '1'){
+            removeHighlightToText();
+            queueForSpeech = [treeNarrator.currentNode.textContent];
+            htmlElements = [treeNarrator.currentNode]; 
+        }
+
+        if(localStorage['highlight_id_nr'] == '2' && localStorage['reading_unit_id_nr'] == '1') {
+            removeHighlightToText();
+            queueForSpeech = [treeNarrator.currentNode.textContent];
+            htmlElements = [getParentWord(treeNarrator.currentNode)];
+        }
+        /*
         if(localStorage['highlight_id_nr'] == '2'){
             removeHighlightToText();
             setHighlightToText([treeNarrator.currentNode]);
@@ -246,7 +268,7 @@ function narrator(){
             wordElements.forEach(wordElement => {
                 queueForSpeech.push(wordElement.textContent);
             });
-        }
+        }*/
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({'texts': queueForSpeech, 'cfgVoiceNarrator': cfgVoiceNarrator});
         
@@ -254,13 +276,17 @@ function narrator(){
             narratorWorker.terminate();
             console.log(event.data);
             audioSrcs = event.data;
-            htmlElements = wordElements;
             playQueue();
         }
     } else {
         console.log("not support web worker :(!")
     }
 }
+
+function getParentWord(nodeWord) {
+    return nodeWord.getElementsByTagName('TEXT-LINE')[0] || $(nodeWord).closest('TEXT-LINE');
+}
+
 
 function playQueue() {
     setSrcCfgPlayer(audioSrcs[0]);
@@ -609,7 +635,6 @@ function isValidNode(node) {
             return false;
         }
     }
-    
     return true;
 }
 
