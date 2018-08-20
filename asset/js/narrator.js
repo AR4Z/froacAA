@@ -305,6 +305,10 @@ function narrator() {
                         queueForSpeech.push(htmlElements[index][0].textContent);
                     }
                     break;
+                case '2':
+                    queueForSpeech = [treeNarrator.currentNode.textContent];
+                    htmlElements = [[treeNarrator.currentNode]];
+                    break;
             }
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
@@ -691,6 +695,7 @@ function isValidNode(node) {
     } else if(localStorage['reading_unit_id_nr'] == '2'){
         switch (localStorage['highlight_id_nr']) {
             case '1':
+            case '2':
                 if ($(node).prop('tagName') != 'TEXT-LINE') {
                     return false;
                 }
