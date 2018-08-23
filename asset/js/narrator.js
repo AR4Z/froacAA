@@ -197,7 +197,6 @@ function splitText() {
             elmLining.relining();
             break;
         case '3':
-            
             $(bodyIframe).blast({
                 delimiter: "sentence",
                 search: false,
@@ -379,6 +378,16 @@ function narrator() {
                     htmlElements = [[treeNarrator.currentNode]];
                     queueForSpeech = [treeNarrator.currentNode.textContent];
                     break;
+                case '4':
+                    let paragraphSentences = sentencesParagraph();
+                    htmlElements = [];
+                    queueForSpeech = [];
+                    for (let index = 0; index < paragraphSentences.length; index++) {
+                        const element = paragraphSentences[index];
+                        queueForSpeech.push(element.textContent);
+                        htmlElements.push(paragraphSentences);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -487,6 +496,16 @@ function getTextFromParagraph(nodes) {
         text += element.textContent;
     }
     return text;
+}
+
+function sentencesParagraph() {
+    let paragraphNodes = [];
+    do {
+        paragraphNodes.push(treeNarrator.currentNode);
+        treeNarrator.nextNode();
+    } while(!$(treeNarrator.currentNode).is(':first-child'));
+    treeNarrator.previousNode();
+    return paragraphNodes;
 }
 
 function paragraph(node) {
