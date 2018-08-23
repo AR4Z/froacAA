@@ -197,6 +197,7 @@ function splitText() {
             elmLining.relining();
             break;
         case '3':
+            
             $(bodyIframe).blast({
                 delimiter: "sentence",
                 search: false,
@@ -208,18 +209,24 @@ function splitText() {
                 returnGenerated: false,
                 aria: true
             });
-            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
-                'autoResize': true,
-                'lineClass': 'my-class'
-            })
-            bodyIframe.setAttribute('data-auto-resize', '');
-
-            bodyIframe.addEventListener('afterlining', function () {
+            if(localStorage['highlight_id_nr'] == '2') {
+                elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                    'autoResize': true,
+                    'lineClass': 'my-class'
+                })
+                bodyIframe.setAttribute('data-auto-resize', '');
+    
+                bodyIframe.addEventListener('afterlining', function () {
+                    loadTreeNarrator();
+                    treeNarrator.nextNode();
+                }, false);
+    
+                elmLining.relining();
+            } else {
                 loadTreeNarrator();
                 treeNarrator.nextNode();
-            }, false);
-
-            elmLining.relining();
+            }
+            break;
         default:
             break;
     }
@@ -367,6 +374,11 @@ function narrator() {
                     for (let index = 0; index < lines.length; index++) {
                         htmlElements.push(lines);
                     }
+                    break;
+                case '3':
+                    htmlElements = [[treeNarrator.currentNode]];
+                    queueForSpeech = [treeNarrator.currentNode.textContent];
+                    break;
                 default:
                     break;
             }
