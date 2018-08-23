@@ -196,12 +196,33 @@ function splitText() {
 
             elmLining.relining();
             break;
+        case '3':
+            $(bodyIframe).blast({
+                delimiter: "sentence",
+                search: false,
+                tag: "span",
+                customClass: "sentence",
+                generateIndexID: true,
+                generateValueClass: false,
+                stripHTMLTags: false,
+                returnGenerated: false,
+                aria: true
+            });
+            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                'autoResize': true,
+                'lineClass': 'my-class'
+            })
+            bodyIframe.setAttribute('data-auto-resize', '');
+
+            bodyIframe.addEventListener('afterlining', function () {
+                loadTreeNarrator();
+                treeNarrator.nextNode();
+            }, false);
+
+            elmLining.relining();
         default:
             break;
-        
     }
-
-
 }
 
 function textIsALink(node) {
@@ -296,8 +317,8 @@ function narrator() {
                 default:
                     break;
             }
-        } else if(localStorage['reading_unit_id_nr'] == '2'){
-            switch (localStorage['highlight_id_nr']){
+        } else if (localStorage['reading_unit_id_nr'] == '2') {
+            switch (localStorage['highlight_id_nr']) {
                 case '1':
                     htmlElements = separateWords(treeNarrator.currentNode);
                     queueForSpeech = [];
@@ -307,7 +328,9 @@ function narrator() {
                     break;
                 case '2':
                     queueForSpeech = [treeNarrator.currentNode.textContent];
-                    htmlElements = [[treeNarrator.currentNode]];
+                    htmlElements = [
+                        [treeNarrator.currentNode]
+                    ];
                     break;
                 case '3':
                     htmlElements = separateSentences(treeNarrator.currentNode);
@@ -327,6 +350,27 @@ function narrator() {
                     break;
 
             }
+        } else if (localStorage['reading_unit_id_nr'] == '3') {
+            switch (localStorage['highlight_id_nr']) {
+                case '1':
+                    htmlElements = separateWords(treeNarrator.currentNode.parentElement);
+                    queueForSpeech = [];
+                    for (let index = 0; index < htmlElements.length; index++) {
+                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    }
+                    break;
+                case '2':
+                    let linesAndTextSentence = getSentenceTextAndLines(treeNarrator.currentNode);
+                    let lines = linesAndTextSentence['lines'];
+                    queueForSpeech = [linesAndTextSentence['text']];
+                    htmlElements = [];
+                    for (let index = 0; index < lines.length; index++) {
+                        htmlElements.push(lines);
+                    }
+                default:
+                    break;
+            }
+            
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({
@@ -341,8 +385,24 @@ function narrator() {
             playQueue();
         }
     } else {
-        console.log("not support web worker :(!")
+        console.log("not support web worker :(!");
     }
+}
+
+function getSentenceTextAndLines(sentenceNode){
+    let sentenceText = "";
+    let id = sentenceNode.getAttribute('id');
+    let lines = [];
+    do {
+        sentenceText += treeNarrator.currentNode.textContent;
+        lines.push(getParentWord(treeNarrator.currentNode));
+        treeNarrator.nextNode();
+    } while(treeNarrator.currentNode.getAttribute('id') == id);
+    treeNarrator.previousNode();
+    return {
+        "text": sentenceText, 
+        "lines": lines
+    };
 }
 
 function getParentSentenceWord(nodeWord) {
@@ -351,9 +411,8 @@ function getParentSentenceWord(nodeWord) {
 }
 
 function getParentWord(nodeWord) {
-    return nodeWord.getElementsByTagName('TEXT-LINE')[0] || $(nodeWord).closest('TEXT-LINE');
+    return nodeWord.getElementsByTagName('TEXT-LINE')[0] || $(nodeWord).closest('TEXT-LINE')[0];
 }
-
 
 function playQueue() {
     setSrcCfgPlayer(audioSrcs[0]);
@@ -728,12 +787,17 @@ function isValidNode(node) {
             default:
                 break;
         }
-    } else if(localStorage['reading_unit_id_nr'] == '2'){
+    } else if (localStorage['reading_unit_id_nr'] == '2') {
         if ($(node).prop('tagName') != 'TEXT-LINE') {
             return false;
         }
+    } else if(localStorage['reading_unit_id_nr'] == '3') {
+        if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
+            return false;
+        }
+
     }
-    
+
     return true;
 }
 
