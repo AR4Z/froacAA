@@ -410,7 +410,7 @@ function narrator() {
         } else if(localStorage['reading_unit_id_nr'] == '4'){
             switch(localStorage['highlight_id_nr']){
                 case '1':
-                    let linesParagraph = paragraph(treeNarrator.currentNode);
+                    {let linesParagraph = paragraph(treeNarrator.currentNode);
                     htmlElements = [];
                     queueForSpeech = getTextFromParagraph(linesParagraph).split(' ');
                     for(let iLine = 0; iLine < linesParagraph.length; iLine++){
@@ -421,8 +421,17 @@ function narrator() {
                             htmlElements.push(word);
                         }
                     }
-
-
+                    break;}
+                case '2':
+                    let linesParagraph = paragraph(treeNarrator.currentNode);
+                    queueForSpeech = [];
+                    htmlElements = [];
+                    for(let iLine = 0; iLine < linesParagraph.length; iLine++){
+                        const line = linesParagraph[iLine];
+                        queueForSpeech.push(line.textContent);
+                        htmlElements.push([line]);
+                    }
+                    break;   
             }
 
         }
