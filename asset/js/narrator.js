@@ -227,6 +227,30 @@ function splitText() {
                 treeNarrator.nextNode();
             }
             break;
+        case '4':
+            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                'autoResize': true,
+                'lineClass': 'my-class'
+            })
+            bodyIframe.setAttribute('data-auto-resize', '');
+
+            bodyIframe.addEventListener('afterlining', function () {
+                loadTreeNarrator();
+                treeNarrator.nextNode();
+            }, false);
+
+            elmLining.relining();
+            /*$(bodyIframe).blast({
+                delimiter: "word",
+                search: false,
+                tag: "span",
+                customClass: "word",
+                generateIndexID: true,
+                generateValueClass: false,
+                stripHTMLTags: false,
+                returnGenerated: false,
+                aria: true
+            });*/
         default:
             break;
     }
@@ -383,6 +407,24 @@ function narrator() {
                     break;
             }
             
+        } else if(localStorage['reading_unit_id_nr'] == '4'){
+            switch(localStorage['highlight_id_nr']){
+                case '1':
+                    let linesParagraph = paragraph(treeNarrator.currentNode);
+                    htmlElements = [];
+                    queueForSpeech = getTextFromParagraph(linesParagraph).split(' ');
+                    for(let iLine = 0; iLine < linesParagraph.length; iLine++){
+                        const line = linesParagraph[iLine];
+                        let words = separateWords(line);
+                        for (let iWord = 0; iWord < words.length; iWord++) {
+                            const word = words[iWord];
+                            htmlElements.push(word);
+                        }
+                    }
+
+
+            }
+
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({
@@ -805,6 +847,11 @@ function isValidNode(node) {
         }
     } else if(localStorage['reading_unit_id_nr'] == '3') {
         if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
+            return false;
+        }
+
+    } else if(localStorage['reading_unit_id_nr'] == '4'){
+        if ($(node).prop('tagName') != 'TEXT-LINE') {
             return false;
         }
 
