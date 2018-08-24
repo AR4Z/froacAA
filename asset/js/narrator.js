@@ -197,7 +197,7 @@ function splitText() {
             elmLining.relining();
             break;
         case '3':
-            
+
             $(bodyIframe).blast({
                 delimiter: "sentence",
                 search: false,
@@ -209,18 +209,18 @@ function splitText() {
                 returnGenerated: false,
                 aria: true
             });
-            if(localStorage['highlight_id_nr'] == '2') {
+            if (localStorage['highlight_id_nr'] == '2') {
                 elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
                     'autoResize': true,
                     'lineClass': 'my-class'
                 })
                 bodyIframe.setAttribute('data-auto-resize', '');
-    
+
                 bodyIframe.addEventListener('afterlining', function () {
                     loadTreeNarrator();
                     treeNarrator.nextNode();
                 }, false);
-    
+
                 elmLining.relining();
             } else {
                 loadTreeNarrator();
@@ -228,7 +228,7 @@ function splitText() {
             }
             break;
         case '4':
-            elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+            /*elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
                 'autoResize': true,
                 'lineClass': 'my-class'
             })
@@ -239,18 +239,20 @@ function splitText() {
                 treeNarrator.nextNode();
             }, false);
 
-            elmLining.relining();
-            /*$(bodyIframe).blast({
-                delimiter: "word",
+            elmLining.relining();*/
+            $(bodyIframe).blast({
+                delimiter: "sentence",
                 search: false,
                 tag: "span",
-                customClass: "word",
+                customClass: "sentence",
                 generateIndexID: true,
                 generateValueClass: false,
                 stripHTMLTags: false,
                 returnGenerated: false,
                 aria: true
-            });*/
+            });
+            loadTreeNarrator();
+            treeNarrator.nextNode();
         default:
             break;
     }
@@ -400,38 +402,53 @@ function narrator() {
                     }
                     break;
                 case '3':
-                    htmlElements = [[treeNarrator.currentNode]];
+                    htmlElements = [
+                        [treeNarrator.currentNode]
+                    ];
                     queueForSpeech = [treeNarrator.currentNode.textContent];
                     break;
                 default:
                     break;
             }
-            
-        } else if(localStorage['reading_unit_id_nr'] == '4'){
-            switch(localStorage['highlight_id_nr']){
+
+        } else if (localStorage['reading_unit_id_nr'] == '4') {
+            switch (localStorage['highlight_id_nr']) {
                 case '1':
-                    {let linesParagraph = paragraph(treeNarrator.currentNode);
-                    htmlElements = [];
-                    queueForSpeech = getTextFromParagraph(linesParagraph).split(' ');
-                    for(let iLine = 0; iLine < linesParagraph.length; iLine++){
-                        const line = linesParagraph[iLine];
-                        let words = separateWords(line);
-                        for (let iWord = 0; iWord < words.length; iWord++) {
-                            const word = words[iWord];
-                            htmlElements.push(word);
+                    {
+                        let linesParagraph = paragraph(treeNarrator.currentNode);
+                        htmlElements = [];
+                        queueForSpeech = getTextFromParagraph(linesParagraph).split(' ');
+                        for (let iLine = 0; iLine < linesParagraph.length; iLine++) {
+                            const line = linesParagraph[iLine];
+                            let words = separateWords(line);
+                            for (let iWord = 0; iWord < words.length; iWord++) {
+                                const word = words[iWord];
+                                htmlElements.push(word);
+                            }
                         }
+                        break;
                     }
-                    break;}
                 case '2':
                     let linesParagraph = paragraph(treeNarrator.currentNode);
                     queueForSpeech = [];
                     htmlElements = [];
-                    for(let iLine = 0; iLine < linesParagraph.length; iLine++){
+                    for (let iLine = 0; iLine < linesParagraph.length; iLine++) {
                         const line = linesParagraph[iLine];
                         queueForSpeech.push(line.textContent);
                         htmlElements.push([line]);
                     }
-                    break;   
+                    break;
+                case '3':
+                    let sentencesParagraph = paragraph(treeNarrator.currentNode);
+                    htmlElements = [];
+                    queueForSpeech = [];
+                    for (let iSentence = 0; iSentence < sentencesParagraph.length; iSentence++) {
+                        const sentence = sentencesParagraph[iSentence];
+                        queueForSpeech.push(sentence.textContent);
+                        htmlElements.push([sentence]);
+                    }
+                    break;
+
             }
 
         }
@@ -452,7 +469,7 @@ function narrator() {
     }
 }
 
-function getSentenceTextAndLines(sentenceNode){
+function getSentenceTextAndLines(sentenceNode) {
     let sentenceText = "";
     let id = sentenceNode.getAttribute('id');
     let lines = [];
@@ -460,10 +477,10 @@ function getSentenceTextAndLines(sentenceNode){
         sentenceText += treeNarrator.currentNode.textContent;
         lines.push(getParentWord(treeNarrator.currentNode));
         treeNarrator.nextNode();
-    } while(treeNarrator.currentNode.getAttribute('id') == id);
+    } while (treeNarrator.currentNode.getAttribute('id') == id);
     treeNarrator.previousNode();
     return {
-        "text": sentenceText, 
+        "text": sentenceText,
         "lines": lines
     };
 }
@@ -546,7 +563,7 @@ function paragraph(node) {
     do {
         paragraphNodes.push(treeNarrator.currentNode);
         treeNarrator.nextNode();
-    } while (!treeNarrator.currentNode.hasAttribute('first-in-element'));
+    } while (!$(treeNarrator.currentNode).is(':first-child'));
     treeNarrator.currentNode = paragraphNodes[paragraphNodes.length - 1];
     console.log(treeNarrator.currentNode);
     return paragraphNodes;
@@ -854,16 +871,21 @@ function isValidNode(node) {
         if ($(node).prop('tagName') != 'TEXT-LINE') {
             return false;
         }
-    } else if(localStorage['reading_unit_id_nr'] == '3') {
+    } else if (localStorage['reading_unit_id_nr'] == '3') {
         if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
             return false;
         }
 
-    } else if(localStorage['reading_unit_id_nr'] == '4'){
-        if ($(node).prop('tagName') != 'TEXT-LINE') {
-            return false;
+    } else if (localStorage['reading_unit_id_nr'] == '4') {
+        if (localStorage['highlight_id_nr'] == '3') {
+            if ($(node).prop('tagName') != 'SPAN') {
+                return false;
+            }
+        } else {
+            if ($(node).prop('tagName') != 'TEXT-LINE') {
+                return false;
+            }
         }
-
     }
 
     return true;
