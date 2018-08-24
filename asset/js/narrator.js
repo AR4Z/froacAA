@@ -134,54 +134,64 @@ function splitText() {
         case '1':
             switch (localStorage['highlight_id_nr']) {
                 case '1':
-                    $(bodyIframe).blast({
-                        delimiter: "word",
-                        search: false,
-                        tag: "span",
-                        customClass: "word",
-                        generateIndexID: true,
-                        generateValueClass: false,
-                        stripHTMLTags: false,
-                        returnGenerated: false,
-                        aria: true
-                    });
-                    loadTreeNarrator();
-                    treeNarrator.nextNode();
-                    break;
-                case '2':
-                case '4':
-                    elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
-                        'autoResize': true,
-                        'lineClass': 'my-class'
-                    })
-                    bodyIframe.setAttribute('data-auto-resize', '');
-
-                    bodyIframe.addEventListener('afterlining', function () {
+                    {
+                        console.log("words");
+                        $(bodyIframe).blast({
+                            delimiter: "word",
+                            search: false,
+                            tag: "span",
+                            customClass: "word",
+                            generateIndexID: true,
+                            generateValueClass: false,
+                            stripHTMLTags: false,
+                            returnGenerated: false,
+                            aria: true
+                        });
                         loadTreeNarrator();
                         treeNarrator.nextNode();
-                    }, false);
-                    elmLining.relining();
-                    loadTreeNarrator();
-                    treeNarrator.nextNode();
-                    break;
+                        break;
+                    }
+                case '2':
+                case '4':
+                    {
+                        console.log("lines");
+                        elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                            'autoResize': true,
+                            'lineClass': 'my-class'
+                        })
+                        bodyIframe.setAttribute('data-auto-resize', '');
+
+                        bodyIframe.addEventListener('afterlining', function () {
+                            loadTreeNarrator();
+                            treeNarrator.nextNode();
+                        }, false);
+                        elmLining.relining();
+                        loadTreeNarrator();
+                        treeNarrator.nextNode();
+                        break;
+                    }
                 case '3':
-                    $(bodyIframe).blast({
-                        delimiter: "sentence", // Set the delimiter type (see left)
-                        search: false, // Perform a search *instead* of delimiting
-                        tag: "span", // Set the wrapping element type (e.g. "div")
-                        customClass: "sentence", // Add a custom class to wrappers
-                        generateIndexID: true, // Add #customClass-i to wrappers
-                        generateValueClass: false, // Add .blast-word-val to wrappers
-                        stripHTMLTags: false, // Strip HTML before blasting
-                        returnGenerated: false, // Return generated elements to stack
-                        aria: true, // Avoid speechflow disruption for screenreaders
-                    });
-                    loadTreeNarrator();
-                    treeNarrator.nextNode();
-                    break;
+                    {
+                        console.log("sentencias");
+                        $(bodyIframe).blast({
+                            delimiter: "sentence", // Set the delimiter type (see left)
+                            search: false, // Perform a search *instead* of delimiting
+                            tag: "span", // Set the wrapping element type (e.g. "div")
+                            customClass: "sentence", // Add a custom class to wrappers
+                            generateIndexID: true, // Add #customClass-i to wrappers
+                            generateValueClass: false, // Add .blast-word-val to wrappers
+                            stripHTMLTags: false, // Strip HTML before blasting
+                            returnGenerated: false, // Return generated elements to stack
+                            aria: true, // Avoid speechflow disruption for screenreaders
+                        });
+                        loadTreeNarrator();
+                        treeNarrator.nextNode();
+                        break;
+                    }
                 default:
                     break;
             }
+            break;
         case '2':
             elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
                 'autoResize': true,
@@ -255,7 +265,7 @@ function splitText() {
 
                 elmLining.relining();
             }
-
+            break;
         default:
             break;
     }
@@ -328,98 +338,131 @@ function narrator() {
         if (localStorage['reading_unit_id_nr'] == '1') {
             switch (localStorage['highlight_id_nr']) {
                 case '1':
-                    queueForSpeech = [treeNarrator.currentNode.textContent];
-                    htmlElements = [treeNarrator.currentNode];
-                    break;
+                    {
+                        // Almaceno el texto de cada palabra que va a ser leido
+                        queueForSpeech = [treeNarrator.currentNode.textContent];
+                        // Almaceno el elemento html de cada palabra para que sea resaltado
+                        htmlElements = [
+                            [treeNarrator.currentNode]
+                        ];
+                        break;
+                    }
                 case '2':
-                    queueForSpeech = [treeNarrator.currentNode.textContent];
-                    htmlElements = [getParentWord(treeNarrator.currentNode)];
-                    break;
+                    {
+                        // almaceno textos a leer
+                        queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
+                        htmlElements = [];
+                        // por cada palabra debo almacenar una linea en htmlElements para que sea resaltada 
+                        for (let iWord = 0; iWord < queueForSpeech.length; iWord++) {
+                            htmlElements.push([getParentWord(treeNarrator.currentNode)]);
+                        }
+                        break;
+                    }
                 case '3':
-                    htmlElements = [];
-                    queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
-                    for (let index = 0; index < queueForSpeech.length; index++) {
-                        htmlElements.push(treeNarrator.currentNode);
+                    {
+                        htmlElements = [];
+                        queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
+                        for (let index = 0; index < queueForSpeech.length; index++) {
+                            htmlElements.push([treeNarrator.currentNode]);
+                        }
+                        break;
                     }
-                    break;
                 case '4':
-                    let nodesParagraph = paragraph(treeNarrator.currentNode);
-                    htmlElements = [];
-                    queueForSpeech = getTextFromParagraph(nodesParagraph).split(' ');
-                    for (let index = 0; index < queueForSpeech.length; index++) {
-                        htmlElements.push(nodesParagraph);
+                    {
+                        let nodesParagraph = paragraph(treeNarrator.currentNode);
+                        htmlElements = [];
+                        queueForSpeech = getTextFromParagraph(nodesParagraph).split(' ');
+                        for (let index = 0; index < queueForSpeech.length; index++) {
+                            htmlElements.push(nodesParagraph);
+                        }
+                        break;
                     }
-                    break;
                 default:
                     break;
             }
         } else if (localStorage['reading_unit_id_nr'] == '2') {
             switch (localStorage['highlight_id_nr']) {
                 case '1':
-                    htmlElements = separateWords(treeNarrator.currentNode);
-                    queueForSpeech = [];
-                    for (let index = 0; index < htmlElements.length; index++) {
-                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    {
+                        htmlElements = separateWords(treeNarrator.currentNode);
+                        queueForSpeech = [];
+                        for (let index = 0; index < htmlElements.length; index++) {
+                            queueForSpeech.push(htmlElements[index][0].textContent);
+                        }
+                        break;
                     }
-                    break;
                 case '2':
-                    queueForSpeech = [treeNarrator.currentNode.textContent];
-                    htmlElements = [
-                        [treeNarrator.currentNode]
-                    ];
-                    break;
+                    {
+                        queueForSpeech = [treeNarrator.currentNode.textContent];
+                        htmlElements = [
+                            [treeNarrator.currentNode]
+                        ];
+                        break;
+                    }
                 case '3':
-                    htmlElements = separateSentences(treeNarrator.currentNode);
-                    queueForSpeech = [];
-                    for (let index = 0; index < htmlElements.length; index++) {
-                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    {
+                        htmlElements = separateSentences(treeNarrator.currentNode);
+                        queueForSpeech = [];
+                        for (let index = 0; index < htmlElements.length; index++) {
+                            queueForSpeech.push(htmlElements[index][0].textContent);
+                        }
+                        break;
                     }
-                    break;
                 case '4':
-                    let nodesParagraph = paragraph(treeNarrator.currentNode);
-                    queueForSpeech = [];
-                    htmlElements = [];
-                    for (let index = 0; index < nodesParagraph.length; index++) {
-                        queueForSpeech.push(nodesParagraph[index].textContent);
-                        htmlElements.push(nodesParagraph);
+                    {
+                        let nodesParagraph = paragraph(treeNarrator.currentNode);
+                        queueForSpeech = [];
+                        htmlElements = [];
+                        for (let index = 0; index < nodesParagraph.length; index++) {
+                            queueForSpeech.push(nodesParagraph[index].textContent);
+                            htmlElements.push(nodesParagraph);
+                        }
+                        break;
                     }
-                    break;
 
             }
         } else if (localStorage['reading_unit_id_nr'] == '3') {
             switch (localStorage['highlight_id_nr']) {
                 case '1':
-                    htmlElements = separateWords(treeNarrator.currentNode.parentElement);
-                    queueForSpeech = [];
-                    for (let index = 0; index < htmlElements.length; index++) {
-                        queueForSpeech.push(htmlElements[index][0].textContent);
+                    {
+                        htmlElements = separateWords(treeNarrator.currentNode.parentElement);
+                        queueForSpeech = [];
+                        for (let index = 0; index < htmlElements.length; index++) {
+                            queueForSpeech.push(htmlElements[index][0].textContent);
+                        }
+                        break;
                     }
-                    break;
                 case '2':
-                    let linesAndTextSentence = getSentenceTextAndLines(treeNarrator.currentNode);
-                    let lines = linesAndTextSentence['lines'];
-                    queueForSpeech = [linesAndTextSentence['text']];
-                    htmlElements = [];
-                    for (let index = 0; index < lines.length; index++) {
-                        htmlElements.push(lines);
+                    {
+                        let linesAndTextSentence = getSentenceTextAndLines(treeNarrator.currentNode);
+                        let lines = linesAndTextSentence['lines'];
+                        queueForSpeech = [linesAndTextSentence['text']];
+                        htmlElements = [];
+                        for (let index = 0; index < lines.length; index++) {
+                            htmlElements.push(lines);
+                        }
+                        break;
                     }
-                    break;
                 case '3':
-                    htmlElements = [
-                        [treeNarrator.currentNode]
-                    ];
-                    queueForSpeech = [treeNarrator.currentNode.textContent];
-                    break;
-                case '4':
-                    let paragraphSentences = sentencesParagraph();
-                    htmlElements = [];
-                    queueForSpeech = [];
-                    for (let index = 0; index < paragraphSentences.length; index++) {
-                        const element = paragraphSentences[index];
-                        queueForSpeech.push(element.textContent);
-                        htmlElements.push(paragraphSentences);
+                    {
+                        htmlElements = [
+                            [treeNarrator.currentNode]
+                        ];
+                        queueForSpeech = [treeNarrator.currentNode.textContent];
+                        break;
                     }
-                    break;
+                case '4':
+                    {
+                        let paragraphSentences = sentencesParagraph();
+                        htmlElements = [];
+                        queueForSpeech = [];
+                        for (let index = 0; index < paragraphSentences.length; index++) {
+                            const element = paragraphSentences[index];
+                            queueForSpeech.push(element.textContent);
+                            htmlElements.push(paragraphSentences);
+                        }
+                        break;
+                    }
                 default:
                     break;
             }
@@ -580,7 +623,7 @@ function sentencesParagraph() {
     do {
         paragraphNodes.push(treeNarrator.currentNode);
         treeNarrator.nextNode();
-    } while(!$(treeNarrator.currentNode).is(':first-child'));
+    } while (!$(treeNarrator.currentNode).is(':first-child'));
     treeNarrator.previousNode();
     return paragraphNodes;
 }
@@ -883,14 +926,18 @@ function isValidNode(node) {
         switch (localStorage['highlight_id_nr']) {
             case '1':
             case '3':
-                if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
-                    return false;
+                {
+                    if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
+                        return false;
+                    }
+                    break;
                 }
-                break;
             case '2':
             case '4':
-                if ($(node).prop('tagName') != 'TEXT-LINE') {
-                    return false;
+                {
+                    if ($(node).prop('tagName') != 'TEXT-LINE') {
+                        return false;
+                    }
                 }
             default:
                 break;
