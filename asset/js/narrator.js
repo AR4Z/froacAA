@@ -228,31 +228,35 @@ function splitText() {
             }
             break;
         case '4':
-            /*elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
-                'autoResize': true,
-                'lineClass': 'my-class'
-            })
-            bodyIframe.setAttribute('data-auto-resize', '');
-
-            bodyIframe.addEventListener('afterlining', function () {
+            if (localStorage['highlight_id_nr'] == '3') {
+                $(bodyIframe).blast({
+                    delimiter: "sentence",
+                    search: false,
+                    tag: "span",
+                    customClass: "sentence",
+                    generateIndexID: true,
+                    generateValueClass: false,
+                    stripHTMLTags: false,
+                    returnGenerated: false,
+                    aria: true
+                });
                 loadTreeNarrator();
                 treeNarrator.nextNode();
-            }, false);
+            } else {
+                elmLining = lining(iframeDocument.getElementsByTagName('body')[0], {
+                    'autoResize': true,
+                    'lineClass': 'my-class'
+                })
+                bodyIframe.setAttribute('data-auto-resize', '');
 
-            elmLining.relining();*/
-            $(bodyIframe).blast({
-                delimiter: "sentence",
-                search: false,
-                tag: "span",
-                customClass: "sentence",
-                generateIndexID: true,
-                generateValueClass: false,
-                stripHTMLTags: false,
-                returnGenerated: false,
-                aria: true
-            });
-            loadTreeNarrator();
-            treeNarrator.nextNode();
+                bodyIframe.addEventListener('afterlining', function () {
+                    loadTreeNarrator();
+                    treeNarrator.nextNode();
+                }, false);
+
+                elmLining.relining();
+            }
+
         default:
             break;
     }
@@ -448,7 +452,12 @@ function narrator() {
                         htmlElements.push([sentence]);
                     }
                     break;
-
+                case '4':
+                    {
+                        let linesParagraph = paragraph(treeNarrator.currentNode);
+                        htmlElements = [linesParagraph];
+                        queueForSpeech = [getTextFromParagraph(linesParagraph)];
+                    }
             }
 
         }
