@@ -317,6 +317,20 @@ function nodeTypeIsText(node) {
     return false;
 }
 
+
+function splitSentenceInWords(nodeSentence) {
+    $(nodeSentence).html(function () {
+        let words = $(this).text().split(' ');
+        let htmlText = "";
+        for (let iWord = 0; iWord < words.length; iWord++) {
+            words[iWord] = '<span class="manual-word">' + words[iWord] + '</span>';
+        }
+        return words.join(' ');
+
+    });
+    return Array.from(nodeSentence.getElementsByClassName('manual-word'));
+}
+
 function narrator() {
     removeHighlightToText();
     cfgReproductor.src = [];
@@ -419,16 +433,16 @@ function narrator() {
                         }
                         break;
                     }
-
             }
         } else if (localStorage['reading_unit_id_nr'] == '3') {
             switch (localStorage['highlight_id_nr']) {
                 case '1':
                     {
-                        htmlElements = separateWords(treeNarrator.currentNode.parentElement);
+                        htmlElements = splitSentenceInWords(treeNarrator.currentNode);
                         queueForSpeech = [];
                         for (let index = 0; index < htmlElements.length; index++) {
-                            queueForSpeech.push(htmlElements[index][0].textContent);
+                            queueForSpeech.push(htmlElements[index].textContent);
+                            htmlElements[index] = [htmlElements[index]];
                         }
                         break;
                     }
@@ -947,7 +961,7 @@ function isValidNode(node) {
             return false;
         }
     } else if (localStorage['reading_unit_id_nr'] == '3') {
-        if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
+        if ($(node).prop('tagName') != 'SPAN' || !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
             return false;
         }
 
