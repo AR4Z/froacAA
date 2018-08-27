@@ -40,7 +40,8 @@ function dataNarrator() {
     }
 
     loadLineStyle();
-    splitText();
+    loadTreeNarrator();
+    treeNarrator.nextNode();
     loadNarrator();
 }
 
@@ -127,7 +128,7 @@ $("input[name='readPuncts']").change(function () {
     localStorage['punct_signs'] = $("input[name='punctSigns']").val();
 });
 //*******************************************************************************************/
-
+/*
 function splitText() {
     let bodyIframe = iframeDocument.getElementsByTagName('body')[0];
     switch (localStorage['reading_unit_id_nr']) {
@@ -165,9 +166,8 @@ function splitText() {
                             loadTreeNarrator();
                             treeNarrator.nextNode();
                         }, false);
-                        elmLining.relining();
-                        loadTreeNarrator();
-                        treeNarrator.nextNode();
+                        //elmLining.relining();
+                        
                         break;
                     }
                 case '3':
@@ -204,7 +204,7 @@ function splitText() {
                 treeNarrator.nextNode();
             }, false);
 
-            elmLining.relining();
+            //elmLining.relining();
             break;
         case '3':
             $(bodyIframe).blast({
@@ -230,7 +230,7 @@ function splitText() {
                     treeNarrator.nextNode();
                 }, false);
 
-                elmLining.relining();
+                //elmLining.relining();
             } else {
                 loadTreeNarrator();
                 treeNarrator.nextNode();
@@ -263,13 +263,13 @@ function splitText() {
                     treeNarrator.nextNode();
                 }, false);
 
-                elmLining.relining();
+                //elmLining.relining();
             }
             break;
         default:
             break;
     }
-}
+}*/
 
 function textIsALink(node) {
     let currentNode = node;
@@ -345,187 +345,22 @@ function narrator() {
 
     /*observer.disconnect();
     loadObserver();*/
+
     if (typeof (Worker) !== "undefined") {
         if (textIsALink(treeNarrator.currentNode)['isLink']) {
             readLink();
         }
-        if (localStorage['reading_unit_id_nr'] == '1') {
-            switch (localStorage['highlight_id_nr']) {
-                case '1':
-                    {
-                        // Almaceno el texto de cada palabra que va a ser leido
-                        queueForSpeech = [treeNarrator.currentNode.textContent];
-                        // Almaceno el elemento html de cada palabra para que sea resaltado
-                        htmlElements = [
-                            [treeNarrator.currentNode]
-                        ];
-                        break;
-                    }
-                case '2':
-                    {
-                        // almaceno textos a leer
-                        queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
-                        htmlElements = [];
-                        // por cada palabra debo almacenar una linea en htmlElements para que sea resaltada 
-                        for (let iWord = 0; iWord < queueForSpeech.length; iWord++) {
-                            htmlElements.push([getParentWord(treeNarrator.currentNode)]);
-                        }
-                        break;
-                    }
-                case '3':
-                    {
-                        htmlElements = [];
-                        queueForSpeech = treeNarrator.currentNode.textContent.split(' ');
-                        for (let index = 0; index < queueForSpeech.length; index++) {
-                            htmlElements.push([treeNarrator.currentNode]);
-                        }
-                        break;
-                    }
-                case '4':
-                    {
-                        let nodesParagraph = paragraph(treeNarrator.currentNode);
-                        htmlElements = [];
-                        queueForSpeech = getTextFromParagraph(nodesParagraph).split(' ');
-                        for (let index = 0; index < queueForSpeech.length; index++) {
-                            htmlElements.push(nodesParagraph);
-                        }
-                        break;
-                    }
-                default:
-                    break;
-            }
-        } else if (localStorage['reading_unit_id_nr'] == '2') {
-            switch (localStorage['highlight_id_nr']) {
-                case '1':
-                    {
-                        htmlElements = separateWords(treeNarrator.currentNode);
-                        queueForSpeech = [];
-                        for (let index = 0; index < htmlElements.length; index++) {
-                            queueForSpeech.push(htmlElements[index][0].textContent);
-                        }
-                        break;
-                    }
-                case '2':
-                    {
-                        queueForSpeech = [treeNarrator.currentNode.textContent];
-                        htmlElements = [
-                            [treeNarrator.currentNode]
-                        ];
-                        break;
-                    }
-                case '3':
-                    {
-                        htmlElements = separateSentences(treeNarrator.currentNode);
-                        queueForSpeech = [];
-                        for (let index = 0; index < htmlElements.length; index++) {
-                            queueForSpeech.push(htmlElements[index][0].textContent);
-                        }
-                        break;
-                    }
-                case '4':
-                    {
-                        let nodesParagraph = paragraph(treeNarrator.currentNode);
-                        queueForSpeech = [];
-                        htmlElements = [];
-                        for (let index = 0; index < nodesParagraph.length; index++) {
-                            queueForSpeech.push(nodesParagraph[index].textContent);
-                            htmlElements.push(nodesParagraph);
-                        }
-                        break;
-                    }
-            }
-        } else if (localStorage['reading_unit_id_nr'] == '3') {
-            switch (localStorage['highlight_id_nr']) {
-                case '1':
-                    {
-                        htmlElements = splitSentenceInWords(treeNarrator.currentNode);
-                        queueForSpeech = [];
-                        for (let index = 0; index < htmlElements.length; index++) {
-                            queueForSpeech.push(htmlElements[index].textContent);
-                            htmlElements[index] = [htmlElements[index]];
-                        }
-                        break;
-                    }
-                case '2':
-                    {
-                        let linesAndTextSentence = getSentenceTextAndLines(treeNarrator.currentNode);
-                        let lines = linesAndTextSentence['lines'];
-                        queueForSpeech = [linesAndTextSentence['text']];
-                        htmlElements = [];
-                        for (let index = 0; index < lines.length; index++) {
-                            htmlElements.push(lines);
-                        }
-                        break;
-                    }
-                case '3':
-                    {
-                        htmlElements = [
-                            [treeNarrator.currentNode]
-                        ];
-                        queueForSpeech = [treeNarrator.currentNode.textContent];
-                        break;
-                    }
-                case '4':
-                    {
-                        let paragraphSentences = sentencesParagraph();
-                        htmlElements = [];
-                        queueForSpeech = [];
-                        for (let index = 0; index < paragraphSentences.length; index++) {
-                            const element = paragraphSentences[index];
-                            queueForSpeech.push(element.textContent);
-                            htmlElements.push(paragraphSentences);
-                        }
-                        break;
-                    }
-                default:
-                    break;
-            }
+        
+        htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0); 
+        queueForSpeech = [];
+        for (let index = 0; index < htmlElements.length - 1; index++) {
+            treeNarrator.nextNode();
+        }
 
-        } else if (localStorage['reading_unit_id_nr'] == '4') {
-            switch (localStorage['highlight_id_nr']) {
-                case '1':
-                    {
-                        let linesParagraph = paragraph(treeNarrator.currentNode);
-                        htmlElements = [];
-                        queueForSpeech = getTextFromParagraph(linesParagraph).split(' ');
-                        for (let iLine = 0; iLine < linesParagraph.length; iLine++) {
-                            const line = linesParagraph[iLine];
-                            let words = separateWords(line);
-                            for (let iWord = 0; iWord < words.length; iWord++) {
-                                const word = words[iWord];
-                                htmlElements.push(word);
-                            }
-                        }
-                        break;
-                    }
-                case '2':
-                    let linesParagraph = paragraph(treeNarrator.currentNode);
-                    queueForSpeech = [];
-                    htmlElements = [];
-                    for (let iLine = 0; iLine < linesParagraph.length; iLine++) {
-                        const line = linesParagraph[iLine];
-                        queueForSpeech.push(line.textContent);
-                        htmlElements.push([line]);
-                    }
-                    break;
-                case '3':
-                    let sentencesParagraph = paragraph(treeNarrator.currentNode);
-                    htmlElements = [];
-                    queueForSpeech = [];
-                    for (let iSentence = 0; iSentence < sentencesParagraph.length; iSentence++) {
-                        const sentence = sentencesParagraph[iSentence];
-                        queueForSpeech.push(sentence.textContent);
-                        htmlElements.push([sentence]);
-                    }
-                    break;
-                case '4':
-                    {
-                        let linesParagraph = paragraph(treeNarrator.currentNode);
-                        htmlElements = [linesParagraph];
-                        queueForSpeech = [getTextFromParagraph(linesParagraph)];
-                    }
-            }
-
+        for (let index = 0; index < htmlElements.length; index++) {
+            const element = htmlElements[index];
+            queueForSpeech.push(element.textContent);
+            htmlElements[index] = [element];
         }
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({
@@ -543,6 +378,20 @@ function narrator() {
         console.log("not support web worker :(!");
     }
 }
+
+function splitInLines(node){
+    elmLining = lining(node, {
+        'autoResize': true,
+        'lineClass': 'my-class',
+    });
+    if(node.getElementsByTagName('text-line').length != 0){
+        return node.getElementsByTagName('text-line');
+    } else {
+        treeNarrator.nextNode();
+        return [getParentWord(node)]
+    }
+}
+
 
 function getSentenceTextAndLines(sentenceNode) {
     let sentenceText = "";
@@ -673,6 +522,7 @@ function nextElement() {
         playQueue();
     } else {
         if (treeNarrator.nextNode()) {
+            elmLining.unlining();
             narrator();
         } else {
             return;
@@ -905,7 +755,7 @@ function setReadingUnitNarrator(readingUnitID, setDefault) {
 
 
 function isValidNode(node) {
-    if (!$(node).is(':visible') && $(node).is(':hidden')) {
+    /*if (!$(node).is(':visible') && $(node).is(':hidden')) {
         console.log("invisible")
         return false;
     }
@@ -929,54 +779,22 @@ function isValidNode(node) {
         console.log("deberia ser ignorado")
         return false;
     }
+    
+    if (textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4) {
+        return false;
+    }*/
+
+    if($(node.parentElement).is(':hidden') && !$(node.parentElement).is(':visible')){
+        return false;
+    }
+
+    if(node.parentElement.tagName == 'SCRIPT'){
+        return false;
+    }
     if (is_all_ws(node)) {
         console.log("son solo espacios")
         return false;
     }
-    if (textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4) {
-        return false;
-    }
-    if (localStorage['reading_unit_id_nr'] == '1') {
-        switch (localStorage['highlight_id_nr']) {
-            case '1':
-            case '3':
-                {
-                    if ($(node).prop('tagName') != 'SPAN' && !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
-                        return false;
-                    }
-                    break;
-                }
-            case '2':
-            case '4':
-                {
-                    if ($(node).prop('tagName') != 'TEXT-LINE') {
-                        return false;
-                    }
-                }
-            default:
-                break;
-        }
-    } else if (localStorage['reading_unit_id_nr'] == '2') {
-        if ($(node).prop('tagName') != 'TEXT-LINE') {
-            return false;
-        }
-    } else if (localStorage['reading_unit_id_nr'] == '3') {
-        if ($(node).prop('tagName') != 'SPAN' || !($(node).hasClass('word') || $(node).hasClass('sentence'))) {
-            return false;
-        }
-
-    } else if (localStorage['reading_unit_id_nr'] == '4') {
-        if (localStorage['highlight_id_nr'] == '3') {
-            if ($(node).prop('tagName') != 'SPAN') {
-                return false;
-            }
-        } else {
-            if ($(node).prop('tagName') != 'TEXT-LINE') {
-                return false;
-            }
-        }
-    }
-
     return true;
 }
 
@@ -995,7 +813,7 @@ function loadTreeNarrator() {
             }
         }
     }
-    treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
+    treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
 }
 
 function loadObserver() {
