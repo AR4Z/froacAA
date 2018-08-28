@@ -351,6 +351,8 @@ function narrator() {
             readLink();
         }
         
+        /*
+        read line and highlight line
         htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0); 
         queueForSpeech = [];
         for (let index = 0; index < htmlElements.length - 1; index++) {
@@ -361,7 +363,54 @@ function narrator() {
             const element = htmlElements[index];
             queueForSpeech.push(element.textContent);
             htmlElements[index] = [element];
+        }*/
+
+        /*
+        read word and highlight word
+        htmlElements = Array.prototype.slice.call(splitInWords(treeNarrator.currentNode.parentNode), 0);
+        queueForSpeech = [];
+
+        for (let index = 0; index < htmlElements.length; index++) {
+            treeNarrator.nextNode();
         }
+
+        for (let index = 0; index < htmlElements.length; index++) {
+            const element = htmlElements[index];
+            var txt = element.textContent;
+
+            if(txt[0] == '-'){
+                txt = '\\' + txt;
+            }
+            queueForSpeech.push(txt);
+            
+            htmlElements[index] = [element];
+        }*/
+
+        htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0); 
+        queueForSpeech = [];
+        for (let index = 0; index < htmlElements.length - 1; index++) {
+            treeNarrator.nextNode();
+        }
+        let lines = [];
+        for (let index = 0; index < htmlElements.length; index++) {
+            const element = htmlElements[index];
+            let words = element.textContent.split(' ');
+
+            for (let index1 = 0; index1 < words.length; index1++) {
+                
+                var txt = words[index1];
+
+                if(txt[0] == '-'){
+                    txt = '\\' + txt;
+                }
+                queueForSpeech.push(txt);
+                lines.push([element]); 
+            }
+            
+        }
+        htmlElements = lines;
+
+
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({
             'texts': queueForSpeech,
@@ -377,6 +426,21 @@ function narrator() {
     } else {
         console.log("not support web worker :(!");
     }
+}
+
+function splitInWords(node){
+    $(node).blast({
+        delimiter: "word",
+        search: false,
+        tag: "span",
+        customClass: "word",
+        generateIndexID: true,
+        generateValueClass: false,
+        stripHTMLTags: false,
+        returnGenerated: false,
+        aria: true
+    });
+    return node.getElementsByClassName('word');
 }
 
 function splitInLines(node){
@@ -522,6 +586,7 @@ function nextElement() {
         playQueue();
     } else {
         if (treeNarrator.nextNode()) {
+            // word word $('iframe').contents().find('.blast-root').blast(false);
             elmLining.unlining();
             narrator();
         } else {
@@ -800,7 +865,7 @@ function isValidNode(node) {
 
 function is_all_ws(nod) {
     // Use ECMA-262 Edition 3 String and RegExp features
-    return !(/[^\t\n\r ]/.test(nod.textContent));
+    return !(/[^\t\n\r ]/.test(nod.textContent.trim()));
 }
 
 function loadTreeNarrator() {
