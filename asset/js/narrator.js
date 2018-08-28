@@ -386,6 +386,8 @@ function narrator() {
             htmlElements[index] = [element];
         }*/
 
+        /*
+        READ WORD AND HIGHLIGHT LINE
         htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0); 
         queueForSpeech = [];
         for (let index = 0; index < htmlElements.length - 1; index++) {
@@ -408,8 +410,31 @@ function narrator() {
             }
             
         }
-        htmlElements = lines;
+        htmlElements = lines;*/
 
+        htmlElements = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0); 
+        queueForSpeech = [];
+        for (let index = 0; index < htmlElements.length; index++) {
+            treeNarrator.nextNode();
+        }
+        let sentences = [];
+        for (let index = 0; index < htmlElements.length; index++) {
+            const element = htmlElements[index];
+            let words = element.textContent.split(' ');
+
+            for (let index1 = 0; index1 < words.length; index1++) {
+                
+                var txt = words[index1];
+
+                if(txt[0] == '-'){
+                    txt = '\\' + txt;
+                }
+                queueForSpeech.push(txt);
+                sentences.push([element]); 
+            }
+            
+        }
+        htmlElements = sentences;
 
         let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
         narratorWorker.postMessage({
@@ -426,6 +451,22 @@ function narrator() {
     } else {
         console.log("not support web worker :(!");
     }
+}
+
+function splitInSentences(node) {
+    $(node).blast({
+        delimiter: "sentence",
+        search: false,
+        tag: "span",
+        customClass: "sentence",
+        generateIndexID: true,
+        generateValueClass: false,
+        stripHTMLTags: false,
+        returnGenerated: false,
+        aria: true
+    });
+    return node.getElementsByClassName('sentence');
+
 }
 
 function splitInWords(node){
@@ -587,7 +628,8 @@ function nextElement() {
     } else {
         if (treeNarrator.nextNode()) {
             // word word $('iframe').contents().find('.blast-root').blast(false);
-            elmLining.unlining();
+            // word and highlight line elmLining.unlining();
+            $('iframe').contents().find('.blast-root').blast(false);
             narrator();
         } else {
             return;
