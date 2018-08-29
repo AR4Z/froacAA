@@ -314,24 +314,22 @@ function narrator() {
                     switch (localStorage['highlight_id_nr']) {
                         case '1':
                             {
-                                lines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLWords = [];
                                 queueForSpeech = [];
-                                words = [];
-                                n_words = 0;
-                                for (let index = 0; index < lines.length; index++) {
-                                    words.push(Array.prototype.slice.call(splitInWords(lines[index]), 0));
-                                    n_words += words[words.length - 1].length;
-                                }
                                 htmlElements = [];
-                                for (let index = 0; index < words.length; index++) {
+                                
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    HTMLWords.push(Array.prototype.slice.call(splitInWords(HTMLlines[iLine]), 0));
+                                }
 
-                                    for (let index2 = 0; index2 < words[index].length; index2++) {
-                                        var txt = words[index][index2].textContent;
-                                        if (txt[0] == '-') {
-                                            txt = '\\' + txt;
-                                        }
+                                for (let iWords = 0; iWords  < HTMLWords.length; iWords++) {
+                                    const wordsLineElements = HTMLWords[iWords];
+                                    for (let iWord = 0; iWord < wordsLineElements.length; iWord++) {
+                                        let txt = cleanText(wordsLineElements[iWord].textContent);
+
                                         queueForSpeech.push(txt);
-                                        htmlElements.push([words[index][index2]]);
+                                        htmlElements.push([wordsLineElements[iWord]]);
                                     }
                                 }
                                 treeNarrator.currentNode = htmlElements[(htmlElements.length - 1)][htmlElements[(htmlElements.length - 1)].length - 1].childNodes[0];
@@ -339,39 +337,42 @@ function narrator() {
                             }
                         case '2':
                             {
-                                htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
-                                for (let index = 0; index < htmlElements.length - 1; index++) {
+                                htmlElements = [];
+
+                                for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
 
-                                for (let index = 0; index < htmlElements.length; index++) {
-                                    const element = htmlElements[index];
-                                    queueForSpeech.push(element.textContent);
-                                    htmlElements[index] = [element];
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    const lineElement = HTMLlines[iLine];
+
+                                    queueForSpeech.push(lineElement.textContent);
+                                    htmlElements.push([lineElement]);
                                 }
 
                                 break;
                             }
                         case '3':
                             {
-                                lines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLSentences = [];
                                 queueForSpeech = [];
-                                sentences = [];
-                                for (let index = 0; index < lines.length; index++) {
-                                    sentences.push(Array.prototype.slice.call(splitInSentences(lines[index]), 0));
+                                htmlElements = [];
+
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    HTMLSentences.push(Array.prototype.slice.call(splitInSentences(HTMLlines[iLine]), 0));
                                 }
 
-                                htmlElements = [];
-                                for (let index = 0; index < sentences.length; index++) {
+                                for (let iSentences = 0; iSentences < HTMLSentences.length; iSentence++) {
+                                    const sentencesLineElements = HTMLSentences[iSentences];
+                                    
+                                    for (let iSentence = 0; iSentence  < sentencesLineElements.length; iSentence++) {
+                                        let txt = cleanText(sentencesLineElements[iSentence].textContent);
 
-                                    for (let index2 = 0; index2 < sentences[index].length; index2++) {
-                                        var txt = sentences[index][index2].textContent;
-                                        if (txt[0] == '-') {
-                                            txt = '\\' + txt;
-                                        }
                                         queueForSpeech.push(txt);
-                                        htmlElements.push([sentences[index][index2]]);
+                                        htmlElements.push([sentencesLineElements[iSentence]]);
                                     }
                                 }
                                 treeNarrator.currentNode = htmlElements[(htmlElements.length - 1)][htmlElements[(htmlElements.length - 1)].length - 1].childNodes[0];
@@ -379,18 +380,19 @@ function narrator() {
                             }
                         case '4':
                             {
-
-                                lines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
                                 htmlElements = [];
-                                for (let index = 0; index < lines.length - 1; index++) {
+
+                                for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
 
-                                for (let index = 0; index < lines.length; index++) {
-                                    const element = lines[index];
-                                    queueForSpeech.push(element.textContent);
-                                    htmlElements.push(lines);
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    const lineElement = HTMLlines[iLine];
+
+                                    queueForSpeech.push(lineElement.textContent);
+                                    htmlElements.push(HTMLlines);
                                 }
                                 break;
                             }
