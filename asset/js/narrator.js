@@ -176,19 +176,6 @@ function nodeTypeIsText(node) {
 }
 
 
-function splitSentenceInWords(nodeSentence) {
-    $(nodeSentence).html(function () {
-        let words = $(this).text().split(' ');
-        let htmlText = "";
-        for (let iWord = 0; iWord < words.length; iWord++) {
-            words[iWord] = '<span class="manual-word">' + words[iWord] + '</span>';
-        }
-        return words.join(' ');
-
-    });
-    return Array.from(nodeSentence.getElementsByClassName('manual-word'));
-}
-
 function cleanText(txt){
     if (txt[0] == '-') {
         txt = '\\' + txt;
@@ -648,36 +635,17 @@ function splitInLines(node) {
 }
 
 
-function getSentenceTextAndLines(sentenceNode) {
-    let sentenceText = "";
-    let id = sentenceNode.getAttribute('id');
-    let lines = [];
-    do {
-        sentenceText += treeNarrator.currentNode.textContent;
-        lines.push(getParentWord(treeNarrator.currentNode));
-        treeNarrator.nextNode();
-    } while (treeNarrator.currentNode.getAttribute('id') == id);
-    treeNarrator.previousNode();
-    return {
-        "text": sentenceText,
-        "lines": lines
-    };
-}
-
-function getParentSentenceWord(nodeWord) {
-    return nodeWord.getElementsByClassName('sentence')[0] || $(nodeWord).closest('.sentence');
-
-}
-
-function getParentWord(nodeWord) {
+function getParentLine(nodeWord) {
     return nodeWord.getElementsByTagName('TEXT-LINE')[0] || $(nodeWord).closest('TEXT-LINE')[0];
 }
+
 
 function playQueue() {
     setSrcCfgPlayer(audioSrcs[0]);
     player.init(cfgReproductor);
     player.play();
 }
+
 
 function clearQueue() {
     console.log("CLEAR!");
@@ -687,77 +655,6 @@ function clearQueue() {
     htmlElements.splice(0, 1);
 }
 
-
-function separateWords(node) {
-    let wordsElements = [];
-    let generated = $(node).blast({
-        delimiter: "word", // Set the delimiter type (see left)
-        search: false, // Perform a search *instead* of delimiting
-        tag: "span", // Set the wrapping element type (e.g. "div")
-        customClass: "word", // Add a custom class to wrappers
-        generateIndexID: true, // Add #customClass-i to wrappers
-        generateValueClass: false, // Add .blast-word-val to wrappers
-        stripHTMLTags: false, // Strip HTML before blasting
-        returnGenerated: true, // Return generated elements to stack
-        aria: true, // Avoid speechflow disruption for screenreaders
-    });
-
-    for (let index = 0; index < generated['length']; index++) {
-        wordsElements.push([generated[index]]);
-    }
-    return wordsElements;
-}
-
-function separateSentences(node) {
-    let sentenceElements = [];
-    let generated = $(node).blast({
-        delimiter: "sentence", // Set the delimiter type (see left)
-        search: false, // Perform a search *instead* of delimiting
-        tag: "span", // Set the wrapping element type (e.g. "div")
-        customClass: "sentence", // Add a custom class to wrappers
-        generateIndexID: true, // Add #customClass-i to wrappers
-        generateValueClass: false, // Add .blast-word-val to wrappers
-        stripHTMLTags: false, // Strip HTML before blasting
-        returnGenerated: true, // Return generated elements to stack
-        aria: true, // Avoid speechflow disruption for screenreaders
-    });
-
-    for (let index = 0; index < generated['length']; index++) {
-        sentenceElements.push([generated[index]]);
-    }
-    return sentenceElements;
-}
-
-function getTextFromParagraph(nodes) {
-    let text = "";
-    for (let index = 0; index < nodes.length; index++) {
-        const element = nodes[index];
-        text += element.textContent;
-    }
-    return text;
-}
-
-function sentencesParagraph() {
-    let paragraphNodes = [];
-    do {
-        paragraphNodes.push(treeNarrator.currentNode);
-        treeNarrator.nextNode();
-    } while (!$(treeNarrator.currentNode).is(':first-child'));
-    treeNarrator.previousNode();
-    return paragraphNodes;
-}
-
-function paragraph(node) {
-    //let parent = node.parentNode;
-    let paragraphNodes = [];
-    do {
-        paragraphNodes.push(treeNarrator.currentNode);
-        treeNarrator.nextNode();
-    } while (!$(treeNarrator.currentNode).is(':first-child'));
-    treeNarrator.currentNode = paragraphNodes[paragraphNodes.length - 1];
-    console.log(treeNarrator.currentNode);
-    return paragraphNodes;
-}
 
 function removeHighlightToText() {
     $('iframe').contents().find('.reading').removeClass('reading');
