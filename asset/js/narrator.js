@@ -189,6 +189,13 @@ function splitSentenceInWords(nodeSentence) {
     return Array.from(nodeSentence.getElementsByClassName('manual-word'));
 }
 
+function cleanText(txt){
+    if (txt[0] == '-') {
+        txt = '\\' + txt;
+    }
+    return txt;
+}
+
 function narrator() {
     removeHighlightToText();
     cfgReproductor.src = [];
@@ -214,104 +221,89 @@ function narrator() {
                     switch (localStorage['highlight_id_nr']) {
                         case '1':
                             {
-                                htmlElements = Array.prototype.slice.call(splitInWords(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLwords = Array.prototype.slice.call(splitInWords(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
+                                htmlElements = [];
 
-                                for (let index = 0; index < htmlElements.length; index++) {
-                                    const element = htmlElements[index];
-                                    var txt = element.textContent;
-
-                                    if (txt[0] == '-') {
-                                        txt = '\\' + txt;
-                                    }
+                                for (let iWord = 0; iWord < HTMLwords.length; iWord++) {
+                                    const wordElement = HTMLwords[iWord];
+                                    let txt = cleanText(wordElement.textContent);
                                     queueForSpeech.push(txt);
-
-                                    htmlElements[index] = [element];
+                                    htmlElements.push([wordElement]);
                                 }
+
                                 treeNarrator.currentNode = htmlElements[(htmlElements.length - 1)][htmlElements[(htmlElements.length - 1)].length - 1].childNodes[0];
+                                
                                 break;
                             }
                         case '2':
                             {
-                                htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
-                                for (let index = 0; index < htmlElements.length - 1; index++) {
+                                htmlElements = [];
+
+                                for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
-                                let lines = [];
-                                for (let index = 0; index < htmlElements.length; index++) {
-                                    const element = htmlElements[index];
-                                    let words = element.textContent.split(' ');
 
-                                    for (let index1 = 0; index1 < words.length; index1++) {
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    const lineElement = HTMLlines[iLine];
+                                    let words = lineElement.textContent.split(' ');
 
-                                        var txt = words[index1];
+                                    for (let iWord = 0; iWord < words.length; iWord++) {
+                                        let txt = cleanText(words[iWord]);
 
-                                        if (txt[0] == '-') {
-                                            txt = '\\' + txt;
-                                        }
                                         queueForSpeech.push(txt);
-                                        lines.push([element]);
+                                        htmlElements.push([lineElement]);
                                     }
-
                                 }
-                                htmlElements = lines;
-
                                 break;
                             }
                         case '3':
                             {
-                                htmlElements = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLSentences = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
-                                for (let index = 0; index < htmlElements.length; index++) {
+                                htmlElements = [];
+
+                                for (let i = 0; i < HTMLSentences.length; i++) {
                                     treeNarrator.nextNode();
                                 }
-                                let sentences = [];
-                                for (let index = 0; index < htmlElements.length; index++) {
-                                    const element = htmlElements[index];
-                                    let words = element.textContent.split(' ');
 
-                                    for (let index1 = 0; index1 < words.length; index1++) {
+                                for (let iSentence = 0; iSentence < HTMLSentences.length; iSentence++) {
+                                    const sentenceElement = HTMLSentences[iSentence];
+                                    let words = sentenceElement.textContent.split(' ');
+                                    
+                                    for (let iWord = 0; iWord < words.length; iWord++) {
+                                        var txt = cleanText( words[iWord]);
 
-                                        var txt = words[index1];
-
-                                        if (txt[0] == '-') {
-                                            txt = '\\' + txt;
-                                        }
                                         queueForSpeech.push(txt);
-                                        sentences.push([element]);
+                                        htmlElements.push([sentenceElement]);
                                     }
 
                                 }
-                                htmlElements = sentences;
                                 break;
                             }
                         case '4':
                             {
-
-                                htmlElements = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLlines = Array.prototype.slice.call(splitInLines(treeNarrator.currentNode.parentNode), 0);
                                 queueForSpeech = [];
-                                for (let index = 0; index < htmlElements.length - 1; index++) {
+                                htmlElements = [];
+
+                                for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
-                                let lines = [];
-                                for (let index = 0; index < htmlElements.length; index++) {
-                                    const element = htmlElements[index];
-                                    let words = element.textContent.split(' ');
 
-                                    for (let index1 = 0; index1 < words.length; index1++) {
+                                for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
+                                    const lineElement = HTMLlines[iLine];
+                                    let words = lineElement.textContent.split(' ');
 
-                                        var txt = words[index1];
+                                    for (let iWord = 0; iWord < words.length; iWord++) {
+                                        var txt = cleanText(words[iWord]);
 
-                                        if (txt[0] == '-') {
-                                            txt = '\\' + txt;
-                                        }
                                         queueForSpeech.push(txt);
-                                        lines.push(htmlElements);
+                                        htmlElements.push(HTMLlines);
                                     }
-
                                 }
-                                htmlElements = lines;
                                 break;
                             }
                     }
@@ -764,120 +756,11 @@ function nextElement() {
         playQueue();
     } else {
         if (treeNarrator.nextNode()) {
-            switch (localStorage['reading_unit_id_nr']) {
-                case '1':
-                    {
-                        switch (localStorage['highlight_id_nr']) {
-                            case '1':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    break;
-                                }
-                            case '2':
-                                {
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '3':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    break;
-                                }
-                            case '4':
-                                {
-                                    elmLining.unlining();
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case '2':
-                    {
-                        switch (localStorage['highlight_id_nr']) {
-                            case '1':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '2':
-                                {
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '3':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '4':
-                                {
-
-                                    elmLining.unlining();
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case '3':
-                    {
-                        switch (localStorage['highlight_id_nr']) {
-                            case '1':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '2':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '3':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    break;
-                                }
-                            case '4':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    elmLining.unlining();
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case '4':
-                    {
-                        switch (localStorage['highlight_id_nr']) {
-                            case '1':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    break;
-                                }
-                            case '2':
-                                {
-                                    elmLining.unlining();
-                                    break;
-                                }
-                            case '3':
-                                {
-                                    $('iframe').contents().find('.blast-root').blast(false);
-                                    break;
-                                }
-                            case '4':
-                                {
-
-                                    elmLining.unlining();
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                default:
-                    break;
+            try {
+                $('iframe').contents().find('.blast-root').blast(false);
+                elmLining.unlining();
+            } catch {
+                console.log("swsw");
             }
             narrator();
         } else {
