@@ -208,7 +208,7 @@ function narrator() {
                     switch (localStorage['highlight_id_nr']) {
                         case '1':
                             {
-                                let HTMLwords = Array.prototype.slice.call(splitInWords(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLwords = splitInWords(treeNarrator.currentNode.parentNode);
                                 queueForSpeech = [];
                                 htmlElements = [];
 
@@ -248,7 +248,7 @@ function narrator() {
                             }
                         case '3':
                             {
-                                let HTMLSentences = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLSentences = splitInSentences(treeNarrator.currentNode.parentNode);
                                 queueForSpeech = [];
                                 htmlElements = [];
 
@@ -307,7 +307,7 @@ function narrator() {
                                 htmlElements = [];
                                 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                                    HTMLWords.push(Array.prototype.slice.call(splitInWords(HTMLlines[iLine]), 0));
+                                    HTMLWords.push(splitInWords(HTMLlines[iLine]));
                                 }
 
                                 for (let iWords = 0; iWords  < HTMLWords.length; iWords++) {
@@ -349,7 +349,7 @@ function narrator() {
                                 htmlElements = [];
 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                                    HTMLSentences.push(Array.prototype.slice.call(splitInSentences(HTMLlines[iLine]), 0));
+                                    HTMLSentences.push(splitInSentences(HTMLlines[iLine]));
                                 }
 
                                 for (let iSentences = 0; iSentences < HTMLSentences.length; iSentence++) {
@@ -397,7 +397,7 @@ function narrator() {
                                 htmlElements = [];
                                 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                                    HTMLWords.push(Array.prototype.slice.call(splitInWords(HTMLlines[iLine]), 0));
+                                    HTMLWords.push(splitInWords(HTMLlines[iLine]));
                                 }
 
                                 for (let iWords = 0; iWords  < HTMLWords.length; iWords++) {
@@ -420,7 +420,7 @@ function narrator() {
                                 let HTMLSentences = [];
 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                                    HTMLSentences.push(Array.prototype.slice.call(splitInSentences(HTMLlines[iLine]), 0));
+                                    HTMLSentences.push(splitInSentences(HTMLlines[iLine]));
                                 }
 
                                 for (let iSentences = 0; iSentences < HTMLSentences.length; iSentences++) {
@@ -430,7 +430,7 @@ function narrator() {
                                         let txt = cleanText(sentencesInLineElements[iSentence].textContent);
 
                                         queueForSpeech.push(txt);
-                                        htmlElements.push([getParentWord(sentencesInLineElements[iSentence])]);
+                                        htmlElements.push([getParentLine(sentencesInLineElements[iSentence])]);
                                     }
                                 }
 
@@ -439,7 +439,7 @@ function narrator() {
                             }
                         case '3':
                             {
-                                let HTMLSentences = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLSentences = splitInSentences(treeNarrator.currentNode.parentNode);
                                 queueForSpeech = [];
                                 htmlElements = [];
 
@@ -468,7 +468,7 @@ function narrator() {
                                 }
 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                                    const sentencesInLineElements = Array.prototype.slice.call(splitInSentences(HTMLlines[iLine]), 0);
+                                    const sentencesInLineElements = splitInSentences(HTMLlines[iLine]);
                                     
                                     for (let iSentences = 0; iSentences < sentencesInLineElements.length; iSentences++) {
                                         HTMLSentences.push(sentencesInLineElements[iSentences]);
@@ -494,7 +494,7 @@ function narrator() {
                     switch (localStorage['highlight_id_nr']) {
                         case '1':
                             {
-                                let HTMLwords = Array.prototype.slice.call(splitInWords(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLwords = splitInWords(treeNarrator.currentNode.parentNode);
                                 queueForSpeech = [];
                                 htmlElements = [];
 
@@ -530,7 +530,7 @@ function narrator() {
                             }
                         case '3':
                             {
-                                let HTMLSentences = Array.prototype.slice.call(splitInSentences(treeNarrator.currentNode.parentNode), 0);
+                                let HTMLSentences = splitInSentences(treeNarrator.currentNode.parentNode);
                                 queueForSpeech = [];
                                 htmlElements = [];
 
@@ -602,8 +602,10 @@ function splitInSentences(node) {
         returnGenerated: false,
         aria: true
     });
-    return node.getElementsByClassName('sentence');
-
+    let sentenceElms = Array.prototype.slice.call(node.getElementsByClassName('sentence'), 0);
+    let validSentenceElms = sentenceElms.filter(sentenceElm => $(sentenceElm).is(':visible') && !$(sentenceElm).is(':hidden')); 
+    
+    return validSentenceElms;
 }
 
 function splitInWords(node) {
@@ -618,7 +620,10 @@ function splitInWords(node) {
         returnGenerated: false,
         aria: true
     });
-    return node.getElementsByClassName('word');
+    let wordElms = Array.prototype.slice.call(node.getElementsByClassName('word'), 0);
+    let validWordElms = wordElms.filter(wordElm => $(wordElm).is(':visible') && !$(wordElm).is(':hidden')); 
+
+    return validWordElms; 
 }
 
 function splitInLines(node) {
@@ -630,7 +635,7 @@ function splitInLines(node) {
         return node.getElementsByTagName('text-line');
     } else {
         treeNarrator.nextNode();
-        return [getParentWord(node)]
+        return [getParentLine(node)]
     }
 }
 
@@ -932,15 +937,20 @@ function isValidNode(node) {
         console.log("label")
         return false;
     }
-
-    if (shouldBeignored(node)) {
-        console.log("deberia ser ignorado")
-        return false;
-    }
+    
     
     if (textIsALink(node)['isLink'] && localStorage['links_id_nr'] == 4) {
         return false;
     }*/
+
+    if (shouldBeignored(node)) {
+        console.log("deberia ser ignorado");
+        return false;
+    }
+
+    if(node.parentElement.tagName == 'OPTION'){
+        return false;
+    }
 
     if ($(node.parentElement).is(':hidden') && !$(node.parentElement).is(':visible')) {
         return false;
