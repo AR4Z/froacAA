@@ -41,7 +41,11 @@ function dataNarrator() {
 
     loadLineStyle();
     loadTreeNarrator();
-    treeNarrator.nextNode();
+    try {
+        treeNarrator.nextNode();
+    } catch {
+        console.log("temporal");
+    }
     loadNarrator();
 }
 
@@ -176,7 +180,7 @@ function nodeTypeIsText(node) {
 }
 
 
-function cleanText(txt){
+function cleanText(txt) {
     if (txt[0] == '-') {
         txt = '\\' + txt;
     }
@@ -220,7 +224,7 @@ function narrator() {
                                 }
 
                                 treeNarrator.currentNode = htmlElements[(htmlElements.length - 1)][htmlElements[(htmlElements.length - 1)].length - 1].childNodes[0];
-                                
+
                                 break;
                             }
                         case '2':
@@ -259,9 +263,9 @@ function narrator() {
                                 for (let iSentence = 0; iSentence < HTMLSentences.length; iSentence++) {
                                     const sentenceElement = HTMLSentences[iSentence];
                                     let words = sentenceElement.textContent.split(' ');
-                                    
+
                                     for (let iWord = 0; iWord < words.length; iWord++) {
-                                        var txt = cleanText( words[iWord]);
+                                        var txt = cleanText(words[iWord]);
 
                                         queueForSpeech.push(txt);
                                         htmlElements.push([sentenceElement]);
@@ -305,12 +309,12 @@ function narrator() {
                                 let HTMLWords = [];
                                 queueForSpeech = [];
                                 htmlElements = [];
-                                
+
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
                                     HTMLWords.push(splitInWords(HTMLlines[iLine]));
                                 }
 
-                                for (let iWords = 0; iWords  < HTMLWords.length; iWords++) {
+                                for (let iWords = 0; iWords < HTMLWords.length; iWords++) {
                                     const wordsLineElements = HTMLWords[iWords];
                                     for (let iWord = 0; iWord < wordsLineElements.length; iWord++) {
                                         let txt = cleanText(wordsLineElements[iWord].textContent);
@@ -354,8 +358,8 @@ function narrator() {
 
                                 for (let iSentences = 0; iSentences < HTMLSentences.length; iSentence++) {
                                     const sentencesLineElements = HTMLSentences[iSentences];
-                                    
-                                    for (let iSentence = 0; iSentence  < sentencesLineElements.length; iSentence++) {
+
+                                    for (let iSentence = 0; iSentence < sentencesLineElements.length; iSentence++) {
                                         let txt = cleanText(sentencesLineElements[iSentence].textContent);
 
                                         queueForSpeech.push(txt);
@@ -395,12 +399,12 @@ function narrator() {
                                 let HTMLWords = [];
                                 queueForSpeech = [];
                                 htmlElements = [];
-                                
+
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
                                     HTMLWords.push(splitInWords(HTMLlines[iLine]));
                                 }
 
-                                for (let iWords = 0; iWords  < HTMLWords.length; iWords++) {
+                                for (let iWords = 0; iWords < HTMLWords.length; iWords++) {
                                     const wordsLineElements = HTMLWords[iWords];
                                     for (let iWord = 0; iWord < wordsLineElements.length; iWord++) {
                                         let txt = cleanText(wordsLineElements[iWord].textContent);
@@ -462,14 +466,14 @@ function narrator() {
                                 queueForSpeech = [];
                                 htmlElements = [];
 
-                                
+
                                 for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
 
                                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
                                     const sentencesInLineElements = splitInSentences(HTMLlines[iLine]);
-                                    
+
                                     for (let iSentences = 0; iSentences < sentencesInLineElements.length; iSentences++) {
                                         HTMLSentences.push(sentencesInLineElements[iSentences]);
                                     }
@@ -506,7 +510,7 @@ function narrator() {
                                 }
 
                                 treeNarrator.currentNode = htmlElements[(htmlElements.length - 1)][htmlElements[(htmlElements.length - 1)].length - 1].childNodes[0];
-                                
+
                                 break;
                             }
                         case '2':
@@ -551,8 +555,8 @@ function narrator() {
                                 let txt = "";
                                 queueForSpeech = [];
                                 htmlElements = [];
-                                
-                                
+
+
                                 for (let i = 0; i < HTMLlines.length - 1; i++) {
                                     treeNarrator.nextNode();
                                 }
@@ -603,8 +607,8 @@ function splitInSentences(node) {
         aria: true
     });
     let sentenceElms = Array.prototype.slice.call(node.getElementsByClassName('sentence'), 0);
-    let validSentenceElms = sentenceElms.filter(sentenceElm => $(sentenceElm).is(':visible') && !$(sentenceElm).is(':hidden')); 
-    
+    let validSentenceElms = sentenceElms.filter(sentenceElm => $(sentenceElm).is(':visible') && !$(sentenceElm).is(':hidden'));
+
     return validSentenceElms;
 }
 
@@ -621,9 +625,9 @@ function splitInWords(node) {
         aria: true
     });
     let wordElms = Array.prototype.slice.call(node.getElementsByClassName('word'), 0);
-    let validWordElms = wordElms.filter(wordElm => $(wordElm).is(':visible') && !$(wordElm).is(':hidden')); 
+    let validWordElms = wordElms.filter(wordElm => $(wordElm).is(':visible') && !$(wordElm).is(':hidden'));
 
-    return validWordElms; 
+    return validWordElms;
 }
 
 function splitInLines(node) {
@@ -948,7 +952,7 @@ function isValidNode(node) {
         return false;
     }
 
-    if(node.parentElement.tagName == 'OPTION'){
+    if (node.parentElement.tagName == 'OPTION') {
         return false;
     }
 
@@ -981,7 +985,11 @@ function loadTreeNarrator() {
             }
         }
     }
-    treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
+    try {
+        treeNarrator = iframeDocument.createTreeWalker(iframeDocument.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
+    } catch {
+        console.log("temporal");
+    }
 }
 
 function loadObserver() {
