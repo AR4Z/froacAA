@@ -25,7 +25,9 @@
 #unalTop ul.socialLinks dd a.rss{background-position:-63px 0}
 #unalTop ul.socialLinks dd a.rss:hover{background-position:-63px -21px}
 
-html {
+body { scroll-behavior: smooth }
+
+html{
     width:100%;
     height:100%;
 }

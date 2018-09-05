@@ -155,6 +155,7 @@
 
                             </div>
                         </div>
+                        
                         <div class="form-group" aria-live="assertive">
                             <input type="button" style="display:none;" value="Realizar Test NEED" name="need" id="need" class="btn btn-info">
                             <!--FIN FORMULARIO DE REGISTRO DE USUARIO-->
@@ -180,13 +181,23 @@
         let dd = today.getDate() - 1;
         let mm = today.getMonth() + 1;
         let yyyy = today.getFullYear();
+
         if (dd < 10) {
             dd = '0' + dd
         }
+
         if (mm < 10) {
             mm = '0' + mm
         }
-        $(document).ready(function() {
+
+        function asignOpenAccessibilityBar() {
+            $('#show-panel').on("click", function () {
+                let accessibilityBar = document.getElementById('collapseExample');
+                $(accessibilityBar ).collapse('show');
+            });
+        }
+
+        $(document).ready(function () {
             $('.birthdate').datepicker({
                 startView: 2,
                 inputFormat: ["yyyy/MM/dd"],
@@ -194,37 +205,69 @@
                 min: '1975/01/01',
                 max: yyyy + "/" + mm + "/" + dd
             });
+
             $('.name').focus();
             $('.glyphicon-calendar').attr("class", "fa fa-calendar");
             $('.glyphicon-triangle-right').attr('class', "fa fa-caret-right");
             $('.glyphicon-triangle-left').attr('class', "fa fa-caret-left");
             $('.glyphicon-backward').attr('class', "fa fa-media-skip-backward");
             $('.glyphicon-forward').attr('class', "fa fa-media-skip-forward");
-            $(".datepicker-button").click(function() {
+            $(".datepicker-button").click(function () {
                 $("#datepicker-calendar-input_fecha_nac").attr("style", "left: 20px; top: 284px;");
             });
+
+
+            $("#useAdaptInterfaz").on("change", function () {
+                let selectedVal = $(this).find(":selected").val();
+                
+                if (selectedVal == '1' || selectedVal == '2') {
+                    $.notify({
+                        icon: 'fa fa-info',
+                        message: 'Los valores de la barra de accesibilidad serán guardados para cuando inicie sesión con su nueva cuenta. Haga clic sobre esta notificación para cambiarlos.',
+                        url: '#collapseExample',
+                        target: "_self"
+                    }, {
+                        onShow: asignOpenAccessibilityBar,
+                        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<span data-notify="icon"></span> ' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span data-notify="message">{2}</span>' +
+                            '<div class="progress" data-notify="progressbar">' +
+                            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                            '</div>' +
+                            '<a id="show-panel" href="{3}" target="{4}" data-notify="url"></a>' +
+                            '</div>'
+                    });
+                }
+            });
+
+
+
         });
-        $(document).ready(function() {
+        $(document).ready(function () {
             function validateUsername(username) {
                 let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
                 return re.test(username);
             }
+
             function validateEmail(email) {
                 let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
             }
+
             function validateDate(date, infDate, supDate) {
                 return (infDate <= date) && (date <= supDate);
             }
-            $.validator.addMethod('range_date', function(value) {
+            $.validator.addMethod('range_date', function (value) {
                 let date = new Date(value);
                 let infDate = new Date('1975-01-01');
                 return validateDate(date, infDate, today);
             });
-            $.validator.addMethod("email_regex", function(value) {
+            $.validator.addMethod("email_regex", function (value) {
                 return validateEmail(value);
             });
-            $.validator.addMethod("usernameValidation", function(value) {
+            $.validator.addMethod("usernameValidation", function (value) {
                 return validateUsername(value);
             })
             $("#form").validate({
@@ -250,11 +293,11 @@
                             url: "<?php echo base_url()?>index.php/usuario/verify_email",
                             dataType: 'json',
                             data: {
-                                mail: function() {
+                                mail: function () {
                                     return $('#input_mail').val();
                                 }
                             },
-                            dataFilter: function(resp) {
+                            dataFilter: function (resp) {
                                 let json = JSON.parse(resp);
                                 return !json.success;
                             }
@@ -269,11 +312,11 @@
                             url: "<?php echo base_url()?>index.php/usuario/verify_username",
                             dataType: 'json',
                             data: {
-                                username: function() {
+                                username: function () {
                                     return $("#input_username").val();
                                 }
                             },
-                            dataFilter: function(resp) {
+                            dataFilter: function (resp) {
                                 let json = JSON.parse(resp);
                                 return !json.success;
                             }
@@ -328,12 +371,12 @@
                         required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de la institucion educativa es obligatorio.</div>"
                     }
                 },
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     let name = element.attr('name');
                     error.appendTo($("#" + name + "-validate"));
                 },
             });
-        })
+        });
     </script>
 
     <script type="text/javascript">
