@@ -23,6 +23,11 @@
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
+<script src="<?php echo base_url() ?>asset/js/button.js"></script>
+<script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
+<script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
+<script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
+
 
 <?php if($this->session->userdata('needNarrator') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
@@ -37,7 +42,6 @@
 <?php endif;?>
 
 <?php if($this->session->userdata('needSr') || !($this->session->userdata('logged_in'))):?>
-    <script src="<?php echo base_url()?>asset/js/artyom.js"></script>
     <script src="<?php echo base_url()?>asset/js/screenReader.js"></script>
 <?php endif;?>
 <script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>

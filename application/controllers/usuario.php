@@ -223,7 +223,6 @@ class Usuario extends CI_Controller {
      * para verificar si ya existe en la base de datos
      */
      public function verify_email(){
-
         $mail = $_POST["mail"];
         $mail = strtolower($mail);
         $result = $this->usuario_model->verify_email($mail);

@@ -77,7 +77,7 @@ class Main extends CI_Controller {
             $this->load->view ( 'base/base_template', $content );
 
         }
-	}
+    }
 }
 
 /* End of file welcome.php */
