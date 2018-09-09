@@ -147,10 +147,7 @@
 
     <?php else : ?>
         <body>
-        
-        <div class="page">
-<?php endif;?>
-<div class="container-iris draggable" style="width:340px; height:430px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1000;position:absolute;">
+        <div class="container-iris draggable" style="width:340px; height:430px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1000; position:absolute;">
 		<div class="video" id="iris" style="width:320px; height:240px; margin:auto; background-image: url(<?php echo base_url()?>asset/img/lengua/conector_espera.jpg); position:relative">
 		</div>
 		<div id="control-iris" style="width:320px; height:40px; margin:auto; text-align: center; padding-top:10px; position:relative;">
@@ -171,4 +168,7 @@
 			<a onclick="translate()" class="button button-raised button-pill button-primary button-small" style="float:right; margin-top:5px">Traducir</a>
 		</div>
 	</div>
+        <div class="page">
+<?php endif;?>
+
 
