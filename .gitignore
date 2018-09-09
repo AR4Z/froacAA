@@ -98,3 +98,4 @@ typings/
 # Serverless directories
 .serverless
 .htaccess
+/asset/img/lengua
