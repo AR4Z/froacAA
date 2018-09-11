@@ -140,7 +140,7 @@
                                 </select>
 
                             </div>
-                            <div class="form-group" role="group" aria-labelledby="label_narrator">
+                            <div class="form-group" role="group" aria-labelledby="label_use_screen_reader">
                                 <label for="use_screen_reader" id="label_use_screen_reader">¿Desea usar el lector de pantalla?</label>
                                 <select id="useSr" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
                                     <?php
@@ -152,8 +152,23 @@
                                         <?php endif?>
                                 <?php }?>
                                 </select>
+                            </div>
+
+                            <div class="form-group" role="group" aria-labelledby="label_lsc">
+                                <label for="useLSC" id="label_use_lsc">¿Desea usar el traductor de Español a Lenguaje de Señas Colombiano?</label>
+                                <select id="useLSC" class="form-control input-sm m-bot15" name="useLSC" aria-labelledby="label_use_lsc" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
 
                             </div>
+
                         </div>
                         
                         <div class="form-group" aria-live="assertive">
@@ -245,6 +260,7 @@
 
 
         });
+
         $(document).ready(function () {
             function validateUsername(username) {
                 let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
@@ -259,14 +275,17 @@
             function validateDate(date, infDate, supDate) {
                 return (infDate <= date) && (date <= supDate);
             }
+
             $.validator.addMethod('range_date', function (value) {
                 let date = new Date(value);
                 let infDate = new Date('1975-01-01');
                 return validateDate(date, infDate, today);
             });
+
             $.validator.addMethod("email_regex", function (value) {
                 return validateEmail(value);
             });
+            
             $.validator.addMethod("usernameValidation", function (value) {
                 return validateUsername(value);
             })

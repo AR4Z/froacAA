@@ -71,11 +71,13 @@ function get_all_data_adaptability_narrator($username) {
 function get_all_data_adaptability_sr($username) {
     $query = $this->db->query("select use_pref_sr.use_username, use_pref_sr.speed_reading, use_pref_sr.pitch_id, use_pref_sr.volume_id, use_pref_sr.voice_gender_id, use_pref_sr.links_id
     from use_pref_sr
+
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_sr.pitch_id
     inner join scales_pitch_volume AS spv on spv.scale_id=use_pref_sr.volume_id
     inner join gender_options on gender_options.gender_id=use_pref_sr.voice_gender_id
     inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_sr.links_id
     inner join users on users.use_username=use_pref_sr.use_username
+    
     where use_pref_sr.use_username='".$username."'");
 
     return $query->result_array();
@@ -94,9 +96,22 @@ function get_custom_colors($username) {
     return $query->result_array();
 }
 
+// metodo que se encarga de obtener las preferencias del usuario para usar el traductor de español a lenguaje de señas colombiano
+function get_all_data_adaptability_lsc_translator($username) {
+    $query = $this->db->query("select use_pref_lsc.use_username, use_pref_lsc.sign_speed, use_pref_lsc.model_id,
+    from use_pref_lsc
+
+    inner join lsc_model on lsc_model.model_id=use_pref_lsc.model_id
+    
+    where use_pref_lsc.use_username='".$username."'");
+
+    return $query->result_array();
+}
+
+
     // Metodo que obtiene los registros del administrador a partir del nombre de usuario a partir de la tabla usuario
 
-    function get_all_admin_data($username){
+function get_all_admin_data($username){
         $query = $this->db->query("select users.use_nombre, users.use_apellido, users.use_email, users.use_fecha_registro, use_rol.use_rol_nombre
 from users inner join use_rol on use_rol.use_rol_id=users.use_rol_id
 where users.use_username='".$username."'");
@@ -104,7 +119,7 @@ where users.use_username='".$username."'");
         return $query->result_array();
     }
 
-    function save_score() {
+function save_score() {
         $query = $this->db->get_where('use_score', array('lo_id' => $this->input->post("lo_id"),
             'rep_id' => $this->input->post("rep_id"),"use_username" => $this->input->post("username")));
         if ($query->num_rows() == 0) {
@@ -253,13 +268,14 @@ if ($this->input->post('cantidad6')!='') {
             'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
             'use_narrator_id'=>$this->input->post('useNarrator'),
             'use_screen_reader_id'=>$this->input->post('useSr'),
+            'use_traslator_lsc_id'=>$this->input->post('useLSC')
         );
 
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
     }
 
-    public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $dataInterfaz, $dataNarrator, $dataScreenReader){
+    public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator){
         // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
         // se agregara a la tabla de preferencias de interfaz
         if($optInterfaz == 1 || $optInterfaz == 2){
@@ -276,6 +292,12 @@ if ($this->input->post('cantidad6')!='') {
         // se agregara a la tabla de preferencias de screen reader
         if($optScreenReader == 1 || $optScreenReader == 2){
             $this->usuario_model->insert_pref_sr($username, $dataScreenReader);
+        }
+
+        // en caso de que el usuario requiera o desee usar el traductor de español a lenguaje de señas colombiano de forma opcional entonces
+        // se agregara a la tabla de preferencias de traductor de lenguaje de señas
+        if($optLSCTranslator == 1 || $optLSCTranslator == 2) {
+            $this->usuario_model->insert_pref_LSC_translator($username, $dataLSCTranslator);
         }
     }
 
@@ -338,6 +360,20 @@ if ($this->input->post('cantidad6')!='') {
 
     }
 
+
+    // almacena los valores para usar el traductor de español a lenguaje de señas colombiano
+    public function insert_pref_LSC_translator($id, $data) {
+        if(!($this->usuario_model->alreadyExists($id, 'use_pref_lsc'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_lsc', $data);
+        }
+    }
+
     //Guarda cada una de las preferencias del estudiante en la tabla "use_pre_stu"
 
     public function insert_pref($pref, $id) {
@@ -389,8 +425,20 @@ if ($this->input->post('cantidad6')!='') {
 
     // me dice si un usuario necesita adaptar la interfaz o no
     public function get_need_adapta_interfaz($username){
-
         $this->db->select('use_adapta_interfaz_id');
+    	$this->db->from('users');
+    	$this->db->where('use_username', $username);
+        $this->db->limit(1);
+    	$query = $this->db->get();
+
+
+        return $query->result_array();
+
+    }
+
+    // me dice si un usuario necesita el traductor de español a lenguaje de señas colombiano
+    public function get_need_translator_lsc($username){
+        $this->db->select('use_translator_lsc_id');
     	$this->db->from('users');
     	$this->db->where('use_username', $username);
         $this->db->limit(1);
@@ -423,6 +471,7 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
     }
 
+
     public function alreadyExists($username, $typeAdapt){
         $this->db->from($typeAdapt);
         $this->db->where('use_username',$username);
@@ -433,7 +482,6 @@ if ($this->input->post('cantidad6')!='') {
     // Se obtienen los registros de las preferencias que hay en la tabla "use_preference"
 
     public function get_preferencias() {
-
         $query = $this->db->get('use_preference');
 
         return $query->result();
@@ -442,7 +490,6 @@ if ($this->input->post('cantidad6')!='') {
     // Se obtienen los registros de las discapacidades que hay en la tabla "use_dissabilities"
 
     public function get_dissabilities() {
-
         $query = $this->db->get('use_dissabilities');
 
         return $query->result();
@@ -450,8 +497,6 @@ if ($this->input->post('cantidad6')!='') {
     // Se obtienen los registros de las preferencias que hay en la tabla "use_level"
 
     public function get_nivel_educativo() {
-
-
         $query = $this->db->get('use_level');
 
         return $query->result();
@@ -486,6 +531,7 @@ if ($this->input->post('cantidad6')!='') {
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
+        $optLSCTranslator = $this->input->post('useLSC');
 
         $data1 = array(
             "use_nombre"          =>  $this->input->post("nombre"),
@@ -495,6 +541,7 @@ if ($this->input->post('cantidad6')!='') {
             "use_adapta_interfaz_id" => $optInterfaz,
             "use_narrator_id" => $optNarrator,
             "use_screen_reader_id" => $optScreenReader,
+            "use_traslator_lsc_id" => $optLSCTranslator
         );
         $data2 = array(
             "use_stu_level"       =>  $this->input->post("nevel_ed"),
@@ -503,7 +550,7 @@ if ($this->input->post('cantidad6')!='') {
 
         // actualiza las adaptaciones que el usuario requiere
         // por ejemplo: si el usuario ya necesita el screen reader
-        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, NULL, NULL, NULL);
+        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, NULL, NULL, NULL, NULL);
 
         $this->db->where('use_username', $username);
         $this->db->update('users', $data1);
@@ -534,6 +581,12 @@ if ($this->input->post('cantidad6')!='') {
     public function update_preferences_srDB($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_sr', $data);
+    }
+
+    // este metodo se encarga de actualizar las preferencias a la hora de usar el lector de pantalla en la DB tabla: 'use_pref_sr'
+    public function update_preferences_LSC_translatorDB($username, $data){
+        $this->db->where('use_username', $username);
+        $this->db->update('use_pref_lsc', $data);
     }
 
     //Se verifica si el correo electrónico ingresado existe en la base de datos
