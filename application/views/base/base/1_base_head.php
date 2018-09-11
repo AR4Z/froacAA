@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
     <title>FROAC</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link id='open-sans' href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
     <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')):?>
@@ -147,15 +149,15 @@
 
     <?php else : ?>
         <body>
-        <div id="container-iris" class="container-iris draggable" style="width:340px; height:470px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1000; position:absolute;">
+        <div id="container-iris" class="container-iris draggable" style="width:340px; height:475px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1000; position:absolute;">
 		<div class="container-top-iris" style="width:320px; height:40px; margin:auto;">
-            <h5 style="text-align:center; color:white;">
+            <h5 style="text-align:center; color:white; font-weight: bold;">
                 TRADUCTOR LSC
                 <a onclick="minimizeIris()" id="minimize-iris" class="button button-raised button-primary button-circle button-small" style="float:right;">
-                    <i class="fa fa-window-minimize"></i>
+                    <i class="fas fa-window-minimize"></i>
 			    </a>
                 <a onclick="maximizeIris()" id="maximize-iris" class="button button-raised button-primary button-circle button-small" style="float:right; display:none;">
-                    <i class="fa fa-window-maximize"></i>
+                    <i class="fas fa-window-maximize"></i>
 			    </a> 
             </h5>
         </div>

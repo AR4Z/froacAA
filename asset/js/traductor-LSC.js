@@ -3351,11 +3351,19 @@ function minimizeIris() {
 }
 
 function maximizeIris() {
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+    if((h - parseInt($('#container-iris').css('top'), 10)) < 475) {
+        $("#container-iris").css('top', '155px');
+    }
+
     $("#minimize-iris").show();
     $("#maximize-iris").hide();
-    $("#container-iris").css('height', '470px');
+    $("#container-iris").css('height', '475px');
     $("#container-iris").css('padding-top', '10px');
     $('#container-body-iris').slideDown('fast');
+
+
 
     isMinimized = false;
 }
