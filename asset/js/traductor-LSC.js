@@ -1,5 +1,6 @@
 let clips = {};
 let canvidControl;
+let isMinimized = false;
 let arrayImages = {
     "0": ".ftpquota",
     "1": "iconos_flechas.jpg",
@@ -3198,8 +3199,7 @@ function splitWordsInValidSigns(text) {
     let imagesPath = [];
     let imagesLetter = [];
     const words = text.split(' ');
-    console.log(arrayImages);
-    console.log(words);
+    
     for (let index = 0; index < words.length; index++) {
         const word = words[index];
         console.log(word[0]);
@@ -3312,7 +3312,9 @@ function forgetUserSelection() {
 function setSelectionText(e) {
     let selection = (document.all) ? document.selection.createRange().text : document.getSelection();
     let selectionText = selection.toString();
+    
     forgetUserSelection();
+
     if (selectionText.length > 0) {
         document.getElementById('input-iris').value = selectionText;
         translate();
@@ -3324,16 +3326,38 @@ document.onmouseup = setSelectionText;
 
 function translate() {
     let text = $('#input-iris').val();
-    if (canvidControl && canvidControl.isPlaying()) {
-        canvidControl.destroy();
-        loadImage(splitWordsInValidSigns(specialSigns(prepareText(text))));
-    } else if (canvidControl) {
-        canvidControl.destroy();
-        loadImage(splitWordsInValidSigns(specialSigns(prepareText(text))));
+
+    if (canvidControl) {
+        stopIris();
+    }
+
+    if (isMinimized) {
+        return;
     } else {
         loadImage(splitWordsInValidSigns(specialSigns(prepareText(text))));
     }
-
 }
 
-$( ".container-iris" ).draggable({containment: "parent", scroll: false,});
+
+function minimizeIris() {
+    $('#container-body-iris').slideUp('fast', function() {
+        $("#container-iris").css('height', '49px');
+        $("#container-iris").css('padding-top', '9px');
+        $("#minimize-iris").hide();
+        $("#maximize-iris").show();
+     });
+
+     isMinimized = true;
+}
+
+function maximizeIris() {
+    $("#minimize-iris").show();
+    $("#maximize-iris").hide();
+    $("#container-iris").css('height', '470px');
+    $("#container-iris").css('padding-top', '10px');
+    $('#container-body-iris').slideDown('fast');
+
+    isMinimized = false;
+}
+
+$( ".container-iris" ).draggable({containment: "parent", scroll: false});
