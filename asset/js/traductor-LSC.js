@@ -3351,9 +3351,9 @@ function minimizeIris() {
 }
 
 function maximizeIris() {
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    let maxVWheight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    if((h - parseInt($('#container-iris').css('top'), 10)) < 475) {
+    if((maxVWheight - parseInt($('#container-iris').css('top'), 10)) < 475) {
         $("#container-iris").css('top', '155px');
     }
 
