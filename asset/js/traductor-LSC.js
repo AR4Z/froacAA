@@ -3232,7 +3232,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: 10,
+                fps: 40,
                 onEnd: function () {
                     console.log('clip1 ended.');
                     canvidControl.play(index + 1);
@@ -3244,7 +3244,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: 10,
+                fps: 40,
                 onEnd: function () {
                     canvidControl.destroy();
                     $('#stop-iris').hide();
