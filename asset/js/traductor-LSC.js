@@ -3148,16 +3148,17 @@ let arrayImages = {
         "zipaquira.jpg"
     ]
 }
-$(document).ready(function () {
+
+function dataLSCTranslator() {
     if(session_user && needLSCTranslator){
         localStorage['sign_speed'] = preferencesLSCTranslator['sign_speed'];
-        localStorage['model_id'] = preferencesSr['model_id'];
+        localStorage['model_id'] = preferencesLSCTranslator['model_id'];
     }
 
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 15).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
-});
+}
 
 function setDefaultValuesLSCTranslator(){
     $('#input-speed-LSC-translator').data('default', true);

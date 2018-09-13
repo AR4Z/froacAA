@@ -586,7 +586,6 @@ class Usuario extends CI_Controller {
     // en la tabla usuario y estudiante
 
     public function guardar() {
-
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
@@ -600,7 +599,7 @@ class Usuario extends CI_Controller {
         $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
         $dataLSCTranslator = json_decode($this->input->post('LSCTranslatorPreferences'), TRUE);
-
+        
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));

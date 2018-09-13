@@ -21,7 +21,7 @@
             <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="Traductor de Español a Lenguaje de Señas Colombiano" aria-selected="false">Traductor LSC</a>
         </li>
         <?php endif?>
-        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz')):?>
+        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz') ||  $this->session->userdata('needLSCTranslator')):?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restablecer valores</a>
             <div class="dropdown-menu">

@@ -29,7 +29,7 @@
                         </label>
                         <input type="submit" value="Iniciar sesión" class="btn btn-info" id="2">
                     </form>
-                    <br></br>
+                    <br>
                     <a href="<?php echo base_url() ?>">
                         <input type="button" value="No, tal vez mas tarde" class="btn btn-info">
                     </a>

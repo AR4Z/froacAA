@@ -7,7 +7,14 @@ $(document).ready(function(){
             dataInterfaz();
         });
     } else {
-        dataNarrator();
-        dataInterfaz();   
+        if(needNarrator || !session_user){
+            dataNarrator();
+        }
+        if(needPrefAdaptInterfaz || !session_user) {
+            dataInterfaz();
+        }
+        if(needLSCTranslator || !session_user){
+            dataLSCTranslator();
+        }
     }
 });

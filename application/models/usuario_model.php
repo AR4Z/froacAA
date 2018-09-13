@@ -98,11 +98,10 @@ function get_custom_colors($username) {
 
 // metodo que se encarga de obtener las preferencias del usuario para usar el traductor de español a lenguaje de señas colombiano
 function get_all_data_adaptability_lsc_translator($username) {
-    $query = $this->db->query("select use_pref_lsc.use_username, use_pref_lsc.sign_speed, use_pref_lsc.model_id,
+    $query = $this->db->query("select use_pref_lsc.use_username, use_pref_lsc.sign_speed, use_pref_lsc.model_id
     from use_pref_lsc
-
     inner join lsc_model on lsc_model.model_id=use_pref_lsc.model_id
-    
+    inner join users on users.use_username=use_pref_lsc.use_username
     where use_pref_lsc.use_username='".$username."'");
 
     return $query->result_array();
@@ -268,7 +267,7 @@ if ($this->input->post('cantidad6')!='') {
             'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
             'use_narrator_id'=>$this->input->post('useNarrator'),
             'use_screen_reader_id'=>$this->input->post('useSr'),
-            'use_traslator_lsc_id'=>$this->input->post('useLSC')
+            'use_traslator_lsc_id'=>$this->input->post('useLSCTranslator')
         );
 
         $this->db->insert('users', $data2);

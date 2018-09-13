@@ -154,7 +154,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group" role="group" aria-labelledby="label_lsc">
+                            <div class="form-group" role="group" aria-labelledby="label_use_lsc">
                                 <label for="useLSCTranslator" id="label_use_lsc">¿Desea usar el traductor de Español a Lenguaje de Señas Colombiano?</label>
                                 <select id="useLSCTranslator" class="form-control input-sm m-bot15" name="useLSCTranslator" aria-labelledby="label_use_lsc" role="listbox" aria-required="true">
                                     <?php
@@ -483,7 +483,7 @@
             $(this).append($(inputScreenReaderPreferences));
         }
 
-        if(newUserAdaptInfo.needLSC){
+        if(newUserAdaptInfo.needLSCTranslator){
             let LSCTranslatorPreferences = {
                 'use_username': $("input[name='username']").val(),
                 'sign_speed': localStorage['sign_speed'],

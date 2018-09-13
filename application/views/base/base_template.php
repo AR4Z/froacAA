@@ -6,3 +6,4 @@ $this->load->view('base/base/2_base_header');
 $this->load->view('base/base/3_base_aside');
 $this->load->view($main_view);
 $this->load->view('base/base/4_base_footer');
+?>

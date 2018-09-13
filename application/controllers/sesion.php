@@ -76,7 +76,7 @@ class Sesion extends CI_Controller {
                 $use_sr = $use_sr[0]['use_screen_reader_id'];
 
                 $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
-                $use_LSCTranslator  = $use_LSCTranslator[0]['use_screen_reader_id'];
+                $use_LSCTranslator  = $use_LSCTranslator[0]['use_traslator_lsc_id'];
 
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
@@ -84,10 +84,7 @@ class Sesion extends CI_Controller {
                     $customColors = $this->usuario_model->get_custom_colors($session_data['username']);
                     $this->session->set_userdata('adaptaInterfaz', true);
                     $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
-                    $this->session->set_userdata('customColors', $customColors[0]);
-
-
-                   
+                    $this->session->set_userdata('customColors', $customColors[0]);                   
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('adaptaInterfaz', false);
@@ -112,7 +109,7 @@ class Sesion extends CI_Controller {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('needSr', false);
                 }
-
+                // si el usuario necesita el lsc translator entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
                     $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
                     $this->session->set_userdata('needLSCTranslator', true);
@@ -153,6 +150,7 @@ class Sesion extends CI_Controller {
         $this->session->unset_userdata('needNarrator');
         $this->session->unset_userdata('preferencesSr');
         $this->session->unset_userdata('needSr');
+        $this->session->unset_userdata('needLSCTranslator');
         $this->session->unset_userdata('customColors');
 
         redirect(base_url(), 'refresh');
