@@ -3154,7 +3154,15 @@ function dataLSCTranslator() {
         localStorage['sign_speed'] = preferencesLSCTranslator['sign_speed'];
         localStorage['model_id'] = preferencesLSCTranslator['model_id'];
     }
-
+    
+    $("#container-iris").css("top", localStorage['irisTopPos'] || 0);
+    $("#container-iris").css("left", localStorage['irisLeftPos'] || 0);
+    
+    if(localStorage["isMinimized"] == "true") {
+        minimizeIris();
+    } else {
+        maximizeIris();
+    }
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 15).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
@@ -3413,6 +3421,7 @@ function minimizeIris() {
         $("#maximize-iris").show();
      });
 
+     localStorage['isMinimized'] = true;
      isMinimized = true;
 }
 
@@ -3430,8 +3439,14 @@ function maximizeIris() {
     $('#container-body-iris').slideDown('fast');
 
 
-
+    localStorage['isMinimized'] = false;
     isMinimized = false;
 }
 
-$( ".container-iris" ).draggable({containment: "parent", scroll: false});
+$( ".container-iris" ).draggable({
+    containment: "parent", 
+    scroll: false, 
+    stop: function( event, ui ) {
+        localStorage['irisTopPos'] = $(this).css('top');
+        localStorage['irisLeftPos'] = $(this).css('left'); 
+}});
