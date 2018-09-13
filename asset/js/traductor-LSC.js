@@ -3298,11 +3298,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-<<<<<<< HEAD
                 fps: localStorage['sign_speed'],
-=======
-                fps: 40,
->>>>>>> 3df1c0d9496d269c0f5758e81935a5cf0307d8d3
                 onEnd: function () {
                     console.log('clip1 ended.');
                     canvidControl.play(index + 1);
@@ -3314,11 +3310,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-<<<<<<< HEAD
                 fps: localStorage['sign_speed'],
-=======
-                fps: 40,
->>>>>>> 3df1c0d9496d269c0f5758e81935a5cf0307d8d3
                 onEnd: function () {
                     canvidControl.destroy();
                     $('#stop-iris').hide();
