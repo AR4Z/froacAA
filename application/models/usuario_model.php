@@ -438,7 +438,7 @@ if ($this->input->post('cantidad6')!='') {
 
     // me dice si un usuario necesita el traductor de español a lenguaje de señas colombiano
     public function get_need_translator_lsc($username){
-        $this->db->select('use_translator_lsc_id');
+        $this->db->select('use_traslator_lsc_id');
     	$this->db->from('users');
     	$this->db->where('use_username', $username);
         $this->db->limit(1);

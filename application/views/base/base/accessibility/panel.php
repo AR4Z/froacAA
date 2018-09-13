@@ -16,6 +16,11 @@
             <a class="nav-link" id="screen-reader-tab" data-toggle="tab" href="#screen-reader" role="tab" aria-controls="Lector de pantalla" aria-selected="false">Lector de pantalla</a>
         </li>
         <?php endif?>
+        <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
+        <li class="nav-item">
+            <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="Traductor de Español a Lenguaje de Señas Colombiano" aria-selected="false">Traductor LSC</a>
+        </li>
+        <?php endif?>
         <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz')):?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restablecer valores</a>
@@ -29,6 +34,9 @@
                 <?php if($this->session->userdata('needSr') || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="setDefaultValuesSr()" href="#">Lector de pantalla</a>
                 <?php endif?>
+                <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
+                <a class="dropdown-item" onclick="setDefaultValuesLSCTranslator()" href="#">Traductor LSC</a>
+                <?php endif?>
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" id="reset-all" onclick="setDefaultAllValues()" href="#">Todos</a>
@@ -39,15 +47,20 @@
     <div class="tab-content" id="myTabContent">
         <br>
         <?php if( $this->session->userdata('adaptaInterfaz') || !($this->session->userdata('logged_in'))):?>
-        <?php $this->load->view('base/base/accessibility/interfaz');?>
-        <?php endif?>
-        <?php if($this->session->userdata('needNarrator') || !($this->session->userdata('logged_in'))):?>
-        <?php $this->load->view('base/base/accessibility/narrator');?>
-        <?php endif?>
-        <?php if($this->session->userdata('needSr') || !($this->session->userdata('logged_in'))):?>
-        <?php $this->load->view('base/base/accessibility/screen_reader');?>
+            <?php $this->load->view('base/base/accessibility/interfaz');?>
         <?php endif?>
 
+        <?php if($this->session->userdata('needNarrator') || !($this->session->userdata('logged_in'))):?>
+            <?php $this->load->view('base/base/accessibility/narrator');?>
+        <?php endif?>
+        
+        <?php if($this->session->userdata('needSr') || !($this->session->userdata('logged_in'))):?>
+            <?php $this->load->view('base/base/accessibility/screen_reader');?>
+        <?php endif?>
+        
+        <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
+            <?php $this->load->view('base/base/accessibility/LSCTranslator');?>
+        <?php endif?>
     </div>
     <br/>
 </div>

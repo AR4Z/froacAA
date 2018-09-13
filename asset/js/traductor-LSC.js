@@ -3149,10 +3149,75 @@ let arrayImages = {
     ]
 }
 $(document).ready(function () {
-    $('#stop-iris').hide();
-    $('#pause-iris').hide();
-    $('#play-iris').hide();
+    if(session_user && needLSCTranslator){
+        localStorage['sign_speed'] = preferencesLSCTranslator['sign_speed'];
+        localStorage['model_id'] = preferencesSr['model_id'];
+    }
+
+     // cada una de las configuraciones toma el valor que hay en cache o el default
+     $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 15).change();
+     $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
 });
+
+function setDefaultValuesLSCTranslator(){
+    $('#input-speed-LSC-translator').data('default', true);
+    $('#input-speed-LSC-translator').val(15).change();
+    $("input[name='LSC-translator-model']").data('default', true);
+    $("input[name='LSC-translator-model'][value=" + ('1') + "]").prop('checked', true).change();
+    
+
+    if(session_user){
+        let names_preferences_LSC_translator = ['sign_speed', 'model_id'];
+        let values = [15, 1];
+
+        updateValuesLSCTranslatorInSession(names_preferences_LSC_translator, values);
+    }
+}
+
+$("input[name='LSC-translator-model']").change(function(){
+    let modelIDselected = $("input[name='LSC-translator-model']:checked").val();
+    setLSCTranslatorModel(modelIDselected);
+});
+
+
+function updateValuesLSCTranslatorInSession(names_preferences_LSC_translator, values){
+    console.log("update in session");
+
+    $.ajax({
+        url : base_url+"usuario/update_preferences_LSCTranslatorSession",
+        type : "POST",
+        dataType : "json",
+        data : { "username": session_user['username'], "names_preferences_LSCTranslator":names_preferences_LSC_translator, "values":values},
+        success : function(data) {
+            console.log(data);
+        },
+        error : function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function setSignSpeedLSCTranslator(speed, setDefault){
+    console.log("translator");
+    if((speed != localStorage['sign_speed']) && needLSCTranslator && !setDefault){
+        console.log("trae" +localStorage['sign_speed']);
+        updateValuesLSCTranslatorInSession(['sign_speed'], [speed]);
+    }
+    
+    $('#input-speed-LSC-translator').data('default', false);
+    
+    localStorage['sign_speed'] = speed;
+}
+
+function setLSCTranslatorModel(modelID) {
+    if((modelID != localStorage['model_id']) && needLSCTranslator && !setDefault) {
+        updateValuesLSCTranslatorInSession(['model_id'], [modelID]);
+    }
+
+    $("input[name='LSC-translator-model']").data('default', false);
+    
+    localStorage['model_id'] = modelID;
+}
 
 String.prototype.replaceAll = function (search, replacement) {
     let target = this;
@@ -3232,7 +3297,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: 10,
+                fps: localStorage['sign_speed'],
                 onEnd: function () {
                     console.log('clip1 ended.');
                     canvidControl.play(index + 1);
@@ -3244,7 +3309,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: 10,
+                fps: localStorage['sign_speed'],
                 onEnd: function () {
                     canvidControl.destroy();
                     $('#stop-iris').hide();

@@ -155,8 +155,8 @@
                             </div>
 
                             <div class="form-group" role="group" aria-labelledby="label_lsc">
-                                <label for="useLSC" id="label_use_lsc">¿Desea usar el traductor de Español a Lenguaje de Señas Colombiano?</label>
-                                <select id="useLSC" class="form-control input-sm m-bot15" name="useLSC" aria-labelledby="label_use_lsc" role="listbox" aria-required="true">
+                                <label for="useLSCTranslator" id="label_use_lsc">¿Desea usar el traductor de Español a Lenguaje de Señas Colombiano?</label>
+                                <select id="useLSCTranslator" class="form-control input-sm m-bot15" name="useLSCTranslator" aria-labelledby="label_use_lsc" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
@@ -407,7 +407,9 @@
             needAdaptInterfaz: $("#useAdaptInterfaz").val() ==  1 || $("#useAdaptInterfaz").val() ==  2,
             needSr: $('#useSr').val() ==  1 || $("#useSr").val() ==  2,
             needNarrator: $("#useNarrator").val() == 1 || $("#useNarrator").val() == 2,
+            needLSCTranslator: $("#useLSCTranslator").val() == 1 || $("#useLSCTranslator").val() == 2,
         }
+
         // verificamos si el nuevo usuario desea usar las adaptaciones de interfaz
         if(newUserAdaptInfo.needAdaptInterfaz){
             let interfazPreferences = {
@@ -479,6 +481,19 @@
                   .attr("type", "hidden")
                   .attr("name", "screenReaderPreferences").val(JSON.stringify(screenReaderPreferences));
             $(this).append($(inputScreenReaderPreferences));
+        }
+
+        if(newUserAdaptInfo.needLSC){
+            let LSCTranslatorPreferences = {
+                'use_username': $("input[name='username']").val(),
+                'sign_speed': localStorage['sign_speed'],
+                'model_id': localStorage['model_id']
+            }
+
+            let inputLSCTranslatorPreferences = $("<input>")
+                  .attr("type", "hidden")
+                  .attr("name", "LSCTranslatorPreferences").val(JSON.stringify(LSCTranslatorPreferences));
+            $(this).append($(inputLSCTranslatorPreferences));
         }
         return true;
     });

@@ -332,6 +332,10 @@ class Usuario extends CI_Controller {
                 $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
                 $use_sr = $use_sr[0]['use_screen_reader_id'];
 
+                // pregunto si el usuario necesita usar el traductor de español a lsc
+                $use_LSCTraslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
+                $use_LSCTraslator = $use_LSCTraslator[0]['use_traslator_lsc_id'];
+
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -341,6 +345,7 @@ class Usuario extends CI_Controller {
                     'selectedOptInterfaz'=> $use_adapta_interfaz,
                     'selectedOptNarrator'=> $use_narrator,
                     'selectedOptScreenReader'=>$use_sr,
+                    "selectedOptLSCTranslator"=>$use_LSCTraslator,
                     "main_view" => "usr/editar_view",
                     "id_view" => "edit_user"
                 );
@@ -368,8 +373,11 @@ class Usuario extends CI_Controller {
             $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
             $use_sr = $use_sr[0]['use_screen_reader_id'];
 
+
+            $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
+            $use_LSCTranslator = $use_LSCTranslator[0]['use_traslator_lsc_id'];
             // actualizo valores sesion, desde alla son aztualizados en DB
-            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr);
+            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTraslator);
             
             // redirecciono al perfil del usuario
             redirect(base_url().'usuario/perfil', 'refresh');
@@ -380,7 +388,7 @@ class Usuario extends CI_Controller {
 
     // este metodo se encarga de cargar los valores de adaptabilidad y accesibilidad en sesion
     // despues de que hayan sido actualizados por el usuario
-    public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr){
+    public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator){
         $session_data = $this->session->userdata('logged_in');
 
         // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
@@ -411,6 +419,17 @@ class Usuario extends CI_Controller {
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
             $this->session->set_userdata('needSr', false);
+        }
+
+        // si el usuario necesita el lsc traductor entonces lo almaceno en sesion y tambien sus preferencias
+        if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
+            $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
+            
+            $this->session->set_userdata('needLSCTranslator', true);
+            $this->session->set_userdata('preferencesLSCTranslator', $preferencesLSCTranslator[0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('needLSCTranslator', false);
         }
     }
 
@@ -468,6 +487,22 @@ class Usuario extends CI_Controller {
         echo(json_encode($this->session->userdata('preferencesSr')));
 
         $this->usuario_model->update_preferences_srDB($this->input->post('username'), $arrayCombineNameAndValuesSr);
+    }
+
+    public function update_preferences_LSCTranslatorSession(){
+        $arrayNamesPreferencesLSCTranslator = $this->input->post('names_preferences_LSCTranslator');
+        $arrayValuesPreferencesLSCTranslator = $this->input->post('values');
+        $arrayPreferencesLSCTranslator = $this->session->userdata('preferencesSr');
+        $arrayCombineNameAndValuesLSCTranslator = array_combine($arrayNamesPreferencesSr, $arrayValuesPreferencesSr);
+        
+        foreach($arrayCombineNameAndValuesLSCTranslator as $name => $value){
+            $arrayPreferencesLSCTranslator[$name] = $value;
+        }
+
+        $this->session->set_userdata('preferencesLSCTranslator', $arrayPreferencesLSCTranslator);
+        echo(json_encode($this->session->userdata('preferencesLSCTranslator')));
+
+        $this->usuario_model->update_preferences_LSC_translatorDB($this->input->post('username'), $arrayCombineNameAndValuesLSCTranslator);
     }
 
     public function chpasswd(){
@@ -555,6 +590,7 @@ class Usuario extends CI_Controller {
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
+        $optLSCTranslator = $this->input->post('useLSCTranslator');
         $prefInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
         $customColors = json_decode($this->input->post('customColors'), TRUE);
         $dataInterfaz = array(
@@ -563,6 +599,7 @@ class Usuario extends CI_Controller {
         );
         $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
+        $dataLSCTranslator = json_decode($this->input->post('LSCTranslatorPreferences'), TRUE);
 
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
@@ -573,7 +610,7 @@ class Usuario extends CI_Controller {
         // o el screen segun lo que el necesite
         // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
         // en $data--- va las preferencias del usuario para cada adaptacion
-        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader,$dataInterfaz, $dataNarrator, $dataScreenReader);
+        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator,$dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator);
 
 
         if($_POST["necesidadespecial"]!=""){
@@ -767,6 +804,10 @@ class Usuario extends CI_Controller {
         $use_sr = $this->usuario_model->get_need_sr($id);
         $use_sr = $use_sr[0]['use_screen_reader_id'];
 
+        // pregunto si el usuario necesita usar screen reader
+        $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($id);
+        $use_LSCTranslator = $use_LSCTranslator[0]['use_traslator_lsc_id'];
+
         $content = array(
             "title" => "Registro éxitoso",
             "main_view" => "register/exito_view",
@@ -775,6 +816,7 @@ class Usuario extends CI_Controller {
             "needNarrator" => $use_narrator,
             "needPrefInterfaz"=> $use_adapta_interfaz,
             "needSr" => $use_sr,
+            "needLSCTranslator" => $use_LSCTranslator,
             'id_view' => 'exito'
         );
         $this->load->view('base/base_template', $content);

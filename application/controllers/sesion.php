@@ -75,6 +75,9 @@ class Sesion extends CI_Controller {
                 $use_sr = $this->usuario_model->get_need_sr($session_data['username']);
                 $use_sr = $use_sr[0]['use_screen_reader_id'];
 
+                $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
+                $use_LSCTranslator  = $use_LSCTranslator[0]['use_screen_reader_id'];
+
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
@@ -109,6 +112,16 @@ class Sesion extends CI_Controller {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('needSr', false);
                 }
+
+                if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
+                    $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
+                    $this->session->set_userdata('needLSCTranslator', true);
+                    $this->session->set_userdata('preferencesLSCTranslator', $preferencesLSCTranslator[0]);
+                } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
+                    $this->session->set_userdata('needLSCTranslator', false);
+                }
+
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
                 redirect(base_url().'admin', 'refresh'); // recordar configuración de enable_query_strings puede traer algunos problemas

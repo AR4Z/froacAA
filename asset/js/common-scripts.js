@@ -9,12 +9,14 @@ $(document).ready(function () {
         let dataDecimals = parseFloat(input.attr('data-decimals')) || 0;
         let newValue = 0;
         let decimals = 10;
+
         if (!isNaN(currentVal)) {
             if (type == 'minus') {
                 input.data('tipo', type);
                 if (currentVal > input.attr('min')) {
                     newValue = currentVal - step;
                     decimals *= dataDecimals;
+                    
                     if (dataDecimals) {
                         input.val(Math.round(newValue * decimals) / decimals).change();
                     } else {
@@ -31,6 +33,7 @@ $(document).ready(function () {
                 if (currentVal < input.attr('max')) {
                     newValue = currentVal + step;
                     decimals *= dataDecimals;
+                    
                     if (dataDecimals) {
                         input.val(Math.round(newValue * decimals) / decimals).change();
                     } else {
@@ -55,10 +58,12 @@ $(document).ready(function () {
         } else if ($(this).attr('data-decimals') == 0) {
             $(this).val(parseInt($(this).val()));
         }
+        
         minValue = parseFloat($(this).attr('min'));
         maxValue = parseFloat($(this).attr('max'));
         valueCurrent = parseFloat($(this).val());
         name = $(this).attr('name');
+
         if (valueCurrent >= minValue) {
             $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled');
         } else {
@@ -81,6 +86,8 @@ $(document).ready(function () {
             setSpeechSpeedSr($(this).val(), $(this).data('default'));
         } else if($(this).attr('id') == 'input-pitch-narrator'){
             setPitchNarrator($(this).val(), $(this).data('default'));
+        } else if($(this).attr('id') == 'input-speed-LSC-translator'){
+            setSignSpeedLSCTranslator($(this).val(), $(this).data('default'));
         }
     });
     $(".input-number").keydown(function (e) {
@@ -124,6 +131,10 @@ $(document).ready(function () {
         $('#screen-reader').addClass('show active');
         $('#screen-reader-tab').addClass('active');
         $('#screen-reader-tab').attr('aria-selected', true);
+    } else if (needLSCTranslator) {
+        $('#LSC-translator').addClass('show active');
+        $('#LSC-translator-tab').addClass('active');
+        $('#LSC-translator-tab').attr('aria-selected', true);
     }
 
     if ($('ul#accessibilityTab li').length == 2) {
@@ -136,15 +147,23 @@ $(document).ready(function () {
 
 });
 
-// resetea los valores de la barra de accesibilidad
+// Resetea todos los valores de la barra de accesibilidad por default
 function setDefaultAllValues() {
     if (needPrefAdaptInterfaz || !session_user) {
         setDefaultValuesInterfaz();
     }
+    
     if (needNarrator || !session_user) {
         setDefaultValuesNarrator();
     }
+    
     if (needSr || !session_user) {
         setDefaultValuesSr();
     }
+
+    if (needLSCTranslator || !session_user) {
+        setDefaultValuesLSCTranslator();
+    }
+
+
 }
