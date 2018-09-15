@@ -232,8 +232,10 @@
             });
 
 
-            $("#useAdaptInterfaz").on("change", function () {
+            $("#useAdaptInterfaz, #useNarrator, #useSr, #useLSCTranslator").on("change", function () {
                 let selectedVal = $(this).find(":selected").val();
+                
+                $.notifyClose();
                 
                 if (selectedVal == '1' || selectedVal == '2') {
                     $.notify({
@@ -256,9 +258,6 @@
                     });
                 }
             });
-
-
-
         });
 
         $(document).ready(function () {
