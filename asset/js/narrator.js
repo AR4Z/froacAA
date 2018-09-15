@@ -18,6 +18,7 @@ function dataNarrator() {
         volume: 1,
         punct: true,
         rawdata: 'base64',
+
     }
 
     // class that should ignored for narrator

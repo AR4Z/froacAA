@@ -3154,15 +3154,16 @@ function dataLSCTranslator() {
         localStorage['sign_speed'] = preferencesLSCTranslator['sign_speed'];
         localStorage['model_id'] = preferencesLSCTranslator['model_id'];
     }
-    
-    $("#container-iris").css("top", localStorage['irisTopPos'] || 0);
-    $("#container-iris").css("left", localStorage['irisLeftPos'] || 0);
-    
+
     if(localStorage["isMinimized"] == "true") {
         minimizeIris();
+        document.getElementById("container-iris").style.display = "";
     } else {
+        document.getElementById("container-iris").style.display = "";
         maximizeIris();
     }
+    
+    
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 15).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
@@ -3445,8 +3446,13 @@ function maximizeIris() {
 
 $( ".container-iris" ).draggable({
     containment: "parent", 
-    scroll: false, 
+    scroll: false,
+    create: function() {
+        document.getElementById("container-iris").style.top = (localStorage["irisTopPos"] || 0);
+        document.getElementById("container-iris").style.left = (localStorage["irisLeftPos"] || 0);
+    },
     stop: function( event, ui ) {
         localStorage['irisTopPos'] = $(this).css('top');
         localStorage['irisLeftPos'] = $(this).css('left'); 
-}});
+    },
+});
