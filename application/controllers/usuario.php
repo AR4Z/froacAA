@@ -492,8 +492,8 @@ class Usuario extends CI_Controller {
     public function update_preferences_LSCTranslatorSession(){
         $arrayNamesPreferencesLSCTranslator = $this->input->post('names_preferences_LSCTranslator');
         $arrayValuesPreferencesLSCTranslator = $this->input->post('values');
-        $arrayPreferencesLSCTranslator = $this->session->userdata('preferencesSr');
-        $arrayCombineNameAndValuesLSCTranslator = array_combine($arrayNamesPreferencesSr, $arrayValuesPreferencesSr);
+        $arrayPreferencesLSCTranslator = $this->session->userdata('preferencesLSCTranslator');
+        $arrayCombineNameAndValuesLSCTranslator = array_combine( $arrayNamesPreferencesLSCTranslator, $arrayValuesPreferencesLSCTranslator );
         
         foreach($arrayCombineNameAndValuesLSCTranslator as $name => $value){
             $arrayPreferencesLSCTranslator[$name] = $value;

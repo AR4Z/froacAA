@@ -3194,7 +3194,7 @@ function updateValuesLSCTranslatorInSession(names_preferences_LSC_translator, va
     console.log("update in session");
 
     $.ajax({
-        url : base_url+"usuario/update_preferences_LSCTranslatorSession",
+        url : base_url + "usuario/update_preferences_LSCTranslatorSession",
         type : "POST",
         dataType : "json",
         data : { "username": session_user['username'], "names_preferences_LSCTranslator":names_preferences_LSC_translator, "values":values},
@@ -3219,7 +3219,7 @@ function setSignSpeedLSCTranslator(speed, setDefault){
     localStorage['sign_speed'] = speed;
 }
 
-function setLSCTranslatorModel(modelID) {
+function setLSCTranslatorModel(modelID, setDefault) {
     if((modelID != localStorage['model_id']) && needLSCTranslator && !setDefault) {
         updateValuesLSCTranslatorInSession(['model_id'], [modelID]);
     }
