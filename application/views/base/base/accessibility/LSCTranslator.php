@@ -16,7 +16,7 @@
                                     <span class="oi oi-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" name="quant[5]" id="input-speed-LSC-translator" class="form-control input-number" value="15" min="1" max="45" step="1" data-decimals="0" style="text-align:center">
+                            <input type="text" name="quant[5]" id="input-speed-LSC-translator" class="form-control input-number" value="20" min="10" max="40" step="10" data-decimals="0" style="text-align:center">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[5]">
                                     <span class="oi oi-plus"></span>

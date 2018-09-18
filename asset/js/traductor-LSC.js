@@ -3155,7 +3155,7 @@ function dataLSCTranslator() {
         localStorage['model_id'] = preferencesLSCTranslator['model_id'];
     }
 
-    if(localStorage["isMinimized"] == "true") {
+    if(!localStorage["isMinimized"] || (localStorage["isMinimized"] == "true")) {
         minimizeIris();
         document.getElementById("container-iris").style.display = "";
     } else {
@@ -3165,13 +3165,13 @@ function dataLSCTranslator() {
     
     
      // cada una de las configuraciones toma el valor que hay en cache o el default
-     $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 15).change();
+     $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 20).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
 }
 
 function setDefaultValuesLSCTranslator(){
     $('#input-speed-LSC-translator').data('default', true);
-    $('#input-speed-LSC-translator').val(15).change();
+    $('#input-speed-LSC-translator').val(20).change();
     $("input[name='LSC-translator-model']").data('default', true);
     $("input[name='LSC-translator-model'][value=" + ('1') + "]").prop('checked', true).change();
     
@@ -3307,7 +3307,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: localStorage['sign_speed'],
+                fps: parseInt(localStorage['sign_speed']),
                 onEnd: function () {
                     console.log('clip1 ended.');
                     canvidControl.play(index + 1);
@@ -3319,7 +3319,7 @@ function loadImage(signsName) {
                 frames: 13,
                 cols: 1,
                 loops: 1,
-                fps: localStorage['sign_speed'],
+                fps: parseInt(localStorage['sign_speed']),
                 onEnd: function () {
                     canvidControl.destroy();
                     $('#stop-iris').hide();
@@ -3422,6 +3422,9 @@ function minimizeIris() {
         $("#maximize-iris").show();
      });
 
+     document.getElementById("container-iris").style.top = (localStorage["irisTopPos"] || "calc(100% - 49px)");
+     document.getElementById("container-iris").style.left = (localStorage["irisLeftPos"] || "calc(100% - 340px)");
+     
      localStorage['isMinimized'] = true;
      isMinimized = true;
 }
@@ -3448,8 +3451,8 @@ $( ".container-iris" ).draggable({
     containment: "parent", 
     scroll: false,
     create: function() {
-        document.getElementById("container-iris").style.top = (localStorage["irisTopPos"] || 0);
-        document.getElementById("container-iris").style.left = (localStorage["irisLeftPos"] || 0);
+        document.getElementById("container-iris").style.top = (localStorage["irisTopPos"] || "calc(100% - 49px)");
+        document.getElementById("container-iris").style.left = (localStorage["irisLeftPos"] || "calc(100% - 340px)");
     },
     stop: function( event, ui ) {
         localStorage['irisTopPos'] = $(this).css('top');
