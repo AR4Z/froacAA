@@ -46,6 +46,7 @@
 
 <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
     <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
     <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
 <?php endif;?>

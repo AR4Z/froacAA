@@ -3273,20 +3273,23 @@ function prepareText(text) {
 function splitWordsInValidSigns(text) {
     let imagesPath = [];
     let imagesLetter = [];
+    let imagesNumbers = arrayImages.numeros;
+
     const words = text.split(' ');
     
-    for (let index = 0; index < words.length; index++) {
-        const word = words[index];
-        console.log(word[0]);
+    for (let iWord = 0; iWord < words.length; iWord++) {
+        const word = words[iWord];
         imagesLetter = arrayImages[word[0]];
-        if (imagesLetter.indexOf(word + '.jpg') == -1) {
-            alfabeto = arrayImages['alfabeto']
-            for (let index2 = 0; index2 < word.length; index2++) {
-                imagesPath.push('alfabeto/' + alfabeto[alfabeto.indexOf(word[index2] + '.jpg')]);
-            }
-        } else {
-            imagesPath.push(word[0] + '/' + imagesLetter[imagesLetter.indexOf(word + '.jpg')]);
 
+        if(imagesNumbers.indexOf(word + ".jpg") != -1) {
+            imagesPath.push("numeros" + '/' + imagesNumbers[imagesNumbers.indexOf(word + '.jpg')]);
+        } else if (imagesLetter.indexOf(word + '.jpg') != -1) {
+            imagesPath.push(word[0] + '/' + imagesLetter[imagesLetter.indexOf(word + '.jpg')]);
+        } else {
+            alfabeto = arrayImages['alfabeto']
+            for (let iLetter = 0; iLetter < word.length; iLetter++) {
+                imagesPath.push('alfabeto/' + alfabeto[alfabeto.indexOf(word[iLetter] + '.jpg')]);
+            }
         }
     }
     return imagesPath;
@@ -3409,10 +3412,23 @@ function translate() {
     if (isMinimized) {
         return;
     } else {
-        loadImage(splitWordsInValidSigns(specialSigns(prepareText(text))));
+        loadImage(splitWordsInValidSigns(specialSigns(cleanNumbers(prepareText(text)))));
     }
 }
 
+function cleanNumbers(text) {
+    let copyText = text;
+    const numbersInString = copyText.match(/\d+/g).map(Number);
+
+    for (let index = 0; index < numbersInString.length; index++) {
+        const element = numbersInString[index];
+
+        copyText = copyText.replaceAll(element, writtenNumber(element, {lang: "es"}));
+        
+    }
+
+    return copyText;
+}
 
 function minimizeIris() {
     $('#container-body-iris').slideUp('fast', function() {
