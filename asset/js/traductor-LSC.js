@@ -3286,7 +3286,8 @@ function splitWordsInValidSigns(text) {
         } else if (imagesLetter.indexOf(word + '.jpg') != -1) {
             imagesPath.push(word[0] + '/' + imagesLetter[imagesLetter.indexOf(word + '.jpg')]);
         } else {
-            alfabeto = arrayImages['alfabeto']
+            alfabeto = arrayImages['alfabeto'];
+            
             for (let iLetter = 0; iLetter < word.length; iLetter++) {
                 imagesPath.push('alfabeto/' + alfabeto[alfabeto.indexOf(word[iLetter] + '.jpg')]);
             }
@@ -3418,14 +3419,20 @@ function translate() {
 
 function cleanNumbers(text) {
     let copyText = text;
-    const numbersInString = copyText.match(/\d+/g).map(Number);
+    let numbersInString = copyText.match(/\d+/g);
 
-    for (let index = 0; index < numbersInString.length; index++) {
-        const element = numbersInString[index];
 
-        copyText = copyText.replaceAll(element, writtenNumber(element, {lang: "es"}));
+    if (numbersInString) {
+        numbersInString = numbersInString.map(Number);
         
+        for (let index = 0; index < numbersInString.length; index++) {
+            const element = numbersInString[index];
+    
+            copyText = copyText.replaceAll(element, writtenNumber(element, {lang: "es"}));
+            
+        }
     }
+    
 
     return copyText;
 }
