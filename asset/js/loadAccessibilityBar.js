@@ -10,6 +10,11 @@ $(document).ready(function(){
         if(needNarrator || !session_user){
             dataNarrator();
         }
+
+        if(needSr || !session_user){
+            dataSr();
+        }
+
         if(needPrefAdaptInterfaz || !session_user) {
             dataInterfaz();
         }

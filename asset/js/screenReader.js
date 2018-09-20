@@ -1,4 +1,4 @@
-let treeSr;
+let treeSr, audioSrcsSr, queueForSpeechSr = [];
 let cfgVoiceSr = {
     amplitud: 100,
     wordgap: 0,
@@ -11,16 +11,23 @@ let cfgVoiceSr = {
 
 }
 
-let cfgReproductorSr= {
+let cfgReproductorSr = {
     src: [],
-    format: ['wav']
+    format: ['wav'],
+    onplay: clearQueueSr,
+    onend: nextElementSr,
 }
+
 playerSr = new Howl(cfgReproductorSr);
 
+function dataSr() {
+    loadTreeSr();
+    loadSr();
+}
 
-$(document).ready(function(){
+function loadSr() {
     // verifico si hay una sesion iniciada y si el usuario necesita usar screen reader para cargar los valores desde la DB
-    if(session_user && needSr){
+    if (session_user && needSr) {
         localStorage['speed_reading_sr'] = preferencesSr['speed_reading'];
         localStorage['pitch_id_sr'] = preferencesSr['pitch_id'];
         localStorage['volume_id_sr'] = preferencesSr['volume_id'];
@@ -33,9 +40,10 @@ $(document).ready(function(){
     $("input[name='volume-sr'][value=" + (localStorage['volume_id_sr'] || '2') + "]").prop('checked', true).change();
     $("input[name='gender-sr'][value=" + (localStorage['voice_gender_id_sr'] || '1') + "]").prop('checked', true).change();
     $("input[name='link-sr'][value=" + (localStorage['links_id_sr'] || '1') + "]").prop('checked', true).change();
-});
+}
 
-function setDefaultValuesSr(){
+
+function setDefaultValuesSr() {
     $('#input-speed-speech-sr').data('default', true);
     $('#input-speed-speech-sr').val(180).change();
     $("input[name='pitch-sr']").data('default', true);
@@ -47,54 +55,58 @@ function setDefaultValuesSr(){
     $("input[name='link-sr']").data('default', true);
     $("input[name='link-sr'][value=" + ('1') + "]").prop('checked', true).change();
 
-    if(session_user){
+    if (session_user) {
         let names_preferences_sr = ['speed_reading', 'pitch_id', 'volume_id', 'voice_gender_id', 'links_id'];
         let values = [180, 2, 2, 1, 1];
         updateValuesSrInSession(names_preferences_sr, values);
     }
 }
 
-$("input[name='pitch-sr']").change(function(){
+$("input[name='pitch-sr']").change(function () {
     let pitchIDselected = $("input[name='pitch-sr']:checked").val();
     setPitchSr(pitchIDselected);
 });
 
-$("input[name='volume-sr']").change(function(){
+$("input[name='volume-sr']").change(function () {
     let volumeIDselected = $("input[name='volume-sr']:checked").val();
     setVolumeSr(volumeIDselected);
 });
 
-$("input[name='gender-sr']").change(function(){
+$("input[name='gender-sr']").change(function () {
     let genderIDselected = $("input[name='gender-sr']:checked").val();
     setVoiceGenderSr(genderIDselected);
 });
 
-$("input[name='link-sr']").change(function(){
+$("input[name='link-sr']").change(function () {
     let linkIDselected = $("input[name='link-sr']:checked").val();
     setLinkSr(linkIDselected);
 });
 
-function updateValuesSrInSession(names_preferences_sr, values){
+function updateValuesSrInSession(names_preferences_sr, values) {
     console.log("update in session");
 
     $.ajax({
-        url : base_url+"usuario/update_preferences_srSession",
-        type : "POST",
-        dataType : "json",
-        data : { "username": session_user['username'], "names_preferences_sr":names_preferences_sr, "values":values},
-        success : function(data) {
+        url: base_url + "usuario/update_preferences_srSession",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "username": session_user['username'],
+            "names_preferences_sr": names_preferences_sr,
+            "values": values
+        },
+        success: function (data) {
             console.log(data);
         },
-        error : function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
 }
 
-function setSpeechSpeedSr(speed, setDefault){
+function setSpeechSpeedSr(speed, setDefault) {
     console.log("swswej");
-    if((speed != localStorage['speed_reading_sr']) && needSr && !setDefault){
-        console.log("trae" +localStorage['speed_reading_sr']);
+    if ((speed != localStorage['speed_reading_sr']) && needSr && !setDefault) {
+        console.log("trae" + localStorage['speed_reading_sr']);
         updateValuesSrInSession(['speed_reading'], [speed]);
     }
     $('#input-speed-speech-sr').data('default', false);
@@ -102,7 +114,7 @@ function setSpeechSpeedSr(speed, setDefault){
 }
 
 function setPitchSr(pitchID, setDefault) {
-    if((pitchID != localStorage['pitch_id_sr']) && needSr && !setDefault) {
+    if ((pitchID != localStorage['pitch_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['pitch_id'], [pitchID]);
     }
     $("input[name='pitch-sr']").data('default', false);
@@ -110,7 +122,7 @@ function setPitchSr(pitchID, setDefault) {
 }
 
 function setVolumeSr(volumeID, setDefault) {
-    if((volumeID != localStorage['volume_id_sr']) && needSr && !setDefault) {
+    if ((volumeID != localStorage['volume_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['volume_id'], [volumeID]);
     }
     $("input[name='volume-sr']").data('default', false);
@@ -118,7 +130,7 @@ function setVolumeSr(volumeID, setDefault) {
 }
 
 function setVoiceGenderSr(genderID, setDefault) {
-    if((genderID != localStorage['voice_gender_id_sr']) && needSr && !setDefault) {
+    if ((genderID != localStorage['voice_gender_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['voice_gender_id'], [genderID]);
     }
     $("input[name='gender-sr']").data('default', false);
@@ -126,7 +138,7 @@ function setVoiceGenderSr(genderID, setDefault) {
 }
 
 function setLinkSr(linkID, setDefault) {
-    if((linkID != localStorage['links_id_sr']) && needSr && !setDefault) {
+    if ((linkID != localStorage['links_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['links_id'], [linkID]);
     }
     $("input[name='link-sr']").data('default', false);
@@ -152,12 +164,7 @@ function loadTreeSr() {
     }
 }
 
-function is_all_ws(node) {
-    // Use ECMA-262 Edition 3 String and RegExp features
-    return !(/[^\t\n\r ]/.test(node.textContent.trim()));
-}
-
-function isValidNode(node) {
+function isValidNodeSr(node) {
     if ($(node.parentElement).is(':hidden') && !$(node.parentElement).is(':visible')) {
         return false;
     }
@@ -171,9 +178,58 @@ function isValidNode(node) {
 }
 
 function sr() {
-    cfgReproductorSr.src[0] = "data:audio/wav;base64," + meSpeak.speak(treeSr.currentNode.textContent, cfgVoiceSr);
-    playerSr.init(cfgReproductorSr);
-    playerSr.play();
-    treeSr.nextNode();
+    treeSr.nextNode()
+    try {
+        if (playerSr.playing()) {
+            playerSr.stop();
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    queueForSpeechSr = [];
+    queueForSpeechSr.push(treeSr.currentNode.textContent); 
+
+    let srWorker = new Worker(base_url + 'asset/js/espeakWorker.js');
+    srWorker.postMessage({
+        'texts': queueForSpeechSr,
+        'cfgVoiceNarrator': cfgVoiceSr
+    });
+
+    srWorker.onmessage = function (event) {
+        srWorker.terminate();
+        console.log(event.data);
+        audioSrcsSr = event.data;
+        playQueueSr();
+    }
 }
 
+function nextElementSr() {
+    if (audioSrcsSr.length >= 1) {
+        console.log("OTRO!!")
+        playQueueSr();
+    } else {
+        if (treeSr.nextNode()) {
+            treeSr.previousNode();
+            sr();
+        } else {
+            return;
+        }
+    }
+}
+
+function playQueueSr() {
+    setSrcCfgPlayerSr(audioSrcsSr[0]);
+    playerSr.init(cfgReproductorSr);
+    playerSr.play();
+}
+
+function clearQueueSr() {
+    console.log("CLEAR!");
+    audioSrcsSr.splice(0, 1);
+}
+
+
+function setSrcCfgPlayerSr(src) {
+    cfgReproductorSr['src'][0] = src;
+}
