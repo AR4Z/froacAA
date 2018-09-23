@@ -1,4 +1,5 @@
-let treeSr, audioSrcsSr = [],
+let treeSr, flStopSr = false,
+    audioSrcsSr = [],
     queueForSpeechSr = [];
 let synth = window.speechSynthesis;
 
@@ -6,11 +7,11 @@ function dataSr() {
     loadTreeSr();
     loadSr();
 
-    hotkeys('ctrl+n,ctrl+p,ctrl+s', function (event, handler) {
+    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s', function (event, handler) {
         event.preventDefault()
 
         switch (handler.key) {
-            case "ctrl+n":
+            case "ctrl+d":
                 console.log("next");
                 nextSr();
                 break;
@@ -19,6 +20,9 @@ function dataSr() {
                 break;
             case "ctrl+s":
                 sr();
+                break;
+            case "ctrl+a":
+                stopSr();
                 break;
         }
     });
@@ -63,25 +67,25 @@ function setDefaultValuesSr() {
 
 $("input[name='pitch-sr']").change(function () {
     let pitchIDselected = $("input[name='pitch-sr']:checked").val();
-    
+
     setPitchSr(pitchIDselected);
 });
 
 $("input[name='volume-sr']").change(function () {
     let volumeIDselected = $("input[name='volume-sr']:checked").val();
-    
+
     setVolumeSr(volumeIDselected);
 });
 
 $("input[name='gender-sr']").change(function () {
     let genderIDselected = $("input[name='gender-sr']:checked").val();
-    
+
     setVoiceGenderSr(genderIDselected);
 });
 
 $("input[name='link-sr']").change(function () {
     let linkIDselected = $("input[name='link-sr']:checked").val();
-    
+
     setLinkSr(linkIDselected);
 });
 
@@ -213,7 +217,11 @@ function createUtterances(text) {
 }
 
 function nextElementSr() {
-    
+    if (flStopSr) {
+        flStopSr = false;
+        return;
+    }
+
     if (audioSrcsSr.length >= 1) {
         console.log("OTRO!!")
         playQueueSr();
@@ -231,24 +239,23 @@ function nextElementSr() {
 function nextSr() {
     if (synth.speaking) {
         synth.cancel();
-    }
+        audioSrcsSr = [];
 
-    audioSrcsSr = [];
-    nextElementSr();
+        nextElementSr();
+    }
 }
 
 function prevSr() {
     if (synth.speaking) {
         synth.cancel();
+        audioSrcsSr = [];
+        removeStyle();
+
+        treeSr.previousNode();
+        treeSr.previousNode();
+
+        nextElementSr();
     }
-
-    audioSrcsSr = [];
-    removeStyle();
-    
-    treeSr.previousNode();
-    treeSr.previousNode();
-
-    nextElementSr();
 }
 
 function playQueueSr() {
@@ -266,7 +273,17 @@ function setStyle() {
     node.style.outline = "solid black";
 }
 
-function removeStyle(){
+function removeStyle() {
     const node = treeSr.currentNode.parentElement;
+
     node.style.outline = '';
+}
+
+function stopSr() {
+    if (synth.speaking) {
+        removeStyle();
+        loadTreeSr();
+        flStopSr = true;
+        synth.cancel();
+    }
 }
