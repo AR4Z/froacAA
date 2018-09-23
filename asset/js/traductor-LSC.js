@@ -3178,7 +3178,7 @@ function setDefaultValuesLSCTranslator(){
 
     if(session_user){
         let names_preferences_LSC_translator = ['sign_speed', 'model_id'];
-        let values = [15, 1];
+        let values = [20, 1];
 
         updateValuesLSCTranslatorInSession(names_preferences_LSC_translator, values);
     }

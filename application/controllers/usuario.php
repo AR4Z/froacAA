@@ -377,7 +377,7 @@ class Usuario extends CI_Controller {
             $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
             $use_LSCTranslator = $use_LSCTranslator[0]['use_traslator_lsc_id'];
             // actualizo valores sesion, desde alla son aztualizados en DB
-            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTraslator);
+            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator);
             
             // redirecciono al perfil del usuario
             redirect(base_url().'usuario/perfil', 'refresh');

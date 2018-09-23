@@ -469,7 +469,7 @@
         if(newUserAdaptInfo.needSr){
             let screenReaderPreferences = {
                     'use_username':$("input[name='username']").val(),
-                    'speed_reading':localStorage['speed_reading_sr'],
+                    'speed_reading_id':localStorage['speed_reading_sr'],
                     'pitch_id':localStorage['pitch_id_sr'],
                     'volume_id':localStorage['volume_id_sr'],
                     'voice_gender_id':localStorage['voice_gender_id_sr'],

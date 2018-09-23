@@ -73,7 +73,7 @@ function get_all_data_adaptability_sr($username) {
     from use_pref_sr
 
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_sr.pitch_id
-    inner join scales_pitch_volume AS spvs on spv.scale_id=use_pref_sr.speed_reading_id
+    inner join scales_pitch_volume AS spvs on spvs.scale_id=use_pref_sr.speed_reading_id
     inner join scales_pitch_volume AS spv on spv.scale_id=use_pref_sr.volume_id
     inner join gender_options on gender_options.gender_id=use_pref_sr.voice_gender_id
     inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_sr.links_id
@@ -531,7 +531,7 @@ if ($this->input->post('cantidad6')!='') {
         $optInterfaz = $this->input->post('personaliceInterfaz');
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
-        $optLSCTranslator = $this->input->post('useLSC');
+        $optLSCTranslator = $this->input->post('useLSCTranslator');
 
         $data1 = array(
             "use_nombre"          =>  $this->input->post("nombre"),
