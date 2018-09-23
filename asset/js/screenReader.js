@@ -6,6 +6,7 @@ let treeSr, flStopSr = false,
         pitch: 1,
         volume: 0.5, 
     };
+
 let synth = window.speechSynthesis;
 
 function dataSr() {
@@ -132,7 +133,7 @@ function setSpeechSpeedSr(speedID, setDefault) {
 
     if ((speedID != localStorage['speed_reading_sr']) && needSr && !setDefault) {
         console.log("trae" + localStorage['speed_reading_sr']);
-        updateValuesSrInSession(['speed_reading'], [speed]);
+        updateValuesSrInSession(['speed_reading_id'], [speedID]);
     }
 
     $("input[name='speed-sr']").data('default', false);
@@ -199,7 +200,7 @@ function setLinkSr(linkID, setDefault) {
 function loadTreeSr() {
     let filter = {
         acceptNode: function (n) {
-            if (isValidNode(n)) {
+            if (isValidNodeSr(n)) {
                 return NodeFilter.FILTER_ACCEPT;
             } else {
                 return NodeFilter.FILTER_SKIP;

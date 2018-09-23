@@ -578,7 +578,7 @@ function narrator() {
                 break;
         }
 
-        let narratorWorker = new Worker(base_url + 'asset/js/workerNarrator.js');
+        let narratorWorker = new Worker(base_url + 'asset/js/espeakWorker.js');
         narratorWorker.postMessage({
             'texts': queueForSpeech,
             'cfgVoiceNarrator': cfgVoiceNarrator
