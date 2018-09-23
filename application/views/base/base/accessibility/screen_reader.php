@@ -1,31 +1,44 @@
 <div class="tab-pane fade" id="screen-reader" role="tabpanel" aria-labelledby="screen-reader-tab">
     <div class="d-flex flex-row flex-nowrap">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b>VELOCIDAD DE LECTURA</b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar la velocidad de lectura. (Palabras por minuto)</p>
+                        <p>Cambiar la velocidad de lectura.</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[3]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[3]" id="input-speed-speech-sr" class="form-control input-number" value="180" min="80" max="450" step="1" data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[3]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-sr" id="speedBajo" value="1">
+                                    <label class="form-check-label" for="speedBajo">Bajo</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-sr" id="speedMedio" value="2">
+                                    <label class="form-check-label" for="speedMedio">Medio</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-sr" id="speedAlto" value="3">
+                                    <label class="form-check-label" for="speedAlto">Alto</label>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">

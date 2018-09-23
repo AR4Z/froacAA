@@ -1,6 +1,11 @@
 let treeSr, flStopSr = false,
     audioSrcsSr = [],
-    queueForSpeechSr = [];
+    queueForSpeechSr = [],
+    cfgVoiceSr = {
+        rate: 1,
+        pitch: 1,
+        volume: 0.5, 
+    };
 let synth = window.speechSynthesis;
 
 function dataSr() {
@@ -9,17 +14,19 @@ function dataSr() {
 
     hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s', function (event, handler) {
         event.preventDefault()
+        let sayEventUtter = new SpeechSynthesisUtterance();
 
         switch (handler.key) {
             case "ctrl+d":
-                console.log("next");
                 nextSr();
                 break;
             case "ctrl+p":
                 prevSr();
                 break;
             case "ctrl+s":
-                sr();
+                sayEventUtter.text = "Lector de pantalla encendido";
+                sayEventUtter.onend = sr;
+                synth.speak(sayEventUtter);
                 break;
             case "ctrl+a":
                 stopSr();
@@ -31,14 +38,14 @@ function dataSr() {
 function loadSr() {
     // verifico si hay una sesion iniciada y si el usuario necesita usar screen reader para cargar los valores desde la DB
     if (session_user && needSr) {
-        localStorage['speed_reading_sr'] = preferencesSr['speed_reading'];
+        localStorage['speed_reading_sr'] = preferencesSr['speed_reading_id'];
         localStorage['pitch_id_sr'] = preferencesSr['pitch_id'];
         localStorage['volume_id_sr'] = preferencesSr['volume_id'];
         localStorage['voice_gender_id_sr'] = preferencesSr['voice_gender_id'];
         localStorage['links_id_sr'] = preferencesSr['links_id'];
     }
     // cada una de las configuraciones toma el valor que hay en cache o el default
-    $('#input-speed-speech-sr').val(localStorage['speed_reading_sr'] || 180).change();
+    $("input[name='speed-sr'][value=" + (localStorage['speed_reading_sr'] || '2') + "]").prop('checked', true).change();
     $("input[name='pitch-sr'][value=" + (localStorage['pitch_id_sr'] || '2') + "]").prop('checked', true).change();
     $("input[name='volume-sr'][value=" + (localStorage['volume_id_sr'] || '2') + "]").prop('checked', true).change();
     $("input[name='gender-sr'][value=" + (localStorage['voice_gender_id_sr'] || '1') + "]").prop('checked', true).change();
@@ -47,8 +54,8 @@ function loadSr() {
 
 
 function setDefaultValuesSr() {
-    $('#input-speed-speech-sr').data('default', true);
-    $('#input-speed-speech-sr').val(180).change();
+    $("input[name='speed-sr']").data('default', true);
+    $("input[name='speed-sr'][value=" + ('2') + "]").prop('checked', true).change();
     $("input[name='pitch-sr']").data('default', true);
     $("input[name='pitch-sr'][value=" + ('2') + "]").prop('checked', true).change();
     $("input[name='volume-sr']").data('default', true);
@@ -64,6 +71,12 @@ function setDefaultValuesSr() {
         updateValuesSrInSession(names_preferences_sr, values);
     }
 }
+
+$("input[name='speed-sr']").change(function () {
+    let speedIDselected = $("input[name='speed-sr']:checked").val();
+
+    setSpeechSpeedSr(speedIDselected);
+});
 
 $("input[name='pitch-sr']").change(function () {
     let pitchIDselected = $("input[name='pitch-sr']:checked").val();
@@ -108,32 +121,61 @@ function updateValuesSrInSession(names_preferences_sr, values) {
     });
 }
 
-function setSpeechSpeedSr(speed, setDefault) {
-    if ((speed != localStorage['speed_reading_sr']) && needSr && !setDefault) {
+function setSpeechSpeedSr(speedID, setDefault) {
+    let validSpeeds = {
+        '1': 0.5,
+        '2': 1,
+        '3': 2,
+    }
+
+    let validSpeed = validSpeeds[speedID];
+
+    if ((speedID != localStorage['speed_reading_sr']) && needSr && !setDefault) {
         console.log("trae" + localStorage['speed_reading_sr']);
         updateValuesSrInSession(['speed_reading'], [speed]);
     }
 
-    $('#input-speed-speech-sr').data('default', false);
-    localStorage['speed_reading_sr'] = speed;
+    $("input[name='speed-sr']").data('default', false);
+    localStorage['speed_reading_sr'] = speedID;
+
+    cfgVoiceSr.rate = validSpeed;
 }
 
+
 function setPitchSr(pitchID, setDefault) {
+    let validPitchs = {
+        '1': 0.5,
+        '2': 1,
+        '3': 2,
+    }
+
+    let validPitch = validPitchs[pitchID];
+
+
     if ((pitchID != localStorage['pitch_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['pitch_id'], [pitchID]);
     }
 
     $("input[name='pitch-sr']").data('default', false);
     localStorage['pitch_id_sr'] = pitchID;
+    cfgVoiceSr.pitch = validPitch;
 }
 
 function setVolumeSr(volumeID, setDefault) {
+    let validVolumes = {
+        '1': 0.5,
+        '2': 1,
+        '3': 2,
+    }
+    let validVolume = validVolumes[volumeID];
+
     if ((volumeID != localStorage['volume_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['volume_id'], [volumeID]);
     }
 
     $("input[name='volume-sr']").data('default', false);
     localStorage['volume_id_sr'] = volumeID;
+    cfgVoiceSr.volume = validVolume;
 }
 
 function setVoiceGenderSr(genderID, setDefault) {
@@ -186,14 +228,7 @@ function isValidNodeSr(node) {
 
 function sr() {
     treeSr.nextNode()
-    try {
-        if (playerSr.playing()) {
-            playerSr.stop();
-            return;
-        }
-    } catch (error) {
-        console.error(error);
-    }
+    
     queueForSpeechSr = [];
     queueForSpeechSr.push(treeSr.currentNode.textContent);
 
@@ -209,9 +244,9 @@ function createUtterances(text) {
         audioSrcsSr[index].onstart = clearQueueSr;
         audioSrcsSr[index].onend = nextElementSr;
         audioSrcsSr[index].voice = synth.getVoices()[65];
-        audioSrcsSr[index].pitch = 0.5;
-        audioSrcsSr[index].volume = 0.5;
-        audioSrcsSr[index].rate = 1;
+        audioSrcsSr[index].pitch = cfgVoiceSr.pitch;
+        audioSrcsSr[index].volume = cfgVoiceSr.volume;
+        audioSrcsSr[index].rate = cfgVoiceSr.rate;
         audioSrcsSr[index].lang = "es-419";
     }
 }

@@ -69,10 +69,11 @@ function get_all_data_adaptability_narrator($username) {
 
 // este metodo se encarga de obtener las preferencias del usuario para usar el screen reader
 function get_all_data_adaptability_sr($username) {
-    $query = $this->db->query("select use_pref_sr.use_username, use_pref_sr.speed_reading, use_pref_sr.pitch_id, use_pref_sr.volume_id, use_pref_sr.voice_gender_id, use_pref_sr.links_id
+    $query = $this->db->query("select use_pref_sr.use_username, use_pref_sr.speed_reading_id, use_pref_sr.pitch_id, use_pref_sr.volume_id, use_pref_sr.voice_gender_id, use_pref_sr.links_id
     from use_pref_sr
 
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_sr.pitch_id
+    inner join scales_pitch_volume AS spvs on spv.scale_id=use_pref_sr.speed_reading_id
     inner join scales_pitch_volume AS spv on spv.scale_id=use_pref_sr.volume_id
     inner join gender_options on gender_options.gender_id=use_pref_sr.voice_gender_id
     inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_sr.links_id
