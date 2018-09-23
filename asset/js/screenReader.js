@@ -1,28 +1,27 @@
-let treeSr, audioSrcsSr, queueForSpeechSr = [];
-let cfgVoiceSr = {
-    amplitud: 100,
-    wordgap: 0,
-    pitch: 50,
-    speed: 175,
-    variant: 'f1',
-    volume: 1,
-    punct: true,
-    rawdata: 'base64',
-
-}
-
-let cfgReproductorSr = {
-    src: [],
-    format: ['wav'],
-    onplay: clearQueueSr,
-    onend: nextElementSr,
-}
-
-playerSr = new Howl(cfgReproductorSr);
+let treeSr, audioSrcsSr = [],
+    queueForSpeechSr = [];
+let synth = window.speechSynthesis;
 
 function dataSr() {
     loadTreeSr();
     loadSr();
+
+    hotkeys('ctrl+d,ctrl+a,ctrl+s', function (event, handler) {
+        event.preventDefault()
+        
+        switch (handler.key) {
+            case "ctrl+d":
+                console.log("next");
+                nextSr();
+                break;
+            case "ctrl+a":
+                prevSr();
+                break;
+            case "ctrl+s":
+                sr();
+                break;
+        }
+    });
 }
 
 function loadSr() {
@@ -188,19 +187,23 @@ function sr() {
         console.error(error);
     }
     queueForSpeechSr = [];
-    queueForSpeechSr.push(treeSr.currentNode.textContent); 
+    queueForSpeechSr.push(treeSr.currentNode.textContent);
 
-    let srWorker = new Worker(base_url + 'asset/js/espeakWorker.js');
-    srWorker.postMessage({
-        'texts': queueForSpeechSr,
-        'cfgVoiceNarrator': cfgVoiceSr
-    });
+    createUtterances(queueForSpeechSr);
+    playQueueSr();
+}
 
-    srWorker.onmessage = function (event) {
-        srWorker.terminate();
-        console.log(event.data);
-        audioSrcsSr = event.data;
-        playQueueSr();
+function createUtterances(text) {
+    for (let index = 0; index < text.length; index++) {
+        const element = text[index];
+        audioSrcsSr[index] = new SpeechSynthesisUtterance(element);
+        audioSrcsSr[index].onstart = clearQueueSr;
+        audioSrcsSr[index].onend = nextElementSr;
+        audioSrcsSr[index].voice = synth.getVoices()[65];
+        audioSrcsSr[index].pitch = 0.5;
+        audioSrcsSr[index].volume = 0.5;
+        audioSrcsSr[index].rate = 1;
+        audioSrcsSr[index].lang = "es-419";
     }
 }
 
@@ -218,18 +221,30 @@ function nextElementSr() {
     }
 }
 
+function nextSr() {
+    if (synth.speaking) {
+        synth.cancel();
+    }
+
+    audioSrcsSr = [];
+    nextElementSr();
+}
+
+function prevSr() {
+    if (synth.speaking) {
+        synth.cancel();
+    }
+
+    audioSrcsSr = [];
+    treeSr.previousNode();
+    treeSr.previousNode();
+}
+
 function playQueueSr() {
-    setSrcCfgPlayerSr(audioSrcsSr[0]);
-    playerSr.init(cfgReproductorSr);
-    playerSr.play();
+    synth.speak(audioSrcsSr[0]);
 }
 
 function clearQueueSr() {
     console.log("CLEAR!");
     audioSrcsSr.splice(0, 1);
-}
-
-
-function setSrcCfgPlayerSr(src) {
-    cfgReproductorSr['src'][0] = src;
 }

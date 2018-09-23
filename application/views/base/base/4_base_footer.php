@@ -41,6 +41,7 @@
 
 <?php if($this->session->userdata('needSr') || !($this->session->userdata('logged_in'))):?>
     <script src="<?php echo base_url()?>asset/js/mespeak.js"></script>
+    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     <script src="<?php echo base_url()?>asset/js/screenReader.js"></script>
 <?php endif;?>
 
