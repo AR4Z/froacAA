@@ -6,15 +6,15 @@ function dataSr() {
     loadTreeSr();
     loadSr();
 
-    hotkeys('ctrl+d,ctrl+a,ctrl+s', function (event, handler) {
+    hotkeys('ctrl+n,ctrl+p,ctrl+s', function (event, handler) {
         event.preventDefault()
-        
+
         switch (handler.key) {
-            case "ctrl+d":
+            case "ctrl+n":
                 console.log("next");
                 nextSr();
                 break;
-            case "ctrl+a":
+            case "ctrl+p":
                 prevSr();
                 break;
             case "ctrl+s":
@@ -63,27 +63,29 @@ function setDefaultValuesSr() {
 
 $("input[name='pitch-sr']").change(function () {
     let pitchIDselected = $("input[name='pitch-sr']:checked").val();
+    
     setPitchSr(pitchIDselected);
 });
 
 $("input[name='volume-sr']").change(function () {
     let volumeIDselected = $("input[name='volume-sr']:checked").val();
+    
     setVolumeSr(volumeIDselected);
 });
 
 $("input[name='gender-sr']").change(function () {
     let genderIDselected = $("input[name='gender-sr']:checked").val();
+    
     setVoiceGenderSr(genderIDselected);
 });
 
 $("input[name='link-sr']").change(function () {
     let linkIDselected = $("input[name='link-sr']:checked").val();
+    
     setLinkSr(linkIDselected);
 });
 
 function updateValuesSrInSession(names_preferences_sr, values) {
-    console.log("update in session");
-
     $.ajax({
         url: base_url + "usuario/update_preferences_srSession",
         type: "POST",
@@ -103,11 +105,11 @@ function updateValuesSrInSession(names_preferences_sr, values) {
 }
 
 function setSpeechSpeedSr(speed, setDefault) {
-    console.log("swswej");
     if ((speed != localStorage['speed_reading_sr']) && needSr && !setDefault) {
         console.log("trae" + localStorage['speed_reading_sr']);
         updateValuesSrInSession(['speed_reading'], [speed]);
     }
+
     $('#input-speed-speech-sr').data('default', false);
     localStorage['speed_reading_sr'] = speed;
 }
@@ -116,6 +118,7 @@ function setPitchSr(pitchID, setDefault) {
     if ((pitchID != localStorage['pitch_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['pitch_id'], [pitchID]);
     }
+
     $("input[name='pitch-sr']").data('default', false);
     localStorage['pitch_id_sr'] = pitchID;
 }
@@ -124,6 +127,7 @@ function setVolumeSr(volumeID, setDefault) {
     if ((volumeID != localStorage['volume_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['volume_id'], [volumeID]);
     }
+
     $("input[name='volume-sr']").data('default', false);
     localStorage['volume_id_sr'] = volumeID;
 }
@@ -132,6 +136,7 @@ function setVoiceGenderSr(genderID, setDefault) {
     if ((genderID != localStorage['voice_gender_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['voice_gender_id'], [genderID]);
     }
+
     $("input[name='gender-sr']").data('default', false);
     localStorage['voice_gender_id_sr'] = genderID;
 }
@@ -140,10 +145,9 @@ function setLinkSr(linkID, setDefault) {
     if ((linkID != localStorage['links_id_sr']) && needSr && !setDefault) {
         updateValuesSrInSession(['links_id'], [linkID]);
     }
+
     $("input[name='link-sr']").data('default', false);
     localStorage['links_id_sr'] = linkID;
-
-
 }
 
 function loadTreeSr() {
@@ -190,6 +194,7 @@ function sr() {
     queueForSpeechSr.push(treeSr.currentNode.textContent);
 
     createUtterances(queueForSpeechSr);
+    setStyle();
     playQueueSr();
 }
 
@@ -208,12 +213,14 @@ function createUtterances(text) {
 }
 
 function nextElementSr() {
+    
     if (audioSrcsSr.length >= 1) {
         console.log("OTRO!!")
         playQueueSr();
     } else {
         if (treeSr.nextNode()) {
             treeSr.previousNode();
+            removeStyle();
             sr();
         } else {
             return;
@@ -236,8 +243,12 @@ function prevSr() {
     }
 
     audioSrcsSr = [];
+    removeStyle();
+    
     treeSr.previousNode();
     treeSr.previousNode();
+
+    nextElementSr();
 }
 
 function playQueueSr() {
@@ -247,4 +258,15 @@ function playQueueSr() {
 function clearQueueSr() {
     console.log("CLEAR!");
     audioSrcsSr.splice(0, 1);
+}
+
+function setStyle() {
+    const node = treeSr.currentNode.parentElement;
+
+    node.style.outline = "solid black";
+}
+
+function removeStyle(){
+    const node = treeSr.currentNode.parentElement;
+    node.style.outline = '';
 }
