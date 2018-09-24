@@ -3167,6 +3167,11 @@ function dataLSCTranslator() {
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 20).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
+     document.onmouseup = setSelectionText;
+     if(idView === "lo_view") {
+        iframeDocument.onmouseup = setSelectionText;
+     }
+     
 }
 
 function setDefaultValuesLSCTranslator(){
@@ -3385,12 +3390,30 @@ function forgetUserSelection() {
     } else if (document.selection) { // IE?
         document.selection.empty();
     }
+    if(idView === "lo_view") {
+        if (iframeDocument.getSelection) {
+            if (iframeDocument.getSelection().empty) { // Chrome
+                iframeDocument.getSelection().empty();
+            } else if (iframeDocument.getSelection().removeAllRanges) { // Firefox
+                iframeDocument.getSelection().removeAllRanges();
+            }
+        }
+     }
+    
 }
 
 
 function setSelectionText(e) {
-    let selection = (document.all) ? document.selection.createRange().text : document.getSelection();
-    let selectionText = selection.toString();
+    let selectionIframe;
+    let selection = (document.all) ? (document.selection.createRange().text) : document.getSelection();
+    selection = selection.toString();
+    
+    if (idView === "lo_view") {
+        selectionIframe = (iframeDocument.all) ? (iframeDocument.selection.createRange().text) : iframeDocument.getSelection();
+        selectionIframe = selectionIframe.toString();
+    }
+    
+    let selectionText = selectionIframe || selection;
     
     forgetUserSelection();
 
@@ -3400,7 +3423,7 @@ function setSelectionText(e) {
     }
 }
 
-document.onmouseup = setSelectionText;
+
 
 
 function translate() {
