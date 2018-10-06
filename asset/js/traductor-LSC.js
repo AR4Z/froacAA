@@ -3304,7 +3304,7 @@ function splitWordsInValidSigns(text) {
 
 
 function loadImage(signsName) {
-    let base = "http://localhost/froacAA/asset/img/lengua/";
+    let base = base_url + "asset/img/lengua/";
 
     for (let index = 0; index < signsName.length; index++) {
         const element = signsName[index];

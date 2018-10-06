@@ -1,4 +1,4 @@
-let treeSr, flStopSr = false,
+let treeSr, treeIsIframe = false,flStopSr = false,
     audioSrcsSr = [],
     queueForSpeechSr = [],
     cfgVoiceSr = {
@@ -10,7 +10,7 @@ let treeSr, flStopSr = false,
 let synth = window.speechSynthesis;
 
 function dataSr() {
-    loadTreeSr();
+    loadTreeSr(document);
     loadSr();
 
     hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s', function (event, handler) {
@@ -197,7 +197,7 @@ function setLinkSr(linkID, setDefault) {
     localStorage['links_id_sr'] = linkID;
 }
 
-function loadTreeSr() {
+function loadTreeSr(doc) {
     let filter = {
         acceptNode: function (n) {
             if (isValidNodeSr(n)) {
@@ -208,7 +208,7 @@ function loadTreeSr() {
         }
     }
     try {
-        treeSr = document.createTreeWalker(document.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
+        treeSr = doc.createTreeWalker(doc.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
     } catch {
         console.log("temporal");
     }
@@ -228,7 +228,7 @@ function isValidNodeSr(node) {
 }
 
 function sr() {
-    treeSr.nextNode()
+    treeSr.nextNode();
     
     queueForSpeechSr = [];
     queueForSpeechSr.push(treeSr.currentNode.textContent);
@@ -276,8 +276,6 @@ function nextSr() {
     if (synth.speaking) {
         synth.cancel();
         audioSrcsSr = [];
-
-        nextElementSr();
     }
 }
 
@@ -318,7 +316,7 @@ function removeStyle() {
 function stopSr() {
     if (synth.speaking) {
         removeStyle();
-        loadTreeSr();
+        loadTreeSr(document);
         flStopSr = true;
         synth.cancel();
     }
