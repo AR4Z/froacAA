@@ -142,6 +142,40 @@ function setSpeechSpeedSr(speedID, setDefault) {
     cfgVoiceSr.rate = validSpeed;
 }
 
+function textIsALinkSr(node) {
+    let currentNode = node;
+    while (currentNode) {
+        if (currentNode.tagName == 'A') {
+            return {
+                isLink: true,
+                nodeLink: currentNode,
+            };
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+    return {
+        isLink: false,
+    };
+}
+
+function textIsALabelSr(node) {
+    let currentNode = node;
+    while (currentNode) {
+        if (currentNode.tagName == 'LABEL') {
+            return {
+                isLabel: true,
+                nodeLabel: currentNode,
+            };
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+    return {
+        isLabel: false,
+    };
+
+}
 
 function setPitchSr(pitchID, setDefault) {
     let validPitchs = {
@@ -208,34 +242,55 @@ function loadTreeSr(doc) {
         }
     }
     try {
-        treeSr = doc.createTreeWalker(doc.getElementsByTagName('body')[0], NodeFilter.SHOW_TEXT, filter, false);
+        treeSr = doc.createTreeWalker(doc.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
     } catch {
         console.log("temporal");
     }
 }
 
 function isValidNodeSr(node) {
-    if ($(node.parentElement).is(':hidden') && !$(node.parentElement).is(':visible')) {
+    if ($(node).is(':hidden') && !$(node).is(':visible')) {
+        console.log("invisible");
         return false;
     }
 
-    if (is_all_ws(node)) {
-        console.log("son solo espacios")
+    if (node.tagName != 'INPUT'  && node.tagName != 'IMG' && is_all_ws(node)) {
+        console.log("son solo espacios");
+        return false;
+    }
+
+    if(node.tagName != 'INPUT' && node.tagName != 'IMG'  && getTextSr(node) == ''){
         return false;
     }
 
     return true;
 }
 
+function getTextSr(node){
+    // Get the parent element somehow, you can just as well use // .getElementById() or any other DOM method 
+    var parentElement = node; 
+    // Returns the text content as a string 
+    return [].reduce.call(parentElement.childNodes, function(a, b) { return a + (b.nodeType === 3 ? b.textContent : ''); }, '').trim();
+}
+
 function sr() {
     treeSr.nextNode();
     
     queueForSpeechSr = [];
-    queueForSpeechSr.push(treeSr.currentNode.textContent);
+    queueForSpeechSr.push(getComputableName(treeSr.currentNode));
 
     createUtterances(queueForSpeechSr);
+    
+    if(textIsALinkSr(treeSr.currentNode)['isLink']) {
+        textIsALinkSr(treeSr.currentNode)['nodeLink'].focus();
+    } 
+
     setStyle();
     playQueueSr();
+}
+
+function getComputableName(node) {
+    return getTextSr(treeSr.currentNode) || treeSr.currentNode.getAttribute('alt');
 }
 
 function createUtterances(text) {
@@ -302,13 +357,13 @@ function clearQueueSr() {
 }
 
 function setStyle() {
-    const node = treeSr.currentNode.parentElement;
+    const node = treeSr.currentNode;
 
     node.style.outline = "solid black";
 }
 
 function removeStyle() {
-    const node = treeSr.currentNode.parentElement;
+    const node = treeSr.currentNode;
 
     node.style.outline = '';
 }
