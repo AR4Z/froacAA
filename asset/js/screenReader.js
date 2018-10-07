@@ -165,40 +165,6 @@ function setSpeechSpeedSr(speedID, setDefault) {
     cfgVoiceSr.rate = validSpeed;
 }
 
-function textIsALinkSr(node) {
-    let currentNode = node;
-    while (currentNode) {
-        if (currentNode.tagName == 'A') {
-            return {
-                isLink: true,
-                nodeLink: currentNode,
-            };
-        } else {
-            currentNode = currentNode.parentNode;
-        }
-    }
-    return {
-        isLink: false,
-    };
-}
-
-function textIsALabelSr(node) {
-    let currentNode = node;
-    while (currentNode) {
-        if (currentNode.tagName == 'LABEL') {
-            return {
-                isLabel: true,
-                nodeLabel: currentNode,
-            };
-        } else {
-            currentNode = currentNode.parentNode;
-        }
-    }
-    return {
-        isLabel: false,
-    };
-
-}
 
 function setPitchSr(pitchID, setDefault) {
     let validPitchs = {
@@ -317,8 +283,11 @@ function sr() {
     }
 
     if (element.tagName == "INPUT" && !manualModeSr) {
-        element.focus();
         changeModeSr();
+    }
+
+    if(element.tagName != 'A' && isALink(element).isLink) {
+        isALink(element).nodeLink.focus();
     } else {
         element.focus();
     }
@@ -397,6 +366,8 @@ function computeRole(element) {
 
     if (element.getAttribute('role') && name != 'a') {
         return element.getAttribute('role');
+    } else if(isALink(element).isLink){
+        return mappings['a'];
     }
 
     return mappings[name] || 'default';
@@ -472,6 +443,7 @@ function prevSr() {
     if (synth.speaking) {
         synth.cancel();
     }
+
     sr();
 }
 
@@ -503,4 +475,22 @@ function stopSr() {
         flStopSr = true;
         synth.cancel();
     }
+}
+
+function isALink(node) {
+    let currentNode = node;
+
+    while (currentNode) {
+        if (currentNode.tagName == 'A') {
+            return {
+                isLink: true,
+                nodeLink: currentNode,
+            };
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+    return {
+        isLink: false,
+    };
 }
