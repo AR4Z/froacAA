@@ -1,19 +1,36 @@
-let treeSr, treeIsIframe = false,flStopSr = false,
+let treeSr, treeIsIframe = false,
+    flStopSr = false,
     audioSrcsSr = [],
     queueForSpeechSr = [],
+    manualModeSr = false,
     cfgVoiceSr = {
         rate: 1,
         pitch: 1,
-        volume: 0.5, 
+        volume: 0.5,
     };
 
 let synth = window.speechSynthesis;
+
+const mappings = {
+    a: 'link',
+    button: 'button',
+    h1: 'heading',
+    h2: 'heading',
+    h3: 'heading',
+    h4: 'heading',
+    h5: 'heading',
+    p: 'paragraph',
+    html: 'page',
+    img: 'image',
+    input: 'input',
+};
+
 
 function dataSr() {
     loadTreeSr(document);
     loadSr();
 
-    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s', function (event, handler) {
+    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s,ctrl+w', function (event, handler) {
         event.preventDefault()
         let sayEventUtter = new SpeechSynthesisUtterance();
 
@@ -31,6 +48,9 @@ function dataSr() {
                 break;
             case "ctrl+a":
                 stopSr();
+                break;
+            case "ctrl+w":
+                changeModeSr();
                 break;
         }
     });
@@ -254,43 +274,126 @@ function isValidNodeSr(node) {
         return false;
     }
 
-    if (node.tagName != 'INPUT'  && node.tagName != 'IMG' && is_all_ws(node)) {
+    if (node.tagName == 'LABEL') {
+        return false;
+    }
+
+    if (node.tagName != 'INPUT' && node.tagName != 'IMG' && is_all_ws(node)) {
         console.log("son solo espacios");
         return false;
     }
 
-    if(node.tagName != 'INPUT' && node.tagName != 'IMG'  && getTextSr(node) == ''){
+    if (node.tagName != 'INPUT' && node.tagName != 'IMG' && getTextSr(node) == '') {
         return false;
     }
 
     return true;
 }
 
-function getTextSr(node){
+function getTextSr(node) {
     // Get the parent element somehow, you can just as well use // .getElementById() or any other DOM method 
-    var parentElement = node; 
+    var parentElement = node;
     // Returns the text content as a string 
-    return [].reduce.call(parentElement.childNodes, function(a, b) { return a + (b.nodeType === 3 ? b.textContent : ''); }, '').trim();
+    return [].reduce.call(parentElement.childNodes, function (a, b) {
+        return a + (b.nodeType === 3 ? b.textContent : '');
+    }, '').trim();
 }
 
 function sr() {
     treeSr.nextNode();
-    
+
+    let element = treeSr.currentNode;
+    let role = computeRole(element);
+
     queueForSpeechSr = [];
-    queueForSpeechSr.push(getComputableName(treeSr.currentNode));
+
+    if (announcers[role]) {
+        queueForSpeechSr.push(announcers[role](element));
+    } else {
+        queueForSpeechSr.push(announcers.default(element));
+    }
+
+    if (element.tagName != "INPUT") {
+        element.focus();
+    }
 
     createUtterances(queueForSpeechSr);
-    
-    if(textIsALinkSr(treeSr.currentNode)['isLink']) {
-        textIsALinkSr(treeSr.currentNode)['nodeLink'].focus();
-    } 
-
     setStyle();
     playQueueSr();
 }
 
-function getComputableName(node) {
-    return getTextSr(treeSr.currentNode) || treeSr.currentNode.getAttribute('alt');
+function computeAccessibleName(element) {
+    let content;
+
+    if (element.getAttribute('aria-label')) {
+        return element.getAttribute('aria-label');
+    } else if (element.getAttribute('alt')) {
+        return element.getAttribute('alt');
+    } else if (element.getAttribute('aria-labelledby')) {
+        return getTextSr(findLabelForControl(element, document));
+    }
+
+    content = getTextSr(element);
+    return content;
+}
+
+
+const announcers = {
+    link(element) {
+        return `Enlace, ${ computeAccessibleName( element ) }. Para seguir el link, presione la tecla enter.`;
+    },
+
+    button(element) {
+        return `Botón, ${ computeAccessibleName( element ) }. Para presionar el botón, presione la tecla espacio.`;
+    },
+
+    heading(element) {
+        const level = element.getAttribute('aria-level') || element.tagName[1];
+
+        return `Encabezado nivel ${ level }, ${ computeAccessibleName( element ) }`;
+    },
+
+    paragraph(element) {
+        return element.textContent;
+    },
+
+    image(element) {
+        return `Imagen, ${ computeAccessibleName( element ) }`;
+    },
+
+    input(element) {
+        if (element.type == "text") {
+            return `Campo de formulario tipo texto: ${computeAccessibleName(element)}. Valor: ${element.value ? element.value : "Vacío"}.`;
+        } else if (element.type == "password") {
+            return `Campo de formulario tipo contraseña: ${computeAccessibleName(element)}. Estado: ${element.value ? "Lleno" : "Vacío"}`;
+        } else if (element.type == "checkbox") {
+            return `Casilla de verificación: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada" : "No seleccionada"}`
+        }
+    },
+
+    default (element) {
+        return `${ element.tagName }: ${ computeAccessibleName( element ) }`;
+    }
+};
+
+function findLabelForControl(el, doc) {
+    let nameVal = el.name;
+    let labels = doc.getElementsByTagName('label');
+
+    for (var i = 0; i < labels.length; i++) {
+        if (labels[i].htmlFor == nameVal)
+            return labels[i];
+    }
+}
+
+function computeRole(element) {
+    const name = element.tagName.toLowerCase();
+
+    if (element.getAttribute('role') && name != 'a') {
+        return element.getAttribute('role');
+    }
+
+    return mappings[name] || 'default';
 }
 
 function createUtterances(text) {
@@ -298,7 +401,11 @@ function createUtterances(text) {
         const element = text[index];
         audioSrcsSr[index] = new SpeechSynthesisUtterance(element);
         audioSrcsSr[index].onstart = clearQueueSr;
-        audioSrcsSr[index].onend = nextElementSr;
+        
+        if(!manualModeSr) {
+            audioSrcsSr[index].onend = nextElementSr;
+        }
+        
         audioSrcsSr[index].voice = synth.getVoices()[65];
         audioSrcsSr[index].pitch = cfgVoiceSr.pitch;
         audioSrcsSr[index].volume = cfgVoiceSr.volume;
@@ -311,15 +418,18 @@ function nextElementSr() {
     if (flStopSr) {
         flStopSr = false;
         return;
+    } else if(manualModeSr) {
+        console.log("next element srr")
+        return;
     }
 
     if (audioSrcsSr.length >= 1) {
-        console.log("OTRO!!")
+        console.log("OTRO!!");
         playQueueSr();
     } else {
         if (treeSr.nextNode()) {
             treeSr.previousNode();
-            removeStyle();
+            removeStyleSr();
             sr();
         } else {
             return;
@@ -327,24 +437,36 @@ function nextElementSr() {
     }
 }
 
-function nextSr() {
-    if (synth.speaking) {
-        synth.cancel();
-        audioSrcsSr = [];
+function changeModeSr() {
+    if(manualModeSr){
+        manualModeSr = false;
+        nextSr();
+    } else {
+        manualModeSr = true;
     }
 }
 
-function prevSr() {
+function nextSr() {
+    audioSrcsSr = [];
+    removeStyleSr();
+
     if (synth.speaking) {
         synth.cancel();
-        audioSrcsSr = [];
-        removeStyle();
-
-        treeSr.previousNode();
-        treeSr.previousNode();
-
-        nextElementSr();
     }
+
+    sr();
+}
+
+function prevSr() {
+    audioSrcsSr = [];
+    removeStyleSr();
+    treeSr.previousNode();
+    treeSr.previousNode();
+    
+    if (synth.speaking) {
+        synth.cancel();
+    }
+    sr();
 }
 
 function playQueueSr() {
@@ -362,7 +484,7 @@ function setStyle() {
     node.style.outline = "solid black";
 }
 
-function removeStyle() {
+function removeStyleSr() {
     const node = treeSr.currentNode;
 
     node.style.outline = '';
@@ -370,7 +492,7 @@ function removeStyle() {
 
 function stopSr() {
     if (synth.speaking) {
-        removeStyle();
+        removeStyleSr();
         loadTreeSr(document);
         flStopSr = true;
         synth.cancel();

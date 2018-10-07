@@ -34,7 +34,7 @@
                             <div id="apellidos-validate">
                             </div>
                             <div id="cont_fecha_nac" class="form-group">
-                                <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
+                                <label id="fecha_nac" for="fecha_nac">Fecha de nacimiento:</label>
                                 <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
                                 <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-required="true" aria-labelledby="fecha_nac"></input>
                             </div>
@@ -54,8 +54,10 @@
                             <div id="username-validate">
                             </div>
                             <div class="form-group">
-                                <label for="passwd" id="passwd">Password:</label>
+                                <label for="passwd" id="passwd">Contraseña:</label>
                                 <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" aria-required="true"><br>
+                                
+                                <label for="passwd2" id="passwd2">Reescriba la contraseña:</label>
                                 <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" aria-required="true">
                             </div>
                             <div id="passwd-validate">
@@ -77,8 +79,8 @@
                                 <br>
                                 <?php
                                   foreach ($dissabilities as $key) { ?>
-                                <input type="checkbox" name="dissabilities[]" value=" <?php echo $key->use_dissability_id ?> " />
-                                <?php echo $key->use_dissability ?><br />
+                                <label><input type="checkbox" name="dissabilities" value=" <?php echo $key->use_dissability_id ?> " aria-label="Presenta alguna de las siguientes discapacidades: <?php echo $key->use_dissability?>"/> <?php echo $key->use_dissability ?></label>
+                                <br/>
                                 <?php } ?>
                             </div>
 
@@ -107,7 +109,7 @@
                                 <?php
                                                     foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
 
-                                <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" aria-selected="true" name="pref[]" value=" <?php echo $key->use_pre_id ?> " /><label id="<?php echo $preferencia?>">
+                                <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" aria-selected="true" name="pref[]" value=" <?php echo $key->use_pre_id ?> " aria-label="Preferencias de tipo de recurso educativo:  <?php echo $preferencia?>" /><label id="<?php echo $preferencia?>">
                                     <?php echo $key->use_pre_preferencia ?></label><br />
                                 <?php } ?>
 
