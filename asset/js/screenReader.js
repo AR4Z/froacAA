@@ -30,7 +30,7 @@ function dataSr() {
     loadTreeSr(document);
     loadSr();
 
-    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s,ctrl+w', function (event, handler) {
+    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s,ctrl+f', function (event, handler) {
         event.preventDefault()
         let sayEventUtter = new SpeechSynthesisUtterance();
 
@@ -49,11 +49,14 @@ function dataSr() {
             case "ctrl+a":
                 stopSr();
                 break;
-            case "ctrl+w":
+            case "ctrl+f":
                 changeModeSr();
                 break;
         }
     });
+    hotkeys.filter = function(event){
+        return true;
+    }
 }
 
 function loadSr() {
@@ -313,7 +316,10 @@ function sr() {
         queueForSpeechSr.push(announcers.default(element));
     }
 
-    if (element.tagName != "INPUT") {
+    if (element.tagName == "INPUT" && !manualModeSr) {
+        element.focus();
+        changeModeSr();
+    } else {
         element.focus();
     }
 
@@ -363,9 +369,9 @@ const announcers = {
 
     input(element) {
         if (element.type == "text") {
-            return `Campo de formulario tipo texto: ${computeAccessibleName(element)}. Valor: ${element.value ? element.value : "Vacío"}.`;
+            return `Campo de formulario tipo texto: ${computeAccessibleName(element)}. Valor: ${element.value ? element.value : "Vacío"}. Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
         } else if (element.type == "password") {
-            return `Campo de formulario tipo contraseña: ${computeAccessibleName(element)}. Estado: ${element.value ? "Lleno" : "Vacío"}`;
+            return `Campo de formulario tipo contraseña: ${computeAccessibleName(element)}. Estado: ${element.value ? "Lleno" : "Vacío"}. Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
         } else if (element.type == "checkbox") {
             return `Casilla de verificación: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada" : "No seleccionada"}`
         }
