@@ -23,6 +23,7 @@ const mappings = {
     html: 'page',
     img: 'image',
     input: 'input',
+    iframe: 'iframe',
 };
 
 
@@ -30,7 +31,7 @@ function dataSr() {
     loadTreeSr(document);
     loadSr();
 
-    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s,ctrl+f', function (event, handler) {
+    hotkeys('ctrl+a,ctrl+d,ctrl+p,ctrl+s,ctrl+f,ctrl+g', function (event, handler) {
         event.preventDefault()
         let sayEventUtter = new SpeechSynthesisUtterance();
 
@@ -51,6 +52,12 @@ function dataSr() {
                 break;
             case "ctrl+f":
                 changeModeSr();
+                break;
+            case "ctrl+g":
+                if(treeSr.currentNode.tagName == "IFRAME") {
+                    loadTreeSr(iframeDocument);
+                    sr();
+                }
                 break;
         }
     });
@@ -243,16 +250,16 @@ function isValidNodeSr(node) {
         return false;
     }
 
-    if (node.tagName == 'LABEL') {
+    if (node.tagName == "LABEL") {
         return false;
     }
 
-    if (node.tagName != 'INPUT' && node.tagName != 'IMG' && is_all_ws(node)) {
+    if (node.tagName != "INPUT" && node.tagName != "IMG" && node.tagName != "IFRAME" && is_all_ws(node)) {
         console.log("son solo espacios");
         return false;
     }
 
-    if (node.tagName != 'INPUT' && node.tagName != 'IMG' && getTextSr(node) == '') {
+    if (node.tagName != "INPUT" && node.tagName != "IMG" && node.tagName != "IFRAME" && getTextSr(node) == '') {
         return false;
     }
 
@@ -282,7 +289,7 @@ function sr() {
         queueForSpeechSr.push(announcers.default(element));
     }
 
-    if (element.tagName == "INPUT" && !manualModeSr) {
+    if ((element.tagName == "INPUT"  || element.tagName == "IFRAME") && !manualModeSr) {
         changeModeSr();
     }
 
@@ -298,13 +305,15 @@ function sr() {
 }
 
 function computeAccessibleName(element) {
-    let content;
+    let content = '';
 
     if (element.getAttribute('aria-label')) {
         return element.getAttribute('aria-label');
+    } else if(element.getAttribute("title")) {
+        return element.getAttribute("title");
     } else if (element.getAttribute('alt')) {
         return element.getAttribute('alt');
-    } else if (element.getAttribute('aria-labelledby')) {
+    } else if (element.getAttribute('aria-labelledby') || findLabelForControl(element, document)) {
         return getTextSr(findLabelForControl(element, document));
     }
 
@@ -342,8 +351,14 @@ const announcers = {
         } else if (element.type == "password") {
             return `Campo de formulario tipo contraseña: ${computeAccessibleName(element)}. Estado: ${element.value ? "Lleno" : "Vacío"}. Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
         } else if (element.type == "checkbox") {
-            return `Casilla de verificación: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada" : "No seleccionada"}`
+            return `Casilla de verificación: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada" : "No seleccionada"}`;
+        } else if(element.type == "radio") {
+            return `Opción única: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada": "No seleccionada. Presione la tecla enter para seleccionar."} `;
         }
+    },
+
+    iframe(element) {
+        return `Iframe, ${ computeAccessibleName(element)}. Para entrar al iframe presionar control + g, presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
     },
 
     default (element) {
@@ -352,13 +367,16 @@ const announcers = {
 };
 
 function findLabelForControl(el, doc) {
-    let nameVal = el.name;
+    let idVal = el.id;
     let labels = doc.getElementsByTagName('label');
 
+    
     for (var i = 0; i < labels.length; i++) {
-        if (labels[i].htmlFor == nameVal)
+        if (labels[i].htmlFor == idVal && idVal != ''){
             return labels[i];
+        }
     }
+    
 }
 
 function computeRole(element) {

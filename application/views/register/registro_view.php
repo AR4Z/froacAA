@@ -22,42 +22,42 @@
                                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label for="nombre" id="nombre">Nombre:</label>
+                                <label for="input_name" id="nombre">Nombre:</label>
                                 <input type="text" class="name form-control" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
                             </div>
                             <div id="nombre-validate">
                             </div>
                             <div class="form-group">
                                 <label for="apellidos" id="apellidos">Apellidos:</label>
-                                <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" aria-required="true" aria-labelledby="apellidos">
+                                <input id="apellidos" type="text" class="form-control" name="apellidos" placeholder="Apellidos" aria-required="true" aria-labelledby="apellidos">
                             </div>
                             <div id="apellidos-validate">
                             </div>
                             <div id="cont_fecha_nac" class="form-group">
-                                <label id="fecha_nac" for="fecha_nac">Fecha de nacimiento:</label>
+                                <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
                                 <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
                                 <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-required="true" aria-labelledby="fecha_nac"></input>
                             </div>
                             <div id="fecha_nac-validate">
                             </div>
                             <div class="form-group">
-                                <label id="mail" for="mail">E-mail:</label>
+                                <label id="mail" for="input_mail">E-mail:</label>
                                 <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
                                 <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-required="true" aria-labelledby="mail">
                             </div>
                             <div id="mail-validate">
                             </div>
                             <div class="form-group">
-                                <label for="username" id="username">Nombre de usuario:</label>
+                                <label for="input_username" id="username">Nombre de usuario:</label>
                                 <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC" aria-required="true" aria-labelledby="username">
                             </div>
                             <div id="username-validate">
                             </div>
                             <div class="form-group">
-                                <label for="passwd" id="passwd">Contraseña:</label>
+                                <label for="input_passwd" id="passwd">Contraseña:</label>
                                 <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" aria-required="true"><br>
                                 
-                                <label for="passwd2" id="passwd2">Reescriba la contraseña:</label>
+                                <label for="input_passwd2" id="passwd2">Reescriba la contraseña:</label>
                                 <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" aria-required="true">
                             </div>
                             <div id="passwd-validate">

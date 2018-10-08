@@ -371,14 +371,14 @@
                         <br/>
                         <div class="form-check checkbox-slider--b">
                             <label>
-                                <input name="invertImages" type="checkbox">
+                                <input name="invertImages" type="checkbox"/>
                                 <span>Imagenes</span>
                             </label>
                         </div>
                         <br/>
                         <div class="form-check checkbox-slider--b">
                             <label>
-                                <input name="invertGeneral" type="checkbox">
+                                <input name="invertGeneral" type="checkbox"/>
                                 <span>General</span>
                             </label>
                         </div>
