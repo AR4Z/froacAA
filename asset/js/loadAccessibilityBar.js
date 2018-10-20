@@ -17,6 +17,9 @@ $(document).ready(function(){
             if(needLSCTranslator || !session_user){
                 dataLSCTranslator();
             }
+            if(!session_user) {
+                dataStructuralNavigation()
+            }
         });
     } else {
         if(needNarrator || !session_user){
@@ -32,6 +35,9 @@ $(document).ready(function(){
         }
         if(needLSCTranslator || !session_user){
             dataLSCTranslator();
+        }
+        if(!session_user) {
+            dataStructuralNavigation()
         }
     }
 });

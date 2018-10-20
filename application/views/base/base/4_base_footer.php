@@ -50,7 +50,7 @@
     <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
     <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
 <?php endif;?>
-
+<script src="<?php echo base_url() ?>asset/js/structuralNavigation.js"></script>
 <script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
 </body>
 </html>
