@@ -34,7 +34,7 @@ $("input[name='showTOC']").change(function () {
         document.getElementById("container-toc").style.display = "none";
     }
     $(this).data('default', false);
-})
+});
 
 $("input[name='navigation-strategy']").change(function () {
     let navigationStrategyId = $("input[name='navigation-strategy']:checked").val();

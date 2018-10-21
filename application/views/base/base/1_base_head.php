@@ -95,7 +95,56 @@
             filter: invert(0);
         }
         
-       
+        .ui-keyboard span {
+            font-size: calc(4em - 1vw);
+        }
+        
+        .ui-keyboard-button {
+            height: calc(4em - 1vh);
+            line-height: calc(4em - 1vh);
+            min-width: calc(4em - 5vw);
+            margin: .2em;
+            cursor: pointer;
+        }
+        /* increased specificity to override repositioning style */
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey > span {
+            position: static;
+            font-size: calc(.7em + 1vw);
+        }
+
+        .ui-keyboard.small span {
+            font-size: calc(3em - 1vw);
+        }
+        
+        .ui-keyboard-button.small {
+            height: calc(3em - 1vh);
+            line-height: calc(3em - 1vh);
+            min-width: calc(3em - 5vw);
+            margin: .2em;
+            cursor: pointer;
+        }
+        /* increased specificity to override repositioning style */
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.small > span {
+            position: static;
+            font-size: calc(.6em + 1vw);
+        }
+
+        .ui-keyboard.large span {
+            font-size: calc(5em - 1vw);
+        }
+        
+        .ui-keyboard-button.large {
+            height: calc(5em - 1vh);
+            line-height: calc(5em - 1vh);
+            min-width: calc(5em - 5vw);
+            margin: .2em;
+            cursor: pointer;
+        }
+        /* increased specificity to override repositioning style */
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.large > span {
+            position: static;
+            font-size: calc(.8em + 1vw);
+        }
 
     </style>
 
@@ -111,6 +160,7 @@
     let needSr;
     let needLSCTranslator;
     let needStructuralNavigation;
+    let needKeyboard;
     let customColors;
     let base_url;
     let idView;
@@ -142,6 +192,7 @@
         needSr = "<?php echo $this->session->userdata('needSr');?>" || false;
         needLSCTranslator = "<?php echo $this->session->userdata('needLSCTranslator');?>" || false;
         needStructuralNavigation = "<?php echo $this->session->userdata('needStructuralNavigation');?>" || false;
+        needKeyboard = "<?php echo $this->session->userdata('needKeyboard');?>" || false;
         customColors = <?php echo json_encode($this->session->userdata('customColors'));?>;
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";

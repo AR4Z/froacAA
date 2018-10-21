@@ -14,11 +14,17 @@ $(document).ready(function(){
             if(needPrefAdaptInterfaz || !session_user) {
                 dataInterfaz();
             }
+            
             if(needLSCTranslator || !session_user){
                 dataLSCTranslator();
             }
+            
             if(!session_user) {
                 dataStructuralNavigation()
+            }
+            
+            if(!session_user) {
+                dataKeyboard()
             }
         });
     } else {
@@ -36,8 +42,13 @@ $(document).ready(function(){
         if(needLSCTranslator || !session_user){
             dataLSCTranslator();
         }
+        
         if(!session_user) {
             dataStructuralNavigation()
+        }
+
+        if(!session_user) {
+            dataKeyboard()
         }
     }
 });
