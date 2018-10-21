@@ -23,7 +23,7 @@
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/button.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
 
     <style>
@@ -94,6 +94,9 @@
         .no-invert-color {
             filter: invert(0);
         }
+        
+       
+
     </style>
 
     
@@ -107,6 +110,7 @@
     let needNarrator;
     let needSr;
     let needLSCTranslator;
+    let needStructuralNavigation;
     let customColors;
     let base_url;
     let idView;
@@ -137,6 +141,7 @@
         needNarrator = "<?php echo $this->session->userdata('needNarrator');?>" || false;
         needSr = "<?php echo $this->session->userdata('needSr');?>" || false;
         needLSCTranslator = "<?php echo $this->session->userdata('needLSCTranslator');?>" || false;
+        needStructuralNavigation = "<?php echo $this->session->userdata('needStructuralNavigation');?>" || false;
         customColors = <?php echo json_encode($this->session->userdata('customColors'));?>;
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
@@ -161,3 +166,6 @@
         
         <div class="page">
 <?php endif;?>
+
+<audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
+</audio>

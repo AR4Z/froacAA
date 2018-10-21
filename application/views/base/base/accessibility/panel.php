@@ -21,6 +21,11 @@
             <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="Traductor de Español a Lenguaje de Señas Colombiano" aria-selected="false">Traductor LSC</a>
         </li>
         <?php endif?>
+        <?php if(!($this->session->userdata('logged_in'))):?>
+        <li class="nav-item">
+            <a class="nav-link" id="structural-navigation-tab" data-toggle="tab" href="#structural-navigation" role="tab" aria-controls="Navegación estructural" aria-selected="false">Navegación estructural</a>
+        </li>
+        <?php endif?>
         <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz') ||  $this->session->userdata('needLSCTranslator')):?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restablecer valores</a>
@@ -37,8 +42,10 @@
                 <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="setDefaultValuesLSCTranslator()" href="#">Traductor LSC</a>
                 <?php endif?>
+                <?php if(!($this->session->userdata('logged_in'))):?>
+                <a class="dropdown-item" onclick="setDefaultValuesSn()" href="#">Navegación estructural</a>
+                <?php endif?>
                 <div class="dropdown-divider"></div>
-
                 <a class="dropdown-item" id="reset-all" onclick="setDefaultAllValues()" href="#">Todos</a>
             </div>
         </li>
@@ -60,6 +67,10 @@
         
         <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/LSCTranslator');?>
+        <?php endif?>
+
+        <?php if(!$this->session->userdata('logged_in')):?>
+            <?php $this->load->view('base/base/accessibility/structuralNavigation');?>
         <?php endif?>
     </div>
     <br/>
