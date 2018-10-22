@@ -94,7 +94,7 @@
         .no-invert-color {
             filter: invert(0);
         }
-        
+    
         .ui-keyboard span {
             font-size: calc(4em - 1vw);
         }

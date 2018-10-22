@@ -68,6 +68,35 @@
                     </div>
                 </div>
             </div>
+            
+        </div>
+
+        <div id="useKeyboardDiv" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+            <div class="card-header text-center">
+                <span>
+                    <b>TECLADO
+                    </b>
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p>No usar teclado.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <br/>
+                        <div class="form-check checkbox-slider--b">
+                            <label>
+                                <input name="useKeyboard" type="checkbox"/>
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

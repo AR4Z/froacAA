@@ -216,7 +216,7 @@ $( ".container-toc" ).draggable({
     scroll: false,
     create: function() {
         document.getElementById("container-toc").style.top = (localStorage["tocTopPos"] || "calc(100% - 49px)");
-        document.getElementById("container-toc").style.left = (localStorage["tocLeftPos"] || "calc(100% - 340px)");
+        document.getElementById("container-toc").style.left = (localStorage["tocLeftPos"] || "0px");
     },
     stop: function( event, ui ) {
         localStorage['tocTopPos'] = $(this).css('top');

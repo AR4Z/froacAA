@@ -7,6 +7,8 @@ function dataKeyboard() {
     loadKeyboard();
 }
 
+
+
 $("input[name='keyboard-size']").change(function () {
     let keyboardSizeId = $("input[name='keyboard-size']:checked").val();
     setKeyboardSize(keyboardSizeId, $(this).data('default'));
@@ -28,15 +30,57 @@ $("input[name='play_key_sound']").change(function () {
 });
 
 
+$("input[name='useKeyboard']").change(function () {
+    if ($(this).prop("checked")) {
+        localStorage['useKeyboard'] = "true";
+        createKeyboard();
+        console.log("creando")
+    } else {
+        localStorage["useKeyboard"] = "false";
+        console.log("falseeee")
+        if ($('.ui-keyboard').length > 0) {
+            console.log("destroy")
+            keyboard = $(`#${$('.ui-keyboard')[0].id}`).getkeyboard();
+            keyboard.destroy();
+        }
+    }
+
+    $(this).data('default', false);
+});
+
+
 function loadKeyboard() {
     $("input[name='keyboard-size'][value=" + (localStorage['keyboard_size_id'] || '2') + "]").prop('checked', true).change();
+
     if (localStorage['play_key_sound'] == 't') {
         localStorage['play_key_sound'] = 'true';
     } else if (localStorage['play_key_sound'] == 'f') {
         localStorage['play_key_sound'] = 'false';
     }
-    $("input[name='play_key_sound']").prop('checked', localStorage['play_key_sound'] == "true").change();
 
+    if (localStorage['useKeyboard'] == 't') {
+        localStorage['useKeyboard'] = 'true';
+    } else if (localStorage['useKeyboard'] == 'f') {
+        localStorage['useKeyboard'] = 'false';
+    }
+
+    $("input[name='play_key_sound']").prop('checked', localStorage['play_key_sound'] == "true").change();
+    $("input[name='useKeyboard']").prop('checked', localStorage['useKeyboard'] == "true").change();
+
+
+}
+
+function playKeySound() {
+    let keySound = document.getElementById('key-sound');
+
+    if (keySound.played.length === 1) {
+        keySound.pause();
+        keySound.currentTime = 0;
+    }
+    keySound.play()
+}
+
+function createKeyboard() {
     $(':input[type=text], :input[type=password]').keyboard({
         language: 'es',
         layout: 'qwerty',
@@ -75,30 +119,24 @@ function loadKeyboard() {
             // (centers keyboard at bottom of the input/textarea)
             at2: 'center bottom'
         },
-        beforeVisible: function () {
-            $("input[name='keyboard-size']").change()
+
+        beforeVisible: function (e) {
+            $("input[name='keyboard-size']").change();
+            if (localStorage["useKeyboard"] == "false") {
+                keyboard = $(`#${$('.ui-keyboard')[0].id}`).getkeyboard();
+                keyboard.destroy();
+            }
         },
+
         visible: function () {
             $('.ui-keyboard-button').on('click', function () {
-                if(localStorage['play_key_sound'] == "true") {
+                if (localStorage['play_key_sound'] == "true") {
                     playKeySound();
                 }
                 $('.ui-keyboard-input-current').trigger('keyup');
-
             });
-
         }
     })
-}
-
-function playKeySound() {
-    let keySound = document.getElementById('key-sound');
-
-    if (keySound.played.length === 1) {
-        keySound.pause();
-        keySound.currentTime = 0;
-    }
-    keySound.play()
 }
 
 function updateValuesKeyboardInSession(names_preferences_kb, values) {
