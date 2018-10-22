@@ -23,8 +23,8 @@ $(document).ready(function(){
                 dataStructuralNavigation()
             }
             
-            if(!session_user) {
-                dataKeyboard()
+            if(needKeyboard || !session_user) {
+                dataKeyboard();
             }
         });
     } else {
@@ -47,8 +47,8 @@ $(document).ready(function(){
             dataStructuralNavigation()
         }
 
-        if(!session_user) {
-            dataKeyboard()
+        if(needKeyboard || !session_user) {
+            dataKeyboard();
         }
     }
 });

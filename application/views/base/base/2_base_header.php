@@ -15,7 +15,7 @@
     </div>
 
     <div class="firstMenu">
-        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') || $this->session->userdata('adaptaInterfaz') || $this->session->userdata('needNarrator')  || $this->session->userdata('needLSCTranslator')):?>
+        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') || $this->session->userdata('adaptaInterfaz') || $this->session->userdata('needNarrator')  || $this->session->userdata('needLSCTranslator') || $this->session->userdata('needStructuralNav') || $this->session->userdata('needKeyboard')):?>
 
         <ul class="socialLinks">
             <li>

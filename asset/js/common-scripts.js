@@ -133,6 +133,10 @@ $(document).ready(function () {
         $('#LSC-translator').addClass('show active');
         $('#LSC-translator-tab').addClass('active');
         $('#LSC-translator-tab').attr('aria-selected', true);
+    } else if (needKeyboard) {
+        $('#keyboard-cf').addClass('show active');
+        $('#keyboard-tab').addClass('active');
+        $('#keyboard-tab').attr('aria-selected', true);
     }
 
     if ($('ul#accessibilityTab li').length == 2) {

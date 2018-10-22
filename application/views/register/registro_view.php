@@ -186,6 +186,21 @@
 
                             </div>
 
+                            <div class="form-group" role="group" aria-labelledby="label_use_kb">
+                                <label for="useKeyboard" id="label_use_kb">¿Desea usar navegación estructural?</label>
+                                <select id="useKeyboard" class="form-control input-sm m-bot15" name="useKeyboard" aria-labelledby="label_use_kb" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
+
+                            </div>
+
                         </div>
                         
                         <div class="form-group" aria-live="assertive">
@@ -424,7 +439,8 @@
             needSr: $('#useSr').val() ==  1 || $("#useSr").val() ==  2,
             needNarrator: $("#useNarrator").val() == 1 || $("#useNarrator").val() == 2,
             needLSCTranslator: $("#useLSCTranslator").val() == 1 || $("#useLSCTranslator").val() == 2,
-            needStructuralNav: $('#useStructuralNav').val() == 1 || $("#useStructuralNav").val() == 2
+            needStructuralNav: $('#useStructuralNav').val() == 1 || $("#useStructuralNav").val() == 2,
+            needKeyboard: $('#useKeyboard').val() == 1 || $("#useKeyboard").val() == 2,
         }
 
         // verificamos si el nuevo usuario desea usar las adaptaciones de interfaz
@@ -524,6 +540,19 @@
                   .attr("type", "hidden")
                   .attr("name", "structuralNavPreferences").val(JSON.stringify(structuralNavPreferences));
             $(this).append($(inputStructuralNavPreferences));
+        }
+
+        if(newUserAdaptInfo.needKeyboard) {
+            let keyboardPreferences = {
+                'use_username' : $("input[name='username']").val(),
+                'kb_size_id': localStorage['keyboard_size_id'],
+                'play_key_sound':localStorage['play_key_sound']
+            }
+
+            let inputKeyboardPreferences = $("<input>")
+                  .attr("type", "hidden")
+                  .attr("name", "keyboardPreferences").val(JSON.stringify(keyboardPreferences));
+            $(this).append($(inputKeyboardPreferences));
         }
 
         return true;

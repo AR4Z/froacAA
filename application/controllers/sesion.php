@@ -81,6 +81,9 @@ class Sesion extends CI_Controller {
                 $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
                 $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
 
+                $use_keyboard = $this->usuario_model->get_need_kb($session_data['username']);
+                $use_keyboard = $use_keyboard[0]['use_kb_id'];
+
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
@@ -131,6 +134,15 @@ class Sesion extends CI_Controller {
                     $this->session->set_userdata('needStructuralNav', false);
                 }
 
+                if($use_keyboard == "1" || $use_keyboard == "2") {
+                    $preferencesKeyboard = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
+                    $this->session->set_userdata('needKeyboard', true);
+                    $this->session->set_userdata('preferencesKeyboard', $preferencesKeyboard[0]);
+                } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
+                    $this->session->set_userdata('needKeyboard', false);
+                }
+
     			redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
                 redirect(base_url().'admin', 'refresh'); // recordar configuración de enable_query_strings puede traer algunos problemas
@@ -159,10 +171,14 @@ class Sesion extends CI_Controller {
         $this->session->unset_userdata('adaptaInterfaz');
         $this->session->unset_userdata('preferencesAdaptainterfaz');
         $this->session->unset_userdata('preferencesNarrator');
+        $this->session->unset_userdata('preferencesStructuralNav');
+        $this->session->unset_userdata('preferencesKeyboard');
+        $this->session->unset_userdata('needStructuralNav');
         $this->session->unset_userdata('needNarrator');
         $this->session->unset_userdata('preferencesSr');
         $this->session->unset_userdata('needSr');
         $this->session->unset_userdata('needLSCTranslator');
+        $this->session->unset_userdata('needKeyboard');
         $this->session->unset_userdata('customColors');
 
         redirect(base_url(), 'refresh');

@@ -120,6 +120,17 @@ function get_all_data_adaptability_lsc_translator($username) {
     return $query->result_array();
 }
 
+// metodo que se encarga de obtener las preferencias del usuario para usar el traductor de español a lenguaje de señas colombiano
+function get_all_data_adaptability_keyboard($username) {
+    $query = $this->db->query("select use_pref_kb.use_username, use_pref_kb.kb_size_id, use_pref_kb.play_key_sound
+    from use_pref_kb
+    inner join opts_size_kb on opts_size_kb.kb_size_id=use_pref_kb.kb_size_id
+    inner join users on users.use_username=use_pref_kb.use_username
+    where use_pref_kb.use_username='".$username."'");
+
+    return $query->result_array();
+}
+
 
     // Metodo que obtiene los registros del administrador a partir del nombre de usuario a partir de la tabla usuario
 
@@ -281,14 +292,15 @@ if ($this->input->post('cantidad6')!='') {
             'use_narrator_id'=>$this->input->post('useNarrator'),
             'use_screen_reader_id'=>$this->input->post('useSr'),
             'use_traslator_lsc_id'=>$this->input->post('useLSCTranslator'),
-            'use_structural_nav_id'=>$this->input->post('useStructuralNav')
+            'use_structural_nav_id'=>$this->input->post('useStructuralNav'),
+            'use_kb_id'=>$this->input->post('useKeyboard'),
         );
 
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
     }
 
-    public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav){
+    public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard,$dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard){
         // en caso de que el usuario requiera o desee usar las adaptaciones de forma opcional entonces
         // se agregara a la tabla de preferencias de interfaz
         if($optInterfaz == 1 || $optInterfaz == 2){
@@ -315,6 +327,10 @@ if ($this->input->post('cantidad6')!='') {
 
         if($optStructuralNav == 1 || $optStructuralNav == 2) {
             $this->usuario_model->insert_pref_structuralNav($username, $dataStructuralNav);
+        }
+
+        if($optKeyboard == 1 || $optKeyboard == 2) {
+            $this->usuario_model->insert_pref_keyboard($username, $dataKeyboard);
         }
     }
 
@@ -388,6 +404,18 @@ if ($this->input->post('cantidad6')!='') {
                 );
             }
             $this->db->insert('use_pref_lsc', $data);
+        }
+    }
+
+    public function insert_pref_keyboard($id, $data) {
+        if(!($this->usuario_model->alreadyExists($id, 'use_pref_kb'))){
+            if(!$data){
+                // valores por default
+                $data = array(
+                    'use_username' => $id,
+                );
+            }
+            $this->db->insert('use_pref_kb', $data);
         }
     }
 
@@ -500,6 +528,16 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
     }
 
+    public function get_need_kb($username){
+        $this->db->select('use_kb_id');
+        $this->db->from('users');
+        $this->db->where('use_username', $username);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
     public function get_need_structural_nav($username){
         $this->db->select('use_structural_nav_id');
         $this->db->from('users');
@@ -572,6 +610,7 @@ if ($this->input->post('cantidad6')!='') {
         $optScreenReader = $this->input->post('useSr');
         $optLSCTranslator = $this->input->post('useLSCTranslator');
         $optStructuralNav = $this->input->post('useStructuralNav');
+        $optKeyboard = $this->input->post('useKeyboard');
 
         $data1 = array(
             "use_nombre"          =>  $this->input->post("nombre"),
@@ -582,7 +621,8 @@ if ($this->input->post('cantidad6')!='') {
             "use_narrator_id" => $optNarrator,
             "use_screen_reader_id" => $optScreenReader,
             "use_traslator_lsc_id" => $optLSCTranslator,
-            "use_structural_nav_id" => $optStructuralNav
+            "use_structural_nav_id" => $optStructuralNav,
+            'use_kb_id' => $optKeyboard
         );
         $data2 = array(
             "use_stu_level"       =>  $this->input->post("nevel_ed"),
@@ -591,7 +631,7 @@ if ($this->input->post('cantidad6')!='') {
 
         // actualiza las adaptaciones que el usuario requiere
         // por ejemplo: si el usuario ya necesita el screen reader
-        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, NULL, NULL, NULL, NULL, NULL);
+        $this->usuario_model->insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard, NULL, NULL, NULL, NULL, NULL, NULL);
 
         $this->db->where('use_username', $username);
         $this->db->update('users', $data1);
@@ -633,6 +673,11 @@ if ($this->input->post('cantidad6')!='') {
     public function update_preferences_structuralNav($username, $data){
         $this->db->where('use_username', $username);
         $this->db->update('use_pref_structural_nav', $data);
+    }
+
+    public function update_preferences_keyboard($username, $data){
+        $this->db->where('use_username', $username);
+        $this->db->update('use_pref_kb', $data);
     }
 
     //Se verifica si el correo electrónico ingresado existe en la base de datos

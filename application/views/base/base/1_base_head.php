@@ -189,6 +189,7 @@
         preferencesSr = <?php echo json_encode($this->session->userdata('preferencesSr'));?>;
         preferencesLSCTranslator = <?php echo json_encode($this->session->userdata('preferencesLSCTranslator'));?>;
         preferencesStructuralNav = <?php echo json_encode($this->session->userdata('preferencesStructuralNav'));?>;
+        preferencesKeyboard = <?php echo json_encode($this->session->userdata('preferencesKeyboard'));?>;
         needPrefAdaptInterfaz = "<?php echo $this->session->userdata('adaptaInterfaz');?>" || false;
         needNarrator = "<?php echo $this->session->userdata('needNarrator');?>" || false;
         needSr = "<?php echo $this->session->userdata('needSr');?>" || false;
@@ -209,6 +210,7 @@
 <?php if($id_view == 'login') : ?>
     <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
     <?php $this->load->view('base/base/accessibility/iris');?>
+    <?php $this->load->view('base/base/accessibility/toc');?>
     <?php else : ?>
         <body>
 

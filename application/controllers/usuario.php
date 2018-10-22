@@ -339,6 +339,9 @@ class Usuario extends CI_Controller {
                 $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
                 $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
 
+                $use_keyboard = $this->usuario_model->get_need_kb($session_data['username']);
+                $use_keyboard = $use_keyboard[0]['use_kb_id'];
+
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -350,6 +353,7 @@ class Usuario extends CI_Controller {
                     'selectedOptScreenReader'=>$use_sr,
                     "selectedOptLSCTranslator"=>$use_LSCTraslator,
                     'selectedOptStructuralNav'=>$use_structuralNav,
+                    'selectedOptKeyboard'=>$use_keyboard,
                     "main_view" => "usr/editar_view",
                     "id_view" => "edit_user"
                 );
@@ -383,8 +387,11 @@ class Usuario extends CI_Controller {
 
             $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
             $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
+
+            $use_keyboard = $this->usuario_model->get_need_kb($session_data['username']);
+            $use_keyboard = $use_keyboard[0]['use_kb_id'];
             // actualizo valores sesion, desde alla son aztualizados en DB
-            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator, $use_structuralNav);
+            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator, $use_structuralNav, $use_keyboard);
             
             // redirecciono al perfil del usuario
             redirect(base_url().'usuario/perfil', 'refresh');
@@ -450,6 +457,17 @@ class Usuario extends CI_Controller {
             // en caso se que no necesite tambien lo almaceno en sesion
             $this->session->set_userdata('needStructuralNavigation', false);
         }
+
+        if($use_keyboard == "1" || $use_keyboard == "2") {
+            $preferencesKeyboard = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
+            
+            $this->session->set_userdata('needKeyboard', true);
+            $this->session->set_userdata('preferencesKeyboard', $preferencesKeyboard[0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('needKeyboard', false);
+        }
+
     }
 
     // este metodo se encarga de actualizar los valores de adaptacion de la interfaz en la sesion
@@ -541,6 +559,23 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_structuralNav($this->input->post('username'), $arrayCombineNameAndValuesStructuralNav);
     }
 
+
+    public function update_preferences_kbSession(){
+        $arrayNamesKeyboard = $this->input->post('names_preferences_kb');
+        $arrayValuesPreferencesKeyboard = $this->input->post('values');
+        $arrayPreferencesKeyboard= $this->session->userdata('preferencesKeyboard');
+        $arrayCombineNameAndValuesKeyboard = array_combine( $arrayNamesKeyboard, $arrayValuesPreferencesKeyboard );
+        
+        foreach($arrayCombineNameAndValuesKeyboard as $name => $value){
+            $arrayPreferencesKeyboard[$name] = $value;
+        }
+
+        $this->session->set_userdata('preferencesKeyboard', $arrayPreferencesKeyboard);
+        echo(json_encode($this->session->userdata('preferencesKeyboard')));
+
+        $this->usuario_model->update_preferences_keyboard($this->input->post('username'), $arrayCombineNameAndValuesKeyboard);
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -627,6 +662,7 @@ class Usuario extends CI_Controller {
         $optScreenReader = $this->input->post('useSr');
         $optLSCTranslator = $this->input->post('useLSCTranslator');
         $optStructuralNav = $this->input->post('useStructuralNav');
+        $optKeyboard = $this->input->post('useKeyboard');
         $prefInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
         $customColors = json_decode($this->input->post('customColors'), TRUE);
         $dataInterfaz = array(
@@ -637,7 +673,7 @@ class Usuario extends CI_Controller {
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
         $dataLSCTranslator = json_decode($this->input->post('LSCTranslatorPreferences'), TRUE);
         $dataStructuralNav = json_decode($this->input->post('structuralNavPreferences'), TRUE);
-        
+        $dataKeyboard = json_decode($this->input->post('keyboardPreferences'), TRUE);
 
 
         $this->usuario_model->guardar_estudiante();
@@ -649,7 +685,7 @@ class Usuario extends CI_Controller {
         // o el screen segun lo que el necesite
         // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
         // en $data--- va las preferencias del usuario para cada adaptacion
-        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav);
+        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard);
 
 
         if($_POST["necesidadespecial"]!=""){
@@ -849,6 +885,9 @@ class Usuario extends CI_Controller {
 
         $use_structuralNav = $this->usuario_model->get_need_structural_nav($id);
         $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
+
+        $use_keyboard = $this->usuario_model->get_need_kb($id);
+        $use_keyboard = $use_keyboard[0]['use_kb_id'];
         
         $content = array(
             "title" => "Registro éxitoso",
@@ -860,6 +899,7 @@ class Usuario extends CI_Controller {
             "needSr" => $use_sr,
             "needLSCTranslator" => $use_LSCTranslator,
             "needStructuralNav" => $use_structuralNav,
+            "needKeyboard" => $use_keyboard,
             'id_view' => 'exito'
         );
         $this->load->view('base/base_template', $content);

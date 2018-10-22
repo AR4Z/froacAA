@@ -26,12 +26,12 @@
             <a class="nav-link" id="structural-navigation-tab" data-toggle="tab" href="#structural-navigation" role="tab" aria-controls="Navegación estructural" aria-selected="false">Navegación estructural</a>
         </li>
         <?php endif?>
-        <?php if(!($this->session->userdata('logged_in'))):?>
+        <?php if($this->session->userdata('needKeyboard') || !($this->session->userdata('logged_in'))):?>
         <li class="nav-item">
             <a class="nav-link" id="keyboard-tab" data-toggle="tab" href="#keyboard-cf" role="tab" aria-controls="Teclado virtual" aria-selected="false">Teclado de pantalla</a>
         </li>
         <?php endif?>
-        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz') ||  $this->session->userdata('needLSCTranslator')):?>
+        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') ||  $this->session->userdata('needNarrator') ||  $this->session->userdata('adaptaInterfaz') ||  $this->session->userdata('needLSCTranslator') || $this->session->userdata('needStructuralNav') || $this->session->userdata('needKeyboard')):?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restablecer valores</a>
             <div class="dropdown-menu">
@@ -50,7 +50,7 @@
                 <?php if($this->session->userdata('needStructuralNav') || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="setDefaultValuesSn()" href="#">Navegación estructural</a>
                 <?php endif?>
-                <?php if(!($this->session->userdata('logged_in'))):?>
+                <?php if($this->session->userdata('needKeyboard') || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="setDefaultValuesKb()" href="#">Teclado de pantalla</a>
                 <?php endif?>
                 <div class="dropdown-divider"></div>
@@ -81,7 +81,7 @@
             <?php $this->load->view('base/base/accessibility/structuralNavigation');?>
         <?php endif?>
 
-        <?php if(!$this->session->userdata('logged_in')):?>
+        <?php if($this->session->userdata('needKeyboard') || !$this->session->userdata('logged_in')):?>
             <?php $this->load->view('base/base/accessibility/keyboard');?>
         <?php endif?>
     </div>

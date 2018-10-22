@@ -100,15 +100,15 @@ function setNavigationStrategy(strategyId, setDefault) {
     }
     let validStrategy = strategies[strategyId];
 
-    if ((strategyId != localStorage['navigation_strategy_id']) && needStructuralNavigation && !setDefault) {
-        updateValuesSnInSession(['nav_strategy_id'], [strategyId]);
+    if ((strategyId != localStorage['nav_strategy_id']) && needStructuralNavigation && !setDefault) {
+        updateValuesSnInSession(['nav_strategy_id'], [parseInt(strategyId)]);
     }
 
     /* to not make many requests when the default values 
     are set a parameter is sent then in the others it is false */
     $("input[name='navigation-strategy']").data('default', false);
 
-    localStorage['navigation_strategy_id'] = strategyId;
+    localStorage['nav_strategy_id'] = strategyId;
 }
 
 function htmlTableOfContents (customDoc) {

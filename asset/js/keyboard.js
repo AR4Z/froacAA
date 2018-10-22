@@ -1,4 +1,9 @@
 function dataKeyboard() {
+    if (session_user && needKeyboard) {
+        localStorage['keyboard_size_id'] = preferencesKeyboard['kb_size_id'];
+        localStorage['play_key_sound'] = preferencesKeyboard['play_key_sound'];
+    }
+
     loadKeyboard();
 }
 
@@ -10,12 +15,12 @@ $("input[name='keyboard-size']").change(function () {
 $("input[name='play_key_sound']").change(function () {
     if ($(this).prop("checked")) {
         if (session_user && needKeyboard && (localStorage['play_key_sound'] != "true") && !($(this).data('default'))) {
-            updateValuesSnInSession(['play_key_sound'], ["true"]);
+            updateValuesKeyboardInSession(['play_key_sound'], ["true"]);
         }
         localStorage['play_key_sound'] = "true";
     } else {
         if (session_user && needKeyboard && (localStorage['showTOC'] != "false") && !($(this).data('default'))) {
-            updateValuesSnInSession(['play_key_sound'], ["false"]);
+            updateValuesKeyboardInSession(['play_key_sound'], ["false"]);
         }
         localStorage['play_key_sound'] = "false";
     }
@@ -87,7 +92,7 @@ function loadKeyboard() {
 }
 
 function playKeySound() {
-    let keySound = document.getElementById('key-sound')
+    let keySound = document.getElementById('key-sound');
 
     if (keySound.played.length === 1) {
         keySound.pause();
@@ -98,7 +103,7 @@ function playKeySound() {
 
 function updateValuesKeyboardInSession(names_preferences_kb, values) {
     $.ajax({
-        url: base_url + "usuario/update_preferences_keyboardSession",
+        url: base_url + "usuario/update_preferences_kbSession",
         type: "POST",
         dataType: "json",
         data: {
@@ -123,7 +128,7 @@ function setDefaultValuesKb() {
     $("input[name='play_key_sound']").prop('checked', true).change();
 
     if (session_user) {
-        let names_preferences_kb = ['keyboard_size_id', 'play_key_sound'];
+        let names_preferences_kb = ['kb_size_id', 'play_key_sound'];
         let values = [2, true];
         updateValuesKeyboardInSession(names_preferences_kb, values);
     }
@@ -131,7 +136,7 @@ function setDefaultValuesKb() {
 
 function setKeyboardSize(sizeId, setDefault) {
     if ((sizeId != localStorage['keyboard_size_id']) && needKeyboard && !setDefault) {
-        updateValuesKeyboardInSession(['keyboard_size_id'], [sizeId]);
+        updateValuesKeyboardInSession(['kb_size_id'], [sizeId]);
     }
 
     /* to not make many requests when the default values 
