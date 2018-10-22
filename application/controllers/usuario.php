@@ -336,6 +336,9 @@ class Usuario extends CI_Controller {
                 $use_LSCTraslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
                 $use_LSCTraslator = $use_LSCTraslator[0]['use_traslator_lsc_id'];
 
+                $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
+                $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
+
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -346,6 +349,7 @@ class Usuario extends CI_Controller {
                     'selectedOptNarrator'=> $use_narrator,
                     'selectedOptScreenReader'=>$use_sr,
                     "selectedOptLSCTranslator"=>$use_LSCTraslator,
+                    'selectedOptStructuralNav'=>$use_structuralNav,
                     "main_view" => "usr/editar_view",
                     "id_view" => "edit_user"
                 );
@@ -376,8 +380,11 @@ class Usuario extends CI_Controller {
 
             $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
             $use_LSCTranslator = $use_LSCTranslator[0]['use_traslator_lsc_id'];
+
+            $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
+            $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
             // actualizo valores sesion, desde alla son aztualizados en DB
-            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator);
+            $this->loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator, $use_structuralNav);
             
             // redirecciono al perfil del usuario
             redirect(base_url().'usuario/perfil', 'refresh');
@@ -430,6 +437,18 @@ class Usuario extends CI_Controller {
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
             $this->session->set_userdata('needLSCTranslator', false);
+        }
+
+
+        // si el usuario necesita el lsc traductor entonces lo almaceno en sesion y tambien sus preferencias
+        if($use_structuralNav == "1" || $use_structuralNav == "2") {
+            $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
+            
+            $this->session->set_userdata('needStructuralNavigation', true);
+            $this->session->set_userdata('preferencesStructuralNav', $preferencesStructuralNav [0]);
+        } else {
+            // en caso se que no necesite tambien lo almaceno en sesion
+            $this->session->set_userdata('needStructuralNavigation', false);
         }
     }
 
@@ -503,6 +522,23 @@ class Usuario extends CI_Controller {
         echo(json_encode($this->session->userdata('preferencesLSCTranslator')));
 
         $this->usuario_model->update_preferences_LSC_translatorDB($this->input->post('username'), $arrayCombineNameAndValuesLSCTranslator);
+    }
+    
+
+    public function update_preferences_snSession(){
+        $arrayNamesPreferencesStructuralNav = $this->input->post('names_preferences_sn');
+        $arrayValuesPreferencesStructuralNav = $this->input->post('values');
+        $arrayPreferencesStructuralNav = $this->session->userdata('preferencesStructuralNav');
+        $arrayCombineNameAndValuesStructuralNav= array_combine( $arrayNamesPreferencesStructuralNav, $arrayValuesPreferencesStructuralNav );
+        
+        foreach($arrayCombineNameAndValuesStructuralNav as $name => $value){
+            $arrayPreferencesStructuralNav[$name] = $value;
+        }
+
+        $this->session->set_userdata('preferencesStructuralNav', $arrayPreferencesStructuralNav);
+        echo(json_encode($this->session->userdata('preferencesStructuralNav')));
+
+        $this->usuario_model->update_preferences_structuralNav($this->input->post('username'), $arrayCombineNameAndValuesStructuralNav);
     }
 
     public function chpasswd(){
@@ -590,6 +626,7 @@ class Usuario extends CI_Controller {
         $optNarrator = $this->input->post('useNarrator');
         $optScreenReader = $this->input->post('useSr');
         $optLSCTranslator = $this->input->post('useLSCTranslator');
+        $optStructuralNav = $this->input->post('useStructuralNav');
         $prefInterfaz = json_decode($this->input->post('interfazPreferences'), TRUE);
         $customColors = json_decode($this->input->post('customColors'), TRUE);
         $dataInterfaz = array(
@@ -599,7 +636,10 @@ class Usuario extends CI_Controller {
         $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
         $dataLSCTranslator = json_decode($this->input->post('LSCTranslatorPreferences'), TRUE);
+        $dataStructuralNav = json_decode($this->input->post('structuralNavPreferences'), TRUE);
         
+
+
         $this->usuario_model->guardar_estudiante();
         foreach ($_POST['pref'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
@@ -609,7 +649,7 @@ class Usuario extends CI_Controller {
         // o el screen segun lo que el necesite
         // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
         // en $data--- va las preferencias del usuario para cada adaptacion
-        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator,$dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator);
+        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav);
 
 
         if($_POST["necesidadespecial"]!=""){
@@ -807,6 +847,9 @@ class Usuario extends CI_Controller {
         $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($id);
         $use_LSCTranslator = $use_LSCTranslator[0]['use_traslator_lsc_id'];
 
+        $use_structuralNav = $this->usuario_model->get_need_structural_nav($id);
+        $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
+        
         $content = array(
             "title" => "Registro éxitoso",
             "main_view" => "register/exito_view",
@@ -816,6 +859,7 @@ class Usuario extends CI_Controller {
             "needPrefInterfaz"=> $use_adapta_interfaz,
             "needSr" => $use_sr,
             "needLSCTranslator" => $use_LSCTranslator,
+            "needStructuralNav" => $use_structuralNav,
             'id_view' => 'exito'
         );
         $this->load->view('base/base_template', $content);

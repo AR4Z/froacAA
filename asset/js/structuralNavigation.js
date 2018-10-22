@@ -1,5 +1,13 @@
 let treeSn;
 function dataStructuralNavigation() {
+    if (session_user && needStructuralNavigation) {
+        console.log("swswswswswsw");
+        localStorage['nav_strategy_id'] = preferencesStructuralNav['nav_strategy_id'];
+        localStorage['showTOC'] = preferencesStructuralNav['showtoc'];
+        console.log(localStorage['showTOC'])
+        console.log(localStorage['nav_strategy_id'])
+    }
+    
     loadTreeSn(document);
     
     loadStructuralNavigation();
@@ -22,13 +30,13 @@ function dataStructuralNavigation() {
 $("input[name='showTOC']").change(function () {
     if ($(this).prop("checked")) {
         if (session_user && needStructuralNavigation && (localStorage['showTOC'] != "true") && !($(this).data('default'))) {
-            updateValuesSnInSession(['showTOC'], ["true"]);
+            updateValuesSnInSession(['showtoc'], ["true"]);
         }
         localStorage['showTOC'] = "true";
         document.getElementById("container-toc").style.display = "";
     } else {
         if (session_user && needStructuralNavigation  && (localStorage['showTOC'] != "false") && !($(this).data('default'))) {
-            updateValuesSnInSession(['showTOC'], ["false"]);
+            updateValuesSnInSession(['showtoc'], ["false"]);
         }
         localStorage['showTOC'] = "false";
         document.getElementById("container-toc").style.display = "none";
@@ -42,7 +50,7 @@ $("input[name='navigation-strategy']").change(function () {
 });
 
 function loadStructuralNavigation() {
-    $("input[name='navigation-strategy'][value=" + (localStorage['navigation-strategy-id'] || '1') + "]").prop('checked', true).change();
+    $("input[name='navigation-strategy'][value=" + (localStorage['nav_strategy_id'] || '1') + "]").prop('checked', true).change();
     if (localStorage['showTOC'] == 't') {
         localStorage['showTOC'] = 'true';
     } else if (localStorage['showTOC'] == 'f') {
@@ -78,7 +86,7 @@ function setDefaultValuesSn() {
     $("input[name='showTOC']").prop('checked', true).change();
 
     if (session_user) {
-        let names_preferences_sn = ['navigation_strategy_id', 'showTOC'];
+        let names_preferences_sn = ['nav_strategy_id', 'showtoc'];
         let values = [1, true];
         updateValuesSnInSession(names_preferences_sn, values);
     }
@@ -93,7 +101,7 @@ function setNavigationStrategy(strategyId, setDefault) {
     let validStrategy = strategies[strategyId];
 
     if ((strategyId != localStorage['navigation_strategy_id']) && needStructuralNavigation && !setDefault) {
-        updateValuesSnInSession(['navigation_strategy_id'], [strategyId]);
+        updateValuesSnInSession(['nav_strategy_id'], [strategyId]);
     }
 
     /* to not make many requests when the default values 

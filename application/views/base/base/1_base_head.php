@@ -155,6 +155,7 @@
     let preferencesNarrator;
     let preferencesSr;
     let preferencesLSCTranslator;
+    let preferencesStructuralNav;
     let needPrefAdaptInterfaz;
     let needNarrator;
     let needSr;
@@ -187,11 +188,12 @@
         preferencesNarrator = <?php echo json_encode($this->session->userdata('preferencesNarrator'));?>;
         preferencesSr = <?php echo json_encode($this->session->userdata('preferencesSr'));?>;
         preferencesLSCTranslator = <?php echo json_encode($this->session->userdata('preferencesLSCTranslator'));?>;
+        preferencesStructuralNav = <?php echo json_encode($this->session->userdata('preferencesStructuralNav'));?>;
         needPrefAdaptInterfaz = "<?php echo $this->session->userdata('adaptaInterfaz');?>" || false;
         needNarrator = "<?php echo $this->session->userdata('needNarrator');?>" || false;
         needSr = "<?php echo $this->session->userdata('needSr');?>" || false;
         needLSCTranslator = "<?php echo $this->session->userdata('needLSCTranslator');?>" || false;
-        needStructuralNavigation = "<?php echo $this->session->userdata('needStructuralNavigation');?>" || false;
+        needStructuralNavigation = "<?php echo $this->session->userdata('needStructuralNav');?>" || false;
         needKeyboard = "<?php echo $this->session->userdata('needKeyboard');?>" || false;
         customColors = <?php echo json_encode($this->session->userdata('customColors'));?>;
         base_url = "<?php echo base_url()?>";

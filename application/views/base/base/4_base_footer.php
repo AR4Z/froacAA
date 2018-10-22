@@ -51,7 +51,7 @@
     <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
 <?php endif;?>
 
-<?php if(!($this->session->userdata('logged_in'))):?>
+<?php if($this->session->userdata('needStructuralNav') || !($this->session->userdata('logged_in'))):?>
     <script src="<?php echo base_url() ?>asset/js/structuralNavigation.js"></script>
 <?php endif;?>
 

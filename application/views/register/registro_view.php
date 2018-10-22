@@ -171,6 +171,21 @@
 
                             </div>
 
+                            <div class="form-group" role="group" aria-labelledby="label_use_sn">
+                                <label for="useStructuralNav" id="label_use_sn">¿Desea usar navegación estructural?</label>
+                                <select id="useStructuralNav" class="form-control input-sm m-bot15" name="useStructuralNav" aria-labelledby="label_use_sn" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
+
+                            </div>
+
                         </div>
                         
                         <div class="form-group" aria-live="assertive">
@@ -409,6 +424,7 @@
             needSr: $('#useSr').val() ==  1 || $("#useSr").val() ==  2,
             needNarrator: $("#useNarrator").val() == 1 || $("#useNarrator").val() == 2,
             needLSCTranslator: $("#useLSCTranslator").val() == 1 || $("#useLSCTranslator").val() == 2,
+            needStructuralNav: $('#useStructuralNav').val() == 1 || $("#useStructuralNav").val() == 2
         }
 
         // verificamos si el nuevo usuario desea usar las adaptaciones de interfaz
@@ -496,6 +512,20 @@
                   .attr("name", "LSCTranslatorPreferences").val(JSON.stringify(LSCTranslatorPreferences));
             $(this).append($(inputLSCTranslatorPreferences));
         }
+        
+        if(newUserAdaptInfo.needStructuralNav) {
+            let structuralNavPreferences = {
+                'use_username' : $("input[name='username']").val(),
+                'nav_strategy_id': localStorage['nav_strategy_id'],
+                'showtoc':localStorage['showTOC']
+            }
+
+            let inputStructuralNavPreferences = $("<input>")
+                  .attr("type", "hidden")
+                  .attr("name", "structuralNavPreferences").val(JSON.stringify(structuralNavPreferences));
+            $(this).append($(inputStructuralNavPreferences));
+        }
+
         return true;
     });
     </script>

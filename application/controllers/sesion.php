@@ -78,6 +78,9 @@ class Sesion extends CI_Controller {
                 $use_LSCTranslator = $this->usuario_model->get_need_translator_lsc($session_data['username']);
                 $use_LSCTranslator  = $use_LSCTranslator[0]['use_traslator_lsc_id'];
 
+                $use_structuralNav = $this->usuario_model->get_need_structural_nav($session_data['username']);
+                $use_structuralNav = $use_structuralNav[0]['use_structural_nav_id'];
+
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
@@ -117,6 +120,15 @@ class Sesion extends CI_Controller {
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('needLSCTranslator', false);
+                }
+
+                if($use_structuralNav == "1" || $use_structuralNav == "2") {
+                    $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
+                    $this->session->set_userdata('needStructuralNav', true);
+                    $this->session->set_userdata('preferencesStructuralNav', $preferencesStructuralNav[0]);
+                } else {
+                    // en caso se que no necesite tambien lo almaceno en sesion
+                    $this->session->set_userdata('needStructuralNav', false);
                 }
 
     			redirect('main', 'refresh');

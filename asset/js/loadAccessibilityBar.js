@@ -19,7 +19,7 @@ $(document).ready(function(){
                 dataLSCTranslator();
             }
             
-            if(!session_user) {
+            if(needStructuralNavigation || !session_user) {
                 dataStructuralNavigation()
             }
             
@@ -43,7 +43,7 @@ $(document).ready(function(){
             dataLSCTranslator();
         }
         
-        if(!session_user) {
+        if(needStructuralNavigation || !session_user) {
             dataStructuralNavigation()
         }
 
