@@ -81,7 +81,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>No usar teclado.</p>
+                        <p>Usar teclado.</p>
                     </div>
                 </div>
                 <div class="row">

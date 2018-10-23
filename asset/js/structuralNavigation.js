@@ -4,11 +4,9 @@ function dataStructuralNavigation() {
         console.log("swswswswswsw");
         localStorage['nav_strategy_id'] = preferencesStructuralNav['nav_strategy_id'];
         localStorage['showTOC'] = preferencesStructuralNav['showtoc'];
-        console.log(localStorage['showTOC'])
-        console.log(localStorage['nav_strategy_id'])
+        console.log(localStorage['showTOC']);
+        console.log(localStorage['nav_strategy_id']);
     }
-    
-    loadTreeSn(document);
     
     loadStructuralNavigation();
 
@@ -19,9 +17,9 @@ function dataStructuralNavigation() {
     }
 
     if(idView == 'lo_view') {
-        htmlTableOfContents(iframeDocument)
+        htmlTableOfContents(iframeDocument);
     } else {
-        htmlTableOfContents()
+        htmlTableOfContents();
     }
 
     
@@ -104,6 +102,13 @@ function setNavigationStrategy(strategyId, setDefault) {
         updateValuesSnInSession(['nav_strategy_id'], [parseInt(strategyId)]);
     }
 
+    if(validStrategy == 'df') {
+        loadTreeSn(document);
+        dfsFocus();
+    } else {
+        bfsFocus(document.getElementsByTagName('body')[0], [], 1);
+    }
+
     /* to not make many requests when the default values 
     are set a parameter is sent then in the others it is false */
     $("input[name='navigation-strategy']").data('default', false);
@@ -145,28 +150,24 @@ function htmlTableOfContents (customDoc) {
 }
 
 
-
-function loadTreeSn(doc) {
-    let filter = {
-        acceptNode: function (n) {
-            if (isValidNodeSn(n)) {
-                return NodeFilter.FILTER_ACCEPT;
-            } else {
-                return NodeFilter.FILTER_SKIP;
-            }
-        }
-    }
-    try {
-        treeSn = doc.createTreeWalker(doc.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
-    } catch {
-        console.log("temporal");
-    }
-}
-
-
 function isValidNodeSn(node) {
+    let validTagNames = {
+        "A": true,
+        "INPUT": true,
+        "SELECT": true,
+        "TEXTAREA": true,
+        "BUTTON": true,
+    }
+    if(!node) {
+        return false;
+    }
+
     if ($(node).is(':hidden') && !$(node).is(':visible')) {
         console.log("invisible");
+        return false;
+    }
+
+    if(!validTagNames[node.tagName]) {
         return false;
     }
 
@@ -224,3 +225,41 @@ $( ".container-toc" ).draggable({
     },
 });
 
+function loadTreeSn(doc) {
+    let filter = {
+        acceptNode: function (n) {
+            if (isValidNodeSn(n)) {
+                return NodeFilter.FILTER_ACCEPT;
+            } else {
+                return NodeFilter.FILTER_SKIP;
+            }
+        }
+    }
+    try {
+        treeSn = doc.createTreeWalker(doc.getElementsByTagName('body')[0], NodeFilter.SHOW_ELEMENT, filter, false);
+    } catch {
+        console.log("temporal");
+    }
+}
+
+function dfsFocus() {
+    while(treeSn.nextNode() || treeSn.nextSibling()) {
+        treeSn.currentNode.tabIndex = ''
+    }
+}
+
+
+function bfsFocus(currentElement, queue = [], tabindex) {
+    if(isValidNodeSn(currentElement)) {
+        currentElement.tabIndex = tabindex;
+        tabindex += 1;
+    }
+
+    queue = queue.concat([].slice.apply(currentElement.childNodes));
+    let nextElement = queue.shift();
+    
+    if(!!nextElement) {
+        console.log(tabindex);
+        return bfsFocus(nextElement, queue, tabindex);
+    }
+}

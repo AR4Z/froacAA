@@ -214,7 +214,7 @@
     <?php else : ?>
         <body>
 
-        <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
+        <?php if($this->session->userdata('needLSCTranslator') || $this->session->userdata('needStructuralNav') || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/iris');?>
             <?php $this->load->view('base/base/accessibility/toc');?>
         <?php endif?>

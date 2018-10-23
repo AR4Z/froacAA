@@ -187,7 +187,7 @@
                             </div>
 
                             <div class="form-group" role="group" aria-labelledby="label_use_kb">
-                                <label for="useKeyboard" id="label_use_kb">¿Desea usar navegación estructural?</label>
+                                <label for="useKeyboard" id="label_use_kb">¿Desea usar el teclado virtual?</label>
                                 <select id="useKeyboard" class="form-control input-sm m-bot15" name="useKeyboard" aria-labelledby="label_use_kb" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
