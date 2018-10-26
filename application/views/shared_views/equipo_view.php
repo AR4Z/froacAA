@@ -2,13 +2,10 @@
         <div class="container-fluid">
             <br/>
             <div class="card border-0">
-                    <h1>Equipo FROAC</h1>
+                    <h1><?php echo $this->lang->line('team'); ?></h1>
                 <div class="card-body">
-                    <p>Grupo de Trabajo Académico GAIA - Grupo Ambientes Inteligentes Adaptativos <br/>
-                        Universidad Nacional de Colombia – Sede Manizales <br/>
-                        Director: Néstor Darío Duque Méndez <br/>
-                        Correo Director: ndduqueme@unal.edu.co <br/>
-                        Correo Grupo: gaia_man@unal.edu.co
+                    <p>
+                    <?php echo $this->lang->line('message_team'); ?>
                     </p>
 
                     <p>Campus La Nubia <br>
