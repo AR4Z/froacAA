@@ -1,7 +1,7 @@
 <div id="container-iris" class="container-iris draggable" style="width:340px; height:475px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1001; position:absolute; display:none;">
     <div class="container-top-iris" style="width:320px; height:40px; margin:auto;">
         <h5 style="text-align:center; color:white; font-weight: bold;">
-            TRADUCTOR LSC
+        <?php echo $this->lang->line('lsc_translator'); ?>
             <a onclick="minimizeIris()" id="minimize-iris" class="button button-raised button-primary button-circle button-small"
                 style="float:right;">
                 <i class="fas fa-window-minimize"></i>
@@ -30,11 +30,11 @@
             </button>
         </div>
         <div id="container-input-iris" style="width:320px; height:140px; margin:auto; position:relative; padding-top:10px;">
-            <textarea id="input-iris" placeholder="Escribe lo que quieras traducir" rows="4" cols="42" style="resize: none; position:relative"></textarea>
+            <textarea id="input-iris" placeholder="<?php echo $this->lang->line('message_text_lsc'); ?>" rows="4" cols="42" style="resize: none; position:relative"></textarea>
             <a onclick="cleanInputIris()" class="button button-raised button-circle button-primary button-small" style="float:left; margin-top:5px"><i
                     class="fa fa-trash"></i></a>
 
-            <a onclick="translate()" class="button button-raised button-pill button-primary button-small" style="float:right; margin-top:5px">Traducir</a>
+            <a onclick="translate()" class="button button-raised button-pill button-primary button-small" style="float:right; margin-top:5px"><?php echo $this->lang->line('translate'); ?></a>
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@
         <?php endif?>
         <?php if($this->session->userdata('needLSCTranslator') || !($this->session->userdata('logged_in'))):?>
         <li class="nav-item">
-            <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="<?php echo $this->lang->line('lsc_translator'); ?>" aria-selected="false"><?php echo $this->lang->line('translator'); ?></a>
+            <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="<?php echo $this->lang->line('lsc_translator'); ?>" aria-selected="false"><?php echo $this->lang->line('lsc_translator'); ?></a>
         </li>
         <?php endif?>
         <?php if($this->session->userdata('needStructuralNav') || !($this->session->userdata('logged_in'))):?>

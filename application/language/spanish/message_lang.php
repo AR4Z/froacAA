@@ -142,3 +142,12 @@ $lang["sound"] = "SONIDO";
 $lang["message_kb_sound"] = "Reproducir un sonido el presionar una tecla";
 $lang["keyboard"] = "TECLADO";
 $lang["use_kb"] = "Usar teclado";
+$lang["translate"] = "Traducir";
+$lang["message_text_lsc"] = "Escribe lo que quieras traducir";
+
+$lang["sign_speed"] = "VELOCIDAD DE SEÑAS";
+$lang["message_sign_speed"] = "Cambiar la velocidad con la que se reproducen las señas";
+$lang["model"] = "MODELO";
+$lang["message_model"] = "Cambiar el modelo que hará las señas";
+$lang["avatar"] = "Avatar";
+$lang["human"] = "Humano";
