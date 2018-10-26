@@ -69,7 +69,43 @@ $lang["ontologia"] = "ONTOLOGÍA";
 $lang["def_ontologia"] = "El término ontología en informática hace  referencia al intento de formular un exhaustivo y riguroso esquema conceptual  dentro de un dominio dado, en orden a facilitar la comunicación y la compartir  la información entre diferentes sistemas.";
 $lang["repo_oas"] = "REPOSITORIO DE OBJETOS DE APRENDIZAJE";
 $lang["def_repo_oas"] = "Los objetos de  aprendizaje están almacenados en bibliotecas digitales especializadas, que  alojan múltiples tipos de recursos educativos y sus metadatos. Existen  repositorios locales que contienen los OA propios y los repositorios remotos  que son aquellos a los que se accede a través de una red.";
+$lang["interface"] = "Interfaz";
+$lang["narrator"] = "Narrador";
+$lang["screen_reader"] = "Lector de pantalla";
+$lang["lsc_translator"] = "Traductor LSC";
+$lang["struc_nav"] = "Navegación estructural";
+$lang["virtual_keyboard"] = "Teclado en pantalla";
+$lang["reset_values"] = "Restablecer valores";  
 
-
-
-
+$lang["font_size"] ="TAMAÑO DE FUENTE";
+$lang["message_font_size"] = "Cambiar el tamaño de la fuente.";
+$lang["inteline_size"] = "TAMAÑO DE INTERLINEADO";
+$lang["message_interline_size"] = "Cambiar el tamaño del interlineado.";
+$lang["contrast"] = "CONTRASTE";
+$lang["message_contrast"] = "Cambiar el contraste.";
+$lang["normal"] = "NORMAL";
+$lang["black_white"] = "NEGRO-BLANCO";
+$lang["white_black"] = "BLANCO-NEGRO";
+$lang["black_yellow"] = "NEGRO-AMARILLO";
+$lang["yellow_black"] = "AMARILLO-NEGRO";
+$lang["gray"] = "GRIS";
+$lang["customized"] = "PERSONALIZADO";
+$lang["font_color"] = "COLOR DE FUENTE";
+$lang["background_color"] = "COLOR DEL FONDO";
+$lang["highlight_color"] = "COLOR DE RESALTADO";
+$lang["link_color"] = "COLOR ENLACES";
+$lang["font_type"] = "TIPO DE FUENTE";
+$lang["message_font_type"] = "Cambiar el tipo de fuente.";
+$lang["cursor_config"] = "CONFIGURACIÓN DEL CURSOR";
+$lang["message_cursor_config"] = "Cambiar configuración del cursor";
+$lang["size_cursor"] = "TAMAÑO DEL CURSOR";
+$lang["no_change"] = "No cambiar";
+$lang["cursor_color"] = "COLOR DEL CURSOR";
+$lang["size_trail"] = "TAMAÑO DEL RASTRO";
+$lang["without_trail"] = "Sin rastro";
+$lang["trail_color"] = "COLOR DEL RASTRO";
+$lang["cfg_colors"] = "CONFIGURACIÓN DE COLORES";
+$lang["message_cfG_colors"] = "Cambiar configuración de colores.";
+$lang["invert_color"] = "INVERTIR COLORES";
+$lang["images"] = "Imágenes";
+$lang["general"] = "General";

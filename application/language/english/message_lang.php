@@ -5,17 +5,14 @@ $lang["repositories"] = "Repositories";
 $lang["team"] = "Team FROAC";
 $lang["about"] = "About FROAC";
 $lang["glossary"] = "Glossary";
-
 $lang["signin"] = "Sign in";
 $lang["accessibility"] = "Accessibility";
 $lang["profile"] = "Perfil";
 $lang["signout"] = "Cerrar sesión";
 $lang["search_learning_object"] = "Search learning object";
-
 $lang["user"] = "Users";
 $lang["objects"] = "Objects";
 $lang["objects_qualified"] = "Qualified objects"; 
-
 $lang["personal_information"] = "Personal information";
 $lang["name"] = "Name";
 $lang["last_name"] = "Last name";
@@ -58,7 +55,6 @@ $lang["abstract_project"] = "ICT support for learning can benefit a large number
 The strategy of educational content in small entities is a significant advance in the production of OA, but this alone is not enough. Its real usefulness requires that these objects are compatible with different environments and learning management systems, easy to migrate from one platform to another, easy to locate, access, archive and re-use. Hence the importance of establishing standards for the design and description of LOs. The potential benefits of the AO Repositories are reuse, interoperability, durability and accessibility.
 The project aims to define and validate which are the characteristics and technologies that effectively enable the storage and retrieval of reusable OAs and that can aim to participate in national and international OA Repository Federations. It is proposed to develop a model for the creation in Colombia of a set of repositories of federated LOs that allow the sharing of these resources through the definition of policies, methodological bases and processes of construction and administration of LOs and repositories, based on international standards and free software.";
 $lang["what_is_froac"] = "FROAC is the acronym in Spanish of the ";
-
 $lang["glossary_terms"] = "GLOSSARY OF TERMS";
 $lang["federation"] = "FEDERATION";
 $lang["def_federation"] = "A Federation of learning objects repositories facilitates the uniform administration of applications to discover and access the contents of the available OAs in a group of repositories.";
@@ -73,4 +69,42 @@ $lang["ontologia"] = "ONTOLOGY";
 $lang["def_ontologia"] = "The term computer ontology refers to the attempt to formulate a comprehensive and rigorous conceptual scheme within a given domain, in order to facilitate communication and sharing information between different systems.";
 $lang["repo_oas"] = "REPOSITORY OF LEARNING OBJECTS";
 $lang["def_repo_oas"] = "The learning objects are stored in specialized digital libraries, which house multiple types of educational resources and their metadata. There are local repositories that contain the own OAs and the remote repositories that are those that are accessed through a network.";
-
+$lang["interface"] = "Interface";
+$lang["narrator"] = "Narrator";
+$lang["screen_reader"] = "Screen reader";
+$lang["lsc_traslator"] = "Translator LSC";
+$lang["struc_nav"] = "Structural navigation";
+$lang["virtual_keyboard"] = "On-screen keyboard";
+$lang["reset_values"] = "Reset values";
+$lang["font_size"] = "FONT SIZE";
+$lang["message_font_size"] = "Change the font size";
+$lang["inteline_size"] = "INTERLINED SIZE";
+$lang["message_interline_size"] = "Change the line spacing size.";
+$lang["contrast"] = "CONSTRASTE";
+$lang["message_contrast"] = "Change the contrast.";
+$lang["normal"] = "NORMAL";
+$lang["black_white"] = "BLACK-WHITE";
+$lang["white_black"] = "WHITE-BLACK";
+$lang["black_yellow"] = "BLACK-YELLOW";
+$lang["yellow_black"] = "YELLOW-BLACK";
+$lang["gray"] = "GRAY";
+$lang["customized"] = "CUSTOMIZED";
+$lang["font_color"] = "SOURCE COLOR";
+$lang["background_color"] = "COLOR OF THE FUND";
+$lang["highlight_color"] = "HIGHLIGHT COLOR";
+$lang["link_color"] = "COLOR LINKS";
+$lang["font_type"] = "TYPE OF SOURCE";
+$lang["message_font_type"] = "Change the font type.";
+$lang["cursor_config"] = "CURSOR CONFIGURATION";
+$lang["message_cursor_config"] = "Change cursor settings";
+$lang["size_cursor"] = "CURSOR SIZE";
+$lang["no_change"] = "Do not change";
+$lang["cursor_color"] = "COLOR OF CURSOR";
+$lang["size_trail"] = "TRAIL SIZE";
+$lang["without_trail"] = "No trace";
+$lang["trail_color"] = "TRAIL COLOR";
+$lang["cfg_colors"] = "COLOR CONFIGURATION";
+$lang["message_cfG_colors"] = "Change color settings.";
+$lang["invert_color"] = "INVEST COLORS";
+$lang["images"] = "Images";
+$lang["general"] = "General";
