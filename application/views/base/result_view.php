@@ -14,8 +14,8 @@ if ($sess == 1) {
 <div class="col-lg-9">
     <div class="card border-0">
 
-        <h4 class="card-title">Resultados que incluyen todas las palabras <b>(<?php echo $palabras ?> )</b></h4>
-        <p class="no-results" >No hay resultados.</p>
+        <h4 class="card-title"><?php echo $this->lang->line('message_result'); ?> <b>(<?php echo $palabras ?> )</b></h4>
+        <p class="no-results" ><?php echo $this->lang->line('no_results'); ?>.</p>
         <div id="show_oas" class="card-body">
 
         </div>
@@ -49,7 +49,7 @@ if ($sess == 1) {
         <div class="modal-content" role="document">
             <div class="modal-header">
                 
-                <h4 class="modal-title" id="metadataModal">Metadatos estandar LOM</h4>
+                <h4 class="modal-title" id="metadataModal"><?php echo $this->lang->line('metadata_standard_lom'); ?></h4>
                 <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
                     <span aria-hidden="true">
                     &times;
@@ -64,7 +64,7 @@ if ($sess == 1) {
                
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal"  class="btn btn-success" type="button">Aceptar</button>
+                <button data-dismiss="modal"  class="btn btn-success" type="button"><?php echo $this->lang->line('accept'); ?></button>
             </div>
         </div>
     </div>
@@ -138,19 +138,19 @@ if ($sess == 1) {
                             </h5>
                         </div>
                         <div class="card-body">
-                            <b>Descripción: </b><p class="card-text">
+                            <b><?php echo $this->lang->line('description'); ?>: </b><p class="card-text">
                                 ${item['lo_description']}
                             </p><br>
-                            <b>Palabras claves: </b><p class="card-text">
+                            <b><?php echo $this->lang->line('keywords'); ?>: </b><p class="card-text">
                                 ${item['lo_keyword']}
                             </p>
                         </div>
                         <div class="card-footer">
                             <button onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" type="button" class="btn btn-lg btn-info card-link d-inline"  data-toggle="modal" data-target="#dialog_medatada">
-                                <i class="fa fa-eye"></i> Ver metadatos
+                                <i class="fa fa-eye"></i> <?php echo $this->lang->line('see_metadata'); ?>
                             </button>
                             <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}">
-                                <i class="fa fa-eye"></i> Ver objeto
+                                <i class="fa fa-eye"></i> <?php echo $this->lang->line('see_object'); ?>
                             </a>
                         </div>
                         </div>
@@ -170,7 +170,6 @@ if ($sess == 1) {
     }
 
     $(document).keypress(function (e) {
-        console.log("AR4Z");
         if ($("#dialog_medatada").hasClass('show') && (e.keycode == 13 || e.which == 13)) {
             $('#dialog_medatada').modal('hide');
             $('body').removeClass('modal-open');
