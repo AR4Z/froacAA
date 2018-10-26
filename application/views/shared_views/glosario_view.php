@@ -2,37 +2,37 @@
         <div class="container-fluid">
             <br/>
             <div class="card border-0">
-                 <h1>GLOSARIO</h1>
+                 <h1><?php echo $this->lang->line('glossary'); ?></h1>
                  <div class="card-body">
-                      <h5>GLOSARIO DE TERMINOS</h5>
+                      <h5><?php echo $this->lang->line('glossary_terms'); ?></h5>
                      <table class="table" width="791" border="2" align="center">
                        <tr>
-                         <td width="125"><h5 align="center">FEDERACIÓN:</h5></td>
-                         <td width="680"> <div align="justify">Una Federación de repositorios de objetos de  aprendizaje facilita la administración uniforme de aplicaciones para descubrir  y acceder a los contenidos de los OA disponibles en un grupo de repositorios.</div></td>
+                         <td width="125"><h5 align="center"><?php echo $this->lang->line('federation'); ?>:</h5></td>
+                         <td width="680"> <div align="justify"><?php echo $this->lang->line('def_federation'); ?></div></td>
                        </tr>
                        <tr>
                          <td><h5 align="center">LOM:</h5></td>
-                         <td> <div align="justify">LOM Learning Object Metadata (Metadatos para Objetos de  Aprendizaje) es un modelo de datos, usualmente codificado en XML, usado para  describir un objeto de aprendizaje y otros recursos digitales similares usados  para el apoyo al aprendizaje. Su propósito es ayudar a la reutilización de  objetos de aprendizaje y facilitar su interacción, usualmente en el contexto de  sistemas de aprendizaje on-line.</div></td>
+                         <td> <div align="justify"><?php echo $this->lang->line('def_lom'); ?></div></td>
                        </tr>
                        <tr>
-                         <td><h5 align="center">METADATOS:</h5></td>
-                         <td><div align="justify">Los metadatos son un conjunto información  provista con el fin de describir un material educativo. Metadatos Son datos  asociados a un documento digital que recogen información fundamentalmente  descriptiva (autor, título, etc.). También pueden incluir información de  administración (creación del recurso, derechos, control de acceso), y  preservación (tipo de formato, etc.).</div></td>
+                         <td><h5 align="center"><?php echo $this->lang->line('metadatos'); ?>:</h5></td>
+                         <td><div align="justify"><?php echo $this->lang->line('def_meta'); ?></div></td>
                        </tr>
                        <tr>
                          <td><h5 align="center">OAI (Open Archives Initiative):</h5></td>
-                         <td><div align="justify">Iniciativa que surge con el  objetivo de desarrollar y promover estándares de interoperabilidad para la  difusión y recuperación de publicaciones científicas en Internet. Surge en las  comunidades de e-prints, como alternativa a la distribución de información  científica en manos de los tradicionales editores comerciales. La  interoperabilidad se favorece con el establecimiento del protocolo OAI-PMH, que  facilita la comunicación de metadatos codificados en el formato Dublin Core,  entre servidores proveedores y clientes recolectores.</div></td>
+                         <td><div align="justify"><?php echo $this->lang->line('def_oai'); ?></div></td>
                        </tr>
                        <tr>
-                         <td><h5 align="center">OBJETOS DE APRENDIZAJE: </h5></td>
-                         <td height="10"><div align="justify">Se entiende como una unidad  didáctica en formato digital, independiente, auto-contenida, perdurable y  predispuesta para su reutilización en varios contextos educativos por la  inclusión de información auto-descriptiva en forma de metadatos.</div></td>
+                         <td><h5 align="center"><?php echo $this->lang->line('oas'); ?>: </h5></td>
+                         <td height="10"><div align="justify"><?php echo $this->lang->line('def_oas'); ?></div></td>
                        </tr>
                        <tr>
-                         <td><h5 align="center">ONTOLOGÍA:</h5></td>
-                         <td>  <div align="justify">El término ontología en informática hace  referencia al intento de formular un exhaustivo y riguroso esquema conceptual  dentro de un dominio dado, en orden a facilitar la comunicación y la compartir  la información entre diferentes sistemas.</div></td>
+                         <td><h5 align="center"><?php echo $this->lang->line('ontologia'); ?>:</h5></td>
+                         <td>  <div align="justify"><?php echo $this->lang->line('def_ontologia'); ?></div></td>
                        </tr>
                        <tr>
-                         <td><h5 align="center">REPOSITORIO DE OBJETOS DE APRENDIZAJE: </h5></td>
-                         <td><p align="justify">Los objetos de  aprendizaje están almacenados en bibliotecas digitales especializadas, que  alojan múltiples tipos de recursos educativos y sus metadatos. Existen  repositorios locales que contienen los OA propios y los repositorios remotos  que son aquellos a los que se accede a través de una red.</p></td>
+                         <td><h5 align="center"><?php echo $this->lang->line('repo_oas'); ?>: </h5></td>
+                         <td><p align="justify"><?php echo $this->lang->line('def_repo_oas'); ?></p></td>
                        </tr>
                      </table>
                      <p>&nbsp;</p>
