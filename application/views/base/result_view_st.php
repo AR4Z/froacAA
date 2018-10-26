@@ -14,7 +14,7 @@ if ($sess == 1) {
                 <div class="col-lg-12">
                     <!-- page start-->
                     <div class="card border-0">
-                        <h1 class="card-title"> <?php echo $encabezado?>:</h1>
+                        <h1 class="card-title"> <?php echo $this->lang->line('objects_qualified'); ?>:</h1>
                         <div class="card-body">
                             <?php
 
@@ -28,11 +28,11 @@ if ($sess == 1) {
                                         <p><a target="_blank" class="titulo" id="<?php echo $key['lo_id'] ?>" rep_id="<?php echo $key['rep_id'] ?>" logged="<?php echo $logged ?>" href="<?php echo base_url().'lo/load_lo/'.$url.'/'.$lo_name ?>"><?php echo $key['lo_title'] ?></a>
                                         </p>
                                         <div>
-                                            <b>Descripción: </b><?php echo $key['lo_description'] ?><br>
-                                            <b>Palabras claves: </b><?php echo $key['lo_keyword'] ?><br>
+                                            <b><?php echo $this->lang->line('description'); ?>: </b><?php echo $key['lo_description'] ?><br>
+                                            <b><?php echo $this->lang->line('keywords'); ?>: </b><?php echo $key['lo_keyword'] ?><br>
 
                                             <a onclick="verMetadata('<?php echo $key['lo_id'] . '/' . $key['rep_id'] ?>')" class="btn btn-sm btn-info" data-toggle="modal" href="#dialog_medatada" txt="OA1">
-                                                <li class="icon-eye-open"></li> Ver metadatos
+                                                <li class="icon-eye-open"></li><?php echo $this->lang->line('see_metadata'); ?>
                                             </a>
 
                                           <!--  <a onclick="verIndicadores('<?php echo $key['lo_id'] . '/' . $key['rep_id'] . '/' . $user; ?>','<?php echo $key['rank']?>')" class="btn btn-warning btn-sm" data-toggle="modal" href="#dialog_indicaores" txt="OA2">
@@ -44,7 +44,7 @@ if ($sess == 1) {
                                 }
                             } else {
                                 ?>
-                                No hay resultados.
+                                <?php echo $this->lang->line('no_results'); ?>
                             <?php } ?>
                         </div>
                     </div>
@@ -60,14 +60,14 @@ if ($sess == 1) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Metadatos estandar LOM</h4>
+                <h4 class="modal-title"><?php echo $this->lang->line('metadata_standard_lom'); ?></h4>
             </div>
 
             <div class="modal-body" id="dialog_metadata_result">
 
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal"  class="btn btn-success" type="button">Aceptar</button>
+                <button data-dismiss="modal"  class="btn btn-success" type="button"><?php echo $this->lang->line('accept'); ?></button>
             </div>
         </div>
     </div>
@@ -81,17 +81,17 @@ if ($sess == 1) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Indicadores</h4>
+                <h4 class="modal-title"><?php echo $this->lang->line('indicators'); ?></h4>
             </div>
             <div class="modal-body">
 
                 <?php if ($logged == 1) { ?>
-                    <b>Usted ha calificado estre objeto:</b>
+                    <b><?php echo $this->lang->line('you_rank'); ?>:</b>
                     <div class="raty"  id="" rep_id="" data-score=""  username=""></div>
                 <?php }else{ ?>
-                    <b>Promedio de calificación de los usuarios:</b>
+                    <b><?php echo $this->lang->line('average_rank_lo'); ?>:</b>
                     <div class="raty"  id="" rep_id="" data-score="5"  username=""></div>
-                    Si desea calificar este objeto y agregarlo a su lista de favoritos, debe crear una cuenta e iniciar sesión!
+                    <?php echo $this->lang->line('ad_rank_lo'); ?>!
                 <?php }?>
 
                 <!--<div id="dialog_inidicadores_result"></div>-->
