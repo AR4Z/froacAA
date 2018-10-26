@@ -17,28 +17,22 @@
                 <?php echo validation_errors(); ?>
             </div>
             <?php endif;?>
-            <input type="text" title="Nombre de usuario FROAC" class="form-control" placeholder="Nombre de usuario" name="username" autofocus>
-            <input type="password" title="Contraseña" class="form-control" name="password" placeholder="Contraseña">
+            <input type="text" title="Nombre de usuario FROAC" class="form-control" placeholder="<?php echo $this->lang->line('username'); ?>" name="username" autofocus>
+            <input type="password" title="Contraseña" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>">
 
             <div class="form-group">
-                <div class="form-check">
-                    <span class="pull-right">
-                        <a data-toggle="modal" href="#myModal"> Olvide mi contraseña?</a>
-
-                    </span>
-                </div>
-
+                
             </div>
-            <button class="btn btn-lg btn-success btn-block" type="submit">Iniciar Sesión</button>
+            <button class="btn btn-lg btn-success btn-block" type="submit"><?php echo $this->lang->line('signin'); ?></button>
             <div class="registration text-center">
-                ¿No tienes una cuenta aún?<br>
+            <?php echo $this->lang->line('message_signup'); ?><br>
                 <a class="" href="<?php echo base_url()?>usuario/registro">
-                    Crear una nueva cuenta
+                <?php echo $this->lang->line('create_account'); ?>
                 </a>
             </div><br>
             <div class="registration text-center">
                 <a class="" href="<?php echo base_url()?>">
-                    <i class="fa fa-reply"></i>Volver
+                    <i class="fa fa-reply"></i><?php echo $this->lang->line('return'); ?>
                 </a>
             </div>
         </div>

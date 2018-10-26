@@ -149,3 +149,6 @@ $lang["model"] = "MODEL";
 $lang["message_model"] = "Change the model that will make the signs";
 $lang["avatar"] = "Avatar";
 $lang["human"] = "Human";
+$lang["message_signup"] = "¿You do not have an account yet?";
+$lang["create_account"] = "Create a new account";
+$lang["return"] = "return";

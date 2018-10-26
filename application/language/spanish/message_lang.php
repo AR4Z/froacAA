@@ -144,10 +144,12 @@ $lang["keyboard"] = "TECLADO";
 $lang["use_kb"] = "Usar teclado";
 $lang["translate"] = "Traducir";
 $lang["message_text_lsc"] = "Escribe lo que quieras traducir";
-
 $lang["sign_speed"] = "VELOCIDAD DE SEÑAS";
 $lang["message_sign_speed"] = "Cambiar la velocidad con la que se reproducen las señas";
 $lang["model"] = "MODELO";
 $lang["message_model"] = "Cambiar el modelo que hará las señas";
 $lang["avatar"] = "Avatar";
 $lang["human"] = "Humano";
+$lang["message_signup"] = "¿No tienes una cuenta aún?";
+$lang["create_account"] = "Crear una nueva cuenta";
+$lang["return"] = "Volver";
