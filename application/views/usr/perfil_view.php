@@ -21,9 +21,9 @@
                           </div>
                           <div class="card-body">
                               <ul class="list-group list-group-flush profile-nav">
-                                  <li class="list-group-item"><a  href="<?php echo base_url()?>usuario/mis_objetos"> <i class="fa fa-book"></i> Mis objetos</a></li>
+                                  <li class="list-group-item"><a  href="<?php echo base_url()?>usuario/mis_objetos"> <i class="fa fa-book"></i> <?php echo $this->lang->line('my_objects'); ?></a></li>
                                  <!-- <li><a href="profile-activity.html"> <i class="icon-rss-sign"></i> Noticias <span class="label label-danger pull-right r-activity">9</span></a></li>-->
-                                  <li class="list-group-item"><a  href="<?php echo base_url()?>usuario/editar_usr"> <i class="fa fa-pencil"></i> Editar perfil</a></li>
+                                  <li class="list-group-item"><a  href="<?php echo base_url()?>usuario/editar_usr"> <i class="fa fa-pencil"></i><?php echo $this->lang->line('edit_profile'); ?></a></li>
                                   <!--<li><a href="<?php echo base_url()?>usuario/estilos"> <i class="icon-edit"></i> Test de Estilos de Aprendizaje </a></li>>-->
                               </ul>
                           </div>
@@ -32,38 +32,38 @@
                   <aside class="profile-info col-lg-9" role="complementary" aria-label="Acerca del usuario">
                       <div class="card border-0">
 
-                              <h2 class="card-title" style="color: #89817e;">Acerca de mi</h2>
+                              <h2 class="card-title" style="color: #89817e;"><?php echo $this->lang->line('about_me'); ?></h2>
 
                           <div class="card-body bio-graph-info">
 
                               <div class="row">
                                   <div class="bio-row">
-                                     <p><span>Nombres: </span> <?php echo $usr_data['use_nombre']?></p>
+                                     <p><span><?php echo $this->lang->line('name'); ?>: </span> <?php echo $usr_data['use_nombre']?></p>
                                   </div>
 
                                   <div class="bio-row">
-                                     <p><span>Apellidos: </span> <?php echo $usr_data['use_apellido']?></p>
+                                     <p><span><?php echo $this->lang->line('last_name'); ?>: </span> <?php echo $usr_data['use_apellido']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span>Fecha de Nacimiento:</span> <?php echo $usr_data['use_stu_datebirth']?></p>
+                                      <p><span><?php echo $this->lang->line('birthdate'); ?>:</span> <?php echo $usr_data['use_stu_datebirth']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span>Email: </span> <?php echo $usr_data['use_email']?></p>
+                                      <p><span><?php echo $this->lang->line('email'); ?>: </span> <?php echo $usr_data['use_email']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span>Educación: </span> <?php echo $usr_data['use_level']?></p>
+                                      <p><span><?php echo $this->lang->line('education'); ?>: </span> <?php echo $usr_data['use_level']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span>Registro: </span> <?php echo $usr_data['use_fecha_registro']?></p>
+                                      <p><span><?php echo $this->lang->line('register'); ?>: </span> <?php echo $usr_data['use_fecha_registro']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span>Rol: </span> <?php echo $usr_data['use_rol_nombre']?></p>
+                                      <p><span><?php echo $this->lang->line('rol'); ?>: </span> <?php echo $usr_data['use_rol_nombre']?></p>
                                   </div>
                                   <div class="bio-row">
-                                     <p><span>Estilo de Aprendizaje: </span> <?php echo $usr_data['use_ls_learningstyle']?></p>
+                                     <p><span><?php echo $this->lang->line('learning_style'); ?>: </span> <?php echo $usr_data['use_ls_learningstyle']?></p>
                                   </div>
                                   <div class="bio-row">
-                                     <p><span>Descripción del Estilo de Aprendizaje: </span> <?php echo $usr_data['use_ls_description']?></p>
+                                     <p><span><?php echo $this->lang->line('description_ls'); ?>: </span> <?php echo $usr_data['use_ls_description']?></p>
                                   </div>
                               </div>
                           </div>
