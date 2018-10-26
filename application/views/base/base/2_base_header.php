@@ -19,7 +19,7 @@
 
         <ul class="socialLinks">
             <li>
-                    <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
+                    <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><?php echo $this->lang->line('accessibility'); ?> </a>
             </li>
         </ul>
         <?php endif;?>
@@ -38,7 +38,7 @@
         <?php if(!$this->session->userdata('logged_in')): ?>
         <li class="nav-item">
             <a class="btn btn-outline-dark btn-lg" href="<?php echo base_url()?>login" role="button">
-                Iniciar sesión
+            <?php echo $this->lang->line('signin'); ?> 
             </a>
         </li>
         <?php else : ?>
@@ -48,8 +48,8 @@
             <button class="btn btn-outline-dark btn-lg dropdown-toggle" id="navbarDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $usr['use_nombre'] ?></button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil">Perfil</a>
-                <a onclick="localStorage.clear();" class="dropdown-item" href="<?php echo base_url()?>sesion/logout">Cerrar Sesión</a>
+                <a class="dropdown-item" href="<?php echo base_url()?>usuario/perfil"><?php echo $this->lang->line('profile'); ?> </a>
+                <a onclick="localStorage.clear();" class="dropdown-item" href="<?php echo base_url()?>sesion/logout"><?php echo $this->lang->line('signout'); ?> </a>
             </div>
         </li>
 

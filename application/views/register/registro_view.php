@@ -3,13 +3,14 @@
     <div class="container-fluid">
         <br/>
         <div class="card border-0">
-            <h1>Crear cuenta en FROAC</h1>
+        
+            <h1><?php echo $this->lang->line('signup'); ?> FROAC</h1>
             <!--FORMULARIO DE REGISTRO DE USUARIO-->
             <div class="card-body">
                 <form method="POST" action="<?php echo base_url();?>index.php/usuario/guardar"  role="form" enctype='multipart/form-data' id="form">
 
                     <div class="card border-0">
-                        <h3>Información personal</h3>
+                        <h3><?php echo $this->lang->line('personal_information'); ?></h3>
                         <div class="card-body">
                             <div class="form-group">
                                 <input type="hidden" value="2" name="tipoU">
@@ -22,50 +23,50 @@
                                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label for="input_name" id="nombre">Nombre:</label>
-                                <input type="text" class="name form-control" name="nombre" placeholder="Nombres" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
+                                <label for="input_name" id="nombre"><?php echo $this->lang->line('name'); ?></label>
+                                <input type="text" class="name form-control" name="nombre" placeholder="<?php echo $this->lang->line('name'); ?>" id="input_name" aria-labelledby="nombre" aria-required="true" autofocus>
                             </div>
                             <div id="nombre-validate">
                             </div>
                             <div class="form-group">
-                                <label for="apellidos" id="apellidos">Apellidos:</label>
-                                <input id="apellidos" type="text" class="form-control" name="apellidos" placeholder="Apellidos" aria-required="true" aria-labelledby="apellidos">
+                                <label for="apellidos" id="apellidos"><?php echo $this->lang->line('last_name'); ?></label>
+                                <input id="apellidos" type="text" class="form-control" name="apellidos" placeholder="<?php echo $this->lang->line('last_name'); ?>" aria-required="true" aria-labelledby="apellidos">
                             </div>
                             <div id="apellidos-validate">
                             </div>
                             <div id="cont_fecha_nac" class="form-group">
-                                <label id="fecha_nac" for="input_fecha_nac">Fecha de nacimiento:</label>
+                                <label id="fecha_nac" for="input_fecha_nac"><?php echo $this->lang->line('birthdate'); ?></label>
                                 <!--<input data-date-viewmode="years" data-date-format="dd-mm-yyyy" type="text" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Selecciona año, mes y día" required>-->
-                                <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="fecha de nacimiento" aria-required="true" aria-labelledby="fecha_nac"></input>
+                                <input type="text" class="birthdate form-control" id="input_fecha_nac" name="fecha_nac" placeholder="<?php echo $this->lang->line('birthdate'); ?>" aria-required="true" aria-labelledby="fecha_nac">
                             </div>
                             <div id="fecha_nac-validate">
                             </div>
                             <div class="form-group">
-                                <label id="mail" for="input_mail">E-mail:</label>
+                                <label id="mail" for="input_mail"><?php echo $this->lang->line('email'); ?></label>
                                 <!-- Se valida la existencia de @ y . en el correo ingresado por medio del atributo pattern -->
-                                <input type="text" id="input_mail" class="form-control" name="mail" placeholder="Correo electronico" aria-required="true" aria-labelledby="mail">
+                                <input type="text" id="input_mail" class="form-control" name="mail" placeholder="<?php echo $this->lang->line('signup'); ?>" aria-required="true" aria-labelledby="mail">
                             </div>
                             <div id="mail-validate">
                             </div>
                             <div class="form-group">
-                                <label for="input_username" id="username">Nombre de usuario:</label>
-                                <input type="text" class="form-control" id="input_username" name="username" placeholder="Nombre de usuario unico en FROAC" aria-required="true" aria-labelledby="username">
+                                <label for="input_username" id="username"><?php echo $this->lang->line('username'); ?>:</label>
+                                <input type="text" class="form-control" id="input_username" name="username" placeholder="<?php echo $this->lang->line('username'); ?>" aria-required="true" aria-labelledby="username">
                             </div>
                             <div id="username-validate">
                             </div>
                             <div class="form-group">
-                                <label for="input_passwd" id="passwd">Contraseña:</label>
-                                <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="Contraseña" aria-labelledby="passwd" aria-required="true"><br>
+                                <label for="input_passwd" id="passwd"><?php echo $this->lang->line('password'); ?>:</label>
+                                <input type="password" class="form-control" id="input_passwd" name="passwd" placeholder="<?php echo $this->lang->line('password'); ?>" aria-labelledby="passwd" aria-required="true"><br>
                                 
-                                <label for="input_passwd2" id="passwd2">Reescriba la contraseña:</label>
-                                <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="Reescribe la contraseña" aria-labelledby="passwd" aria-required="true">
+                                <label for="input_passwd2" id="passwd2"><?php echo $this->lang->line('confirmation_password'); ?>:</label>
+                                <input type="password" class="form-control" id="input_passwd2" name="passwd2" placeholder="<?php echo $this->lang->line('confirmation_password'); ?>" aria-labelledby="passwd" aria-required="true">
                             </div>
                             <div id="passwd-validate">
                             </div>
                             <div id="passwd2-validate">
                             </div>
                             <div class="form-group">
-                                <label for="etnica">Pertenece a una comunidad indigena:</label>
+                                <label for="etnica"><?php echo $this->lang->line('belong_indigenous'); ?>:</label>
                                 <select class="form-control input-sm m-bot15" name="etnica" id="etnica">
                                     <option value="ninguna">Ninguna</option>
                                     <option value="embera">Embera Chamí</option>
@@ -75,7 +76,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="dissabilities">Presenta alguna de las siguientes discapacidades:</label>
+                                <label for="dissabilities"><?php echo $this->lang->line('have_disabilities'); ?>:</label>
                                 <br>
                                 <?php
                                   foreach ($dissabilities as $key) { ?>
@@ -85,15 +86,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="institution_username">Institución a la que pertenece:</label>
-                                <input aria-labelledby="institution_username" type="text" class="form-control" id="institution_username" name="institution_username" placeholder="Nombre de la institución a la que pertenece">
+                                <label for="institution_username"><?php echo $this->lang->line('institution'); ?>:</label>
+                                <input aria-labelledby="institution_username" type="text" class="form-control" id="institution_username" name="institution_username" placeholder="<?php echo $this->lang->line('institution'); ?>">
                             </div>
                             <div id="institution_username-validate">
 
                             </div>
 
                             <div class="form-group">
-                                <label id="label_nivel_educativo" for="nevel_ed">Nivel Educativo:</label>
+                                <label id="label_nivel_educativo" for="nevel_ed"><?php echo $this->lang->line('education_level'); ?>:</label>
                                 <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
                                     <?php
                                                     foreach ($nivel_educativo as $key) { ?>
@@ -104,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_preferences">
-                                <label id="label_preferences" for="pref">Preferencias de tipo de recurso educativo</label><br/>
+                                <label id="label_preferences" for="pref"><?php echo $this->lang->line('educational_resource_pref'); ?></label><br/>
 
                                 <?php
                                                     foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
@@ -115,7 +116,7 @@
 
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_interfaz">
-                                <label for="personaliceInterfaz" id="label_personalice_interfaz">¿Desea personalizar la interfaz?</label>
+                                <label for="personaliceInterfaz" id="label_personalice_interfaz"><?php echo $this->lang->line('customize_interface'); ?></label>
                                 <select id="useAdaptInterfaz" class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -129,7 +130,7 @@
 
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_narrator">
-                                <label for="useNarrator" id="label_use_narrator">¿Desea usar el narrador?</label>
+                                <label for="useNarrator" id="label_use_narrator"><?php echo $this->lang->line('use_narrator'); ?></label>
                                 <select id="useNarrator" class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -143,7 +144,7 @@
 
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_use_screen_reader">
-                                <label for="use_screen_reader" id="label_use_screen_reader">¿Desea usar el lector de pantalla?</label>
+                                <label for="use_screen_reader" id="label_use_screen_reader"><?php echo $this->lang->line('use_screen_reader'); ?></label>
                                 <select id="useSr" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -157,7 +158,7 @@
                             </div>
 
                             <div class="form-group" role="group" aria-labelledby="label_use_lsc">
-                                <label for="useLSCTranslator" id="label_use_lsc">¿Desea usar el traductor de Español a Lenguaje de Señas Colombiano?</label>
+                                <label for="useLSCTranslator" id="label_use_lsc"><?php echo $this->lang->line('use_lsc'); ?></label>
                                 <select id="useLSCTranslator" class="form-control input-sm m-bot15" name="useLSCTranslator" aria-labelledby="label_use_lsc" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -172,7 +173,7 @@
                             </div>
 
                             <div class="form-group" role="group" aria-labelledby="label_use_sn">
-                                <label for="useStructuralNav" id="label_use_sn">¿Desea usar navegación estructural?</label>
+                                <label for="useStructuralNav" id="label_use_sn"><?php echo $this->lang->line('use_struc_nav'); ?></label>
                                 <select id="useStructuralNav" class="form-control input-sm m-bot15" name="useStructuralNav" aria-labelledby="label_use_sn" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -187,7 +188,7 @@
                             </div>
 
                             <div class="form-group" role="group" aria-labelledby="label_use_kb">
-                                <label for="useKeyboard" id="label_use_kb">¿Desea usar el teclado virtual?</label>
+                                <label for="useKeyboard" id="label_use_kb"><?php echo $this->lang->line('use_virtual_keyboard'); ?></label>
                                 <select id="useKeyboard" class="form-control input-sm m-bot15" name="useKeyboard" aria-labelledby="label_use_kb" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -210,7 +211,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input id="submitg" type="submit" class="btn btn-info" value="Guardar Información">
+                            <input id="submitg" type="submit" class="btn btn-info" value="<?php echo $this->lang->line('save_information'); ?>">
                         </div>
                     </div>
                 </form>

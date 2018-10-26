@@ -8,7 +8,7 @@
                         <div class="input-group mb-3" role="search" aria-label="Buscar objeto de aprendizaje">
                             <input type="text" class="form-control form-control-lg"  id="hide-input" placeholder="Buscar objeto de aprendizaje" aria-label="Buscar objeto de aprendizaje" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <a class="btn btn-outline-success btn-lg" role="button" href="">Buscar</a>
+                                <a class="btn btn-outline-success btn-lg" role="button" href=""><?php echo $this->lang->line('search'); ?></a>
                             </div>
                         </div>
                     </div>
@@ -27,9 +27,9 @@
                     <div class="col">
                         <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
                             <div class="input-group mb-3" role="search" aria-label="Buscar objeto de aprendizaje">
-                                <input type="text" class="form-control form-control-lg"  id="search" placeholder="Buscar objeto de aprendizaje" aria-label="Buscar objeto de aprendizaje" aria-describedby="basic-addon2">
+                                <input type="text" class="form-control form-control-lg"  id="search" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>" aria-label="<?php echo $this->lang->line('search_learning_object'); ?>" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <a class="btn btn-outline-success btn-lg" role="button" href="<?php echo base_url()?>usuario/busqueda">Buscar</a>
+                                    <a class="btn btn-outline-success btn-lg" role="button" href="<?php echo base_url()?>usuario/busqueda"><?php echo $this->lang->line('search'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                         <p class="numeros">
                                             <?php echo $total_user ?>
                                         </p>
-                                        <p>Usuarios</p>
+                                        <p><?php echo $this->lang->line('user'); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                         <p class="numeros">
                                             <?php echo $total_rep ?>
                                         </p>
-                                        <p>Repositorios</p>
+                                        <p><?php echo $this->lang->line('repositories'); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                                         <p class="numeros">
                                             <?php echo $total_lo ?>
                                         </p>
-                                        <p>Objetos</p>
+                                        <p><?php echo $this->lang->line('objects'); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                         <p class="numeros">
                                             <?php echo $total_lo_score ?>
                                         </p>
-                                        <p>Objetos calificados</p>
+                                        <p><?php echo $this->lang->line('objects_qualified'); ?></p>
                                     </div>
                                 </div>
                             </div>

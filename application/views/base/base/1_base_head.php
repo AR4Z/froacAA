@@ -224,3 +224,9 @@
 
 <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
 </audio>
+<select onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+    <option value="english" <?php if($this->session->userdata('site_lang') == 'english') echo 'selected="selected"'; ?>>Inglés</option>
+    <option value="portugues" <?php if($this->session->userdata('site_lang') == 'portugues') echo 'selected="selected"'; ?>>Portugués</option>
+    <option value="spanish" <?php if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>   
+</select>
+<p><?php echo $this->lang->line('welcome_message'); ?></p>

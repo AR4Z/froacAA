@@ -1,0 +1,36 @@
+<?php 
+$lang["search"] = "Buscar";
+$lang["signup"] = "Crear cuenta";
+$lang["repositories"] = "Repositorios";
+$lang["team"] = "Equipo FROAC";
+$lang["about"] = "Acerca de FROAC";
+$lang["glossary"] = "Glosario";
+$lang["signin"] = "Iniciar Sesión";
+$lang["accessibility"] = "Accesibilidad";
+$lang["profile"] = "Perfil";
+$lang["signout"] = "Cerrar sesión";
+$lang["search_learning_object"] = "Buscar objeto de aprendizaje";
+$lang["user"] = "Usuarios";
+$lang["objects"] = "Objetos";
+$lang["objects_qualified"] = "Objetos calificados"; 
+
+$lang["personal_information"] = "Información personal";
+$lang["name"] = "Nombre";
+$lang["last_name"] = "Apellidos";
+$lang["birthdate"] = "Fecha de nacimiento";
+$lang["email"] = "Correo electrónico";
+$lang["username"] = "Nombre de usuario";
+$lang["password"] = "Contraseña";
+$lang["confirmation_password"] = "Confirmación de contraseña";
+$lang["belong_indigenous"] = "Pertenece a una comunidad indígena";
+$lang["have_disabilities"] = "Presenta alguna de las siguientes discapacidades";
+$lang["institution"] = "Institución";
+$lang["education_level"] = "Nivel educativo";
+$lang["educational_resource_pref"] = "Preferencia de recurso educativo";
+$lang["customize_interface"] = "¿Desea personalizar la interfaz?";
+$lang["use_narrator"] = "¿Desea usar el narrador?";
+$lang["use_screen_reader"] = "¿Desea usar el lector de pantalla?";
+$lang["use_lsc"] = "¿Desea usar el traductor de lenguaje de señas?";
+$lang["use_struc_nav"] = "¿Desea usar la navegación estructural?";
+$lang["use_virtual_keyboard"] = "¿Desea usar el teclado virtual?";
+$lang["save_information"] = "Guardar información";
