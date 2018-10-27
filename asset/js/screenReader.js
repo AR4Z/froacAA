@@ -54,7 +54,7 @@ let dictLangs = {
         "Single option",
         "To enter iframe press control + g, press control + f to continue in automatic mode or control + d to move to the next element.",
     ],
-    'portugues': [
+    'portuguese': [
         "Leitor de tela em",
         "Link",
         "Para seguir o link, pressione a tecla Enter",
@@ -478,7 +478,7 @@ function createUtterances(text) {
         if(userLang == "english") {
             audioSrcsSr[index].lang = "en-GB";
             audioSrcsSr[index].voice = synth.getVoices()[57];
-        } else if(userLang == "portugues") {
+        } else if(userLang == "portuguese") {
             console.log("postugures")
             audioSrcsSr[index].lang = "pt-BR";
             audioSrcsSr[index].voice = synth.getVoices()[46];
