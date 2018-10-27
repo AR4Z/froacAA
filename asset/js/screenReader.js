@@ -9,6 +9,75 @@ let treeSr, treeIsIframe = false,
         volume: 0.5,
     };
 
+let dictLangs = {
+    'spanish': [
+        "Lector de pantalla encendido",
+        "Enlace",
+        "Para seguir el link, presione la tecla enter",
+        "Botón",
+        "Para presionar el botón, presione la tecla espacio",
+        "Encabezado nivel",
+        "Imagen",
+        "Campo de formulario tipo texto",
+        "Valor",
+        "Vacío",
+        "Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento",
+        "Campo de formulario tipo contraseña",
+        "Estado",
+        "Lleno",
+        "Casilla de verificación",
+        "Seleccionada",
+        "No seleccionada",
+        "No seleccionada. Presione la tecla enter para seleccionar.",
+        "Opción única",
+        "Para entrar al iframe presionar control + g, presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.",
+    ],
+    'english': [
+        "Screen reader on",
+        "Link",
+        "To follow the link, press the enter key",
+        "Button",
+        "To press the button, press the space key",
+        "Header level",
+        "Image",
+        "Form type text field",
+        "Value",
+        "Empty",
+        "Enter the value and press control + f to continue in automatic mode or control + d to move to the next element",
+        "Password type form field",
+        "State",
+        "Full",
+        "Checkbox",
+        "Selected",
+        "Not selected",
+        "Not selected Press the enter key to select.",
+        "Single option",
+        "To enter iframe press control + g, press control + f to continue in automatic mode or control + d to move to the next element.",
+    ],
+    'portugues': [
+        "Leitor de tela em",
+        "Link",
+        "Para seguir o link, pressione a tecla Enter",
+        "Botão",
+        "Para pressionar o botão, pressione a tecla de espaço",
+        "Nível de cabeçalho",
+        "Image",
+        "Campo de texto do tipo de formulário",
+        "Valor",
+        "Vazio",
+        "Insira o valor e pressione control + f para continuar no modo automático ou control + d para passar para o próximo elemento",
+        "Campo de formulário do tipo de senha",
+        "Estado",
+        "Completo",
+        "Caixa de seleção",
+        "Seleccionado",
+        "Não selecionado",
+        "Não selecionado. Pressione a tecla Enter para selecionar.",
+        "Opção única",
+        "Para inserir iframe pressione Ctrl + g, pressione control + f para continuar no modo automático ou control + d para mover para o próximo elemento.",
+    ]
+}
+
 let synth = window.speechSynthesis;
 
 const mappings = {
@@ -43,7 +112,7 @@ function dataSr() {
                 prevSr();
                 break;
             case "ctrl+s":
-                sayEventUtter.text = "Lector de pantalla encendido";
+                sayEventUtter.text = dictLangs[userLang][0];
                 sayEventUtter.onend = sr;
                 synth.speak(sayEventUtter);
                 break;
@@ -324,17 +393,17 @@ function computeAccessibleName(element) {
 
 const announcers = {
     link(element) {
-        return `Enlace, ${ computeAccessibleName( element ) }. Para seguir el link, presione la tecla enter.`;
+        return `${dictLangs[userLang][1]}, ${ computeAccessibleName( element ) }. ${ dictLangs[userLang][2] }.`;
     },
 
     button(element) {
-        return `Botón, ${ computeAccessibleName( element ) }. Para presionar el botón, presione la tecla espacio.`;
+        return `${ dictLangs[userLang[3]] }, ${ computeAccessibleName( element ) }. ${ dictLangs[userLang[4]] }.`;
     },
 
     heading(element) {
         const level = element.getAttribute('aria-level') || element.tagName[1];
 
-        return `Encabezado nivel ${ level }, ${ computeAccessibleName( element ) }`;
+        return `${ dictLangs[userLang][5] } ${ level }, ${ computeAccessibleName( element ) }`;
     },
 
     paragraph(element) {
@@ -342,23 +411,23 @@ const announcers = {
     },
 
     image(element) {
-        return `Imagen, ${ computeAccessibleName( element ) }`;
+        return `${ dictLangs[userLang][6] }, ${ computeAccessibleName( element ) }`;
     },
 
     input(element) {
         if (element.type == "text") {
-            return `Campo de formulario tipo texto: ${computeAccessibleName(element)}. Valor: ${element.value ? element.value : "Vacío"}. Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
+            return `${ dictLangs[userLang][7] }: ${computeAccessibleName(element)}. ${ dictLangs[userLang][8] }: ${element.value ? element.value :  dictLangs[userLang][9]}. ${dictLangs[userLang][10]}.`;
         } else if (element.type == "password") {
-            return `Campo de formulario tipo contraseña: ${computeAccessibleName(element)}. Estado: ${element.value ? "Lleno" : "Vacío"}. Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
+            return `${ dictLangs[userLang][11] }: ${computeAccessibleName(element)}. ${ dictLangs[userLang][12] }: ${element.value ? dictLangs[userLang][13] : dictLangs[userLang][9]}. ${dictLangs[userLang][10]}.`;
         } else if (element.type == "checkbox") {
-            return `Casilla de verificación: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada" : "No seleccionada"}`;
+            return `${dictLangs[userLang][14]}: ${computeAccessibleName(element)}. ${ dictLangs[userLang][12] }: ${element.checked ? dictLangs[userLang][15] : dictLangs[userLang][16]}`;
         } else if(element.type == "radio") {
-            return `Opción única: ${computeAccessibleName(element)}. Estado: ${element.checked ? "Seleccionada": "No seleccionada. Presione la tecla enter para seleccionar."} `;
+            return `${dictLangs[userLang[18]]}: ${computeAccessibleName(element)}. ${ dictLangs[userLang][12] }: ${element.checked ? dictLangs[userLang][15]: dictLangs[userLang][17]} `;
         }
     },
 
     iframe(element) {
-        return `Iframe, ${ computeAccessibleName(element)}. Para entrar al iframe presionar control + g, presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.`;
+        return `Iframe, ${ computeAccessibleName(element)}. ${ dictLangs[userLang][19] }`;
     },
 
     default (element) {
@@ -401,18 +470,21 @@ function createUtterances(text) {
             audioSrcsSr[index].onend = nextElementSr;
         }
         
-        audioSrcsSr[index].voice = synth.getVoices()[65];
+        
         audioSrcsSr[index].pitch = cfgVoiceSr.pitch;
         audioSrcsSr[index].volume = cfgVoiceSr.volume;
         audioSrcsSr[index].rate = cfgVoiceSr.rate;
         
         if(userLang == "english") {
             audioSrcsSr[index].lang = "en-GB";
+            audioSrcsSr[index].voice = synth.getVoices()[57];
         } else if(userLang == "portugues") {
             console.log("postugures")
             audioSrcsSr[index].lang = "pt-BR";
+            audioSrcsSr[index].voice = synth.getVoices()[46];
         } else {
             audioSrcsSr[index].lang = "es-419";
+            audioSrcsSr[index].voice = synth.getVoices()[65];
         }
         
     }
