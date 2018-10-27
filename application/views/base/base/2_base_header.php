@@ -11,9 +11,10 @@
     </div>
     <div class="seal">
     <select class="selectpicker" data-width="105px" onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+    <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>
     <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php if($this->session->userdata('site_lang') == 'english') echo 'selected="selected"'; ?>>Inglés</option>
-    <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portugues" <?php if($this->session->userdata('site_lang') == 'portugues') echo 'selected="selected"'; ?>>Portugués</option>
-    <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>   
+    <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese" <?php if($this->session->userdata('site_lang') == 'portugues') echo 'selected="selected"'; ?>>Portugués</option>
+       
 </select>
         <img alt="Escudo de la República de Colombia" src="<?php echo base_url()?>asset/img/sealColombia.png" width="66" height="66" />
     </div>

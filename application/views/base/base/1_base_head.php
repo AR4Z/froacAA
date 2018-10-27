@@ -202,7 +202,7 @@
         customColors = <?php echo json_encode($this->session->userdata('customColors'));?>;
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
-        userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish"
+        userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
 
         $("#" + idView).addClass('active');
     });
