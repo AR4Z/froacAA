@@ -23,6 +23,8 @@
     <link href="<?php echo base_url() ?>asset/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/button.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/css/flag-icon.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>asset/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
 
@@ -226,9 +228,3 @@
 
 <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
 </audio>
-<select onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
-    <option value="english" <?php if($this->session->userdata('site_lang') == 'english') echo 'selected="selected"'; ?>>Inglés</option>
-    <option value="portugues" <?php if($this->session->userdata('site_lang') == 'portugues') echo 'selected="selected"'; ?>>Portugués</option>
-    <option value="spanish" <?php if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>   
-</select>
-<p><?php echo $this->lang->line('welcome_message'); ?></p>

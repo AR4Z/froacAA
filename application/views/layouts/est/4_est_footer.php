@@ -18,6 +18,7 @@
     
     <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
     <script src="<?php echo base_url()?>asset/js/jquery.scrollTo.min.js"></script>
     <script src="<?php echo base_url()?>asset/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>asset/js/jquery.sparkline.js" type="text/javascript"></script>

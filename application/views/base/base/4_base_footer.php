@@ -24,7 +24,7 @@
 <script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
-
+<script src="<?php echo base_url() ?>asset/js/bootstrap-select.min.js"></script>
 
 
 <?php if($this->session->userdata('needNarrator') || !($this->session->userdata('logged_in'))):?>
