@@ -1,25 +1,11 @@
 function dataNarrator() {
-    cfgReproductor = {
-        src: [],
-        format: ['wav'],
-        onplay: clearQueue,
-        onend: nextElement,
-    }
-    player = new Howl(cfgReproductor);
-
+    audioSrcs = []
     // voice narrator config
-
     cfgVoiceNarrator = {
-        amplitud: 100,
-        wordgap: 0,
-        pitch: 50,
-        speed: 175,
-        variant: 'f1',
-        volume: 1,
-        punct: true,
-        rawdata: 'base64',
-
-    }
+        rate: 1,
+        pitch: 1,
+        volume: 0.5,
+    };
 
     // class that should ignored for narrator
     srClass = {
@@ -60,6 +46,18 @@ $(window).keydown(function (event) {
 
 // changes methods for narrator settings
 //**********************************************************************************************/
+$("input[name='speed-nr']").change(function () {
+    let speedIDselected = $("input[name='speed-nr']:checked").val();
+
+    setSpeechSpeedNarrator(speedIDselected);
+});
+
+$("input[name='pitch-nr']").change(function () {
+    let pitchIDselected = $("input[name='pitch-nr']:checked").val();
+
+    setPitchNarrator(pitchIDselected);
+});
+
 $("input[name='volume-narrator']").change(function () {
     let volumeIDselected = $("input[name='volume-narrator']:checked").val();
     setVolumeNarrator(volumeIDselected, $(this).data('default'));
@@ -190,18 +188,7 @@ function cleanText(txt) {
 
 function narrator() {
     removeHighlightToText();
-    cfgReproductor.src = [];
-    try {
-        if (player.playing()) {
-            player.stop();
-            return;
-        }
-    } catch (error) {
-        console.error(error);
-    }
 
-    /*observer.disconnect();
-    loadObserver();*/
 
     if (typeof (Worker) !== "undefined") {
         if (textIsALink(treeNarrator.currentNode)['isLink']) {
@@ -578,22 +565,39 @@ function narrator() {
                 break;
         }
 
-        let narratorWorker = new Worker(base_url + 'asset/js/espeakWorker.js');
-        narratorWorker.postMessage({
-            'texts': queueForSpeech,
-            'cfgVoiceNarrator': cfgVoiceNarrator
-        });
+        createUtterancesNarrator(queueForSpeech);
+        playQueue();
 
-        narratorWorker.onmessage = function (event) {
-            narratorWorker.terminate();
-            console.log(event.data);
-            audioSrcs = event.data;
-            playQueue();
-        }
     } else {
         console.log("not support web worker :(!");
     }
 }
+
+function createUtterancesNarrator(text) {
+    for (let index = 0; index < text.length; index++) {
+        const element = text[index];
+        audioSrcs[index] = new SpeechSynthesisUtterance(element);
+        audioSrcs[index].onstart = clearQueue;
+        audioSrcs[index].onend = nextElement;        
+        audioSrcs[index].pitch = cfgVoiceNarrator.pitch;
+        audioSrcs[index].volume = cfgVoiceNarrator.volume;
+        audioSrcs[index].rate = cfgVoiceNarrator.rate;
+        
+        if(userLang == "english") {
+            audioSrcs[index].lang = "en-GB";
+            audioSrcs[index].voice = synth.getVoices()[57];
+        } else if(userLang == "portugues") {
+            console.log("postugures")
+            audioSrcs[index].lang = "pt-BR";
+            audioSrcs[index].voice = synth.getVoices()[46];
+        } else {
+            audioSrcs[index].lang = "es-419";
+            audioSrcs[index].voice = synth.getVoices()[65];
+        }
+        
+    }
+}
+
 
 function splitInSentences(node) {
     $(node).blast({
@@ -651,9 +655,7 @@ function getParentLine(nodeWord) {
 
 
 function playQueue() {
-    setSrcCfgPlayer(audioSrcs[0]);
-    player.init(cfgReproductor);
-    player.play();
+    synth.speak(audioSrcs[0]);
 }
 
 
@@ -719,10 +721,6 @@ function readLink() {
 }
 
 
-function setSrcCfgPlayer(src) {
-    cfgReproductor['src'][0] = src;
-}
-
 function loadNarrator() {
     if (localStorage['read_puncts'] == 't') {
         console.log("change value");
@@ -732,8 +730,8 @@ function loadNarrator() {
         localStorage['read_puncts'] = 'false';
     }
     // cada una de las configuraciones toma el valor que hay en localStorage o el default
-    $('#input-speed-speech-narrator').val(localStorage['speed_reading_nr'] || 175).change();
-    $('#input-pitch-narrator').val(localStorage['pitch_nr'] || 50).change();
+    $("input[name='speed-nr'][value=" + (localStorage['speed_reading_nr'] || '2') + "]").prop('checked', true).change();
+    $("input[name='pitch-nr'][value=" + (localStorage['pitch_nr'] || '2') + "]").prop('checked', true).change();
     $("input[name='volume-narrator'][value=" + (localStorage['volume_id_nr'] || '2') + "]").prop('checked', true).change();
     $("input[name='gender-narrator'][value=" + (localStorage['voice_gender_id_nr'] || '1') + "]").prop('checked', true).change();
     $("input[name='link-narrator'][value=" + (localStorage['links_id_nr'] || '1') + "]").prop('checked', true).change();
@@ -766,10 +764,10 @@ function updateValuesNarratorInSession(names_preferences_narrator, values) {
 
 function setDefaultValuesNarrator() {
     // el data-default sirve para realizar solo una peticion cuando se actualicen todos los valores
-    $("#input-speed-speech-narrator").data('default', true);
-    $('#input-speed-speech-narrator').val(175).change();
-    $("#input-pitch-narrator").data('default', true);
-    $('#input-pitch-narrator').val(50).change();
+    $("input[name='speed-nr']").data('default', true);
+    $("input[name='speed-nr'][value=" + ('2') + "]").prop('checked', true).change();
+    $("input[name='pitch-nr']").data('default', true);
+    $("input[name='pitch-nr'][value=" + ('2') + "]").prop('checked', true).change();
     $("input[name='volume-narrator']").data('default', true);
     $("input[name='volume-narrator'][value=" + ('2') + "]").prop('checked', true).change();
     $("input[name='gender-narrator']").data('default', true);
@@ -787,13 +785,20 @@ function setDefaultValuesNarrator() {
 
     if (session_user) {
         let names_preferences_narrator = ['speed_reading', 'pitch_nr', 'volume_id', 'voice_gender_id', 'links_id', 'highlight_id', 'reading_unit_id', 'read_puncts', 'punct_signs'];
-        let values = [175, 50, 2, 1, 1, 1, 1, false, ".,;?"];
+        let values = [2, 2, 2, 1, 1, 1, 1, false, ".,;?"];
         updateValuesNarratorInSession(names_preferences_narrator, values);
     }
 
 }
 
 function setSpeechSpeedNarrator(speed, setDefault) {
+    let validSpeeds = {
+        '1':0.5,
+        '2':1,
+        '3':2
+    }
+
+    let validSpeed = validSpeeds[speed];
     // decide if a user is logged in to save their preferences in the db
     if ((speed != localStorage['speed_reading_nr']) && needNarrator && !setDefault) {
         console.log("trae" + localStorage['speed_reading_nr']);
@@ -802,16 +807,24 @@ function setSpeechSpeedNarrator(speed, setDefault) {
 
     /* to not make many requests when the default values 
     are set a parameter is sent then in the others it is false */
-    $("#input-speed-speech-narrator").data('default', false);
+    $("input[name='speed-nr']").data('default', false);
 
     // save in local storage
     localStorage['speed_reading_nr'] = speed;
 
     // save in voice config
-    cfgVoiceNarrator['speed'] = speed;
+    cfgVoiceNarrator.rate = validSpeed;
 }
 
 function setPitchNarrator(pitch, setDefault) {
+    let validPitchs = {
+        '1': 0.5,
+        '2': 1,
+        '3': 2,
+    }
+
+    let validPitch = validPitchs[pitch];
+
     // decide if a user is logged in to save their preferences in the db
     if ((pitch != localStorage['pitch_nr']) && needNarrator && !setDefault) {
         updateValuesNarratorInSession(['pitch_nr'], [pitch]);
@@ -819,13 +832,13 @@ function setPitchNarrator(pitch, setDefault) {
 
     /* to not make many requests when the default values 
     are set a parameter is sent then in the others it is false */
-    $("#input-pitch-narrator").data('default', false);
+    $("input[name='pitch-nr']").data('default', false);
 
     // save in local storage
     localStorage['pitch_nr'] = pitch;
 
     // save in voice config
-    cfgVoiceNarrator['pitch'] = pitch;
+    cfgVoiceNarrator.pitch = validPitch;
 }
 
 function setVolumeNarrator(volumeID, setDefault) {

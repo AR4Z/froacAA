@@ -177,7 +177,6 @@ $lang["edit_my_data"] = "Editar mis datos";
 $lang["change_password"] = "Cambiar contraseña";
 $lang["update_my_data"] = "Actualizar mis datos";
 $lang["update_password"] = "Actualizar contraseña";
-
 $lang["sorry"] = "Lo sentimos";
 $lang["need_name"] = "El nombre es obligatorio";
 $lang["mim_length_name"] = "El nombre debe tener como mínimo 3 caracteres de longitud";
@@ -189,7 +188,6 @@ $lang["invalid_birthdate_range"] = "La fecha de nacimiento debe estar entre 1975
 $lang["need_email"] = "El correo es obligatorio";
 $lang["invalid_email"] = "El correo no es válido";
 $lang["use_email"] = "El correo ya fue registrado";
-
 $lang["need_username"] = "El nombre de usuario es obligatorio";
 $lang["min_length_username"] = "El nombre de usuario debe tener como mínimo 4 caracteres de longitud";
 $lang["invalid_username"] = "El nombre de usuario es inválido";
@@ -199,3 +197,16 @@ $lang["need_confirm_password"] = "Reescriba su contraseña";
 $lang["error_confirm_password"] = "Las contraseñas no coinciden";
 $lang["need_institution"] = "El nombre de la institucion educativa es obligatorio";
 $lang["use_username"] = "El nombre de usuario ya esta registrado";
+
+$lang["highlight_mode"] = "MODO DE RESALTADO";
+$lang["message_highlight"] = "Cambiar la porción del texto resaltada mientras se lee el contenido";
+$lang["word"] = "Palabra";
+$lang["line"] = "Linea";
+$lang["sentence"] = "Oración";
+$lang["paragraph"] = "Parrafo";
+$lang["read_mode"] = "MODO DE LECTURA";
+$lang["message_read_mode"] = "Cambia la forma en la cual el narrador lee el contenido";
+$lang["word_to_word"] = "Palabra a palabra";
+$lang["line_to_line"] = "Línea a línea";
+$lang["sentence_to_sentence"] = "Oración a oración";
+$lang["paragraph_to_paragraph"] = "Párrado a párrafo";

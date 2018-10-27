@@ -195,3 +195,16 @@ $lang["need_confirm_password"] = "Reescreva sua senha";
 $lang["error_confirm_password"] = "As senhas não correspondem";
 $lang["need_institution"] = "O nome da instituição de ensino é obrigatório";
 $lang["use_username"] = "O nome de usuário já está registrado";
+
+$lang["highlight_mode"] = "MODO DESTAQUE";
+$lang["message_highlight"] = "Alterar a parte do texto realçado enquanto lê o conteúdo";
+$lang["word"] = "Palavra";
+$lang["line"] = "Line";
+$lang["sentence"] = "Oração";
+$lang["paragraph"] = "Parágrafo";
+$lang["read_mode"] = "MODO DE LECTURA";
+$lang["message_read_mode"] = "Alterar a maneira como o narrador lê o conteúdo";
+$lang["word_to_word"] = "Palavra por palavra";
+$lang["line_to_line"] = "Linha para linha";
+$lang["sentence_to_sentence"] = "Oração à oração";
+$lang["paragraph_to_paragraph"] = "Parágrafo por parágrafo";

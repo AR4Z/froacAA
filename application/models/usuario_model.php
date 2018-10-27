@@ -54,7 +54,10 @@ function get_all_data_adaptability_narrator($username) {
     $query = $this->db->query("select use_pref_narrator.use_username, use_pref_narrator.speed_reading, use_pref_narrator.pitch_nr, use_pref_narrator.volume_id, use_pref_narrator.voice_gender_id, use_pref_narrator.links_id, use_pref_narrator.highlight_id,
     use_pref_narrator.speech_component_id, use_pref_narrator.reading_unit_id, use_pref_narrator.read_puncts, use_pref_narrator.punct_signs
     from use_pref_narrator
+
     inner join scales_pitch_volume on scales_pitch_volume.scale_id=use_pref_narrator.volume_id
+    inner join scales_pitch_volume AS spvs on spvs.scale_id=use_pref_narrator.speed_reading
+    inner join scales_pitch_volume AS spv on spv.scale_id=use_pref_narrator.pitch_nr
     inner join gender_options  on gender_options.gender_id=use_pref_narrator.voice_gender_id
     inner join links_reading_opts on links_reading_opts.opt_link_id=use_pref_narrator.links_id
     inner join reading_units on reading_units.unit_id=use_pref_narrator.highlight_id

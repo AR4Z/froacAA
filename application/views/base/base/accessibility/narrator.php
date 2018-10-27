@@ -1,67 +1,92 @@
 <div class="tab-pane fade" id="narrator" role="tabpanel" aria-labelledby="narrator-tab">
 
     <div class="d-flex flex-row flex-nowrap">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>VELOCIDAD DE LECTURA</b></span></div>
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('read_speed'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar la velocidad de lectura. (Palabras por minuto)</p>
+                        <p><?php echo $this->lang->line('message_read_speed'); ?></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[2]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[2]" id="input-speed-speech-narrator" class="form-control input-number" value="175" min="80" max="500" step="1" data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[2]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-nr" id="speedBajo" value="1">
+                                    <label class="form-check-label" for="speedBajo"><?php echo $this->lang->line('low'); ?></label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-nr" id="speedMedio" value="2">
+                                    <label class="form-check-label" for="speedMedio"><?php echo $this->lang->line('medium'); ?></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="speed-nr" id="speedAlto" value="3">
+                                    <label class="form-check-label" for="speedAlto"><?php echo $this->lang->line('high'); ?></label>
+                                </div>
 
-            </div>
-        </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>TONO DE VOZ</b></span></div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <p>Cambiar el tono de voz.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[4]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[4]" id="input-pitch-narrator" class="form-control input-number" value="50" min="0" max="99" step="1" data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[4]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>VOLUMEN</b></span></div>
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('voice_tone'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar el volumen de voz.</p>
+                        <p><?php echo $this->lang->line('message_voice_tone'); ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pitch-nr" id="pitchBajo" value="1">
+                                    <label class="form-check-label" for="pitchBajo"><?php echo $this->lang->line('low'); ?></label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pitch-nr" id="pitchMedio" value="2">
+                                    <label class="form-check-label" for="pitchMedio"><?php echo $this->lang->line('medium'); ?></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pitch-nr" id="pitchAlto" value="3">
+                                    <label class="form-check-label" for="pitchAlto"><?php echo $this->lang->line('high'); ?></label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('volume'); ?></b></span></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p><?php echo $this->lang->line('message_volume'); ?>.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -70,7 +95,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="volume-narrator" id="volumeBajo" value="1">
-                                    <label class="form-check-label" for="volumeBajo">Bajo</label>
+                                    <label class="form-check-label" for="volumeBajo"><?php echo $this->lang->line('low'); ?></label>
                                 </div>
 
                             </div>
@@ -80,7 +105,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="volume-narrator" id="volumeMedio" value="2">
-                                    <label class="form-check-label" for="volumeMedio">Medio</label>
+                                    <label class="form-check-label" for="volumeMedio"><?php echo $this->lang->line('medium'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +113,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="volume-narrator" id="volumeAlto" value="3">
-                                    <label class="form-check-label" for="volumeAlto">Alto</label>
+                                    <label class="form-check-label" for="volumeAlto"><?php echo $this->lang->line('high'); ?></label>
                                 </div>
 
                             </div>
@@ -98,11 +123,11 @@
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>GENERO DE VOZ</b></span></div>
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('gender_voice'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar el genero de la voz.</p>
+                        <p><?php echo $this->lang->line('message_gender_voice'); ?>.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -111,7 +136,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="gender-narrator" id="genderFemaleNarrator" value="1">
-                                    <label class="form-check-label" for="genderFemaleNarrator">Femenino</label>
+                                    <label class="form-check-label" for="genderFemaleNarrator"><?php echo $this->lang->line('female'); ?></label>
                                 </div>
 
                             </div>
@@ -121,7 +146,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="gender-narrator" id="genderMasculineNarrator" value="2">
-                                    <label class="form-check-label" for="genderMasculineNarrator">Masculino</label>
+                                    <label class="form-check-label" for="genderMasculineNarrator"><?php echo $this->lang->line('male'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -130,11 +155,11 @@
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>ENLACES - LINKS</b></span></div>
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('links'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar el comportamiento a la hora de leer un enlace.</p>
+                        <p><?php echo $this->lang->line('message_links'); ?>.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -143,7 +168,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="link-narrator" id="speak-link-narrator" value="1">
-                                    <label class="form-check-label" for="speak-link-narrator">Leer normal</label>
+                                    <label class="form-check-label" for="speak-link-narrator"><?php echo $this->lang->line('read_normal'); ?></label>
                                 </div>
 
                             </div>
@@ -153,7 +178,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="link-narrator" id="different-voice-link-narrator" value="2">
-                                    <label class="form-check-label" for="different-voice-link-narrator">Cambiar voz</label>
+                                    <label class="form-check-label" for="different-voice-link-narrator"><?php echo $this->lang->line('change_voice'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +186,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="link-narrator" id="sound-effect-link-narrator" value="3">
-                                    <label class="form-check-label" for="sound-effect-link-narrator">Reproducir efecto</label>
+                                    <label class="form-check-label" for="sound-effect-link-narrator"><?php echo $this->lang->line('play_effect'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +194,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="link-narrator" id="none-link-narrator" value="4">
-                                    <label class="form-check-label" for="none-link-narrator">No leer enlaces</label>
+                                    <label class="form-check-label" for="none-link-narrator"><?php echo $this->lang->line('no_read_link'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -178,11 +203,11 @@
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>MODO DE RESALTADO</b></span></div>
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('highlight_mode'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambiar la porción del texto resaltada mientras se lee el contenido.</p>
+                        <p><?php echo $this->lang->line('message_highlight'); ?>.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -191,7 +216,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="highlight-narrator" id="word-highlight-narrator" value="1">
-                                    <label class="form-check-label" for="word-highlight-narrator">Palabra</label>
+                                    <label class="form-check-label" for="word-highlight-narrator"><?php echo $this->lang->line('word'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +224,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="highlight-narrator" id="line-highlight-narrator" value="2">
-                                    <label class="form-check-label" for="line-highlight-narrator">Linea</label>
+                                    <label class="form-check-label" for="line-highlight-narrator"><?php echo $this->lang->line('line'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +232,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="highlight-narrator" id="sentence-highlight-narrator" value="3">
-                                    <label class="form-check-label" for="sentence-highlight-narrator">Oración</label>
+                                    <label class="form-check-label" for="sentence-highlight-narrator"><?php echo $this->lang->line('sentence'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +240,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="highlight-narrator" id="paragraph-highlight-narrator" value="4">
-                                    <label class="form-check-label" for="paragraph-highlight-narrator">Párrafo</label>
+                                    <label class="form-check-label" for="paragraph-highlight-narrator"><?php echo $this->lang->line('paragraph'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -224,11 +249,11 @@
             </div>
         </div>
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header text-center"><span><b>MODO DE LECTURA</b></span></div>
+            <div class="card-header text-center"><span><b><?php echo $this->lang->line('read_mode'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Cambia la forma en la cual el narrador lee el contenido.</p>
+                        <p><?php echo $this->lang->line('message_read_mode'); ?>.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -237,7 +262,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="reading-unit-narrator" id="ru-word-narrator" value="1">
-                                    <label class="form-check-label" for="ru-word-narrator">Palabra a Palabra</label>
+                                    <label class="form-check-label" for="ru-word-narrator"><?php echo $this->lang->line('word_to_word'); ?></label>
                                 </div>
 
                             </div>
@@ -247,7 +272,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="reading-unit-narrator" id="ru-line-narrator" value="2">
-                                    <label class="form-check-label" for="ru-line-narrator">Linea a linea.</label>
+                                    <label class="form-check-label" for="ru-line-narrator"><?php echo $this->lang->line('line_to_line'); ?>.</label>
                                 </div>
                             </div>
                         </div>
@@ -259,7 +284,7 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="reading-unit-narrator" id="ru-sentence-narrator" value="3">
-                                    <label class="form-check-label" for="ru-sentence-narrator">Oración a oración</label>
+                                    <label class="form-check-label" for="ru-sentence-narrator"><?php echo $this->lang->line('sentence_to_sentence'); ?></label>
                                 </div>
 
                             </div>
@@ -269,43 +294,10 @@
                             <div class="col">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="reading-unit-narrator" id="ru-paragraph-narrator" value="4">
-                                    <label class="form-check-label" for="ru-paragraph-narrator">Párrafo a párrafo</label>
+                                    <label class="form-check-label" for="ru-paragraph-narrator"><?php echo $this->lang->line('paragraph_to_paragraph'); ?></label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
-            <div class="card-header text-center">
-                <span>
-                    <b>LEER PUNTUACIÓN
-                    </b>
-                </span>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <p>Permite leer el nombre de un signo de puntuación cuando se encuentre en el texto.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-check checkbox-slider--b">
-                            <label>
-                                <input name="readPuncts" type="checkbox"/>
-                                <span></span>
-                            </label>
-                        </div>
-                        <br/>
-                        <div id="div-punct-signs" class="form-check">
-                            <p>Escriba lo signos:</p>
-                            <label for="punctSigns" aria-labelledby="punctSigns">
-                                <input type="text" class="form-control"  value=".,;?" style="text-align:center" name="punctSigns" id="punctSigns">
-                            </label>
-                        </div>
-                        <br/>
                     </div>
                 </div>
             </div>

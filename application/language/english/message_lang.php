@@ -197,3 +197,16 @@ $lang["need_confirm_password"] = "Rewrite your password";
 $lang["error_confirm_password"] = "Passwords do not match";
 $lang["need_institution"] = "The name of the educational institution is mandatory";
 $lang["use_username"] = "The username is already registered";
+
+$lang["highlight_mode"] = "HIGHLIGHT MODE";
+$lang["message_highlight"] = "Change the portion of the highlighted text while reading the content";
+$lang["word"] = "Word";
+$lang["line"] = "Line";
+$lang["sentence"] = "Sentence";
+$lang["paragraph"] = "Paragraph";
+$lang["read_mode"] = "READ MODE";
+$lang["message_read_mode"] = "Change the way in which the narrator reads the content";
+$lang["word_to_word"] = "Word by word";
+$lang["line_to_line"] = "Line to line";
+$lang["sentence_to_sentence"] = "Sentence to sentence";
+$lang["paragraph_to_paragraph"] = "Paragraph to paragraph";

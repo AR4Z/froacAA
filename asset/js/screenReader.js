@@ -167,7 +167,7 @@ function setDefaultValuesSr() {
 
     if (session_user) {
         let names_preferences_sr = ['speed_reading', 'pitch_id', 'volume_id', 'voice_gender_id', 'links_id'];
-        let values = [180, 2, 2, 1, 1];
+        let values = [2, 2, 2, 1, 1];
         updateValuesSrInSession(names_preferences_sr, values);
     }
 }

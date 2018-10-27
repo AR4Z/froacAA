@@ -146,7 +146,6 @@ $(document).ready(function () {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
-
 });
 
 // Resetea todos los valores de la barra de accesibilidad por default
@@ -166,6 +165,11 @@ function setDefaultAllValues() {
     if (needLSCTranslator || !session_user) {
         setDefaultValuesLSCTranslator();
     }
+    if(needStructuralNavigation || !session_user){
+        setDefaultValuesSn();
+    }
 
-
+    if(needKeyboard || !session_user) {
+        setDefaultValuesKb();
+    }
 }
