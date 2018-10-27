@@ -134,6 +134,34 @@
                                                 </select>
 
                                             </div>
+                                            <div class="form-group" role="group" aria-labelledby="label_use_sn">
+                                <label for="useStructuralNav" id="label_use_sn"><?php echo $this->lang->line('use_struc_nav'); ?></label>
+                                <select id="useStructuralNav" class="form-control input-sm m-bot15" name="useStructuralNav" aria-labelledby="label_use_sn" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
+
+                            </div>
+                            <div class="form-group" role="group" aria-labelledby="label_use_kb">
+                                <label for="useKeyboard" id="label_use_kb"><?php echo $this->lang->line('use_virtual_keyboard'); ?></label>
+                                <select id="useKeyboard" class="form-control input-sm m-bot15" name="useKeyboard" aria-labelledby="label_use_kb" role="listbox" aria-required="true">
+                                    <?php
+                                        foreach($optsAdapta as $key) {?>
+                                            <?php if($key->option_use_id == 3): ?>
+                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
+                                        <?php endif?>
+                                <?php }?>
+                                </select>
+
+                            </div>
 
 
                                             <button id="sub" type="submit" class="btn btn-info"><?php echo $this->lang->line('update_my_data'); ?></button>
@@ -178,6 +206,8 @@
     let selectedOptNarrator = "<?php echo $selectedOptNarrator;?>";
     let selectedOptScreenReader = "<?php echo $selectedOptScreenReader;?>";
     let selectedOptLSCTranslator= "<?php echo $selectedOptLSCTranslator;?>";
+    let selectedOptStructuralNav =  "<?php echo $selectedOptStructuralNav;?>";
+    let selectedOptKeyboard =  "<?php echo $selectedOptKeyboard;?>";
 
     let today = new Date();
     let dd = today.getDate() - 1;
@@ -282,22 +312,22 @@
         },
         messages: {
             nombre: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_name'); ?>.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('min_length_name'); ?>.</div>"
             },
             apellidos: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
-                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_last_name'); ?>.</div>",
+                minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong>  <?php echo $this->lang->line('min_length_last_name'); ?>.</div>"
             },
             fecha_nac: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
-                dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
-                range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_birthdate'); ?>.</div>",
+                dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_birthdate'); ?>.</div>",
+                range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_birthdate_range'); ?>.</div>"
             },
             mail: {
-                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
-                email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
-                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
+                required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_email'); ?>.</div>",
+                email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_email'); ?>.</div>",
+                remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('use_email'); ?>.</div>"
             }
         },
         errorPlacement: function(error, element) {
@@ -319,4 +349,6 @@
     $('#useSr').val(selectedOptScreenReader);
     $('#useNarrator').val(selectedOptNarrator);
     $('#useLSCTranslator').val(selectedOptLSCTranslator);
+    $('#useStructuralNav').val(selectedOptStructuralNav);
+    $('#useKeyboard').val(selectedOptKeyboard);
 </script>

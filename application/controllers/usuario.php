@@ -402,7 +402,7 @@ class Usuario extends CI_Controller {
 
     // este metodo se encarga de cargar los valores de adaptabilidad y accesibilidad en sesion
     // despues de que hayan sido actualizados por el usuario
-    public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator){
+    public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator, $use_structuralNav, $use_keyboard){
         $session_data = $this->session->userdata('logged_in');
 
         // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
@@ -451,11 +451,11 @@ class Usuario extends CI_Controller {
         if($use_structuralNav == "1" || $use_structuralNav == "2") {
             $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
             
-            $this->session->set_userdata('needStructuralNavigation', true);
+            $this->session->set_userdata('needStructuralNav', true);
             $this->session->set_userdata('preferencesStructuralNav', $preferencesStructuralNav [0]);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needStructuralNavigation', false);
+            $this->session->set_userdata('needStructuralNav', false);
         }
 
         if($use_keyboard == "1" || $use_keyboard == "2") {

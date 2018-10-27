@@ -405,7 +405,16 @@ function createUtterances(text) {
         audioSrcsSr[index].pitch = cfgVoiceSr.pitch;
         audioSrcsSr[index].volume = cfgVoiceSr.volume;
         audioSrcsSr[index].rate = cfgVoiceSr.rate;
-        audioSrcsSr[index].lang = "es-419";
+        
+        if(userLang == "english") {
+            audioSrcsSr[index].lang = "en-GB";
+        } else if(userLang == "portugues") {
+            console.log("postugures")
+            audioSrcsSr[index].lang = "pt-BR";
+        } else {
+            audioSrcsSr[index].lang = "es-419";
+        }
+        
     }
 }
 

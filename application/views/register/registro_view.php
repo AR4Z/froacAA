@@ -387,39 +387,39 @@
                 },
                 messages: {
                     nombre: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre es obligatorio.</div>",
-                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre debe tener como mínimo 3 caracteres de longitud.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_name'); ?>.</div>",
+                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('min_length_name'); ?>.</div>"
                     },
                     apellidos: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido es obligatorio.</div>",
-                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El apellido debe tener como mínimo 3 caracteres de longitud.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_last_name'); ?>.</div>",
+                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong>  <?php echo $this->lang->line('min_length_last_name'); ?>.</div>"
                     },
                     fecha_nac: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento es obligatoria.</div>",
-                        dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento ingresada es inválida.</div>",
-                        range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La fecha de nacimiento debe estar entre 1975-01-01 y ayer.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_birthdate'); ?>.</div>",
+                        dateISO: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_birthdate'); ?>.</div>",
+                        range_date: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_birthdate_range'); ?>.</div>"
                     },
                     mail: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo es obligatorio.</div>",
-                        email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo no es válido.</div>",
-                        remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El correo ya fue registrado.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_email'); ?>.</div>",
+                        email_regex: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_email'); ?>.</div>",
+                        remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('use_email'); ?>.</div>"
                     },
                     username: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es obligatorio.</div>",
-                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario debe tener como mínimo 4 caracteres de longitud.</div>",
-                        usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario es inválido.</div>",
-                        remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de usuario ya esta registrado.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_username'); ?>.</div>",
+                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('min_length_username'); ?>.</div>",
+                        usernameValidation: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('invalid_username'); ?>.</div>",
+                        remote: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('use_username'); ?>.</div>"
                     },
                     passwd: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> La contraseña es obligatoria.</div>",
-                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Tu contraseña debe tener como mínimo 6 caracteres de longitud.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_password'); ?>.</div>",
+                        minlength: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('min_length_password'); ?>.</div>"
                     },
                     passwd2: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Reescriba su contraseña.</div>",
-                        equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> Las contraseñas no coinciden.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_confirm_password'); ?>.</div>",
+                        equalTo: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('error_confirm_password'); ?>.</div>"
                     },
                     institution_username: {
-                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡Lo sentimos!</strong> El nombre de la institucion educativa es obligatorio.</div>"
+                        required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_institution'); ?>.</div>"
                     }
                 },
                 errorPlacement: function (error, element) {

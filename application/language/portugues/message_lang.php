@@ -173,3 +173,25 @@ $lang["edit_my_data"] = "Editar meus dados";
 $lang["change_password"] = "Alterar senha";
 $lang["update_my_data"] = "Atualizar meus dados";
 $lang["update_password"] = "Atualizar senha";
+
+$lang["sorry"] = "Sentimos muito";
+$lang["need_name"] = "O nome é obrigatório";
+$lang["mim_length_name"] = "O nome deve ter pelo menos 3 caracteres";
+$lang["need_last_name"] = "O sobrenome é obrigatório";
+$lang["min_length_last_name"] = "O sobrenome deve ter pelo menos 3 caracteres de comprimento";
+$lang["need_birthdate"] = "A data de nascimento é obrigatória";
+$lang["invalid_birthdate"] = "A data de nascimento é inválida";
+$lang["invalid_birthdate_range"] = "A data de nascimento deve ser entre 1975-01-01 e ontem";
+$lang["need_email"] = "Mail é obrigatório";
+$lang["invalid_email"] = "O email não é válido";
+$lang["use_email"] = "O email já foi registrado";
+
+$lang["need_username"] = "O nome de usuário é obrigatório";
+$lang["min_length_username"] = "O nome de usuário deve ter no mínimo 4 caracteres";
+$lang["invalid_username"] = "O nome de usuário é inválido";
+$lang["need_password"] = "A senha é obrigatória";
+$lang["min_length_password"] = "Sua senha deve ter pelo menos 6 caracteres";
+$lang["need_confirm_password"] = "Reescreva sua senha";
+$lang["error_confirm_password"] = "As senhas não correspondem";
+$lang["need_institution"] = "O nome da instituição de ensino é obrigatório";
+$lang["use_username"] = "O nome de usuário já está registrado";
