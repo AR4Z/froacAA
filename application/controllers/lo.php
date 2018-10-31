@@ -227,6 +227,7 @@ public function load_lo($url, $lo_name){
     }
 }
 
+
 public function getLO(){
     $this->load->library('curl');
     $url = "http://127.0.0.1:5000/downloadLO/"; 
@@ -240,6 +241,14 @@ public function getLO(){
     echo($json);
 }
 
+public function getLanguage() {
+    $result = $this->lo_model->get_language($this->input->post('url'));
+    $response = array(
+        'language' => $result[0]['lo_language']
+    );
+    
+    echo json_encode($response);
+}
 
 public function get_score_avg(){
     $result = $this->lo_model->get_avg_score();

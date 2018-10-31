@@ -59,8 +59,10 @@ function loadKeyboard() {
     }
 
     if (localStorage['useKeyboard'] == 't') {
+        console.log("trueee")
         localStorage['useKeyboard'] = 'true';
     } else if (localStorage['useKeyboard'] == 'f') {
+        console.log("false")
         localStorage['useKeyboard'] = 'false';
     }
 

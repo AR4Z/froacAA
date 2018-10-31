@@ -57,9 +57,7 @@
         let iframe_oa = document.getElementById("oa");
         let dataj;
 
-        console.log("desde afuera");
         $(document).ready(function () {
-            console.log("LOOOOL");
             let formData = new FormData();
             formData.append("url", url);
             formData.append("name", lo_name);
@@ -93,6 +91,25 @@
                     console.log(data);
                     
                 }
+            })
+
+            $.ajax({
+                url: "<?php echo base_url()?>lo/getLanguage/",
+                type: "post",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                async: true,
+                success: function (data) {
+                    let dataJSON = JSON.parse(data);
+                    console.log(dataJSON['language'])
+                    loLang = dataJSON['language'];
+                },
+                error: function (data){
+                    console.log(data);
+                    
+                },
             })
         });
     </script>

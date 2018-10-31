@@ -3167,7 +3167,7 @@ function dataLSCTranslator() {
      // cada una de las configuraciones toma el valor que hay en cache o el default
      $('#input-speed-LSC-translator').val(localStorage['sign_speed'] || 20).change();
      $("input[name='LSC-translator-model'][value=" + (localStorage['model_id'] || '1') + "]").prop('checked', true).change();
-     document.onmouseup = setSelectionText;
+      document.onmouseup = setSelectionText;
      if(idView === "lo_view") {
         iframeDocument.onmouseup = setSelectionText;
      }
@@ -3414,17 +3414,14 @@ function setSelectionText(e) {
     }
     
     let selectionText = selectionIframe || selection;
-    
-    forgetUserSelection();
 
     if (selectionText.length > 0) {
         document.getElementById('input-iris').value = selectionText;
+        forgetUserSelection();
         translate();
+        
     }
 }
-
-
-
 
 function translate() {
     let text = $('#input-iris').val();

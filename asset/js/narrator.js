@@ -1,3 +1,4 @@
+let loLang;
 function dataNarrator() {
     audioSrcs = []
     // voice narrator config
@@ -583,10 +584,10 @@ function createUtterancesNarrator(text) {
         audioSrcs[index].volume = cfgVoiceNarrator.volume;
         audioSrcs[index].rate = cfgVoiceNarrator.rate;
         
-        if(userLang == "english") {
+        if(loLang == "en") {
             audioSrcs[index].lang = "en-GB";
             audioSrcs[index].voice = synth.getVoices()[57];
-        } else if(userLang == "portugues") {
+        } else if(loLang == "pt") {
             console.log("postugures")
             audioSrcs[index].lang = "pt-BR";
             audioSrcs[index].voice = synth.getVoices()[46];

@@ -44,7 +44,7 @@ $(document).ready(function(){
         }
         
         if(needStructuralNavigation || !session_user) {
-            dataStructuralNavigation()
+            dataStructuralNavigation();
         }
 
         if(needKeyboard || !session_user) {

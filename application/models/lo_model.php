@@ -163,6 +163,14 @@ Class Lo_model extends CI_Model {
 
     }
 
+    function get_language($url) {
+        $this->db->select('lo_language');
+        $this->db->from('lo');
+        $this->db->where('lo_location', $url);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 //    function get_metadata($lo_id, $rep_id) {
 //
 //        
