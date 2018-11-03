@@ -103,8 +103,13 @@
                 async: true,
                 success: function (data) {
                     let dataJSON = JSON.parse(data);
+                    languages = {
+                        en:'english',
+                        es:'spanish',
+                        pt:'portuguese'
+                    }
                     console.log(dataJSON['language'])
-                    loLang = dataJSON['language'];
+                    loLang = languages[dataJSON['language']];
                 },
                 error: function (data){
                     console.log(data);

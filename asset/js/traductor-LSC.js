@@ -3418,12 +3418,12 @@ function setSelectionText(e) {
     if (selectionText.length > 0) {
         document.getElementById('input-iris').value = selectionText;
         forgetUserSelection();
-        translate();
+        translateLsc();
         
     }
 }
 
-function translate() {
+function translateLsc() {
     let text = $('#input-iris').val();
 
     if (canvidControl) {
