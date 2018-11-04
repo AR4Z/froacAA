@@ -173,3 +173,11 @@ function setDefaultAllValues() {
         setDefaultValuesKb();
     }
 }
+
+function contains(selector, text) {
+  var elements = document.querySelectorAll(selector);
+  return [].filter.call(elements, function(element){
+    return RegExp(text, 'i').test(element.textContent);
+  });
+}
+

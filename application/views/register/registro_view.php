@@ -7,7 +7,7 @@
             <h1><?php echo $this->lang->line('signup'); ?> FROAC</h1>
             <!--FORMULARIO DE REGISTRO DE USUARIO-->
             <div class="card-body">
-                <form method="POST" action="<?php echo base_url();?>index.php/usuario/guardar"  role="form" enctype='multipart/form-data' id="form">
+                <form method="POST" onsubmit="return mySubmitFunction(event)" action="<?php echo base_url();?>index.php/usuario/guardar"  role="form" enctype='multipart/form-data' id="form">
 
                     <div class="card border-0">
                         <h3><?php echo $this->lang->line('personal_information'); ?></h3>
@@ -211,7 +211,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input id="submitg" type="submit" class="btn btn-info" value="<?php echo $this->lang->line('save_information'); ?>">
+                            <input id="submitg" type="button" class="btn btn-info" value="<?php echo $this->lang->line('save_information'); ?>">
                         </div>
                     </div>
                 </form>
@@ -422,6 +422,9 @@
                         required: "<br><div id='in_use1' aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><strong>¡<?php echo $this->lang->line('sorry'); ?>!</strong> <?php echo $this->lang->line('need_institution'); ?>.</div>"
                     }
                 },
+                submitHandler: function(form, e) { // <- pass 'form' argument in
+                 return false;
+                },
                 errorPlacement: function (error, element) {
                     let name = element.attr('name');
                     error.appendTo($("#" + name + "-validate"));
@@ -432,6 +435,11 @@
 
     <script type="text/javascript">
 
+    $('#submitg').click(function(e) {
+      if(!$('#form').valid()) {
+        e.preventDefault();
+      }
+    })
     $('#form').submit(function(e) {
         // con esta información sabemos que preferencias de usuario guardar
         // si cada una de las caracteristicas es requerida(1) u opcional(2) seran guardadas
@@ -556,6 +564,7 @@
             $(this).append($(inputKeyboardPreferences));
         }
 
-        return true;
+        //return true;
+        return false;
     });
     </script>
