@@ -62,39 +62,9 @@
     <script src="<?php echo base_url()?>asset/js/keyboard.js"></script>
 <?php endif;?>
 
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
 <script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
-<!--
-<script>
-if (annyang) {
-  // Add our commands to annyang
-  
-  annyang.setLanguage('es-CO');
-  annyang.addCommands({
-    'Ir a *linkName': irA,
-    'enviar': function() { alert('Hello world!'); },
-    'clic en botón enviar': function() { alert('Hello world!'); },
-    
-  });
-  annyang.debug();
-
-  
-  annyang.start({ continuous: false });
-  function irA(linkName){
-
-  }
-  // Tell KITT to use annyang
-  /*SpeechKITT.annyang();
-
-  // Define a stylesheet for KITT to use
-  SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
-
-  // Render KITT's interface
-  SpeechKITT.vroom();*/
-  
-}
-</script>-->
 </body>
 </html>
