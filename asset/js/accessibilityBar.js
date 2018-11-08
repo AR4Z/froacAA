@@ -42,7 +42,7 @@ class AccessibilityBar {
 
   _createAccessibilityElements() {
     if (this.needCustomInterfaz) {
-      this.customInterfaz = new this.customInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
+      this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
     if (this.needNarrator) {

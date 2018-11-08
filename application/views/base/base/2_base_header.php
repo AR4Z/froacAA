@@ -21,7 +21,7 @@
 
     <div class="firstMenu">
     
-        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('needSr') || $this->session->userdata('adaptaInterfaz') || $this->session->userdata('needNarrator')  || $this->session->userdata('needLSCTranslator') || $this->session->userdata('needStructuralNav') || $this->session->userdata('needKeyboard')):?>
+        <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_screen_reader') || $this->session->userdata('need_custom_interfaz') || $this->session->userdata('need_narrator')  || $this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || $this->session->userdata('need_virtual_keyboard')):?>
 
         <ul class="socialLinks">
             <li>

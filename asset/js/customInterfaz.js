@@ -1,27 +1,17 @@
-class customInterfaz {
-  constructor(fontSize=12, 
-    sizeLine=1.5, 
-    contrastId=1, 
-    fontTypeId=1, 
-    cursorSizeId='normalSizeCursor', 
-    trailCursorSizeId='normalSizeCursorTrails',
-    cursorColor='black',
-    trailCursorColor='black',
-    invertColor=false,
-    invertImageColor=false,
-    cursorUrl='') {
+class CustomInterfaz {
+  constructor(preferencesInterfaz) {
 
-    this.fontSize = fontSize
-    this.sizeLine = sizeLine
-    this.fontTypeId = fontTypeId
-    this.cursorSizeId = cursorSizeId
-    this.trailCursorSizeId = trailCursorSizeId
-    this.contrastId = contrastId
-    this.cursorColor = cursorColor
-    this.invertColor = invertColor
-    this.invertImageColor = invertImageColor
-    this.trailCursorColor = trailCursorColor
-    this.cursorUrl = cursorUrl
+    this.fontSize = preferencesInterfaz.font_size
+    this.sizeLineSpacing = preferencesInterfaz.size_line_spacing
+    this.fontTypeId = preferencesInterfaz.font_type_id
+    this.cursorSizeId = preferencesInterfaz.cursor_size_id
+    this.trailCursorSizeId = preferencesInterfaz.trail_cursor_size_id
+    this.contrastColorsId = preferencesInterfaz.contrast_colors_id
+    this.cursorColor = preferencesInterfaz.color_cursor
+    this.invertColorGeneral = preferencesInterfaz.invert_color_general
+    this.invertColorImage = preferencesInterfaz.invert_color_image
+    this.trailCursorColor = preferencesInterfaz.trail_cursor_color
+    this.cursorUrl = preferencesInterfaz.cursor_url
 
     // I keep the values of each of the interface characteristics in the localStorage
     this._setValuesInLocalStorage()
@@ -31,14 +21,14 @@ class customInterfaz {
 
   _setValuesInLocalStorage() {
     localStorage.setItem('cursor_size_id', this.cursorSizeId)
-    localStorage.setItem('cursor_color', this.cursorColor)
+    localStorage.setItem('color_cursor', this.cursorColor)
     localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
-    localStorage.setItem('invert_color', this.invertColor)
-    localStorage.setItem('invert_image_color', this.invertImageColor)
-    localStorage.setItem('contrast_id', this.contrastId)
+    localStorage.setItem('invert_color_general', this.invertColorGeneral)
+    localStorage.setItem('invert_color_image', this.invertColorImage)
+    localStorage.setItem('contrast_colors_id', this.contrastColorsId)
     localStorage.setItem('font_size', this.fontSize)
-    localStorage.setItem('sizeLine', this.sizeLine)
+    localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
     localStorage.setItem('font_type_id', this.fontTypeId)
     localStorage.setItem('cursor_url', this.cursorUrl)
   }
@@ -47,14 +37,14 @@ class customInterfaz {
     document.getElementById('inputFontSize').value = parseInt(this.fontSize)
     document.getElementById('inputFontSize').dispatchEvent(new Event('change'))
 
-    document.getElementById("inputInterlineSize").value = parseInt(this.sizeLine)
+    document.getElementById("inputInterlineSize").value = parseInt(this.sizeLineSpacing)
     document.getElementById("inputInterlineSize").dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastId }']`).checked = true
-    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastId }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).checked = true
+    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='type-font'][value='${ this.fontType }']`).checked = true
-    document.querySelector(`input[name='type-font'][value='${ this.fontType }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='type-font'][value='${ this.fontTypeId }']`).checked = true
+    document.querySelector(`input[name='type-font'][value='${ this.fontTypeId }']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${ this.trailCursorSizeId }']`).checked = true
     document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${ this.trailCursorSizeId }']`).dispatchEvent(new Event('change'))
@@ -95,15 +85,15 @@ class customInterfaz {
     html.style.fontSize = `${ this.fontSize }px`
     
     document.getElementById('inputFontSize').setAttribute('default', false)
-    localStorage.setItem('font_size') = this.fontSize
+    localStorage.setItem('font_size', this.fontSize) 
   }
 
   changeSizeLine(sizeLine) {
-    this.sizeLine = sizeLine
+    this.sizeLineSpacing = sizeLine
     let body = document.getElementsByTagName('body')[0]
-    body.style.lineHeight = `${ this.sizeLine }`
+    body.style.lineHeight = `${ this.sizeLineSpacing }`
     
     document.getElementById("inputInterlineSize").setAttribute('default', false)
-    localStorage.setItem('sizeLine', this.sizeLine)    
+    localStorage.setItem('sizeLine', this.sizeLineSpacing)    
   }
 }

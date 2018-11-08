@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link id='open-sans' href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-    <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('adaptaInterfaz')):?>
+    <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_custom_interfaz')):?>
         <link id='serif' rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
         <link id='cantarell' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
         <link id='source-code-pro' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
@@ -219,7 +219,7 @@
     <?php else : ?>
         <body>
 
-        <?php if($this->session->userdata('needLSCTranslator') || $this->session->userdata('needStructuralNav') || !($this->session->userdata('logged_in'))):?>
+        <?php if($this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/iris');?>
             <?php $this->load->view('base/base/accessibility/toc');?>
         <?php endif?>
