@@ -143,7 +143,11 @@ class Usuario extends CI_Controller {
 
     //Metodo que carga la pagina de inicio de sesión
     public function login() {
+      if($this->session->userdata('logged_in')) {
+        redirect(base_url(), 'refresh');
+      } else {
         $this->load->view('base/login_view');
+      }
     }
 
     //Metodo para crear una nueva cuenta
@@ -400,6 +404,98 @@ class Usuario extends CI_Controller {
         }
     }
 
+    public function get_data_interfaz(){
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_narrator(){
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_screen_reader(){
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_structural_navigation(){
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_custom_colors() {
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_custom_colors($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_lsc_translator() {
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_virtual_keyboard() {
+      $session_data = $this->session->userdata('logged_in');
+      $result = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
+      header('Content-Type: application/json');
+      echo json_encode( $result );
+    }
+
+    public function get_data_accessibility_bar(){
+      $session_data = $this->session->userdata('logged_in');
+      $data_accessibility_bar = array();
+      $need_custom_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username'])[0]["use_adapta_interfaz_id"];
+      $need_structural_nav = $this->usuario_model->get_need_structural_nav($session_data['username'])[0]['use_structural_nav_id']; 
+      $need_narrator =  $this->usuario_model->get_need_narrator($session_data['username'])[0]['use_narrator_id']; 
+      $need_screen_reader = $this->usuario_model->get_need_sr($session_data['username'])[0]['use_screen_reader_id'];
+      $need_lsc_translator = $this->usuario_model->get_need_translator_lsc($session_data['username'])[0]['use_traslator_lsc_id'];
+      $need_virtual_keyboard = $this->usuario_model->get_need_kb($session_data['username'])[0]['use_kb_id'];
+
+      if($need_custom_interfaz == "1" || $need_custom_interfaz == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
+        $data_accessibility_bar["data_custom_interfaz"] = $result[0];
+      }
+
+      if($need_structural_nav == "1" || $need_structural_nav == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
+        $data_accessibility_bar["data_stuctural_nav"] = $result[0];
+      }
+
+      if($need_narrator == "1" || $need_narrator == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
+        $data_accessibility_bar["data_narrator"] = $result[0];
+      }
+
+      if($need_screen_reader == "1" || $need_screen_reader == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
+        $data_accessibility_bar["data_screen_reader"] = $result[0];
+      }
+
+      if($need_lsc_translator == "1" || $need_lsc_translator == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
+        $data_accessibility_bar["data_lsc_translator"] = $result[0];
+      }
+
+      if($need_virtual_keyboard == "1" || $need_virtual_keyboard == "2"){
+        $result = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
+        $data_accessibility_bar["data_virtual_keyboard"] = $result[0];
+      }
+
+      header('Content-Type: application/json');
+      echo json_encode( $data_accessibility_bar );
+    }
     // este metodo se encarga de cargar los valores de adaptabilidad y accesibilidad en sesion
     // despues de que hayan sido actualizados por el usuario
     public function loadPreferencesInSession($use_adapta_interfaz, $use_narrator, $use_sr, $use_LSCTranslator, $use_structuralNav, $use_keyboard){

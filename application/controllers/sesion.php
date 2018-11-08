@@ -88,62 +88,56 @@ class Sesion extends CI_Controller {
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
                     $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
                     $customColors = $this->usuario_model->get_custom_colors($session_data['username']);
-                    $this->session->set_userdata('adaptaInterfaz', true);
-                    $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
-                    $this->session->set_userdata('customColors', $customColors[0]);                   
+                    
+                    $this->session->set_userdata('need_custom_interfaz', true);                   
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('adaptaInterfaz', false);
+                    $this->session->set_userdata('need_custom_interfaz', false);
                 }
 
                 // si el usuario necesita el narrador entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_narrator == "1" || $use_narrator == "2") {
                     $preferencesNarrator = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
-                    $this->session->set_userdata('needNarrator', true);
-                    $this->session->set_userdata('preferencesNarrator', $preferencesNarrator[0]);
+                    $this->session->set_userdata('need_narrator', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('needNarrator', false);
+                    $this->session->set_userdata('need_narrator', false);
                 }
 
                 // si el usuario necesita el screen reader entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_sr == "1" || $use_sr == "2") {
                     $preferencesSr = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
-                    $this->session->set_userdata('needSr', true);
-                    $this->session->set_userdata('preferencesSr', $preferencesSr[0]);
+                    $this->session->set_userdata('need_screen_reader', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('needSr', false);
+                    $this->session->set_userdata('need_screen_reader', false);
                 }
                 // si el usuario necesita el lsc translator entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
                     $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
-                    $this->session->set_userdata('needLSCTranslator', true);
-                    $this->session->set_userdata('preferencesLSCTranslator', $preferencesLSCTranslator[0]);
+                    $this->session->set_userdata('need_lsc_translator', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('needLSCTranslator', false);
+                    $this->session->set_userdata('need_lsc_translator', false);
                 }
 
                 if($use_structuralNav == "1" || $use_structuralNav == "2") {
                     $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
-                    $this->session->set_userdata('needStructuralNav', true);
-                    $this->session->set_userdata('preferencesStructuralNav', $preferencesStructuralNav[0]);
+                    $this->session->set_userdata('need_structural_nav', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('needStructuralNav', false);
-                }
+                    $this->session->set_userdata('need_structural_nav', false);
+                } 
 
                 if($use_keyboard == "1" || $use_keyboard == "2") {
                     $preferencesKeyboard = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
-                    $this->session->set_userdata('needKeyboard', true);
-                    $this->session->set_userdata('preferencesKeyboard', $preferencesKeyboard[0]);
+                    $this->session->set_userdata('need_virtual_keyboard', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
-                    $this->session->set_userdata('needKeyboard', false);
+                    $this->session->set_userdata('need_virtual_keyboard', false);
                 }
 
-    			redirect('main', 'refresh');
+    			      redirect('main', 'refresh');
     		}elseif($rol[0]['use_rol_id'] == 1) {
                 redirect(base_url().'admin', 'refresh'); // recordar configuración de enable_query_strings puede traer algunos problemas
     		}else{
@@ -166,20 +160,13 @@ class Sesion extends CI_Controller {
     }
 
     public function logout() {
-
         $this->session->unset_userdata('logged_in');
-        $this->session->unset_userdata('adaptaInterfaz');
-        $this->session->unset_userdata('preferencesAdaptainterfaz');
-        $this->session->unset_userdata('preferencesNarrator');
-        $this->session->unset_userdata('preferencesStructuralNav');
-        $this->session->unset_userdata('preferencesKeyboard');
-        $this->session->unset_userdata('needStructuralNav');
-        $this->session->unset_userdata('needNarrator');
-        $this->session->unset_userdata('preferencesSr');
-        $this->session->unset_userdata('needSr');
-        $this->session->unset_userdata('needLSCTranslator');
-        $this->session->unset_userdata('needKeyboard');
-        $this->session->unset_userdata('customColors');
+        $this->session->unset_userdata('need_custom_interfaz');
+        $this->session->unset_userdata('need_structural_nav');
+        $this->session->unset_userdata('need_narrator');
+        $this->session->unset_userdata('need_screen_reader');
+        $this->session->unset_userdata('need_lsc_translator');
+        $this->session->unset_userdata('need_virtual_keyboard');
 
         redirect(base_url(), 'refresh');
     }

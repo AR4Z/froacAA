@@ -13,6 +13,9 @@ class Login extends CI_Controller{
     }
 
     public function index() {
+        if($this->session->userdata('logged_in')) {
+          redirect(base_url(), 'refresh');
+        }
         $data = array(
             'id_view'=> 'login'
         );
