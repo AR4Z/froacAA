@@ -36,7 +36,7 @@
 <?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
-<script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>
+<!--<script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>-->
 <?php endif;?>
 
 <?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>

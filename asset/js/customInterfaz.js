@@ -13,10 +13,14 @@ class CustomInterfaz {
     this.trailCursorColor = preferencesInterfaz.trail_cursor_color
     this.cursorUrl = preferencesInterfaz.cursor_url
 
+    this._addEventChangeFontType()
+    this._addEventChangeContrast()
     // I keep the values of each of the interface characteristics in the localStorage
     this._setValuesInLocalStorage()
     // charge the values received in each one of the characteristics of the interface to be applied
     this._loadCustomInterfaz()
+
+    
   }
 
   _setValuesInLocalStorage() {
@@ -37,7 +41,7 @@ class CustomInterfaz {
     document.getElementById('inputFontSize').value = parseInt(this.fontSize)
     document.getElementById('inputFontSize').dispatchEvent(new Event('change'))
 
-    document.getElementById("inputInterlineSize").value = parseInt(this.sizeLineSpacing)
+    document.getElementById("inputInterlineSize").value = parseFloat(this.sizeLineSpacing)
     document.getElementById("inputInterlineSize").dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).checked = true
@@ -79,21 +83,70 @@ class CustomInterfaz {
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").dispatchEvent(new Event('change'))
   }
 
-  changeFontSize(fontSize) {
-    this.fontSize = fontSize
+  _addEventChangeContrast() {
+    let optionsContrast = document.querySelectorAll('input[name="radioOptionscontrast"]')
+
+    Array.prototype.forEach.call(optionsContrast, opt => opt.addEventListener('change', this.changeContrastColors))
+  }
+
+  _addEventChangeFontType() {
+    let optionsFontType = document.querySelectorAll('input[name="type-font"]')
+  
+    Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType))
+  }
+
+  changeFontSize() {
+    let inputFontSize = document.getElementById('inputFontSize')
     let html = document.getElementsByTagName('html')[0]
+
+    this.fontSize = parseInt(inputFontSize.value)
     html.style.fontSize = `${ this.fontSize }px`
-    
-    document.getElementById('inputFontSize').setAttribute('default', false)
+    inputFontSize.setAttribute('default', false)
     localStorage.setItem('font_size', this.fontSize) 
   }
 
-  changeSizeLine(sizeLine) {
-    this.sizeLineSpacing = sizeLine
+  changeSizeLine() {
+    let inputSizeLine = document.getElementById("inputInterlineSize")
     let body = document.getElementsByTagName('body')[0]
+
+    this.sizeLineSpacing = parseFloat(inputSizeLine.value)
     body.style.lineHeight = `${ this.sizeLineSpacing }`
-    
     document.getElementById("inputInterlineSize").setAttribute('default', false)
-    localStorage.setItem('sizeLine', this.sizeLineSpacing)    
+    localStorage.setItem('size_line_spacing', this.sizeLineSpacing)    
+  }
+
+  changeContrastColors() {
+    let optionContrastSelected = parseInt(Array.from(document.getElementsByName('radioOptionscontrast')).filter(radioOption => radioOption.checked)[0].value)
+    this.contrastColorsId = optionContrastSelected
+    let classNameContrastOptions = {
+      1: 'default',
+      2: 'fl-theme-bw',
+      3: 'fl-theme-wb',
+      4: 'fl-theme-by',
+      5: 'fl-theme-yb',
+      6: 'fl-theme-lgdg',
+      7: 'customized'
+    }
+
+    let classNameContrastSelected = classNameContrastOptions[optionContrastSelected]
+    document.getElementsByTagName('body')[0].classList.remove(classNameContrastOptions[this.contrastColorsId])
+    document.getElementsByTagName('body')[0].classList.add(classNameContrastSelected)
+    localStorage['contrast_colors_id'] = optionContrastSelected
+  }
+
+  changeFontType() {
+    let optionFontSelected = parseInt(Array.from(document.getElementsByName('type-font')).filter(radioOption => radioOption.checked)[0].value)
+    this.fontTypeId = optionFontSelected
+    let validFonts = {
+      1: "'Open Sans', sans-serif",
+      2: "'PT Serif', serif",
+      3: "'Cantarell', sans-serif",
+      4: "'Source Code Pro', monospace"
+    }
+
+    let body = document.getElementsByTagName('body')[0]
+    body.style.fontFamily = validFonts[optionFontSelected]
+    localStorage['font_type_id'] = this.fontTypeId
   }
 }
+

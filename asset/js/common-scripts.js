@@ -76,9 +76,9 @@ $(document).ready(function () {
         }
 
         if ($(this).attr('id') == 'inputInterlineSize') {
-            changeInterlineSpace('#inputInterlineSize', $(this).data('default'));
+          accessibilityBar.customInterfaz.changeSizeLine()
         } else if ($(this).attr('id') == 'inputFontSize') {
-            changeFontSize('#inputFontSize', $(this).data('default'));
+          accessibilityBar.customInterfaz.changeFontSize()  
         } else if ($(this).attr('id') == 'input-speed-speech-narrator') {
             console.log("cambiando");
             setSpeechSpeedNarrator($(this).val());

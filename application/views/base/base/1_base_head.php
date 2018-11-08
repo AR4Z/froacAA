@@ -154,27 +154,11 @@
     
     <script type="text/javascript">
     let session_user;
-    let preferencesAdaptainterfaz;
-    let preferencesNarrator;
-    let preferencesSr;
-    let preferencesLSCTranslator;
-    let preferencesStructuralNav;
-    let needPrefAdaptInterfaz;
-    let needNarrator;
-    let needSr;
-    let needLSCTranslator;
-    let needStructuralNavigation;
-    let needKeyboard;
-    let customColors;
     let base_url;
     let idView;
     let nodeIframe;
     let iframeDocument;
-    let nParagraph;
-    let pLining;
     let treeNarrator;
-    let textReading;
-    let parentElementText;
     let target;
     let srClass;
     let cfgVoiceNarrator;
@@ -184,27 +168,28 @@
     let audioSrcs;
     let htmlElements;
     let userLang;
+    let accessibilityBar;
 
     $(document).ready(function(){
 
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
-        preferencesAdaptainterfaz = <?php echo json_encode($this->session->userdata('preferencesAdaptainterfaz'));?>;
-        preferencesNarrator = <?php echo json_encode($this->session->userdata('preferencesNarrator'));?>;
-        preferencesSr = <?php echo json_encode($this->session->userdata('preferencesSr'));?>;
-        preferencesLSCTranslator = <?php echo json_encode($this->session->userdata('preferencesLSCTranslator'));?>;
-        preferencesStructuralNav = <?php echo json_encode($this->session->userdata('preferencesStructuralNav'));?>;
-        preferencesKeyboard = <?php echo json_encode($this->session->userdata('preferencesKeyboard'));?>;
-        needPrefAdaptInterfaz = "<?php echo $this->session->userdata('need_custom_interfaz');?>" || false;
-        needNarrator = "<?php echo $this->session->userdata('need_narrator');?>" || false;
-        needSr = "<?php echo $this->session->userdata('need_screen_reader');?>" || false;
-        needLSCTranslator = "<?php echo $this->session->userdata('need_lsc_translator');?>" || false;
-        needStructuralNavigation = "<?php echo $this->session->userdata('need_structural_nav');?>" || false;
-        needKeyboard = "<?php echo $this->session->userdata('need_keyboard');?>" || false;
-        customColors = <?php echo json_encode($this->session->userdata('customColors'));?>;
+        let needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || false;
+        let needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || false;
+        let needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || false;
+        let needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || false;
+        let needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || false;
+        let needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_keyboard');?>) || false;
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
         userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
-
+        accessibilityBar = new AccessibilityBar(true, 
+        base_url, 
+        needCustomInterfaz, 
+        needNarrator, 
+        needScreenReader, 
+        needLscTranslator, 
+        needVirtualKeyboard, 
+        needStructuralNavigation)
         $("#" + idView).addClass('active');
     });
 
