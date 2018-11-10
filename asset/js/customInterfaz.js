@@ -17,6 +17,8 @@ class CustomInterfaz {
     this._addEventChangeContrast()
     this._addEventChangeCursorSize()
     this._addEventChangeTrailCursorSize()
+    this._addEventChangeInvertGeneral()
+    this._addEventChangeInvertImages()
     // I keep the values of each of the interface characteristics in the localStorage
     this._setValuesInLocalStorage()
     // charge the values received in each one of the characteristics of the interface to be applied
@@ -212,6 +214,17 @@ class CustomInterfaz {
     inputHighlightColor.addEventListener('change', this.changeHighlightColor)
   }
 
+  _addEventChangeInvertGeneral() {
+    let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
+    
+    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral)
+  }
+
+  _addEventChangeInvertImages() {
+    let checkboxInvertImages = document.getElementsByName('invertImages')[0]
+
+    checkboxInvertImages.addEventListener('change', this.changeInvertImages)
+  }
   changeFontSize() {
     let inputFontSize = document.getElementById('inputFontSize')
     let html = document.getElementsByTagName('html')[0]
@@ -340,6 +353,39 @@ class CustomInterfaz {
     }
 
     localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
+  }
+
+  changeInvertGeneral() {
+    let isChecked = document.getElementsByName('invertGeneral')[0].checked
+    let body = document.getElementsByTagName('body')[0]
+    this.invertColorGeneral = isChecked
+
+    if (isChecked) {
+      body.style.filter = 'invert(1)'
+    } else {
+      body.style.filter = 'invert(0)'
+    }
+
+    localStorage.setItem('invert_color_general', this.invertColorGeneral)
+
+  }
+
+  changeInvertImages() {
+    let isChecked = document.getElementsByName('invertImages')[0].checked
+    let images = document.querySelectorAll('img')
+    this.invertColorImage = isChecked
+
+    if(isChecked) {
+      Array.from(images).forEach((image) => {
+        image.style.filter = 'invert(1)'
+      })
+    } else {
+      Array.from(images).forEach((image) => {
+        image.style.filter = 'invert(0)'
+      })
+    }
+
+    localStorage.setItem('invert_color_image', this.invertColorImage)
   }
 }
 
