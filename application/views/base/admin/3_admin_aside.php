@@ -1,9 +1,12 @@
-       <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse" role="navigation" aria-label="Barra de navegación FROAC">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-                  <li>
+<div class="page-content d-flex align-items-stretch">
+    <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+
+          </div>
+          <ul class="list-unstyled">
+          <li>
                       <a  href="<?php echo base_url()?>admin">
                           <i class="icon-dashboard"></i>
                           <span>Resume general</span>
@@ -16,29 +19,11 @@
                           <span>Buscador</span>
                       </a>
                   </li>
-                  <li class="sub-menu dcjq-parent-li">
-                      <a href="javascript:;" class="dcjq-parent">
-                          <i class="icon-sitemap"></i>
-                          <span>Gestión de repositorios </span>
-                          </a>
-                      <ul class="sub" style="display: none;">
-                          <li><a href="<?php echo base_url()?>repositorio/lista">Lista de Repositorios</a></li>
+                  <li><a href="<?php echo base_url()?>repositorio/lista">Lista de Repositorios</a></li>
                           <li><a href="<?php echo base_url()?>repositorio/nuevo">Agregar Repositorios</a></li>
-
-                      </ul>
-                  </li>
-                  <li>
-                  <li class="sub-menu dcjq-parent-li">
-                      <a href="javascript:;" class="dcjq-parent">
-                          <i class="icon-sitemap"></i>
-                          <span>Gestión de Usuarios </span>
-                      </a>
-                      <ul class="sub" style="display: none;">
-                        <li><a href="<?php echo base_url()?>admin/lista_user">Lista de Usuarios </a></li>
+                  
+                  <li><a href="<?php echo base_url()?>admin/lista_user">Lista de Usuarios </a></li>
                           <li><a href="<?php echo base_url()?>usuario/nuevo_usuario">Agregar Usuarios</a></li>
-                      </ul>
-
-                  </li>
 
                   <li>
                       <a href="javascript:;" >
@@ -69,10 +54,7 @@
                           <i class="icon-user"></i>
                           <span>Glosario</span>
                       </a>
-                  </li>
+</li>
+            </ul>
 
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
+        </nav>

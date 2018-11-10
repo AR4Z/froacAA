@@ -22,6 +22,7 @@ class Admin extends CI_Controller {
                     "total_rep" => $this->admin_model->get_total_rep(),
                     "total_lo" => $this->admin_model->get_total_lo(),
                     "total_lo_score" => $this->admin_model->get_total_lo_score(),
+                    "id_view"=> "dashboard"
                 );
                 $this->load->view ( 'base/admin_template', $content );
             } else {

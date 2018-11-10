@@ -1,67 +1,72 @@
-
-      <!--footer start-->
-      <footer class="container" role="complementary" aria-label="Pie de página">             
-        <center>
-        <div>
-            <a rel="nofollow" href="http://www.tawdis.net/system/modules/org.fundacionctic.taw4_wcag_informes_ocms/elements/wcag20/resumen.jsp" title="Análisis de la accesibilidad de la página con TAW"><img style="border: 0; width: 60px; height: 31px;margin-left: 185px" src="asset/img/taw.png" alt="TAW. Nivel doble A. WCAG 1.0 WAI"></a>
-            <a href="http://www.w3.org/WAI/WCAG1AA-Conformance"
-                title="Explicación del Nivel Doble-A de 
-                Conformidad">
-                <img height="32" style="margin-left:20px;" width="88" 
-                src="http://www.w3.org/WAI/wcag1AA-blue"
-                alt="Icono de conformidad con el Nivel Doble-A, 
-                de las Directrices de Accesibilidad para el 
-                Contenido Web 1.0 del W3C-WAI"></a>
+<?php if(!($id_view == 'login')) : ?>
+<footer class="main-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center">
+                <p><a rel="nofollow" href="http://www.tawdis.net" title="Análisis de la accesibilidad de la página con TAW"><img style="border: 0; width: 60px; height: 31px;" src="<?php echo base_url()?>asset/img/taw.png" alt="TAW. Nivel doble A. WCAG 1.0 WAI"></a>
+                    <a href="http://www.w3.org/WAI/WCAG1AA-Conformance" title="Explicación del Nivel Doble-A de
+                          Conformidad"><img height="32" width="88" src="http://www.w3.org/WAI/wcag1AA-blue" alt="Icono de conformidad con el Nivel Doble-A,
+                            de las Directrices de Accesibilidad para el
+                            Contenido Web 1.0 del W3C-WAI"></a></p>
+            </div>
         </div>
-    </footer>
-      <!--footer end-->
-  </section>
+    </div>
+</footer>
+</div>
+</div>
+</div>
+<?php endif;?>
 
-    <!-- js placed at the end of the document so the pages load faster -->
-    
-    <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.scrollTo.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="<?php echo base_url()?>asset/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="<?php echo base_url()?>asset/js/owl.carousel.js" ></script>
-    <script src="<?php echo base_url()?>asset/js/jquery.customSelect.min.js" ></script>
-    <script src="<?php echo base_url()?>asset/js/respond.min.js" ></script>
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="<?php echo base_url() ?>asset/js/popper.js"></script>
+<script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
+<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
+<script src="<?php echo base_url() ?>asset/js/lining.js"></script>
+<script src="<?php echo base_url() ?>asset/js/button.js"></script>
+<script src="<?php echo base_url() ?>asset/js/bootstrap-select.min.js"></script>
 
-    <script class="include" type="text/javascript" src="<?php echo base_url()?>asset/js/jquery.dcjqaccordion.2.7.js"></script>
 
-    <!--common script for all pages-->
-    <script src="<?php echo base_url()?>asset/js/common-scripts.js"></script>
-    <script src="<?php echo base_url()?>asset/js/artyom.js"></script>
+<?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
+<script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/howler.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/narrator.js"></script>
+<?php endif;?>
+
+<?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
+<script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
+<script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
+<!--<script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>-->
+<?php endif;?>
+
+<?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
+    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     <script src="<?php echo base_url()?>asset/js/screenReader.js"></script>
-    <!--script for this page-->
-    <script src="<?php echo base_url()?>asset/js/sparkline-chart.js"></script>
-    <script src="<?php echo base_url()?>asset/js/easy-pie-chart.js"></script>
-    <script src="<?php echo base_url()?>asset/js/count.js"></script>
+<?php endif;?>
 
-  <script>
+<?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
+    <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
+<?php endif;?>
 
-      //owl carousel
+<?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+    <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/structuralNavigation.js"></script>
+<?php endif;?>
 
-      $(document).ready(function() {
-          $("#owl-demo").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true,
-			  autoPlay:true
+<?php if($this->session->userdata('need_keyboard') || !($this->session->userdata('logged_in'))):?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/js/jquery.keyboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/languages/es.min.js"></script>
+    <script src="<?php echo base_url()?>asset/js/keyboard.js"></script>
+<?php endif;?>
 
-          });
-      });
-
-      //custom select box
-
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-
-  </body>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
+<script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
+<script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
+<script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+</body>
 </html>

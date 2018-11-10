@@ -178,5 +178,15 @@ class CustomInterfaz {
     localStorage.setItem('cursor_url', body.style.cursor)
 
   }
+
+  changeCusorTrail() {
+    let optionCursorTrailSelected = parseInt(Array.from(document.getElementsByName('radioOptionsSizeCursorTrails')).filter(radioOption => radioOption.checked)[0].value)
+    this.trailCursorSizeId = optionCursorTrailSelected
+    let validCursorSizeTrail = {
+      1: 0,
+      2: 12,
+      3: 24
+    }
+  }
 }
 
