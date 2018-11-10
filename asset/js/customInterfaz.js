@@ -12,10 +12,11 @@ class CustomInterfaz {
     this.invertColorImage = preferencesInterfaz.invert_color_image
     this.trailCursorColor = preferencesInterfaz.trail_cursor_color
     this.cursorUrl = preferencesInterfaz.cursor_url
-
+    this.cursorTrail = new CursorTrail(0)
     this._addEventChangeFontType()
     this._addEventChangeContrast()
     this._addEventChangeCursorSize()
+    this._addEventChangeTrailCursorSize()
     // I keep the values of each of the interface characteristics in the localStorage
     this._setValuesInLocalStorage()
     // charge the values received in each one of the characteristics of the interface to be applied
@@ -87,7 +88,51 @@ class CustomInterfaz {
   _addEventChangeContrast() {
     let optionsContrast = document.querySelectorAll('input[name="radioOptionscontrast"]')
 
-    Array.prototype.forEach.call(optionsContrast, opt => opt.addEventListener('change', this.changeContrastColors))
+    Array.prototype.forEach.call(optionsContrast, opt => opt.addEventListener('change', (e) => {
+      if (parseInt(e.target.value) == 7) {
+        this._showCustomContrastColors()
+      } else {
+        this._hideCustomContrastColors()
+      }
+
+      this.changeContrastColors()
+    }))
+  }
+
+  _showCustomContrastColors() {
+    document.getElementById('div-color-foreground').style.display = 'block'
+    document.getElementById('div-color-background').style.display = 'block'
+    document.getElementById('div-color-link').style.display = 'block'
+    document.getElementById('div-color-highlight').style.display = 'block'
+  
+    this._addEventChangeBackgroundColor()
+    this._addEventChangeForegroundColor()
+    this._addEventChangeHighlightColor()
+    this._addEventChangeLinkColor()
+
+    let inputForegroundColor = document.getElementsByName('foregroundColor')[0]
+    let inputBackgroundColor = document.getElementsByName('backgroundColor')[0]
+    let inputHighlightColor = document.getElementsByName('highlightColor')[0]
+    let inputLinkColor = document.getElementsByName('linkColor')[0]
+
+    inputForegroundColor.value = localStorage.getItem('foreground_color') || '000000'
+    inputForegroundColor.dispatchEvent(new Event('change'))
+
+    inputBackgroundColor.value = localStorage.getItem('background_color') || 'FFFFFF'
+    inputBackgroundColor.dispatchEvent(new Event('change'))
+
+    inputHighlightColor.value = localStorage.getItem('highlight_color') || 'D3D3D3'
+    inputHighlightColor.dispatchEvent(new Event('change'))
+
+    inputLinkColor.value = localStorage.getItem('link_color') || 'FFFF00'
+    inputLinkColor.dispatchEvent(new Event('change'))
+  }
+
+  _hideCustomContrastColors() {
+    document.getElementById('div-color-foreground').style.display = 'none'
+    document.getElementById('div-color-background').style.display = 'none'
+    document.getElementById('div-color-link').style.display = 'none'
+    document.getElementById('div-color-highlight').style.display = 'none'
   }
 
   _addEventChangeFontType() {
@@ -99,7 +144,72 @@ class CustomInterfaz {
   _addEventChangeCursorSize() {
     let optionsCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursor"]')
   
-    Array.prototype.forEach.call(optionsCursorSize, opt => opt.addEventListener('change', this.changeCursorSize))    
+    Array.prototype.forEach.call(optionsCursorSize, opt => opt.addEventListener('change', (e) => {
+      let containerColorCursor = document.getElementById('div-color-cursor')
+      
+      if(parseInt(e.target.value) != 1) {
+        containerColorCursor.style.display = 'block'
+        this._addEventChangeColorCursor()
+      } else {
+        containerColorCursor.style.display = 'none'
+      }
+
+      this.changeCursorSize()
+    }))    
+  }
+
+  _addEventChangeColorCursor() {
+    let inputColorCursor = document.getElementsByName('colorMousePointer')[0]
+
+    inputColorCursor.addEventListener('change', this.changeCursorSize)
+  }
+
+  _addEventChangeTrailCursorSize() {
+    let optionsTrailCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursorTrails"')
+
+    Array.prototype.forEach.call(optionsTrailCursorSize, opt => opt.addEventListener('change', (e) => {
+      let containerTrailCursorColor = document.getElementById('div-color-cursor-trails')
+
+      if((parseInt(e.target.value) != 1)) {
+        containerTrailCursorColor.style.display = 'block'
+
+        this._addEventChangeTrailCursorColor()
+      } else {
+        containerTrailCursorColor.style.display = 'none'
+      }
+
+      this.changeCursorTrail()
+    }))
+  }
+
+  _addEventChangeTrailCursorColor() {
+    let inputColorTrailCursor = document.getElementsByName('colorCursorTrails')[0]
+
+    inputColorTrailCursor.addEventListener('change', this.changeCursorTrail.bind(this))
+  }
+
+  _addEventChangeForegroundColor() {
+    let inputForegroundColor = document.getElementsByName('foregroundColor')[0]
+
+    inputForegroundColor.addEventListener('change', this.changeForegroundColor)
+  }
+
+  _addEventChangeBackgroundColor() {
+    let inputBakgroundColor = document.getElementsByName('backgroundColor')[0]
+
+    inputBakgroundColor.addEventListener('change', this.changeBackgroundColor)
+  }
+
+  _addEventChangeLinkColor() {
+    let inputLinkColor = document.getElementsByName('linkColor')[0]
+
+    inputLinkColor.addEventListener('change', this.changeLinkColor)
+  }
+
+  _addEventChangeHighlightColor() {
+    let inputHighlightColor = document.getElementsByName('highlightColor')[0]
+
+    inputHighlightColor.addEventListener('change', this.changeHighlightColor)
   }
 
   changeFontSize() {
@@ -124,7 +234,6 @@ class CustomInterfaz {
 
   changeContrastColors() {
     let optionContrastSelected = parseInt(Array.from(document.getElementsByName('radioOptionscontrast')).filter(radioOption => radioOption.checked)[0].value)
-    this.contrastColorsId = optionContrastSelected
     let classNameContrastOptions = {
       1: 'default',
       2: 'fl-theme-bw',
@@ -138,7 +247,36 @@ class CustomInterfaz {
     let classNameContrastSelected = classNameContrastOptions[optionContrastSelected]
     document.getElementsByTagName('body')[0].classList.remove(classNameContrastOptions[this.contrastColorsId])
     document.getElementsByTagName('body')[0].classList.add(classNameContrastSelected)
+    this.contrastColorsId = optionContrastSelected    
     localStorage['contrast_colors_id'] = optionContrastSelected
+  }
+
+  changeForegroundColor() {
+    let color = document.getElementsByName('foregroundColor')[0].value
+    document.documentElement.style.setProperty('--foreground-color', `#${ color }`)
+
+    localStorage.setItem('foreground_color', color)
+  }
+
+  changeBackgroundColor() {
+    let color = document.getElementsByName('backgroundColor')[0].value
+    document.documentElement.style.setProperty('--background-color', `#${ color }`)
+
+    localStorage.setItem('background_color', color)
+  }
+
+  changeLinkColor() {
+    let color = document.getElementsByName('linkColor')[0].value
+    document.documentElement.style.setProperty('--link-color', `#${ color }`)
+
+    localStorage.setItem('link_color', color)
+  }
+
+  changeHighlightColor() {
+    let color = document.getElementsByName('highlightColor')[0].value
+    document.documentElement.style.setProperty('--highlight-color', `#${ color }`)
+    
+    localStorage.setItem('highlight_color', color)
   }
 
   changeFontType() {
@@ -158,7 +296,9 @@ class CustomInterfaz {
 
   changeCursorSize() {
     let optionSizeSelected = parseInt(Array.from(document.getElementsByName('radioOptionsSizeCursor')).filter(radioOption => radioOption.checked)[0].value)
+    let cursorColor = document.getElementsByName('colorMousePointer')[0].value    
     this.cursorSizeId = optionSizeSelected
+    this.cursorColor = cursorColor
     let validSize = {
       1: 0,
       2: 16,
@@ -167,26 +307,39 @@ class CustomInterfaz {
     }
     let sizeSelected = validSize[optionSizeSelected]
     let body = document.getElementsByTagName('body')[0]
-
-    $('body').awesomeCursor('mouse-pointer', {
-      size: sizeSelected,
-      color: 'black'
-    })
-
+    
+    if(sizeSelected != 0) {
+      $('body').awesomeCursor('mouse-pointer', {
+        size: sizeSelected,
+        color: `#${ this.cursorColor }`
+      })
+    } else {
+      body.style.cursor = ''
+    }
+    
     localStorage.setItem('cursor_size_id', this.cursorSizeId)
-    localStorage.setItem('color_cursor', 'black')
+    localStorage.setItem('color_cursor', this.cursorColor)
     localStorage.setItem('cursor_url', body.style.cursor)
-
   }
 
-  changeCusorTrail() {
+  changeCursorTrail() {
     let optionCursorTrailSelected = parseInt(Array.from(document.getElementsByName('radioOptionsSizeCursorTrails')).filter(radioOption => radioOption.checked)[0].value)
+    let colorCursorTrail = document.getElementsByName('colorCursorTrails')[0].value
     this.trailCursorSizeId = optionCursorTrailSelected
     let validCursorSizeTrail = {
       1: 0,
       2: 12,
       3: 24
     }
+
+    let validCursorSizeTrailSelected = validCursorSizeTrail[optionCursorTrailSelected]
+    this.cursorTrail.setSize(validCursorSizeTrailSelected)
+    this.cursorTrail.setColor(colorCursorTrail)
+    if(validCursorSizeTrailSelected >  0){
+      this.cursorTrail.animate()
+    }
+
+    localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
   }
 }
 

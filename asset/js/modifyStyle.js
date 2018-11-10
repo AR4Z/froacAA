@@ -481,7 +481,7 @@ let Dot = function (iframe) {
     this.x = 0;
     this.y = 0;
     this.node = (function () {
-        console.log(iframe);
+        console.log(iframe)
         let n = document.createElement("div");
         n.className = "trail no-high-contrast no-invert-color";
         document.body.appendChild(n);

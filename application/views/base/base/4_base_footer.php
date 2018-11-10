@@ -62,9 +62,11 @@
     <script src="<?php echo base_url()?>asset/js/keyboard.js"></script>
 <?php endif;?>
 
-<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/jscolor.js"></script>
 <script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
 <script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
+<script src="<?php echo base_url()?>asset/js/trailDots.js"></script>
+<script src="<?php echo base_url()?>asset/js/cursorTrail.js"></script>
 <script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
 <script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>

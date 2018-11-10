@@ -153,13 +153,8 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('font_color'); ?></b>
                             <br/>
                             <div id="cp3" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="foregroundColor" value="rgb(0,0,0)" class="form-control no-high-contrast no-invert-color"
+                                <input type="text" name="foregroundColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -169,13 +164,8 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('background_color'); ?></b>
                             <br/>
                             <div id="cp4" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="backgroundColor" value="rgb(255, 255, 255)" class="form-control no-high-contrast no-invert-color"
+                                <input type="text" name="backgroundColor" value="rgb(255, 255, 255)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
 
@@ -185,13 +175,8 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('highlight_color'); ?></b>
                             <br/>
                             <div id="cp5" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="highlightColor" value="rgb(211, 211, 211)" class="form-control no-high-contrast no-invert-color"
+                                <input type="text" name="highlightColor" value="rgb(211, 211, 211)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,13 +185,8 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('link_color'); ?></b>
                             <br/>
                             <div id="cp6" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="linkColor" value="rgb(255, 255, 0)" class="form-control no-high-contrast no-invert-color"
+                                <input type="text" name="linkColor" value="rgb(255, 255, 0)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -309,14 +289,9 @@
                         <div id="div-color-cursor" class="no-high-contrast" style="display:none">
                             <b class="no-high-contrast"><?php echo $this->lang->line('cursor_color'); ?></b>
                             <br/>
-                            <div id="cp1" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="form-control no-high-contrast no-invert-color"
+                            <div class="input-group formcolorpicker no-high-contrast no-invert-color">
+                                <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -338,14 +313,9 @@
                         <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
                             <b class="no-high-contrast"><?php echo $this->lang->line('trail_color'); ?></b>
                             <br/>
-                            <div id="cp2" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="form-control no-high-contrast no-invert-color"
+                            <div id="cp2" class="input-group formcolorpicker no-high-contrast no-invert-color">
+                                <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
-                                <div class="input-group-append no-high-contrast no-invert-color">
-                                    <span class="input-group-text input-group-addon no-high-contrast no-invert-color">
-                                        <i class="no-high-contrast no-invert-color"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
