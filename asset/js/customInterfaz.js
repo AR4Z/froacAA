@@ -15,6 +15,7 @@ class CustomInterfaz {
 
     this._addEventChangeFontType()
     this._addEventChangeContrast()
+    this._addEventChangeCursorSize()
     // I keep the values of each of the interface characteristics in the localStorage
     this._setValuesInLocalStorage()
     // charge the values received in each one of the characteristics of the interface to be applied
@@ -95,6 +96,12 @@ class CustomInterfaz {
     Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType))
   }
 
+  _addEventChangeCursorSize() {
+    let optionsCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursor"]')
+  
+    Array.prototype.forEach.call(optionsCursorSize, opt => opt.addEventListener('change', this.changeCursorSize))    
+  }
+
   changeFontSize() {
     let inputFontSize = document.getElementById('inputFontSize')
     let html = document.getElementsByTagName('html')[0]
@@ -147,6 +154,29 @@ class CustomInterfaz {
     let body = document.getElementsByTagName('body')[0]
     body.style.fontFamily = validFonts[optionFontSelected]
     localStorage['font_type_id'] = this.fontTypeId
+  }
+
+  changeCursorSize() {
+    let optionSizeSelected = parseInt(Array.from(document.getElementsByName('radioOptionsSizeCursor')).filter(radioOption => radioOption.checked)[0].value)
+    this.cursorSizeId = optionSizeSelected
+    let validSize = {
+      1: 0,
+      2: 16,
+      3: 32,
+      4: 48
+    }
+    let sizeSelected = validSize[optionSizeSelected]
+    let body = document.getElementsByTagName('body')[0]
+
+    $('body').awesomeCursor('mouse-pointer', {
+      size: sizeSelected,
+      color: 'black'
+    })
+
+    localStorage.setItem('cursor_size_id', this.cursorSizeId)
+    localStorage.setItem('color_cursor', 'black')
+    localStorage.setItem('cursor_url', body.style.cursor)
+
   }
 }
 
