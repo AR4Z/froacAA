@@ -59,7 +59,7 @@
 <?php if($this->session->userdata('need_keyboard') || !($this->session->userdata('logged_in'))):?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/js/jquery.keyboard.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/languages/es.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/keyboard.js"></script>
+    <script src="<?php echo base_url()?>asset/js/keyboardObj.js"></script>
 <?php endif;?>
 
 <script src="<?php echo base_url()?>asset/js/jscolor.js"></script>

@@ -63,6 +63,11 @@ class AccessibilityBar {
         data_structural_navigation: {
           nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
           show_toc: localStorage.getItem('show_toc') || 'f'
+        },
+
+        data_keyboard: {
+          kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
+          play_key_sound: localStorage.getItem('play_key_sound') || 't'
         }
       }
       this._createAccessibilityElements()
@@ -88,8 +93,8 @@ class AccessibilityBar {
       this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
     }
 
-    if (this.needVirtualKeyboard) {
-      this.virtualKeyboard = {}
+    if (this.needVirtualKeyboard || !this.loggedIn) {
+      this.virtualKeyboard = new VirtualKeyboard(this.dataAccessibilityBar.data_keyboard)
     }
 
     if (this.needStructuralNavigation || !this.loggedIn) {
@@ -251,6 +256,31 @@ class AccessibilityBar {
     } else {
       Object.keys(preferencesStructuralNav).forEach(key => {
         this.dataAccessibilityBar.data_structural_navigation[key] = preferencesStructuralNav[key]
+      })
+    }
+  }
+
+  updatePreferencesKeyboard(preferencesKeyboard) {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesKeyboard: preferencesKeyboard
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesKeyboard).forEach(key => {
+          this.dataAccessibilityBar.data_keyboard[key] = preferencesKeyboard[key]
+        })
+      })
+    } else {
+      Object.keys(preferencesStructuralNav).forEach(key => {
+        this.dataAccessibilityBar.data_keyboard[key] = preferencesKeyboard[key]
       })
     }
   }

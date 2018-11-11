@@ -388,7 +388,7 @@ class CustomInterfaz {
     
     if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id')))) {
       accessibilityBar.updatePreferencesInterfaz({
-        'font_type_id': this.fontTypeId
+        font_type_id: this.fontTypeId
       })
     }
     
