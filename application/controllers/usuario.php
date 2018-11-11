@@ -568,19 +568,10 @@ class Usuario extends CI_Controller {
 
     // este metodo se encarga de actualizar los valores de adaptacion de la interfaz en la sesion
     // para que luego sean actualizados en la db
-    public function update_preferences_interfazSession(){
-        $arrayNamesInterfazPreference = $this->input->post('names_interfaz_preference');
-        $arrayValuesInterfazPreference = $this->input->post('values');
-        $arrayPreferencesInterfaz = $this->session->userdata('preferencesAdaptainterfaz');
-        $arrayCombineValues = array_combine($arrayNamesInterfazPreference, $arrayValuesInterfazPreference);
-        
-        foreach ($arrayCombineValues as $name => $value) {
-            $arrayPreferencesInterfaz[$name] = $value;
-        }
-        
-        $this->session->set_userdata('preferencesAdaptainterfaz', $arrayPreferencesInterfaz);
-        echo(json_encode($this->session->userdata('preferencesAdaptainterfaz')));
-        $this->usuario_model->update_preferences_interfazDB($this->input->post('username'), $arrayCombineValues);
+    public function update_interface_preferences(){
+        $session_data = $this->session->userdata('logged_in');
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $this->usuario_model->update_preferences_interfazDB($session_data['username'], $_POST['preferencesInterface']);
     }
 
     public function update_custom_colorsSession(){

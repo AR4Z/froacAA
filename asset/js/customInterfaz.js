@@ -230,6 +230,10 @@ class CustomInterfaz {
     let html = document.getElementsByTagName('html')[0]
 
     this.fontSize = parseInt(inputFontSize.value)
+    this._updateValues('http://localhost/froacAA/', {
+      font_size: this.fontSize,
+      font_type_id: this.fontTypeId
+    })
     html.style.fontSize = `${ this.fontSize }px`
     inputFontSize.setAttribute('default', false)
     localStorage.setItem('font_size', this.fontSize) 
@@ -387,5 +391,21 @@ class CustomInterfaz {
 
     localStorage.setItem('invert_color_image', this.invertColorImage)
   }
-}
 
+  _updateValues(url, opts) {
+    let fetchData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        preferencesInterface: opts
+      })
+    }
+    
+    fetch(`${ url }usuario/update_interface_preferences`, fetchData)
+    .then(() => {
+      console.log("READY")
+    })
+  }
+}
