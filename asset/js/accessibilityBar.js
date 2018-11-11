@@ -38,14 +38,26 @@ class AccessibilityBar {
         },
 
         data_narrator: {
-          speed_reading: 2,
-          pitch_nr: 2,
-          volume_id: 2,
-          voice_gender_id: 1,
-          links_id: 1,
-          highlight_id: 1,
-          speech_component_id: 1,
-          reading_unit_id: 1
+          speed_reading: parseInt(localStorage.getItem('speed_reading_nr')) || 2,
+          pitch_nr: parseInt(localStorage.getItem('pitch_nr')) || 2,
+          volume_id: parseInt(localStorage.getItem('volume_id_nr')) || 2,
+          voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_nr')) || 1,
+          links_id: parseInt(localStorage.getItem('links_id_nr')) || 1,
+          highlight_id: parseInt(localStorage.getItem('highlight_id_nr')) || 1,
+          reading_unit_id: parseInt(localStorage.getItem('reading_unit_id_nr')) || 1
+        },
+
+        data_screen_reader: {
+          speed_reading_id: parseInt(localStorage.getItem('speed_reading_sr')) || 2,
+          pitch_id: parseInt(localStorage.getItem('pitch_id_sr')) || 2,
+          volume_id: parseInt(localStorage.getItem('volume_id_sr')) || 2,
+          voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_sr')) || 1,
+          links_id: parseInt(localStorage.getItem('links_id_sr')) || 2
+        },
+
+        data_lsc_translator: {
+          sign_speed: parseInt(localStorage.getItem('sign_speed')) || 20,
+          model_id: parseInt(localStorage.getItem('model_id')) || 1
         }
       }
       this._createAccessibilityElements()
@@ -67,8 +79,8 @@ class AccessibilityBar {
       this.narrator = new Narrator(this.dataAccessibilityBar.data_narrator)
     }
 
-    if (this.needLscTranslator) {
-      this.lscTranslator = {}
+    if (this.needLscTranslator || !this.loggedIn) {
+      this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
     }
 
     if (this.needVirtualKeyboard) {
@@ -79,8 +91,8 @@ class AccessibilityBar {
       this.structuralNavigation = {}
     }
 
-    if (this.needScreenReader) {
-      this.screenReader = {}
+    if (this.needScreenReader || !this.loggedIn) {
+      this.screenReader = new ScreenReader(this.dataAccessibilityBar.data_screen_reader)
     }    
   }
 
@@ -162,4 +174,55 @@ class AccessibilityBar {
       })
     }
   }
+
+  updatePreferencesScreenReader(preferencesScreenReader) {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesScreenReader: preferencesScreenReader
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_screen_reader_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesScreenReader).forEach(key => {
+          this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
+        })
+      })
+    } else {
+      Object.keys(preferencesScreenReader).forEach(key => {
+        this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
+      })
+    }
+  }
+
+  updatePreferencesLscTranslator(preferencesLscTranslator) {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesLscTranslator: preferencesLscTranslator
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_lsc_translator_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesLscTranslator).forEach(key => {
+          this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
+        })
+      })
+    } else {
+      Object.keys(preferencesLscTranslator).forEach(key => {
+        this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
+      })
+    }
+  }
+
 }

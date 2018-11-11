@@ -41,14 +41,14 @@
 
 <?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
     <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/screenReader.js"></script>
+    <script src="<?php echo base_url()?>asset/js/screenReaderObj.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
     <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/lscTranslator.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>

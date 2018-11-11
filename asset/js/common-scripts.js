@@ -85,7 +85,7 @@ $(document).ready(function () {
         } else if($(this).attr('id') == 'input-pitch-narrator'){
             setPitchNarrator($(this).val(), $(this).data('default'));
         } else if($(this).attr('id') == 'input-speed-LSC-translator'){
-            setSignSpeedLSCTranslator($(this).val(), $(this).data('default'));
+          accessibilityBar.lscTranslator.changeSignSpeed()
         }
     });
     $(".input-number").keydown(function (e) {
