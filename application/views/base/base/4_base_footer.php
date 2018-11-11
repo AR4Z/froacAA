@@ -53,7 +53,7 @@
 
 <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
     <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/structuralNavigation.js"></script>
+    <script src="<?php echo base_url() ?>asset/js/structuralNavigationObj.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_keyboard') || !($this->session->userdata('logged_in'))):?>

@@ -58,6 +58,11 @@ class AccessibilityBar {
         data_lsc_translator: {
           sign_speed: parseInt(localStorage.getItem('sign_speed')) || 20,
           model_id: parseInt(localStorage.getItem('model_id')) || 1
+        },
+
+        data_structural_navigation: {
+          nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
+          show_toc: localStorage.getItem('show_toc') || 'f'
         }
       }
       this._createAccessibilityElements()
@@ -87,8 +92,8 @@ class AccessibilityBar {
       this.virtualKeyboard = {}
     }
 
-    if (this.needStructuralNavigation) {
-      this.structuralNavigation = {}
+    if (this.needStructuralNavigation || !this.loggedIn) {
+      this.structuralNavigation = new StructuralNavigation(this.dataAccessibilityBar.data_structural_navigation)
     }
 
     if (this.needScreenReader || !this.loggedIn) {
@@ -221,6 +226,31 @@ class AccessibilityBar {
     } else {
       Object.keys(preferencesLscTranslator).forEach(key => {
         this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
+      })
+    }
+  }
+
+  updatePreferencesStructuralNav(preferencesStructuralNav) {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesStructuralNav: preferencesStructuralNav
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesStructuralNav).forEach(key => {
+          this.dataAccessibilityBar.data_structural_navigation[key] = preferencesStructuralNav[key]
+        })
+      })
+    } else {
+      Object.keys(preferencesStructuralNav).forEach(key => {
+        this.dataAccessibilityBar.data_structural_navigation[key] = preferencesStructuralNav[key]
       })
     }
   }
