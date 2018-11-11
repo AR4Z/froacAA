@@ -486,10 +486,10 @@ if ($this->input->post('cantidad6')!='') {
     // me dice si un usuario necesita adaptar la interfaz o no
     public function get_need_adapta_interfaz($username){
         $this->db->select('use_adapta_interfaz_id');
-    	$this->db->from('users');
-    	$this->db->where('use_username', $username);
+    	  $this->db->from('users');
+    	  $this->db->where('use_username', $username);
         $this->db->limit(1);
-    	$query = $this->db->get();
+    	  $query = $this->db->get();
 
 
         return $query->result_array();
@@ -499,10 +499,10 @@ if ($this->input->post('cantidad6')!='') {
     // me dice si un usuario necesita el traductor de español a lenguaje de señas colombiano
     public function get_need_translator_lsc($username){
         $this->db->select('use_traslator_lsc_id');
-    	$this->db->from('users');
-    	$this->db->where('use_username', $username);
+    	  $this->db->from('users');
+    	  $this->db->where('use_username', $username);
         $this->db->limit(1);
-    	$query = $this->db->get();
+    	  $query = $this->db->get();
 
 
         return $query->result_array();

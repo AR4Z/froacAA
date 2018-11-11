@@ -89,7 +89,7 @@ class AccessibilityBar {
     })
   }
 
-  updateCustomColors(cutomColors) {
+  updateCustomColors(customColors) {
     let fetchData = {
       method: 'POST',
       headers: {

@@ -8,6 +8,7 @@ class CustomInterfaz {
     this.trailCursorSizeId = preferencesInterfaz.trail_cursor_size_id
     this.contrastColorsId = preferencesInterfaz.contrast_colors_id
     this.cursorColor = preferencesInterfaz.color_cursor
+    this.customColors = preferencesInterfaz.custom_colors
 
     if(preferencesInterfaz.invert_color_general == 'f') {
       preferencesInterfaz.invert_color_general = false  
@@ -62,6 +63,14 @@ class CustomInterfaz {
     document.getElementById("inputInterlineSize").value = parseFloat(this.sizeLineSpacing)
     document.getElementById("inputInterlineSize").dispatchEvent(new Event('change'))
 
+    document.querySelector('input[name="foregroundColor"]').value = this.customColors.foreground_colour
+    document.querySelector('input[name="foregroundColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="backgroundColor"]').value = this.customColors.background_colour
+    document.querySelector('input[name="backgroundColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="highlightColor"]').value = this.customColors.highlight_colour    
+    document.querySelector('input[name="highlightColor"]').dispatchEvent(new Event('change'))    
+    document.querySelector('input[name="linkColor"]').value = this.customColors.link_colour    
+    document.querySelector('input[name="linkColor"]').dispatchEvent(new Event('change'))     
     document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).checked = true
     document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).dispatchEvent(new Event('change'))
 
@@ -218,31 +227,31 @@ class CustomInterfaz {
   _addEventChangeForegroundColor() {
     let inputForegroundColor = document.getElementsByName('foregroundColor')[0]
 
-    inputForegroundColor.addEventListener('change', this.changeForegroundColor)
+    inputForegroundColor.addEventListener('change', this.changeForegroundColor.bind(this))
   }
 
   _addEventChangeBackgroundColor() {
     let inputBakgroundColor = document.getElementsByName('backgroundColor')[0]
 
-    inputBakgroundColor.addEventListener('change', this.changeBackgroundColor)
+    inputBakgroundColor.addEventListener('change', this.changeBackgroundColor.bind(this))
   }
 
   _addEventChangeLinkColor() {
     let inputLinkColor = document.getElementsByName('linkColor')[0]
 
-    inputLinkColor.addEventListener('change', this.changeLinkColor)
+    inputLinkColor.addEventListener('change', this.changeLinkColor.bind(this))
   }
 
   _addEventChangeHighlightColor() {
     let inputHighlightColor = document.getElementsByName('highlightColor')[0]
 
-    inputHighlightColor.addEventListener('change', this.changeHighlightColor)
+    inputHighlightColor.addEventListener('change', this.changeHighlightColor.bind(this))
   }
 
   _addEventChangeInvertGeneral() {
     let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
     
-    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral)
+    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral.bind(this))
   }
 
   _addEventChangeInvertImages() {
@@ -250,6 +259,7 @@ class CustomInterfaz {
 
     checkboxInvertImages.addEventListener('change', this.changeInvertImages)
   }
+
   changeFontSize() {
     let inputFontSize = document.getElementById('inputFontSize')
     let html = document.getElementsByTagName('html')[0]
@@ -311,6 +321,14 @@ class CustomInterfaz {
   changeForegroundColor() {
     let color = document.getElementsByName('foregroundColor')[0].value
     document.documentElement.style.setProperty('--foreground-color', `#${ color }`)
+    this.customColors.foreground_colour = color
+
+    if((this.customColors.foreground_colour != localStorage.getItem('foreground_color') &&
+    accessibilityBar.loggedIn)){
+      accessibilityBar.updateCustomColors({
+        foreground_colour: this.customColors.foreground_colour
+      })
+    }
 
     localStorage.setItem('foreground_color', color)
   }
@@ -318,13 +336,29 @@ class CustomInterfaz {
   changeBackgroundColor() {
     let color = document.getElementsByName('backgroundColor')[0].value
     document.documentElement.style.setProperty('--background-color', `#${ color }`)
+    this.customColors.background_colour = color
 
+    if((this.customColors.background_colour != localStorage.getItem('background_color') &&
+    accessibilityBar.loggedIn)){
+      accessibilityBar.updateCustomColors({
+        background_colour: this.customColors.background_colour
+      })
+    }
+    
     localStorage.setItem('background_color', color)
   }
 
   changeLinkColor() {
     let color = document.getElementsByName('linkColor')[0].value
     document.documentElement.style.setProperty('--link-color', `#${ color }`)
+    this.customColors.link_colour = color
+
+    if((this.customColors.link_colour != localStorage.getItem('link_color') &&
+    accessibilityBar.loggedIn)){
+      accessibilityBar.updateCustomColors({
+        link_colour: this.customColors.link_colour
+      })
+    }
 
     localStorage.setItem('link_color', color)
   }
@@ -332,7 +366,15 @@ class CustomInterfaz {
   changeHighlightColor() {
     let color = document.getElementsByName('highlightColor')[0].value
     document.documentElement.style.setProperty('--highlight-color', `#${ color }`)
-    
+    this.customColors.highlight_colour = color
+
+    if((this.customColors.highlight_colour != localStorage.getItem('highlight_color') &&
+    accessibilityBar.loggedIn)){
+      accessibilityBar.updateCustomColors({
+        highlight_colour: this.customColors.highlight_colour
+      })
+    }
+
     localStorage.setItem('highlight_color', color)
   }
 

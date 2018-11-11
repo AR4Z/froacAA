@@ -466,6 +466,7 @@ class Usuario extends CI_Controller {
       if($need_custom_interfaz == "1" || $need_custom_interfaz == "2"){
         $result = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
         $data_accessibility_bar["data_custom_interfaz"] = $result[0];
+        $data_accessibility_bar['data_custom_interfaz']['custom_colors'] = $this->usuario_model->get_custom_colors($session_data['username'])[0];
       }
 
       if($need_structural_nav == "1" || $need_structural_nav == "2"){
@@ -574,11 +575,10 @@ class Usuario extends CI_Controller {
         $this->usuario_model->update_preferences_interfazDB($session_data['username'], $_POST['preferencesInterface']);
     }
 
-    public function update_custom_colorsSession(){
-        $username = $this->input->post('username');
-        $arrayCustomColors = $this->input->post('customColors');
-        $this->usuario_model->update_custom_colors($username, $arrayCustomColors);
-        $this->session->set_userdata('customColors', $this->usuario_model->get_custom_colors($username)[0]);
+    public function update_custom_colors(){
+        $session_data = $this->session->userdata('logged_in');
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $this->usuario_model->update_custom_colors($session_data['username'], $_POST['customColors']);
     }
 
     // este metodo se encarga de actualizar los valores del narrador en la sesion
