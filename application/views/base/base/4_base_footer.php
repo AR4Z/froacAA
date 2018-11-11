@@ -21,7 +21,7 @@
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
-<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
+
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
 <script src="<?php echo base_url() ?>asset/js/bootstrap-select.min.js"></script>
@@ -70,5 +70,6 @@
 <script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
 <script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
 </body>
 </html>

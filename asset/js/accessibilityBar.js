@@ -7,9 +7,10 @@ class AccessibilityBar {
     this.needStructuralNavigation = needStructuralNavigation
     this.needScreenReader = needScreenReader
     this.loggedIn = loggedIn
+    this.url = url
 
     if (this.loggedIn) {
-      this._fetchDataAccessibilityBar(url)
+      this._fetchDataAccessibilityBar(this.url)
         .then(data => {
           this.dataAccessibilityBar = data
           this._createAccessibilityElements()
@@ -64,5 +65,46 @@ class AccessibilityBar {
     if (this.needScreenReader) {
       this.screenReader = {}
     }    
+  }
+
+  updatePreferencesInterfaz(preferencesInterface) {
+    let fetchData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        preferencesInterface: preferencesInterface
+      })
+    }
+
+    fetch(`${ this.url }usuario/update_interface_preferences`, fetchData)
+    .then(() => {
+      Object.keys(preferencesInterface).forEach(key => {
+        this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
+      });
+    })
+    .catch((e) => {
+      console.error(e)
+    })
+  }
+
+  updateCustomColors(cutomColors) {
+    let fetchData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        customColors: customColors
+      })
+    }
+
+    fetch(`${ this.url }usuario/update_custom_colors`, fetchData)
+    .then(() => {
+      Object.keys(customColors).forEach(key => {
+        this.dataAccessibilityBar.data_custom_colors[key] = cutomColors[key]
+      })
+    })
   }
 }

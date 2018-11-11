@@ -290,7 +290,7 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('cursor_color'); ?></b>
                             <br/>
                             <div class="input-group formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="colorMousePointer" value="rgb(255, 18, 18)" class="jscolor form-control no-high-contrast no-invert-color"
+                                <input type="text" name="colorMousePointer" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
                             </div>
                         </div>
@@ -314,7 +314,7 @@
                             <b class="no-high-contrast"><?php echo $this->lang->line('trail_color'); ?></b>
                             <br/>
                             <div id="cp2" class="input-group formcolorpicker no-high-contrast no-invert-color">
-                                <input type="text" name="colorCursorTrails" id="colorCursorTrails" value="rgb(255, 18, 18)" class="jscolor form-control no-high-contrast no-invert-color"
+                                <input type="text" name="colorCursorTrails" id="colorCursorTrails" class="jscolor form-control no-high-contrast no-invert-color"
                                 />
                             </div>
                         </div>
