@@ -18,17 +18,23 @@ class AccessibilityBar {
     } else {
       this.dataAccessibilityBar = {
         data_custom_interfaz: {
-          color_cursor: 'rgb(255,18,18)',
-          contrast_colors_id: '1',
-          cursor_size_id: '1',
-          cursor_url: 'auto',
-          font_size: '12',
-          font_type_id: '1',
-          invert_color_general: 'f',
-          invert_color_image: 'f',
-          size_line_spacing: '1.5',
-          trail_cursor_color: 'rgb(255,18,18)',
-          trail_cursor_size_id: '1'
+          color_cursor: localStorage.getItem('color_cursor') || 'rgb(255,18,18)',
+          contrast_colors_id: localStorage.getItem('contrast_colors_id') || 1,
+          cursor_size_id: localStorage.getItem('cursor_size_id') || 1,
+          cursor_url: localStorage.getItem('cursor_url') || 'auto',
+          font_size: localStorage.getItem('font_size') || 12,
+          font_type_id: localStorage.getItem('font_type_id') || 1,
+          invert_color_general: localStorage.getItem('invert_color_general') || 'f',
+          invert_color_image: localStorage.getItem('invert_color_image') || 'f',
+          size_line_spacing: localStorage.getItem('size_line_spacing') || 1.5,
+          trail_cursor_color: localStorage.getItem('trail_cursor_color') || 'rgb(255,18,18)',
+          trail_cursor_size_id: localStorage.getItem('trail_cursor_size_id') || 1,
+          custom_colors: {
+            foreground_colour: localStorage.getItem('foreground_colour') || "rgb(0,0,0)",
+            background_colour: localStorage.getItem('background_colour') || "rgb(255,255,255)",
+            highlight_colour: localStorage.getItem('highlight_colour') || "rgb(211,211,211)",
+            link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
+          }
         }
       }
       this._createAccessibilityElements()
@@ -42,7 +48,7 @@ class AccessibilityBar {
   }
 
   _createAccessibilityElements() {
-    if (this.needCustomInterfaz) {
+    if (this.needCustomInterfaz || !this.loggedIn) {
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
@@ -68,43 +74,56 @@ class AccessibilityBar {
   }
 
   updatePreferencesInterfaz(preferencesInterface) {
-    let fetchData = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        preferencesInterface: preferencesInterface
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesInterface: preferencesInterface
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_interface_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesInterface).forEach(key => {
+          this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
+        });
       })
-    }
-
-    fetch(`${ this.url }usuario/update_interface_preferences`, fetchData)
-    .then(() => {
+      .catch((e) => {
+        console.error(e)
+      })
+    } else {
       Object.keys(preferencesInterface).forEach(key => {
         this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
       });
-    })
-    .catch((e) => {
-      console.error(e)
-    })
+    }
+    
   }
 
   updateCustomColors(customColors) {
-    let fetchData = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        customColors: customColors
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          customColors: customColors
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_custom_colors`, fetchData)
+      .then(() => {
+        Object.keys(customColors).forEach(key => {
+          this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
+        })
+      })
+    } else {
+      Object.keys(customColors).forEach(key => {
+        this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
       })
     }
-
-    fetch(`${ this.url }usuario/update_custom_colors`, fetchData)
-    .then(() => {
-      Object.keys(customColors).forEach(key => {
-        this.dataAccessibilityBar.data_custom_colors[key] = cutomColors[key]
-      })
-    })
   }
 }

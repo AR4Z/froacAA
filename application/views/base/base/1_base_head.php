@@ -15,7 +15,6 @@
         <link id='serif' rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
         <link id='cantarell' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
         <link id='source-code-pro' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
-        <link href="<?php echo base_url() ?>asset/css/bootstrap-colorpicker.css" rel="stylesheet">
         <link id="contrast-styles" href="<?php echo base_url() ?>asset/css/enactors.css" rel="stylesheet">
     <?php endif;?>
     <link href="<?php echo base_url() ?>asset/css/titatoggle.min.css" rel="stylesheet">
@@ -154,6 +153,7 @@
     
     <script type="text/javascript">
     let session_user;
+    let accessibilityBar;
     let base_url;
     let idView;
     let nodeIframe;
@@ -168,7 +168,7 @@
     let audioSrcs;
     let htmlElements;
     let userLang;
-    let accessibilityBar;
+    
 
     $(document).ready(function(){
 
@@ -182,7 +182,7 @@
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
         userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
-        accessibilityBar = new AccessibilityBar(true, 
+        accessibilityBar = new AccessibilityBar(session_user, 
         base_url, 
         needCustomInterfaz, 
         needNarrator, 

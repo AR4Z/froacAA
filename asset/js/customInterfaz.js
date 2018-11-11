@@ -1,6 +1,5 @@
 class CustomInterfaz {
   constructor(preferencesInterfaz) {
-
     this.fontSize = preferencesInterfaz.font_size
     this.sizeLineSpacing = preferencesInterfaz.size_line_spacing
     this.fontTypeId = preferencesInterfaz.font_type_id
@@ -12,13 +11,13 @@ class CustomInterfaz {
 
     if(preferencesInterfaz.invert_color_general == 'f') {
       preferencesInterfaz.invert_color_general = false  
-    } else {
+    } else if(preferencesInterfaz.invert_color_general == 't'){
       preferencesInterfaz.invert_color_general = true
     }
 
     if(preferencesInterfaz.invert_color_image == 'f') {
       preferencesInterfaz.invert_color_image = false  
-    } else {
+    } else if(preferencesInterfaz.invert_color_image == 't'){
       preferencesInterfaz.invert_color_image = true
     }
 
@@ -87,10 +86,10 @@ class CustomInterfaz {
     document.querySelector(`input[name='radioOptionsSizeCursor'][value='${ this.cursorSizeId }']`).checked = true
     document.querySelector(`input[name='radioOptionsSizeCursor'][value='${ this.cursorSizeId }']`).dispatchEvent(new Event('change'))
   
-    document.querySelector(`input[name='invertImages']`).checked = this.invertColorImage
+    document.querySelector(`input[name='invertImages']`).checked = this.invertColorImage == 't' || this.invertColorImage == 'true' ? true : false
     document.querySelector(`input[name='invertImages']`).dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='invertGeneral']`).checked = this.invertColorGeneral
+    document.querySelector(`input[name='invertGeneral']`).checked = this.invertColorGeneral == 't' || this.invertColorGeneral == 'true' ? true : false
     document.querySelector(`input[name='invertGeneral']`).dispatchEvent(new Event('change'))
 
   }
@@ -267,7 +266,7 @@ class CustomInterfaz {
     this.fontSize = parseInt(inputFontSize.value)
     html.style.fontSize = `${ this.fontSize }px`
 
-    if((this.fontSize != parseInt(localStorage.getItem('font_size'))) && accessibilityBar.loggedIn){
+    if((this.fontSize != parseInt(localStorage.getItem('font_size')))){
       accessibilityBar.updatePreferencesInterfaz({
         font_size: this.fontSize
       })
@@ -283,7 +282,7 @@ class CustomInterfaz {
     this.sizeLineSpacing = parseFloat(inputSizeLine.value)
     body.style.lineHeight = `${ this.sizeLineSpacing }`
     
-    if((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing'))) && accessibilityBar.loggedIn){
+    if((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing')))){
       accessibilityBar.updatePreferencesInterfaz({
         size_line_spacing: this.sizeLineSpacing
       })
@@ -309,7 +308,7 @@ class CustomInterfaz {
     document.getElementsByTagName('body')[0].classList.add(classNameContrastSelected)
     this.contrastColorsId = optionContrastSelected    
 
-    if((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id'))) && accessibilityBar.loggedIn) {
+    if((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id')))) {
       accessibilityBar.updatePreferencesInterfaz({
         contrast_colors_id: this.contrastColorsId
       })
@@ -323,8 +322,7 @@ class CustomInterfaz {
     document.documentElement.style.setProperty('--foreground-color', `#${ color }`)
     this.customColors.foreground_colour = color
 
-    if((this.customColors.foreground_colour != localStorage.getItem('foreground_color') &&
-    accessibilityBar.loggedIn)){
+    if((this.customColors.foreground_colour != localStorage.getItem('foreground_color'))){
       accessibilityBar.updateCustomColors({
         foreground_colour: this.customColors.foreground_colour
       })
@@ -338,8 +336,7 @@ class CustomInterfaz {
     document.documentElement.style.setProperty('--background-color', `#${ color }`)
     this.customColors.background_colour = color
 
-    if((this.customColors.background_colour != localStorage.getItem('background_color') &&
-    accessibilityBar.loggedIn)){
+    if((this.customColors.background_colour != localStorage.getItem('background_color'))){
       accessibilityBar.updateCustomColors({
         background_colour: this.customColors.background_colour
       })
@@ -353,8 +350,7 @@ class CustomInterfaz {
     document.documentElement.style.setProperty('--link-color', `#${ color }`)
     this.customColors.link_colour = color
 
-    if((this.customColors.link_colour != localStorage.getItem('link_color') &&
-    accessibilityBar.loggedIn)){
+    if((this.customColors.link_colour != localStorage.getItem('link_color'))){
       accessibilityBar.updateCustomColors({
         link_colour: this.customColors.link_colour
       })
@@ -368,8 +364,7 @@ class CustomInterfaz {
     document.documentElement.style.setProperty('--highlight-color', `#${ color }`)
     this.customColors.highlight_colour = color
 
-    if((this.customColors.highlight_colour != localStorage.getItem('highlight_color') &&
-    accessibilityBar.loggedIn)){
+    if((this.customColors.highlight_colour != localStorage.getItem('highlight_color'))){
       accessibilityBar.updateCustomColors({
         highlight_colour: this.customColors.highlight_colour
       })
@@ -391,7 +386,7 @@ class CustomInterfaz {
     let body = document.getElementsByTagName('body')[0]
     body.style.fontFamily = validFonts[optionFontSelected]
     
-    if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id')) && accessibilityBar.loggedIn)) {
+    if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id')))) {
       accessibilityBar.updatePreferencesInterfaz({
         'font_type_id': this.fontTypeId
       })
@@ -425,8 +420,7 @@ class CustomInterfaz {
     }
 
     if((this.cursorSizeId != localStorage.getItem('cursor_size_id') || 
-    this.cursorColor != localStorage.getItem('color_cursor')) &&
-    accessibilityBar.loggedIn) {
+    this.cursorColor != localStorage.getItem('color_cursor'))) {
       accessibilityBar.updatePreferencesInterfaz({
         cursor_size_id: this.cursorSizeId,
         color_cursor: this.cursorColor,
@@ -460,8 +454,7 @@ class CustomInterfaz {
     }
 
     if((this.trailCursorSizeId != parseInt(localStorage.getItem('trail_cursor_size_id')) ||
-    this.trailCursorColor != localStorage.getItem('trail_cursor_color')) &&
-    accessibilityBar.loggedIn) {
+    this.trailCursorColor != localStorage.getItem('trail_cursor_color'))) {
       accessibilityBar.updatePreferencesInterfaz({
         trail_cursor_size_id: this.trailCursorSizeId,
         trail_cursor_color: this.trailCursorColor
@@ -483,8 +476,7 @@ class CustomInterfaz {
       body.style.filter = 'invert(0)'
     }
 
-    if((this.invertColorGeneral != localStorage.getItem('invert_color_general')) 
-    && accessibilityBar.loggedIn){
+    if((this.invertColorGeneral != localStorage.getItem('invert_color_general'))){
       accessibilityBar.updatePreferencesInterfaz({
         invert_color_general: `${ this.invertColorGeneral }`
       })
@@ -510,8 +502,7 @@ class CustomInterfaz {
       })
     }
 
-    if((this.invertColorImage != localStorage.getItem('invert_color_image')) 
-    && accessibilityBar.loggedIn){
+    if((this.invertColorImage != localStorage.getItem('invert_color_image'))){
       accessibilityBar.updatePreferencesInterfaz({
         invert_color_image: `${ this.invertColorImage }`
       })
