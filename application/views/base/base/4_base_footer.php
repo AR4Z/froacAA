@@ -30,7 +30,7 @@
 <?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/howler.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/narrator.js"></script>
+<script src="<?php echo base_url()?>asset/js/narratorObj.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>

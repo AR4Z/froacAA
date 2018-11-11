@@ -583,18 +583,10 @@ class Usuario extends CI_Controller {
 
     // este metodo se encarga de actualizar los valores del narrador en la sesion
     // para que luego sean actualizados en la db
-    public function update_preferences_narratorSession(){
-        $arrayNamesPreferencesNarrator = $this->input->post('names_preferences_narrator');
-        $arrayValuesPreferencesNarrator = $this->input->post('values');
-        $arrayPreferencesNarrator = $this->session->userdata('preferencesNarrator');
-        $arrayCombineNameAndValuesNarrator = array_combine($arrayNamesPreferencesNarrator, $arrayValuesPreferencesNarrator);
-        foreach($arrayCombineNameAndValuesNarrator as $name => $value){
-            $arrayPreferencesNarrator[$name] = $value;
-        }
-        $this->session->set_userdata('preferencesNarrator', $arrayPreferencesNarrator);
-        echo(json_encode($this->session->userdata('preferencesNarrator')));
-
-        $this->usuario_model->update_preferences_narratorDB($this->input->post('username'), $arrayCombineNameAndValuesNarrator);
+    public function update_narrator_preferences(){
+      $session_data = $this->session->userdata('logged_in');
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $this->usuario_model->update_preferences_narratorDB($session_data['username'], $_POST['preferencesNarrator']);  
     }
 
     // este metodo se encarga de actualizar los valores del screen reader en la sesion

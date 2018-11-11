@@ -35,6 +35,17 @@ class AccessibilityBar {
             highlight_colour: localStorage.getItem('highlight_colour') || "rgb(211,211,211)",
             link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
           }
+        },
+
+        data_narrator: {
+          speed_reading: 2,
+          pitch_nr: 2,
+          volume_id: 2,
+          voice_gender_id: 1,
+          links_id: 1,
+          highlight_id: 1,
+          speech_component_id: 1,
+          reading_unit_id: 1
         }
       }
       this._createAccessibilityElements()
@@ -52,8 +63,8 @@ class AccessibilityBar {
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
-    if (this.needNarrator) {
-      this.narrator = {}
+    if (this.needNarrator || !this.loggedIn) {
+      this.narrator = new Narrator(this.dataAccessibilityBar.data_narrator)
     }
 
     if (this.needLscTranslator) {
@@ -123,6 +134,31 @@ class AccessibilityBar {
     } else {
       Object.keys(customColors).forEach(key => {
         this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
+      })
+    }
+  }
+
+  updatePreferencesNarrator(preferencesNarrator) {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          preferencesNarrator: preferencesNarrator
+        })
+      }
+  
+      fetch(`${ this.url }usuario/update_narrator_preferences`, fetchData)
+      .then(() => {
+        Object.keys(preferencesNarrator).forEach(key => {
+          this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
+        })
+      })
+    } else {
+      Object.keys(preferencesNarrator).forEach(key => {
+        this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
       })
     }
   }
