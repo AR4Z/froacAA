@@ -230,10 +230,11 @@ public function load_lo($url, $lo_name){
 
 public function getLO(){
     $this->load->library('curl');
-    $url = "http://127.0.0.1:5000/downloadLO/"; 
+    $url = "http://127.0.0.1:5000/downloadLO/";
+    $_POST = json_decode(file_get_contents('php://input'), true);
     $post_data = array ( 
-        'url' => $this->input->post('url'), 
-        'name' =>  $this->input->post('name')
+        'url' => $_POST['url'], 
+        'name' =>  $_POST['name']
     );
     $output = $this->curl->simple_post($url, $post_data);
     header('Content-Type: application/json');
@@ -242,7 +243,8 @@ public function getLO(){
 }
 
 public function getLanguage() {
-    $result = $this->lo_model->get_language($this->input->post('url'));
+    $_POST = json_decode(file_get_contents('php://input'), true);
+    $result = $this->lo_model->get_language($_POST['url']);
     $response = array(
         'language' => $result[0]['lo_language']
     );

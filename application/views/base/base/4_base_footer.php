@@ -17,8 +17,6 @@
 </div>
 <?php endif;?>
 
-<!-- js placed at the end of the document so the pages load faster -->
-
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
@@ -66,6 +64,7 @@
 <?php endif;?>
 
 <script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
+<script src="<?php echo base_url() ?>asset/js/lo.js"></script>
 <script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>

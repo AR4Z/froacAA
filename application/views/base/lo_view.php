@@ -48,73 +48,14 @@
             </div>
         </div>
     </section>
-
-
-    <script type="text/javascript">
-        let url = "<?php echo base64_decode($url); ?>";
-        let lo_name = "<?php echo base64_decode($lo_name); ?>";
-        let path = "<?php echo base_url()?>"
-        let iframe_oa = document.getElementById("oa");
-        let dataj;
-
-        $(document).ready(function () {
-            let formData = new FormData();
-            formData.append("url", url);
-            formData.append("name", lo_name);
-            $('#div-lo').hide();
-            $('#error').hide();
-            $('#loading').show();
-            $.ajax({
-                url: "<?php echo base_url()?>lo/getLO/",
-                type: "post",
-                dataType: "json",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                async: true,
-                success: function (data) {
-                    console.log(data);
-                    dataj = data;
-                    let dataJSON = JSON.parse(data);
-                    if (dataJSON.path_lo == '404') {
-                        $('#loading').fadeOut(50);
-                        $('#name-lo').fadeOut(50);
-                        $('#error').fadeIn(600);
-                    } else {
-                        iframe_oa.src = path + "LOs/" + dataJSON.path_lo+'?time='+Date.now();
-                        $('#loading').fadeOut(50);
-                        $('#div-lo').fadeIn(600);
-                    }
-                },
-                error: function (data){
-                    console.log(data);
-                    
-                }
-            })
-
-            $.ajax({
-                url: "<?php echo base_url()?>lo/getLanguage/",
-                type: "post",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                async: true,
-                success: function (data) {
-                    let dataJSON = JSON.parse(data);
-                    languages = {
-                        en:'english',
-                        es:'spanish',
-                        pt:'portuguese'
-                    }
-                    console.log(dataJSON['language'])
-                    loLang = languages[dataJSON['language']];
-                },
-                error: function (data){
-                    console.log(data);
-                    
-                },
-            })
-        });
-    </script>
+<script type="text/javascript">
+  let lo_url = "<?php echo base64_decode($url); ?>";
+  let lo_name = "<?php echo base64_decode($lo_name); ?>";
+  $(document).ready(function () {
+    learningObject = new LearningObject(lo_url, lo_name)
+    
+    $('#oa').on('load', () => {
+      learningObject.translate(userLang)
+    })
+  });
+</script>

@@ -26,6 +26,7 @@
     <link href="<?php echo base_url() ?>asset/css/flag-icon.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
+    
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
 
     <style>
@@ -147,17 +148,10 @@
             position: static;
             font-size: calc(.8em + 1vw);
         }
-
     </style>
 
     
-    <script type="text/javascript">
-    let session_user;
-    let base_url;
-    let idView;
-    let userLang;
-    
-
+    <script type="text/javascript">    
     $(document).ready(function(){
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
         let needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || false;
@@ -166,9 +160,12 @@
         let needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || false;
         let needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || false;
         let needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || false;
+        idView = "<?php echo $id_view ?>" || "nada";
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
         userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
+
+
         accessibilityBar = new AccessibilityBar(session_user, 
         base_url, 
         needCustomInterfaz, 

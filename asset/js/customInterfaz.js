@@ -316,6 +316,7 @@ class CustomInterfaz {
       6: 'fl-theme-lgdg',
       7: 'customized'
     }
+
     
     let classNameContrastSelected = classNameContrastOptions[optionContrastSelected]
     document.getElementsByTagName('body')[0].classList.remove(classNameContrastOptions[this.contrastColorsId])
