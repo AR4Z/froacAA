@@ -86,9 +86,6 @@ class Sesion extends CI_Controller {
 
                 // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
-                    $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
-                    $customColors = $this->usuario_model->get_custom_colors($session_data['username']);
-                    
                     $this->session->set_userdata('need_custom_interfaz', true);                   
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
@@ -97,7 +94,6 @@ class Sesion extends CI_Controller {
 
                 // si el usuario necesita el narrador entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_narrator == "1" || $use_narrator == "2") {
-                    $preferencesNarrator = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
                     $this->session->set_userdata('need_narrator', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
@@ -106,7 +102,6 @@ class Sesion extends CI_Controller {
 
                 // si el usuario necesita el screen reader entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_sr == "1" || $use_sr == "2") {
-                    $preferencesSr = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
                     $this->session->set_userdata('need_screen_reader', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
@@ -114,7 +109,6 @@ class Sesion extends CI_Controller {
                 }
                 // si el usuario necesita el lsc translator entonces lo almaceno en sesion y tambien sus preferencias
                 if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
-                    $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
                     $this->session->set_userdata('need_lsc_translator', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
@@ -122,7 +116,6 @@ class Sesion extends CI_Controller {
                 }
 
                 if($use_structuralNav == "1" || $use_structuralNav == "2") {
-                    $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
                     $this->session->set_userdata('need_structural_nav', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion
@@ -130,7 +123,6 @@ class Sesion extends CI_Controller {
                 } 
 
                 if($use_keyboard == "1" || $use_keyboard == "2") {
-                    $preferencesKeyboard = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
                     $this->session->set_userdata('need_virtual_keyboard', true);
                 } else {
                     // en caso se que no necesite tambien lo almaceno en sesion

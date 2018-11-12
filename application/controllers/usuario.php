@@ -471,7 +471,7 @@ class Usuario extends CI_Controller {
 
       if($need_structural_nav == "1" || $need_structural_nav == "2"){
         $result = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
-        $data_accessibility_bar["data_stuctural_nav"] = $result[0];
+        $data_accessibility_bar["data_structural_nav"] = $result[0];
       }
 
       if($need_narrator == "1" || $need_narrator == "2"){
@@ -504,65 +504,50 @@ class Usuario extends CI_Controller {
 
         // si el usuario necesita adaptaciones de la interfaz entonces lo almaceno en sesion y tambien sus preferencias
         if($use_adapta_interfaz == "1" || $use_adapta_interfaz == "2"){
-            $preferencesInterfaz = $this->usuario_model->get_all_data_adaptability_interfaz($session_data['username']);
-            $this->session->set_userdata('adaptaInterfaz', true);
-            $this->session->set_userdata('preferencesAdaptainterfaz', $preferencesInterfaz[0]);
+            $this->session->set_userdata('need_custom_interfaz', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('adaptaInterfaz', false);
+            $this->session->set_userdata('need_custom_interfaz', false);
         }
 
         // si el usuario necesita el narrador entonces lo almaceno en sesion y tambien sus preferencias
         if($use_narrator == "1" || $use_narrator == "2") {
-            $preferencesNarrator = $this->usuario_model->get_all_data_adaptability_narrator($session_data['username']);
-            $this->session->set_userdata('needNarrator', true);
-            $this->session->set_userdata('preferencesNarrator', $preferencesNarrator[0]);
+            $this->session->set_userdata('need_narrator', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needNarrator', false);
+            $this->session->set_userdata('need_narrator', false);
         }
 
         // si el usuario necesita el screen reader entonces lo almaceno en sesion y tambien sus preferencias
         if($use_sr == "1" || $use_sr == "2") {
-            $preferencesSr = $this->usuario_model->get_all_data_adaptability_sr($session_data['username']);
-            $this->session->set_userdata('needSr', true);
-            $this->session->set_userdata('preferencesSr', $preferencesSr[0]);
+            $this->session->set_userdata('need_screen_reader', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needSr', false);
+            $this->session->set_userdata('need_screen_reader', false);
         }
 
         // si el usuario necesita el lsc traductor entonces lo almaceno en sesion y tambien sus preferencias
         if($use_LSCTranslator == "1" || $use_LSCTranslator == "2") {
-            $preferencesLSCTranslator = $this->usuario_model->get_all_data_adaptability_lsc_translator($session_data['username']);
-            
-            $this->session->set_userdata('needLSCTranslator', true);
-            $this->session->set_userdata('preferencesLSCTranslator', $preferencesLSCTranslator[0]);
+            $this->session->set_userdata('need_lsc_translator', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needLSCTranslator', false);
+            $this->session->set_userdata('need_lsc_translator', false);
         }
 
 
         // si el usuario necesita el lsc traductor entonces lo almaceno en sesion y tambien sus preferencias
         if($use_structuralNav == "1" || $use_structuralNav == "2") {
-            $preferencesStructuralNav = $this->usuario_model->get_all_data_adaptability_sn($session_data['username']);
-            
-            $this->session->set_userdata('needStructuralNav', true);
-            $this->session->set_userdata('preferencesStructuralNav', $preferencesStructuralNav [0]);
+            $this->session->set_userdata('need_structural_nav', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needStructuralNav', false);
+            $this->session->set_userdata('need_structural_nav', false);
         }
 
         if($use_keyboard == "1" || $use_keyboard == "2") {
-            $preferencesKeyboard = $this->usuario_model->get_all_data_adaptability_keyboard($session_data['username']);
-            
-            $this->session->set_userdata('needKeyboard', true);
-            $this->session->set_userdata('preferencesKeyboard', $preferencesKeyboard[0]);
+            $this->session->set_userdata('need_virtual_keyboard', true);
         } else {
             // en caso se que no necesite tambien lo almaceno en sesion
-            $this->session->set_userdata('needKeyboard', false);
+            $this->session->set_userdata('need_virtual_keyboard', false);
         }
 
     }
@@ -584,75 +569,37 @@ class Usuario extends CI_Controller {
     // este metodo se encarga de actualizar los valores del narrador en la sesion
     // para que luego sean actualizados en la db
     public function update_narrator_preferences(){
-      $session_data = $this->session->userdata('logged_in');
+        $session_data = $this->session->userdata('logged_in');
         $_POST = json_decode(file_get_contents('php://input'), true);
         $this->usuario_model->update_preferences_narratorDB($session_data['username'], $_POST['preferencesNarrator']);  
     }
 
     // este metodo se encarga de actualizar los valores del screen reader en la sesion
     // para que luego sean actualizados en la db
-    public function update_preferences_srSession(){
-        $arrayNamesPreferencesSr = $this->input->post('names_preferences_sr');
-        $arrayValuesPreferencesSr = $this->input->post('values');
-        $arrayPreferencesSr = $this->session->userdata('preferencesSr');
-        $arrayCombineNameAndValuesSr = array_combine($arrayNamesPreferencesSr, $arrayValuesPreferencesSr);
-        foreach($arrayCombineNameAndValuesSr as $name => $value){
-            $arrayPreferencesSr[$name] = $value;
-        }
-        $this->session->set_userdata('preferencesSr', $arrayPreferencesSr);
-        echo(json_encode($this->session->userdata('preferencesSr')));
-
-        $this->usuario_model->update_preferences_srDB($this->input->post('username'), $arrayCombineNameAndValuesSr);
+    public function update_screen_reader_preferences(){
+      $session_data = $this->session->userdata('logged_in');
+      $_POST = json_decode(file_get_contents('php://input'), true);
+      $this->usuario_model->update_preferences_srDB($session_data['username'], $_POST['preferencesScreenReader']);  
     }
 
-    public function update_preferences_LSCTranslatorSession(){
-        $arrayNamesPreferencesLSCTranslator = $this->input->post('names_preferences_LSCTranslator');
-        $arrayValuesPreferencesLSCTranslator = $this->input->post('values');
-        $arrayPreferencesLSCTranslator = $this->session->userdata('preferencesLSCTranslator');
-        $arrayCombineNameAndValuesLSCTranslator = array_combine( $arrayNamesPreferencesLSCTranslator, $arrayValuesPreferencesLSCTranslator );
-        
-        foreach($arrayCombineNameAndValuesLSCTranslator as $name => $value){
-            $arrayPreferencesLSCTranslator[$name] = $value;
-        }
-
-        $this->session->set_userdata('preferencesLSCTranslator', $arrayPreferencesLSCTranslator);
-        echo(json_encode($this->session->userdata('preferencesLSCTranslator')));
-
-        $this->usuario_model->update_preferences_LSC_translatorDB($this->input->post('username'), $arrayCombineNameAndValuesLSCTranslator);
+    public function update_lsc_translator_preferences(){
+      $session_data = $this->session->userdata('logged_in');
+      $_POST = json_decode(file_get_contents('php://input'), true);
+      $this->usuario_model->update_preferences_LSC_translatorDB($session_data['username'], $_POST['preferencesLscTranslator']);  
     }
     
 
-    public function update_preferences_snSession(){
-        $arrayNamesPreferencesStructuralNav = $this->input->post('names_preferences_sn');
-        $arrayValuesPreferencesStructuralNav = $this->input->post('values');
-        $arrayPreferencesStructuralNav = $this->session->userdata('preferencesStructuralNav');
-        $arrayCombineNameAndValuesStructuralNav= array_combine( $arrayNamesPreferencesStructuralNav, $arrayValuesPreferencesStructuralNav );
-        
-        foreach($arrayCombineNameAndValuesStructuralNav as $name => $value){
-            $arrayPreferencesStructuralNav[$name] = $value;
-        }
-
-        $this->session->set_userdata('preferencesStructuralNav', $arrayPreferencesStructuralNav);
-        echo(json_encode($this->session->userdata('preferencesStructuralNav')));
-
-        $this->usuario_model->update_preferences_structuralNav($this->input->post('username'), $arrayCombineNameAndValuesStructuralNav);
+    public function update_structural_nav_preferences(){
+      $session_data = $this->session->userdata('logged_in');
+      $_POST = json_decode(file_get_contents('php://input'), true);
+      $this->usuario_model->update_preferences_structuralNav($session_data['username'], $_POST['preferencesStructuralNav']);  
     }
 
 
-    public function update_preferences_kbSession(){
-        $arrayNamesKeyboard = $this->input->post('names_preferences_kb');
-        $arrayValuesPreferencesKeyboard = $this->input->post('values');
-        $arrayPreferencesKeyboard= $this->session->userdata('preferencesKeyboard');
-        $arrayCombineNameAndValuesKeyboard = array_combine( $arrayNamesKeyboard, $arrayValuesPreferencesKeyboard );
-        
-        foreach($arrayCombineNameAndValuesKeyboard as $name => $value){
-            $arrayPreferencesKeyboard[$name] = $value;
-        }
-
-        $this->session->set_userdata('preferencesKeyboard', $arrayPreferencesKeyboard);
-        echo(json_encode($this->session->userdata('preferencesKeyboard')));
-
-        $this->usuario_model->update_preferences_keyboard($this->input->post('username'), $arrayCombineNameAndValuesKeyboard);
+    public function update_keyboard_preferences(){
+      $session_data = $this->session->userdata('logged_in');
+      $_POST = json_decode(file_get_contents('php://input'), true);
+      $this->usuario_model->update_preferences_keyboard($session_data['username'], $_POST['preferencesKeyboard']);  
     }
 
     public function chpasswd(){
@@ -764,7 +711,9 @@ class Usuario extends CI_Controller {
         // o el screen segun lo que el necesite
         // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
         // en $data--- va las preferencias del usuario para cada adaptacion
-        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard, $dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard);
+        $this->usuario_model->insertaAdaptaciones($this->input->post('username'), $optInterfaz, $optNarrator, 
+        $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard, $dataInterfaz, 
+        $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard);
 
 
         if($_POST["necesidadespecial"]!=""){

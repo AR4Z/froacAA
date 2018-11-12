@@ -159,14 +159,13 @@
     
 
     $(document).ready(function(){
-        console.log("1")
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
         let needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || false;
         let needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || false;
         let needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || false;
         let needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || false;
         let needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || false;
-        let needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_keyboard');?>) || false;
+        let needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || false;
         base_url = "<?php echo base_url()?>";
         idView = "<?php echo $id_view ?>" || "nada";
         userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
@@ -178,7 +177,11 @@
         needLscTranslator, 
         needVirtualKeyboard, 
         needStructuralNavigation)
-        accessibilityBar.createAccessibilityElements()
+
+        if(!session_user) {
+          accessibilityBar.createAccessibilityElements()
+        }
+
         $("#" + idView).addClass('active');
     });
 

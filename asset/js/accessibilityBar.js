@@ -1,6 +1,5 @@
 class AccessibilityBar {
   constructor(loggedIn, url, needCustomInterfaz, needNarrator, needScreenReader, needLscTranslator, needVirtualKeyboard, needStructuralNavigation) {
-    console.log(4)
     this.needCustomInterfaz = needCustomInterfaz
     this.needNarrator = needNarrator
     this.needLscTranslator = needLscTranslator
@@ -14,11 +13,13 @@ class AccessibilityBar {
     this.virtualKeyboard;
     this.structuralNavigation;
     this.screenReader;
-    
+
     if (this.loggedIn) {
       this._fetchDataAccessibilityBar(this.url)
         .then(data => {
+          console.log(data)
           this.dataAccessibilityBar = data
+          this.createAccessibilityElements()
         }).catch(err => console.error(err))
     } else {
       this.dataAccessibilityBar = {
@@ -65,12 +66,12 @@ class AccessibilityBar {
           model_id: parseInt(localStorage.getItem('model_id')) || 1
         },
 
-        data_structural_navigation: {
+        data_structural_nav: {
           nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
           show_toc: localStorage.getItem('show_toc') || 'f'
         },
 
-        data_keyboard: {
+        data_virtual_keyboard: {
           kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
           play_key_sound: localStorage.getItem('play_key_sound') || 't'
         }
@@ -85,6 +86,14 @@ class AccessibilityBar {
   }
 
   createAccessibilityElements() {
+    if (this.needStructuralNavigation || !this.loggedIn) {
+      this.structuralNavigation = new StructuralNavigation(this.dataAccessibilityBar.data_structural_nav)
+    }
+
+    if (this.needVirtualKeyboard || !this.loggedIn) {
+      this.virtualKeyboard = new VirtualKeyboard(this.dataAccessibilityBar.data_virtual_keyboard)
+    }
+
     if (this.needCustomInterfaz || !this.loggedIn) {
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
@@ -95,14 +104,6 @@ class AccessibilityBar {
 
     if (this.needLscTranslator || !this.loggedIn) {
       this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
-    }
-
-    if (this.needVirtualKeyboard || !this.loggedIn) {
-      this.virtualKeyboard = new VirtualKeyboard(this.dataAccessibilityBar.data_keyboard)
-    }
-
-    if (this.needStructuralNavigation || !this.loggedIn) {
-      this.structuralNavigation = new StructuralNavigation(this.dataAccessibilityBar.data_structural_navigation)
     }
 
     if (this.needScreenReader || !this.loggedIn) {
@@ -254,12 +255,12 @@ class AccessibilityBar {
       fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
       .then(() => {
         Object.keys(preferencesStructuralNav).forEach(key => {
-          this.dataAccessibilityBar.data_structural_navigation[key] = preferencesStructuralNav[key]
+          this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
         })
       })
     } else {
       Object.keys(preferencesStructuralNav).forEach(key => {
-        this.dataAccessibilityBar.data_structural_navigation[key] = preferencesStructuralNav[key]
+        this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
       })
     }
   }
@@ -276,15 +277,15 @@ class AccessibilityBar {
         })
       }
   
-      fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
+      fetch(`${ this.url }usuario/update_keyboard_preferences`, fetchData)
       .then(() => {
         Object.keys(preferencesKeyboard).forEach(key => {
-          this.dataAccessibilityBar.data_keyboard[key] = preferencesKeyboard[key]
+          this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
         })
       })
     } else {
       Object.keys(preferencesKeyboard).forEach(key => {
-        this.dataAccessibilityBar.data_keyboard[key] = preferencesKeyboard[key]
+        this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
       })
     }
   }
