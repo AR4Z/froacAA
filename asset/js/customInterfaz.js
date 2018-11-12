@@ -27,6 +27,8 @@ class CustomInterfaz {
     this.cursorUrl = preferencesInterfaz.cursor_url
     this.cursorTrail = new CursorTrail(0)
 
+    this._addEventChangeFontSize()
+    this._addEventChangeSizeLineSpacing()
     this._addEventChangeFontType()
     this._addEventChangeContrast()
     this._addEventChangeCursorSize()
@@ -56,11 +58,11 @@ class CustomInterfaz {
   }
 
   _loadCustomInterfaz() {
-    document.getElementById('inputFontSize').value = parseInt(this.fontSize)
-    document.getElementById('inputFontSize').dispatchEvent(new Event('change'))
-
-    document.getElementById("inputInterlineSize").value = parseFloat(this.sizeLineSpacing)
-    document.getElementById("inputInterlineSize").dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='fontSize']`).value = parseInt(this.fontSize)
+    document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
+    
+    document.querySelector(`input[name='interlineSpaceSize']`).value = parseFloat(this.sizeLineSpacing)
+    document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
 
     document.querySelector('input[name="foregroundColor"]').value = this.customColors.foreground_colour
     document.querySelector('input[name="foregroundColor"]').dispatchEvent(new Event('change'))
@@ -120,6 +122,17 @@ class CustomInterfaz {
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").dispatchEvent(new Event('change'))
   }
 
+  _addEventChangeFontSize() {
+    let inputFontSize = document.querySelector('input[name="fontSize"]')
+
+    inputFontSize.addEventListener('change', this.changeFontSize)
+  }
+
+  _addEventChangeSizeLineSpacing() {
+    let inputSizeLineSpacing = document.querySelector('input[name="interlineSpaceSize"]')
+  
+    inputSizeLineSpacing.addEventListener('change', this.changeSizeLine)
+  }
   _addEventChangeContrast() {
     let optionsContrast = document.querySelectorAll('input[name="radioOptionscontrast"]')
 
@@ -250,7 +263,7 @@ class CustomInterfaz {
   _addEventChangeInvertGeneral() {
     let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
     
-    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral.bind(this))
+    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral)
   }
 
   _addEventChangeInvertImages() {
@@ -260,7 +273,8 @@ class CustomInterfaz {
   }
 
   changeFontSize() {
-    let inputFontSize = document.getElementById('inputFontSize')
+    console.log("change font size")
+    let inputFontSize = document.getElementsByName('fontSize')[0]
     let html = document.getElementsByTagName('html')[0]
 
     this.fontSize = parseInt(inputFontSize.value)
@@ -276,7 +290,7 @@ class CustomInterfaz {
   }
 
   changeSizeLine() {
-    let inputSizeLine = document.getElementById("inputInterlineSize")
+    let inputSizeLine = document.getElementsByName("interlineSpaceSize")[0]
     let body = document.getElementsByTagName('body')[0]
 
     this.sizeLineSpacing = parseFloat(inputSizeLine.value)

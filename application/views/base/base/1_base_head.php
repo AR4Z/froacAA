@@ -153,25 +153,13 @@
     
     <script type="text/javascript">
     let session_user;
-    let accessibilityBar;
     let base_url;
     let idView;
-    let nodeIframe;
-    let iframeDocument;
-    let treeNarrator;
-    let target;
-    let srClass;
-    let cfgVoiceNarrator;
-    let cfgReproductor;
-    let player;
-    let elmLining;
-    let audioSrcs;
-    let htmlElements;
     let userLang;
     
 
     $(document).ready(function(){
-
+        console.log("1")
         session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
         let needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || false;
         let needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || false;
@@ -190,6 +178,7 @@
         needLscTranslator, 
         needVirtualKeyboard, 
         needStructuralNavigation)
+        accessibilityBar.createAccessibilityElements()
         $("#" + idView).addClass('active');
     });
 

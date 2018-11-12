@@ -4,7 +4,7 @@ class LscTranslator {
     this.modelId = preferencesLscTranslator.model_id
     
     this._addEventChangeModel()
-
+    this._addEventChangeSignSpeed()
     this._setValuesInLocalStorage()
     this._loadLscTranslator()
   }
@@ -15,8 +15,8 @@ class LscTranslator {
   }
 
   _loadLscTranslator() {
-    document.getElementById('input-speed-LSC-translator').value = parseInt(this.signSpeed)
-    document.getElementById('input-speed-LSC-translator').dispatchEvent(new Event('change'))
+    document.getElementsByName('signSpeed')[0].value = parseInt(this.signSpeed)
+    document.getElementsByName('signSpeed')[0].dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).checked = true
     document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).dispatchEvent(new Event('change'))
@@ -26,6 +26,12 @@ class LscTranslator {
     let optionsModel = document.querySelectorAll('input[name="LSC-translator-model"]')
 
     Array.prototype.forEach.call(optionsModel, opt => opt.addEventListener('change', this.changeModel))
+  }
+
+  _addEventChangeSignSpeed() {
+    let inputSignSpeed = document.getElementsByName('signSpeed')[0]
+
+    inputSignSpeed.addEventListener('change', this.changeSignSpeed)
   }
 
   changeModel() {
@@ -42,7 +48,7 @@ class LscTranslator {
   }
 
   changeSignSpeed() {
-    let signSpeed = parseInt(document.getElementById('input-speed-LSC-translator').value)
+    let signSpeed = parseInt(document.getElementsByName('signSpeed')[0].value)
     this.signSpeed = signSpeed
 
     if(this.signSpeed != parseInt(localStorage.getItem('sign_speed'))) {

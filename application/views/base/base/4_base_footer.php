@@ -18,6 +18,7 @@
 <?php endif;?>
 
 <!-- js placed at the end of the document so the pages load faster -->
+
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
@@ -29,14 +30,15 @@
 
 <?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/howler.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/narratorObj.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
-<script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
-<script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
-<!--<script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>-->
+  <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
+  <script src="<?php echo base_url()?>asset/js/jscolor.js"></script>
+  <script src="<?php echo base_url()?>asset/js/trailDots.js"></script>
+  <script src="<?php echo base_url()?>asset/js/cursorTrail.js"></script>
+  <script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
 <?php endif;?>
 
 <?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
@@ -62,14 +64,10 @@
     <script src="<?php echo base_url()?>asset/js/keyboardObj.js"></script>
 <?php endif;?>
 
-<script src="<?php echo base_url()?>asset/js/jscolor.js"></script>
-<script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
-<script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
-<script src="<?php echo base_url()?>asset/js/trailDots.js"></script>
-<script src="<?php echo base_url()?>asset/js/cursorTrail.js"></script>
-<script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
+<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
 <script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
-<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
+<script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
+
 </body>
 </html>

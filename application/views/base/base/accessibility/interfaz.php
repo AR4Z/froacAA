@@ -15,18 +15,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[0]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[0]" id="inputFontSize" class="form-control input-number" value="12" min="9" max="36" step="1"
-                                data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[0]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                          <input type="number" name="fontSize" value="12" min="9" max="36">
                         </div>
                     </div>
                 </div>
@@ -48,18 +37,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[1]" id="inputInterlineSize" class="form-control input-number" value="1.5" min="1" max="2"
-                                step="0.1" data-decimals="1" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                          <input type="number" name="interlineSpaceSize" value="1.5" min="1" max="2" step="0.1">
                         </div>
                     </div>
                 </div>

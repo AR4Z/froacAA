@@ -11,17 +11,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[5]">
-                                    <span class="oi oi-minus"></span>
-                                </button>
-                            </span>
-                            <input type="text" name="quant[5]" id="input-speed-LSC-translator" class="form-control input-number" value="20" min="10" max="40" step="10" data-decimals="0" style="text-align:center">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[5]">
-                                    <span class="oi oi-plus"></span>
-                                </button>
-                            </span>
+                        <input type="number" name="signSpeed" value="20" min="10" max="40" step="10">
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 class AccessibilityBar {
   constructor(loggedIn, url, needCustomInterfaz, needNarrator, needScreenReader, needLscTranslator, needVirtualKeyboard, needStructuralNavigation) {
+    console.log(4)
     this.needCustomInterfaz = needCustomInterfaz
     this.needNarrator = needNarrator
     this.needLscTranslator = needLscTranslator
@@ -8,27 +9,31 @@ class AccessibilityBar {
     this.needScreenReader = needScreenReader
     this.loggedIn = loggedIn
     this.url = url
-
+    this.customInterfaz;
+    this.lscTranslator;
+    this.virtualKeyboard;
+    this.structuralNavigation;
+    this.screenReader;
+    
     if (this.loggedIn) {
       this._fetchDataAccessibilityBar(this.url)
         .then(data => {
           this.dataAccessibilityBar = data
-          this._createAccessibilityElements()
         }).catch(err => console.error(err))
     } else {
       this.dataAccessibilityBar = {
         data_custom_interfaz: {
           color_cursor: localStorage.getItem('color_cursor') || 'rgb(255,18,18)',
-          contrast_colors_id: localStorage.getItem('contrast_colors_id') || 1,
-          cursor_size_id: localStorage.getItem('cursor_size_id') || 1,
+          contrast_colors_id: parseInt(localStorage.getItem('contrast_colors_id')) || 1,
+          cursor_size_id: parseInt(localStorage.getItem('cursor_size_id')) || 1,
           cursor_url: localStorage.getItem('cursor_url') || 'auto',
-          font_size: localStorage.getItem('font_size') || 12,
-          font_type_id: localStorage.getItem('font_type_id') || 1,
+          font_size: parseInt(localStorage.getItem('font_size')) || 12,
+          font_type_id: parseInt(localStorage.getItem('font_type_id')) || 1,
           invert_color_general: localStorage.getItem('invert_color_general') || 'f',
           invert_color_image: localStorage.getItem('invert_color_image') || 'f',
-          size_line_spacing: localStorage.getItem('size_line_spacing') || 1.5,
+          size_line_spacing: parseFloat(localStorage.getItem('size_line_spacing')) || 1.5,
           trail_cursor_color: localStorage.getItem('trail_cursor_color') || 'rgb(255,18,18)',
-          trail_cursor_size_id: localStorage.getItem('trail_cursor_size_id') || 1,
+          trail_cursor_size_id: parseInt(localStorage.getItem('trail_cursor_size_id')) || 1,
           custom_colors: {
             foreground_colour: localStorage.getItem('foreground_colour') || "rgb(0,0,0)",
             background_colour: localStorage.getItem('background_colour') || "rgb(255,255,255)",
@@ -70,7 +75,6 @@ class AccessibilityBar {
           play_key_sound: localStorage.getItem('play_key_sound') || 't'
         }
       }
-      this._createAccessibilityElements()
     }
   }
 
@@ -80,7 +84,7 @@ class AccessibilityBar {
       .catch(err => console.error(err))
   }
 
-  _createAccessibilityElements() {
+  createAccessibilityElements() {
     if (this.needCustomInterfaz || !this.loggedIn) {
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
@@ -279,10 +283,9 @@ class AccessibilityBar {
         })
       })
     } else {
-      Object.keys(preferencesStructuralNav).forEach(key => {
+      Object.keys(preferencesKeyboard).forEach(key => {
         this.dataAccessibilityBar.data_keyboard[key] = preferencesKeyboard[key]
       })
     }
   }
-
 }
