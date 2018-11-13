@@ -1,7 +1,7 @@
 class StructuralNavigation {
   constructor(preferencesStructuralNavigation) {
     this.navStrategyId = preferencesStructuralNavigation.nav_strategy_id
-    this.showToc = preferencesStructuralNavigation.show_toc
+    this.showToc = preferencesStructuralNavigation.showtoc
     
     this._addEventChangeNavStrategy()
     this._addEventChangeShowToc()
@@ -47,7 +47,7 @@ class StructuralNavigation {
     if(!all) {
       accessibilityBar.updatePreferencesStructuralNav({
         nav_strategy_id: 1,
-        show_toc: false
+        showtoc: 'true'
       })
     }
   }
@@ -76,7 +76,7 @@ class StructuralNavigation {
 
     if(this.showToc != localStorage.getItem('show_toc') && !isDefault) {
       accessibilityBar.updatePreferencesStructuralNav({
-        show_toc: `${ this.showToc }`
+        showtoc: `${ this.showToc }`
       })
     }
 

@@ -47,7 +47,7 @@ class VirtualKeyboard {
     if(!all) {
       accessibilityBar.updatePreferencesKeyboard({
         kb_size_id: 2,
-        play_key_sound: true
+        play_key_sound: 'true'
       })
     }
   }
@@ -77,7 +77,7 @@ class VirtualKeyboard {
 
     if(this.playKeySound != localStorage.getItem('play_key_sound') && !isDefault) {
       accessibilityBar.updatePreferencesKeyboard({
-        play_key_sound: this.playKeySound
+        play_key_sound: `${ this.playKeySound }`
       })
     }
 

@@ -8,12 +8,12 @@ class AccessibilityBar {
     this.needScreenReader = needScreenReader
     this.loggedIn = loggedIn
     this.url = url
-    this.narrator;
-    this.customInterfaz;
-    this.lscTranslator;
-    this.virtualKeyboard;
-    this.structuralNavigation;
-    this.screenReader;
+    this.narrator
+    this.customInterfaz
+    this.lscTranslator
+    this.virtualKeyboard
+    this.structuralNavigation
+    this.screenReader
 
     if (this.loggedIn) {
       this._fetchDataAccessibilityBar(this.url)
@@ -69,7 +69,7 @@ class AccessibilityBar {
 
         data_structural_nav: {
           nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
-          show_toc: localStorage.getItem('show_toc') || 'f'
+          showtoc: localStorage.getItem('show_toc') || 'f'
         },
 
         data_virtual_keyboard: {
@@ -364,7 +364,7 @@ class AccessibilityBar {
     if(this.needStructuralNavigation) {
       this.dataAccessibilityBar.data_structural_nav = {
         nav_strategy_id: 1,
-        show_toc: false
+        showtoc: false
       }
     }
 

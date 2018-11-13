@@ -137,8 +137,8 @@ class CustomInterfaz {
           cursor_url: 'auto',
           font_size:  12,
           font_type_id:  1,
-          invert_color_general:  false,
-          invert_color_image: false,
+          invert_color_general:  'false',
+          invert_color_image: 'false',
           size_line_spacing: 1.5,
           trail_cursor_color: 'rgb(255,18,18)',
           trail_cursor_size_id: 1

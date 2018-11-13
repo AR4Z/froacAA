@@ -17,7 +17,7 @@
 </div>
 <?php endif;?>
 
-<script src="<?php echo base_url() ?>asset/js/popper.js"></script>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 

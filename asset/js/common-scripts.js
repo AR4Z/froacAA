@@ -16,30 +16,35 @@ $(document).ready(function () {
     e.preventDefault(), window.open($(this).attr("href"));
   });
 
-  if (!session_user || accessibilityBar.needCustomInterfaz) {
-    $('#interfaz').addClass('show active');
-    $('#interfaz-tab').addClass('active');
-    $('#interfaz-tab').attr('aria-selected', true);
+  if (!accessibilityBar.loggedIn|| accessibilityBar.needCustomInterfaz) {
+    document.getElementById('interfaz').classList.add('show')
+    document.getElementById('interfaz').classList.add('active')
+    document.getElementById('interfaz-tab').classList.add('active')
+    document.getElementById('interfaz-tab').setAttribute('aria-selected', true)
   } else if (accessibilityBar.needNarrator) {
-    $('#narrator').addClass('show active');
-    $('#narrator-tab').addClass('active');
-    $('#narrator-tab').attr('aria-selected', true);
+    document.getElementById('narrator').classList.add('show')
+    document.getElementById('narrator').classList.add('active')
+    document.getElementById('narrator-tab').classList.add('active')
+    document.getElementById('narrator-tab').setAttribute('aria-selected', true)
   } else if (accessibilityBar.needScreenReader) {
-    $('#screen-reader').addClass('show active');
-    $('#screen-reader-tab').addClass('active');
-    $('#screen-reader-tab').attr('aria-selected', true);
+    document.getElementById('screen-reader').classList.add('show')
+    document.getElementById('screen-reader').classList.add('active')
+    document.getElementById('screen-reader-tab').classList.add('active')
+    document.getElementById('screen-reader-tab').setAttribute('aria-selected', true)
   } else if (accessibilityBar.needLscTranslator) {
-    $('#LSC-translator').addClass('show active');
-    $('#LSC-translator-tab').addClass('active');
-    $('#LSC-translator-tab').attr('aria-selected', true);
-  } else if (accessibilityBar.needKeyboard) {
-    $('#keyboard-cf').addClass('show active');
-    $('#keyboard-tab').addClass('active');
-    $('#keyboard-tab').attr('aria-selected', true);
+    document.getElementById('LSC-translator').classList.add('show')
+    document.getElementById('LSC-translator').classList.add('active')
+    document.getElementById('LSC-translator-tab').classList.add('active')
+    document.getElementById('LSC-translator-tab').setAttribute('aria-selected', true)
+  } else if (accessibilityBar.needVirtualKeyboard) {
+    document.getElementById('keyboard-cf').classList.add('show')
+    document.getElementById('keyboard-cf').classList.add('active')
+    document.getElementById('keyboard-tab').classList.add('active')
+    document.getElementById('keyboard-tab').setAttribute('aria-selected', true)
   }
 
-  if ($('ul#accessibilityTab li').length == 2) {
-    $('#reset-all').hide();
+  if (document.querySelectorAll('ul#accessibilityTab li').length == 2) {
+    document.getElementById('reset-all').style.display = 'none'
   }
 
   $(function () {
