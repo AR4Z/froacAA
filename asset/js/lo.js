@@ -5,7 +5,6 @@ class LearningObject {
     this.iframeElement = document.getElementById('oa')
     
     this.loadLearningObject()
-    this.setLanguage()
   }
 
   getDocument() {
@@ -16,8 +15,17 @@ class LearningObject {
     this.proccessLearningObject()
     .then(data => {
       data = JSON.parse(data)
-      this.iframeElement.src = `${ base_url }LOs/${data.path_lo}?time=${Date.now()}`
-      this.document = this.iframeElement.contentWindow.document
+      if(data.path_lo == '404') {
+        $('#loading').fadeOut(50);
+        $('#name-lo').fadeOut(50);
+        $('#error').fadeIn(600);
+      } else {
+        this.iframeElement.src = `${ base_url }LOs/${data.path_lo}?time=${Date.now()}`
+        this.document = this.iframeElement.contentWindow.document
+        $('#loading').fadeOut(50);
+        $('#div-lo').fadeIn(600);
+      }
+      
     })
   }
 
@@ -65,6 +73,7 @@ class LearningObject {
       }
 
       this.language = languages[data.language]
+      this.translate(userLang)
     })
     .catch(e => console.error(e))
   }
@@ -80,7 +89,11 @@ class LearningObject {
     if(this.language == language) {
       let iframeDocument = this.getDocument()
       
-      iframeDocument.getElementById(":2.container").contentWindow.document.getElementById(":2.restore").click();
+      try {
+        iframeDocument.getElementById(":2.container").contentWindow.document.getElementById(":2.restore").click();
+      } catch(e) {
+        console.error(e)
+      }
     } else {
       try {
         this.iframeElement.contentWindow.translate(validLanguage)

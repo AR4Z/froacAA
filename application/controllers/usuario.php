@@ -602,6 +602,88 @@ class Usuario extends CI_Controller {
       $this->usuario_model->update_preferences_keyboard($session_data['username'], $_POST['preferencesKeyboard']);  
     }
 
+    public function set_all_preferences_to_default() {
+      $session_data = $this->session->userdata('logged_in');
+
+      if($session_data['need_custom_interfaz']) {
+        $default_preferences = array(
+          color_cursor => 'rgb(255,18,18)',
+          contrast_colors_id => 1,
+          cursor_size_id => 1,
+          cursor_url => 'auto',
+          font_size => 12,
+          font_type_id => 1,
+          invert_color_general => false,
+          invert_color_image => false,
+          size_line_spacing => 1.5,
+          trail_cursor_color => 'rgb(255,18,18)',
+          trail_cursor_size_id => 1
+        );
+
+        $default_colors = array(
+          foreground_colour => "rgb(0,0,0)",
+          background_colour => "rgb(255,255,255)",
+          highlight_colour => "rgb(211,211,211)",
+          link_colour => "rgb(255,255,0)"
+        );
+        $this->usuario_model->update_preferences_interfazDB($session_data['username'], $default_preferences);
+        $this->usuario_model->update_custom_colors($session_data['username'], $default_colors);
+      }
+
+      if($session_data['need_narrator']) {
+        $default_preferences = array(
+          speed_reading => 2,
+          pitch_nr => 2,
+          volume_id => 2,
+          voice_gender_id => 1,
+          links_id => 1,
+          highlight_id => 1,
+          reading_unit_id => 1
+        );
+
+        $this->usuario_model->update_preferences_narratorDB($session_data['username'], $default_preferences);  
+      }
+
+      if($session_data['need_screen_reader']) {
+        $default_preferences = array(
+          speed_reading_id => 2,
+          pitch_id => 2,
+          volume_id => 2,
+          voice_gender_id => 1,
+          links_id => 2
+        );
+
+        $this->usuario_model->update_preferences_srDB($session_data['username'], $default_preferences);  
+      }
+
+      if($session_data['need_lsc_translator']) {
+        $default_preferences = array(
+          sign_speed => 20,
+          model_id => 1
+        );
+
+        $this->usuario_model->update_preferences_LSC_translatorDB($session_data['username'], $default_preferences);
+      }
+
+      if($session_data['need_structural_nav']) {
+        $default_preferences = array(
+          nav_strategy_id => 1,
+          show_toc => false
+        );
+
+        $this->usuario_model->update_preferences_structuralNav($session_data['username'], $default_preferences);
+      }
+
+      if($session_data['need_virtual_keyboard']) {
+        $default_preferences = array(
+          kb_size_id => 2,
+          play_key_sound => true
+        );
+
+        $this->usuario_model->update_preferences_keyboard($session_data['username'], $default_preferences);  
+      }
+    }
+
     public function chpasswd(){
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');

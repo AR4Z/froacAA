@@ -36,25 +36,25 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('reset_values'); ?></a>
             <div class="dropdown-menu">
                 <?php if( $this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesInterfaz()" href="#"><?php echo $this->lang->line('interface'); ?></a>
+                <a class="dropdown-item" onclick="accessibilityBar.customInterfaz.setDefaultValues()" href="#"><?php echo $this->lang->line('interface'); ?></a>
                 <?php endif?>
-                <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesNarrator()" href="#"><?php echo $this->lang->line('narrator'); ?></a>
+                <?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
+                <a class="dropdown-item" onclick="accessibilityBar.narrator.setDefaultValues()" href="#"><?php echo $this->lang->line('narrator'); ?></a>
                 <?php endif?>
                 <?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesSr()" href="#"><?php echo $this->lang->line('screen_reader'); ?></a>
+                <a class="dropdown-item" onclick="accessibilityBar.screenReader.setDefaultValues()" href="#"><?php echo $this->lang->line('screen_reader'); ?></a>
                 <?php endif?>
                 <?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesLSCTranslator()" href="#"><?php echo $this->lang->line('lsc_translator'); ?></a>
+                <a class="dropdown-item" onclick="accessibilityBar.lscTranslator.setDefaultValues()" href="#"><?php echo $this->lang->line('lsc_translator'); ?></a>
                 <?php endif?>
                 <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesSn()" href="#"><?php echo $this->lang->line('struc_nav'); ?></a>
+                <a class="dropdown-item" onclick="accessibilityBar.structuralNavigation.setDefaultValues()" href="#"><?php echo $this->lang->line('struc_nav'); ?></a>
                 <?php endif?>
                 <?php if($this->session->userdata('need_virtual_keyboard') || !($this->session->userdata('logged_in'))):?>
-                <a class="dropdown-item" onclick="setDefaultValuesKb()" href="#"><?php echo $this->lang->line('virtual_keyboard'); ?></a>
+                <a class="dropdown-item" onclick="accessibilityBar.virtualKeyboard.setDefaultValues()" href="#"><?php echo $this->lang->line('virtual_keyboard'); ?></a>
                 <?php endif?>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" id="reset-all" onclick="setDefaultAllValues()" href="#"><?php echo $this->lang->line('all'); ?></a>
+                <a class="dropdown-item" id="reset-all" onclick="accessibilityBar.setDefaultAllValues()" href="#"><?php echo $this->lang->line('all'); ?></a>
             </div>
         </li>
     <?php endif;?>

@@ -35,29 +35,52 @@ class StructuralNavigation {
     checkboxShowToc.addEventListener('change', this.changeShowToc.bind(this))
   }
 
+  setDefaultValues(all) {
+    document.querySelector(`input[name='navigation-strategy']`).setAttribute('default', true)
+    document.querySelector(`input[name='navigation-strategy'][value='1']`).checked = true
+    document.querySelector(`input[name='navigation-strategy'][value='1']`).dispatchEvent(new Event('change'))
+  
+    document.querySelector(`input[name='showTOC']`).setAttribute('default', true)
+    document.querySelector(`input[name='showTOC']`).checked = true
+    document.querySelector(`input[name='showTOC']`).dispatchEvent(new Event('change'))
+
+    if(!all) {
+      accessibilityBar.updatePreferencesStructuralNav({
+        nav_strategy_id: 1,
+        show_toc: false
+      })
+    }
+  }
+
   changeNavStrategy() {
-    let optionNavStrategySelected = parseInt(Array.from(document.getElementsByName('navigation-strategy')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('navigation-strategy')).filter(radioOption => radioOption.checked)[0]
+    let optionNavStrategySelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     this.navStrategyId = optionNavStrategySelected
 
-    if(this.navStrategyId != parseInt(localStorage.getItem('nav_strategy_id'))) {
+    if(this.navStrategyId != parseInt(localStorage.getItem('nav_strategy_id')) && !isDefault) {
       accessibilityBar.updatePreferencesStructuralNav({
         nav_strategy_id: this.navStrategyId
       })
     }
 
+    optSelectedElm.setAttribute('default', false)
     localStorage.setItem('nav_strategy_id', this.navStrategyId)
   }
 
   changeShowToc() {
-    let isChecked = document.getElementsByName('showTOC')[0].checked
+    let checkbox = document.getElementsByName('showTOC')[0]
+    let isChecked = checkbox.checked
+    let isDefault = checkbox.default == 'true'
     this.showToc = isChecked
 
-    if(this.showToc != localStorage.getItem('show_toc')) {
+    if(this.showToc != localStorage.getItem('show_toc') && !isDefault) {
       accessibilityBar.updatePreferencesStructuralNav({
         show_toc: `${ this.showToc }`
       })
     }
 
+    checkbox.setAttribute('default', false)
     localStorage.setItem('show_toc', this.showToc)
   }
 }

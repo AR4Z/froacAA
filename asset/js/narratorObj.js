@@ -95,8 +95,52 @@ class Narrator {
     Array.prototype.forEach.call(optionsReadingUnit, opt => opt.addEventListener('change', this.changeReadingUnit))
   }
 
+  setDefaultValues(all) {
+    document.querySelector(`input[name='speed-nr']`).setAttribute('default', true)
+    document.querySelector(`input[name='speed-nr'][value='2']`).checked = true
+    document.querySelector(`input[name='speed-nr'][value='2']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='pitch-nr']`).setAttribute('default', true)
+    document.querySelector(`input[name='pitch-nr'][value='2']`).checked = true
+    document.querySelector(`input[name='pitch-nr'][value='2']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='volume-narrator']`).setAttribute('default', true)
+    document.querySelector(`input[name='volume-narrator'][value='2']`).checked = true
+    document.querySelector(`input[name='volume-narrator'][value='2']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='gender-narrator']`).setAttribute('default', true)
+    document.querySelector(`input[name='gender-narrator'][value='1']`).checked = true
+    document.querySelector(`input[name='gender-narrator'][value='1']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='link-narrator']`).setAttribute('default', true)
+    document.querySelector(`input[name='link-narrator'][value='1']`).checked = true
+    document.querySelector(`input[name='link-narrator'][value='1']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='highlight-narrator']`).setAttribute('default', true)
+    document.querySelector(`input[name='highlight-narrator'][value='1']`).checked = true
+    document.querySelector(`input[name='highlight-narrator'][value='1']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='reading-unit-narrator']`).setAttribute('default', true)
+    document.querySelector(`input[name='reading-unit-narrator'][value='1']`).checked = true
+    document.querySelector(`input[name='reading-unit-narrator'][value='1']`).dispatchEvent(new Event('change'))
+  
+    if(!all) {
+      accessibilityBar.updatePreferencesNarrator({
+        speed_reading: 2,
+        pitch_nr: 2,
+        volume_id: 2,
+        voice_gender_id: 1,
+        links_id: 1,
+        highlight_id: 1,
+        reading_unit_id: 1
+      })
+    }
+  }
+
   changeSpeedReading() {
-    let optionSpeedSelected = parseInt(Array.from(document.getElementsByName('speed-nr')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('speed-nr')).filter(radioOption => radioOption.checked)[0]
+    let optionSpeedSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     let validSpeeds = {
       1: 0.5,
       2: 1,
@@ -105,17 +149,21 @@ class Narrator {
     let validSpeed = validSpeeds[optionSpeedSelected]
     this.speedReading = optionSpeedSelected
 
-    if(this.speedReading != localStorage.getItem('speed_reading_nr')) {
+    if(this.speedReading != localStorage.getItem('speed_reading_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         speed_reading: this.speedReading
       })
     }
 
+    optSelectedElm.setAttribute('default', false)
+
     localStorage.setItem('speed_reading_nr', this.speedReading)
   }
 
   changePitch() {
-    let optionPitchSelected = parseInt(Array.from(document.getElementsByName('pitch-nr')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('pitch-nr')).filter(radioOption => radioOption.checked)[0]
+    let optionPitchSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     let validPitchs = {
       1: 0.5,
       2: 1,
@@ -124,17 +172,21 @@ class Narrator {
     let validPitch = validPitchs[optionPitchSelected]
     this.pitch = optionPitchSelected
 
-    if(this.pitch != localStorage.getItem('pitch_nr')) {
+    if(this.pitch != localStorage.getItem('pitch_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         pitch_nr: this.pitch
       })
     }
-    
+
+    optSelectedElm.setAttribute('default', false)    
+
     localStorage.setItem('pitch_nr', this.pitch)
   }
 
   changeVolume() {
-    let optionVolumeSelected = parseInt(Array.from(document.getElementsByName('volume-narrator')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('volume-narrator')).filter(radioOption => radioOption.checked)[0]
+    let optionVolumeSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     let validVolumes = {
       1: 0.2,
       2: 0.5,
@@ -143,17 +195,21 @@ class Narrator {
     let validVolume = validVolumes[optionVolumeSelected]
     this.volume = optionVolumeSelected
 
-    if(this.volume != localStorage.getItem('volume_id_nr')) {
+    if(this.volume != localStorage.getItem('volume_id_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         volume_id: this.volume
       })
     }
     
+    optSelectedElm.setAttribute('default', false)
+
     localStorage.setItem('volume_id_nr', this.volume)
   }
 
   changeVoiceGender() {
-    let optionGenderSelected = parseInt(Array.from(document.getElementsByName('gender-narrator')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('gender-narrator')).filter(radioOption => radioOption.checked)[0]
+    let optionGenderSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     let validGenders = {
       1: 'f5',
       2: 'm7'
@@ -161,30 +217,38 @@ class Narrator {
     let validGender = validGenders[optionGenderSelected]
     this.voiceGenderId = optionGenderSelected
 
-    if(this.voiceGenderId != localStorage.getItem('voice_gender_id_nr')) {
+    if(this.voiceGenderId != localStorage.getItem('voice_gender_id_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         voice_gender_id: this.voiceGenderId
       })
     }
+
+    optSelectedElm.setAttribute('default', false)
     
     localStorage.setItem('voice_gender_id_nr', this.voiceGenderId)
   }
 
   changeLinks() {
-    let optionLinkSelected = parseInt(Array.from(document.getElementsByName('gender-narrator')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('link-narrator')).filter(radioOption => radioOption.checked)[0]
+    let optionLinkSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     this.linksId = optionLinkSelected
 
-    if(this.linksId != localStorage.getItem('links_id_nr')) {
+    if(this.linksId != localStorage.getItem('links_id_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         links_id: this.linksId
       })
     }
     
+    optSelectedElm.setAttribute('default', false)
+
     localStorage.setItem('links_id_nr', this.voiceLinksId)
   }
 
   changeHighlight() {
-    let optionHighlightSelected = parseInt(Array.from(document.getElementsByName('highlight-narrator')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('highlight-narrator')).filter(radioOption => radioOption.checked)[0]
+    let optionHighlightSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     let validHighlights = {
       1: 'word',
       2: 'line',
@@ -195,24 +259,30 @@ class Narrator {
     let validHighlight = validHighlights[optionHighlightSelected]
     this.highlightId = optionHighlightSelected
 
-    if(this.highlightId != localStorage.getItem('highlight_id_nr')) {
+    if(this.highlightId != localStorage.getItem('highlight_id_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         highlight_id: this.highlightId
       })
     }
     
+    optSelectedElm.setAttribute('default', false)
+
     localStorage.setItem('highlight_id_nr', this.highlightId)
   }
 
   changeReadingUnit() {
-    let optionReadingUnitSelected = parseInt(Array.from(document.getElementsByName('reading-unit-narrator')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('reading-unit-narrator')).filter(radioOption => radioOption.checked)[0]
+    let optionReadingUnitSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     this.readingUnitId = optionReadingUnitSelected
 
-    if(this.readingUnitId != localStorage.getItem('reading_unit_id_nr')) {
+    if(this.readingUnitId != localStorage.getItem('reading_unit_id_nr') && !isDefault) {
       accessibilityBar.updatePreferencesNarrator({
         reading_unit_id: this.readingUnitId
       })
     }
+
+    optSelectedElm.setAttribute('default', false)
     
     localStorage.setItem('reading_unit_id_nr', this.readingUnitId)
   }

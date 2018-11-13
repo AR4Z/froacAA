@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <div class="col embed-responsive embed-responsive-21by9" id="div-lo">
+                            <div class="col embed-responsive embed-responsive-21by9" id="div-lo" style="display:none;">
                                 <iframe id="oa" title="<?php echo base64_decode($lo_name);?>" aria-label="Objeto de aprendizaje" class="embed-responsive-item"
                                     src=""></iframe>
                             </div>
@@ -32,7 +32,7 @@
                             </div>
                         <!-- Esto es una prueba de vizualización de el objeto -->
                     </div>
-                    <div id="error" class="jumbotron jumbotron-fluid">
+                    <div id="error" class="jumbotron jumbotron-fluid" style="display:none;">
                                 <div class="container">
                                     <h1 class="display-4">¡Error!</h1>
                                     <p class="lead">Al parecer el objeto ya no existe :(</p>
@@ -55,7 +55,7 @@
     learningObject = new LearningObject(lo_url, lo_name)
     
     $('#oa').on('load', () => {
-      learningObject.translate(userLang)
+      learningObject.setLanguage()
     })
   });
 </script>

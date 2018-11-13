@@ -104,28 +104,52 @@ class LscTranslator {
     document.onmouseup = this.setSelectionText.bind(this)
   }
 
+  setDefaultValues(all) {
+    document.getElementsByName('signSpeed')[0].value = 20
+    document.getElementsByName('signSpeed')[0].setAttribute('default', true)
+    document.getElementsByName('signSpeed')[0].dispatchEvent(new Event('change'))
+  
+    document.querySelector(`input[name='LSC-translator-model'][value='1']`).checked = true
+    document.querySelector(`input[name='LSC-translator-model']`).setAttribute('default', true)
+    document.querySelector(`input[name='LSC-translator-model'][value='1']`).dispatchEvent(new Event('change'))
+  
+    if(!all) {
+      accessibilityBar.updatePreferencesLscTranslator({
+        sign_speed: 20,
+        model_id: 1
+      })
+    }
+  }
+
   changeModel() {
-    let modelSelected = parseInt(Array.from(document.getElementsByName('LSC-translator-model')).filter(radioOption => radioOption.checked)[0].value)
+    let optSelectedElm = Array.from(document.getElementsByName('LSC-translator-model')).filter(radioOption => radioOption.checked)[0]
+    let modelSelected = parseInt(optSelectedElm.value)
+    let isDefault = optSelectedElm.default == 'true'
     this.modelId = modelSelected
 
-    if (this.modelId != parseInt(localStorage.getItem('model_id'))) {
+    if (this.modelId != parseInt(localStorage.getItem('model_id')) && !isDefault) {
       accessibilityBar.updatePreferencesLscTranslator({
         model_id: this.modelId
       })
     }
 
+    optSelectedElm.setAttribute('default', false)
     localStorage.setItem('model_id', this.modelId)
   }
 
   changeSignSpeed() {
-    let signSpeed = parseInt(document.getElementsByName('signSpeed')[0].value)
+    let inputSignSpeed = document.getElementsByName('signSpeed')[0]
+    let signSpeed = parseInt(inputSignSpeed.value)
+    let isDefault = inputSignSpeed.default == 'true'
     this.signSpeed = signSpeed
 
-    if (this.signSpeed != parseInt(localStorage.getItem('sign_speed'))) {
+    if (this.signSpeed != parseInt(localStorage.getItem('sign_speed')) && !isDefault) {
       accessibilityBar.updatePreferencesLscTranslator({
         sign_speed: this.signSpeed
       })
     }
+
+    inputSignSpeed.setAttribute('default', false)
 
     localStorage.setItem('sign_speed', this.signSpeed)
   }

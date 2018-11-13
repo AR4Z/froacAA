@@ -8,6 +8,7 @@ class AccessibilityBar {
     this.needScreenReader = needScreenReader
     this.loggedIn = loggedIn
     this.url = url
+    this.narrator;
     this.customInterfaz;
     this.lscTranslator;
     this.virtualKeyboard;
@@ -288,5 +289,118 @@ class AccessibilityBar {
         this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
       })
     }
+  }
+
+  updateAllPreferencesToDefault() {
+    if(this.loggedIn) {
+      let fetchData = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      fetch(`${ this.url }usuario/set_all_preferences_to_default`, fetchData)
+      .then(() => {
+        this.setDataAccessibilityToDefault()        
+      })
+    } else {
+      this.setDataAccessibilityToDefault()
+    }
+  }
+
+  setDataAccessibilityToDefault() {
+    if(this.needCustomInterfaz) {
+      this.dataAccessibilityBar.data_custom_interfaz = {
+        color_cursor: 'rgb(255,18,18)',
+        contrast_colors_id: 1,
+        cursor_size_id: 1,
+        cursor_url: 'auto',
+        font_size: 12,
+        font_type_id: 1,
+        invert_color_general: false,
+        invert_color_image: false,
+        size_line_spacing: 1.5,
+        trail_cursor_color: 'rgb(255,18,18)',
+        trail_cursor_size_id: 1,
+        custom_colors: {
+          foreground_colour: "rgb(0,0,0)",
+          background_colour: "rgb(255,255,255)",
+          highlight_colour: "rgb(211,211,211)",
+          link_colour: "rgb(255,255,0)"
+        }
+      }
+    }
+
+    if(this.needNarrator) {
+      this.dataAccessibilityBar.data_narrator = {
+        speed_reading: 2,
+        pitch_nr: 2,
+        volume_id: 2,
+        voice_gender_id: 1,
+        links_id: 1,
+        highlight_id: 1,
+        reading_unit_id: 1
+      }
+    }
+
+    if(this.needScreenReader) {
+      this.dataAccessibilityBar.data_screen_reader = {
+        speed_reading_id: 2,
+        pitch_id: 2,
+        volume_id: 2,
+        voice_gender_id: 1,
+        links_id: 2
+      }
+    }
+
+    if(this.needLscTranslator) {
+      this.dataAccessibilityBar.data_lsc_translator = {
+        sign_speed: 20,
+        model_id: 1
+      }
+    }
+
+    if(this.needStructuralNavigation) {
+      this.dataAccessibilityBar.data_structural_nav = {
+        nav_strategy_id: 1,
+        show_toc: false
+      }
+    }
+
+    if(this.needVirtualKeyboard) {
+      this.dataAccessibilityBar.data_virtual_keyboard = {
+        kb_size_id: 2,
+        play_key_sound: true
+      }
+    }
+  }
+
+  setDefaultAllValues() {
+    if(this.customInterfaz) {
+      this.customInterfaz.setDefaultValues(true)
+    }
+
+    if(this.lscTranslator) {
+      this.lscTranslator.setDefaultValues(true)
+    }
+
+    if(this.narrator) {
+      this.narrator.setDefaultValues(true)
+    }
+
+    if(this.screenReader) {
+      this.screenReader.setDefaultValues(true)
+    }
+
+    if(this.virtualKeyboard) {
+      this.virtualKeyboard.setDefaultValues(true)
+    }
+
+    if(this.structuralNavigation) {
+      this.structuralNavigation.setDefaultValues(true)
+    }
+
+    this.updateAllPreferencesToDefault()
   }
 }
