@@ -14,22 +14,7 @@
                                 <iframe id="oa" title="<?php echo base64_decode($lo_name);?>" aria-label="Objeto de aprendizaje" class="embed-responsive-item"
                                     src=""></iframe>
                             </div>
-                            <div id="loading">
-                                <div class="row mt-2">
-                                    <div class="col-6 mx-auto d-flex justify-content-center flex-wrap">
-                                        <img alt="Logo FROAC" src="<?php echo base_url()?>asset/img/frog1.png" width="50" height="70" />
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-4 mx-auto text-center">
-                                        <img alt="Cargando objeto de aprendizaje" src="<?php echo base_url()?>asset/img/ajax-loader.gif" width="250" height="30"
-                                        />
-                                        <p>Esto puede tardar algunos minutos...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            </div>
+                          </div>
                         <!-- Esto es una prueba de vizualización de el objeto -->
                     </div>
                     <div id="error" class="jumbotron jumbotron-fluid" style="display:none;">
@@ -53,10 +38,5 @@
   let lo_name = "<?php echo base64_decode($lo_name); ?>";
   $(document).ready(function () {
     learningObject = new LearningObject(lo_url, lo_name)
-    
-    $('#oa').on('load', () => {
-      learningObject.setLanguage()
-      accessibilityBar.structuralNavigation.htmlTableOfContents(learningObject.getDocument())
-    })
   });
 </script>

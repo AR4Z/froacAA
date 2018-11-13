@@ -14,76 +14,71 @@ class AccessibilityBar {
     this.virtualKeyboard
     this.structuralNavigation
     this.screenReader
-
-    if (this.loggedIn) {
-      this._fetchDataAccessibilityBar(this.url)
-        .then(data => {
-          console.log(data)
-          this.dataAccessibilityBar = data
-          this.createAccessibilityElements()
-        }).catch(err => console.error(err))
-    } else {
-      this.dataAccessibilityBar = {
-        data_custom_interfaz: {
-          color_cursor: localStorage.getItem('color_cursor') || 'rgb(255,18,18)',
-          contrast_colors_id: parseInt(localStorage.getItem('contrast_colors_id')) || 1,
-          cursor_size_id: parseInt(localStorage.getItem('cursor_size_id')) || 1,
-          cursor_url: localStorage.getItem('cursor_url') || 'auto',
-          font_size: parseInt(localStorage.getItem('font_size')) || 12,
-          font_type_id: parseInt(localStorage.getItem('font_type_id')) || 1,
-          invert_color_general: localStorage.getItem('invert_color_general') || 'f',
-          invert_color_image: localStorage.getItem('invert_color_image') || 'f',
-          size_line_spacing: parseFloat(localStorage.getItem('size_line_spacing')) || 1.5,
-          trail_cursor_color: localStorage.getItem('trail_cursor_color') || 'rgb(255,18,18)',
-          trail_cursor_size_id: parseInt(localStorage.getItem('trail_cursor_size_id')) || 1,
-          custom_colors: {
-            foreground_colour: localStorage.getItem('foreground_colour') || "rgb(0,0,0)",
-            background_colour: localStorage.getItem('background_colour') || "rgb(255,255,255)",
-            highlight_colour: localStorage.getItem('highlight_colour') || "rgb(211,211,211)",
-            link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
-          }
-        },
-
-        data_narrator: {
-          speed_reading: parseInt(localStorage.getItem('speed_reading_nr')) || 2,
-          pitch_nr: parseInt(localStorage.getItem('pitch_nr')) || 2,
-          volume_id: parseInt(localStorage.getItem('volume_id_nr')) || 2,
-          voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_nr')) || 1,
-          links_id: parseInt(localStorage.getItem('links_id_nr')) || 1,
-          highlight_id: parseInt(localStorage.getItem('highlight_id_nr')) || 1,
-          reading_unit_id: parseInt(localStorage.getItem('reading_unit_id_nr')) || 1
-        },
-
-        data_screen_reader: {
-          speed_reading_id: parseInt(localStorage.getItem('speed_reading_sr')) || 2,
-          pitch_id: parseInt(localStorage.getItem('pitch_id_sr')) || 2,
-          volume_id: parseInt(localStorage.getItem('volume_id_sr')) || 2,
-          voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_sr')) || 1,
-          links_id: parseInt(localStorage.getItem('links_id_sr')) || 2
-        },
-
-        data_lsc_translator: {
-          sign_speed: parseInt(localStorage.getItem('sign_speed')) || 20,
-          model_id: parseInt(localStorage.getItem('model_id')) || 1
-        },
-
-        data_structural_nav: {
-          nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
-          showtoc: localStorage.getItem('show_toc') || 'f'
-        },
-
-        data_virtual_keyboard: {
-          kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
-          play_key_sound: localStorage.getItem('play_key_sound') || 't'
-        }
-      }
-    }
   }
 
-  _fetchDataAccessibilityBar(url) {
-    return fetch(`${ url }usuario/get_data_accessibility_bar`)
+  fetchDataAccessibilityBar() {
+    if(this.loggedIn) {
+      return fetch(`${ this.url }usuario/get_data_accessibility_bar`)
       .then(r => r.json())
       .catch(err => console.error(err))
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve({
+          data_custom_interfaz: {
+            color_cursor: localStorage.getItem('color_cursor') || 'rgb(255,18,18)',
+            contrast_colors_id: parseInt(localStorage.getItem('contrast_colors_id')) || 1,
+            cursor_size_id: parseInt(localStorage.getItem('cursor_size_id')) || 1,
+            cursor_url: localStorage.getItem('cursor_url') || 'auto',
+            font_size: parseInt(localStorage.getItem('font_size')) || 12,
+            font_type_id: parseInt(localStorage.getItem('font_type_id')) || 1,
+            invert_color_general: localStorage.getItem('invert_color_general') || 'f',
+            invert_color_image: localStorage.getItem('invert_color_image') || 'f',
+            size_line_spacing: parseFloat(localStorage.getItem('size_line_spacing')) || 1.5,
+            trail_cursor_color: localStorage.getItem('trail_cursor_color') || 'rgb(255,18,18)',
+            trail_cursor_size_id: parseInt(localStorage.getItem('trail_cursor_size_id')) || 1,
+            custom_colors: {
+              foreground_colour: localStorage.getItem('foreground_colour') || "rgb(0,0,0)",
+              background_colour: localStorage.getItem('background_colour') || "rgb(255,255,255)",
+              highlight_colour: localStorage.getItem('highlight_colour') || "rgb(211,211,211)",
+              link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
+            }
+          },
+  
+          data_narrator: {
+            speed_reading: parseInt(localStorage.getItem('speed_reading_nr')) || 2,
+            pitch_nr: parseInt(localStorage.getItem('pitch_nr')) || 2,
+            volume_id: parseInt(localStorage.getItem('volume_id_nr')) || 2,
+            voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_nr')) || 1,
+            links_id: parseInt(localStorage.getItem('links_id_nr')) || 1,
+            highlight_id: parseInt(localStorage.getItem('highlight_id_nr')) || 1,
+            reading_unit_id: parseInt(localStorage.getItem('reading_unit_id_nr')) || 1
+          },
+  
+          data_screen_reader: {
+            speed_reading_id: parseInt(localStorage.getItem('speed_reading_sr')) || 2,
+            pitch_id: parseInt(localStorage.getItem('pitch_id_sr')) || 2,
+            volume_id: parseInt(localStorage.getItem('volume_id_sr')) || 2,
+            voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_sr')) || 1,
+            links_id: parseInt(localStorage.getItem('links_id_sr')) || 2
+          },
+  
+          data_lsc_translator: {
+            sign_speed: parseInt(localStorage.getItem('sign_speed')) || 20,
+            model_id: parseInt(localStorage.getItem('model_id')) || 1
+          },
+  
+          data_structural_nav: {
+            nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
+            showtoc: localStorage.getItem('show_toc') || 'f'
+          },
+  
+          data_virtual_keyboard: {
+            kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
+            play_key_sound: localStorage.getItem('play_key_sound') || 't'
+          }
+        })
+      })
+    }
   }
 
   createAccessibilityElements() {

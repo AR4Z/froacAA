@@ -3,7 +3,7 @@ class LearningObject {
     this.url = url
     this.name = name
     this.iframeElement = document.getElementById('oa')
-    
+
     this.loadLearningObject()
   }
 
@@ -13,20 +13,23 @@ class LearningObject {
 
   loadLearningObject() {
     this.proccessLearningObject()
-    .then(data => {
-      data = JSON.parse(data)
-      if(data.path_lo == '404') {
-        $('#loading').fadeOut(50);
-        $('#name-lo').fadeOut(50);
-        $('#error').fadeIn(600);
-      } else {
-        this.iframeElement.src = `${ base_url }LOs/${data.path_lo}?time=${Date.now()}`
-        this.document = this.iframeElement.contentWindow.document
-        $('#loading').fadeOut(50);
-        $('#div-lo').fadeIn(600);
-      }
-      
-    })
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.path_lo == '404') {
+          document.getElementById('name-lo').style.display = 'none'
+          document.getElementById('error').style.display = ''
+          window.loading_screen.finish()
+        } else {
+          this.iframeElement.onload = () => {
+            this.setLanguage()
+            this.createAccessibilityBar()
+            document.getElementById('div-lo').style.display = ''
+            window.loading_screen.finish()
+          }
+          this.iframeElement.src = `${ base_url }LOs/${data.path_lo}?time=${Date.now()}`
+        }
+      })
+      .catch(() => window.loading_screen.finish())
   }
 
   proccessLearningObject() {
@@ -40,10 +43,10 @@ class LearningObject {
         name: this.name
       })
     }
-  
+
     return fetch(`${ base_url }lo/getLO`, fetchData)
-    .then(r => r.json())
-    .catch(e => console.error(e))
+      .then(r => r.json())
+      .catch(e => window.loading_screen.finish())
   }
 
   getLanguage() {
@@ -57,25 +60,25 @@ class LearningObject {
         name: this.name
       })
     }
-  
+
     return fetch(`${ base_url }lo/getLanguage`, fetchData)
-    .then(r => r.json())
-    .catch(e => console.error(e))
+      .then(r => r.json())
+      .catch(e => console.error(e))
   }
 
   setLanguage() {
     this.getLanguage()
-    .then(data => {
-      let languages = {
-        en:'english',
-        es:'spanish',
-        pt:'portuguese'
-      }
+      .then(data => {
+        let languages = {
+          en: 'english',
+          es: 'spanish',
+          pt: 'portuguese'
+        }
 
-      this.language = languages[data.language]
-      this.translate(userLang)
-    })
-    .catch(e => console.error(e))
+        this.language = languages[data.language]
+        this.translate(userLang)
+      })
+      .catch(e => console.error(e))
   }
 
   translate(language) {
@@ -85,21 +88,34 @@ class LearningObject {
       portuguese: 'Portugués'
     }
     let validLanguage = validLanguages[language]
-    
-    if(this.language == language) {
+
+    if (this.language == language) {
       let iframeDocument = this.getDocument()
-      
+
       try {
         iframeDocument.getElementById(":2.container").contentWindow.document.getElementById(":2.restore").click();
-      } catch(e) {
+      } catch (e) {
         console.error(e)
       }
     } else {
       try {
         this.iframeElement.contentWindow.translate(validLanguage)
       } catch {
-        this.iframeElement.contentWindow.translate(validLanguage.toLowerCase())        
+        this.iframeElement.contentWindow.translate(validLanguage.toLowerCase())
       }
     }
+  }
+
+  createAccessibilityBar() {
+    accessibilityBar.fetchDataAccessibilityBar()
+    .then(data => {
+      accessibilityBar.dataAccessibilityBar = data
+      accessibilityBar.createAccessibilityElements()
+      
+      if(accessibilityBar.needStructuralNavigation) {
+        accessibilityBar.structuralNavigation.htmlTableOfContents(this.getDocument())
+      }
+    })
+    .catch(e => console.error(e))
   }
 }

@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="img/favicon.png">
-    <link href="<?php echo base_url() ?>/asset/img/frog1.png" rel="icon" />
+    <link rel="shortcut icon" type="image/png" href="<?php echo base_url() ?>asset/img/frog_min.ico"/>
     <title>FROAC</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
@@ -24,147 +23,165 @@
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/flag-icon.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-select.min.css" rel="stylesheet">
+    <?php if($id_view == 'lo_view'):?>
+      <link href="<?php echo base_url() ?>asset/css/please-wait.css" rel="stylesheet">
+      <script src="<?php echo base_url()?>asset/js/please-wait.js"></script>
+    <?php endif;?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
-    
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
-
     <style>
         .card {
-            min-height: 200px;
-            min-width: 200px;
-            margin-right: 5px;
+          min-height: 200px;
+          min-width: 200px;
+          margin-right: 5px;
         }
 
         .container-fluid {
-            overflow-x: auto;
+          overflow-x: auto;
         }
 
         .contrast-input[type="checkbox"][id^="cb"] {
-            display: none;
+          display: none;
         }
 
         .contrast-label {
-            cursor: pointer;
+          cursor: pointer;
         }
 
         .contrast-label:before {
-            background-color: white;
-            color: white;
-            content: " ";
-            display: block;
-            border-radius: 50%;
-            border: 1px solid grey;
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            width: 25px;
-            height: 25px;
-            text-align: center;
-            line-height: 28px;
-            transition-duration: 0.4s;
-            transform: scale(0);
-            z-index: 10;
+          background-color: white;
+          color: white;
+          content: " ";
+          display: block;
+          border-radius: 50%;
+          border: 1px solid grey;
+          position: absolute;
+          top: -5px;
+          left: -5px;
+          width: 25px;
+          height: 25px;
+          text-align: center;
+          line-height: 28px;
+          transition-duration: 0.4s;
+          transform: scale(0);
+          z-index: 10;
         }
 
         .contras-label img {
-            height: 64px;
-            width: 64px;
-            transition-duration: 0.2s;
-            transform-origin: 50% 50%;
+          height: 64px;
+          width: 64px;
+          transition-duration: 0.2s;
+          transform-origin: 50% 50%;
         }
 
         :checked+.contras-label {
-            border-color: #ddd;
+          border-color: #ddd;
         }
 
         :checked+.contrast-label:before {
-            content: "✔";
-            background-color: grey;
-            transform: scale(1);
+          content: "✔";
+          background-color: grey;
+          transform: scale(1);
         }
 
         .trail {
-            position: absolute;
-            height: 6px;
-            width: 6px;
-            border-radius: 3px;
-            background: teal;
-            z-index: 10;
-            pointer-events: none;
+          position: absolute;
+          height: 6px;
+          width: 6px;
+          border-radius: 3px;
+          background: teal;
+          z-index: 10;
+          pointer-events: none;
         }
 
         .no-invert-color {
-            filter: invert(0);
+          filter: invert(0);
         }
-    
+
         .ui-keyboard span {
-            font-size: calc(4em - 1vw);
+          font-size: calc(4em - 1vw);
         }
-        
+
         .ui-keyboard-button {
-            height: calc(4em - 1vh);
-            line-height: calc(4em - 1vh);
-            min-width: calc(4em - 5vw);
-            margin: .2em;
-            cursor: pointer;
+          height: calc(4em - 1vh);
+          line-height: calc(4em - 1vh);
+          min-width: calc(4em - 5vw);
+          margin: .2em;
+          cursor: pointer;
         }
+
         /* increased specificity to override repositioning style */
-        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey > span {
-            position: static;
-            font-size: calc(.7em + 1vw);
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey>span {
+          position: static;
+          font-size: calc(.7em + 1vw);
         }
 
         .ui-keyboard.small span {
-            font-size: calc(3em - 1vw);
+          font-size: calc(3em - 1vw);
         }
-        
+
         .ui-keyboard-button.small {
-            height: calc(3em - 1vh);
-            line-height: calc(3em - 1vh);
-            min-width: calc(3em - 5vw);
-            margin: .2em;
-            cursor: pointer;
+          height: calc(3em - 1vh);
+          line-height: calc(3em - 1vh);
+          min-width: calc(3em - 5vw);
+          margin: .2em;
+          cursor: pointer;
         }
+
         /* increased specificity to override repositioning style */
-        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.small > span {
-            position: static;
-            font-size: calc(.6em + 1vw);
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.small>span {
+          position: static;
+          font-size: calc(.6em + 1vw);
         }
 
         .ui-keyboard.large span {
-            font-size: calc(5em - 1vw);
+          font-size: calc(5em - 1vw);
         }
-        
+
         .ui-keyboard-button.large {
-            height: calc(5em - 1vh);
-            line-height: calc(5em - 1vh);
-            min-width: calc(5em - 5vw);
-            margin: .2em;
-            cursor: pointer;
+          height: calc(5em - 1vh);
+          line-height: calc(5em - 1vh);
+          min-width: calc(5em - 5vw);
+          margin: .2em;
+          cursor: pointer;
         }
+
         /* increased specificity to override repositioning style */
-        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.large > span {
-            position: static;
-            font-size: calc(.8em + 1vw);
+        div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.large>span {
+          position: static;
+          font-size: calc(.8em + 1vw);
         }
     </style>
-    
-    <script type="text/javascript">    
+    <script type="text/javascript">
     $(document).ready(function(){
-        session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
-        let needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || false;
-        let needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || false;
-        let needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || false;
-        let needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || false;
-        let needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || false;
-        let needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || false;
-        idView = "<?php echo $id_view ?>" || "nada";
-        base_url = "<?php echo base_url()?>";
-        idView = "<?php echo $id_view ?>" || "nada";
-        userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
-
-
-        accessibilityBar = new AccessibilityBar(session_user, 
+      <?php if($id_view == 'lo_view'):?>
+      window.loading_screen = window.pleaseWait({
+        logo: "<?php echo base_url()?>"+'asset/img/frog_min.png',
+        backgroundColor: '#f8f9fa',
+        loadingHtml: `
+        <p class='loading-message'>Estamos procesando el objeto de aprendizaje</p>
+        <div class="sk-folding-cube">
+          <div class="sk-cube1 sk-cube"></div>
+          <div class="sk-cube2 sk-cube"></div>
+          <div class="sk-cube4 sk-cube"></div>
+          <div class="sk-cube3 sk-cube"></div>
+        </div>
+        `
+      });
+      <?php endif;?>
+        
+      session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
+      needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || !session_user;
+      needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || !session_user;
+      needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || !session_user;
+      needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || !session_user;
+      needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || !session_user;
+      needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || !session_user;
+      idView = "<?php echo $id_view ?>" || "nada";
+      base_url = "<?php echo base_url()?>";
+      idView = "<?php echo $id_view ?>" || "nada";
+      userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
+      accessibilityBar = new AccessibilityBar(session_user, 
         base_url, 
         needCustomInterfaz, 
         needNarrator, 
@@ -173,15 +190,20 @@
         needVirtualKeyboard, 
         needStructuralNavigation)
 
-        if(!session_user) {
+      if (idView != 'lo_view') {
+        accessibilityBar.fetchDataAccessibilityBar()
+        .then(data => {
+          accessibilityBar.dataAccessibilityBar = data
           accessibilityBar.createAccessibilityElements()
-        }
+        })
+        .catch(e => console.error(e))
+      }
 
-        $("#" + idView).addClass('active');
+      if (document.getElementById(idView).length > 0) {
+        document.getElementById(idView).classList.add('active')
+      }
     });
-
     </script>
-
 </head>
 
 <?php if($id_view == 'login') : ?>
@@ -190,13 +212,12 @@
     <?php $this->load->view('base/base/accessibility/toc');?>
     <?php else : ?>
         <body>
-
         <?php if($this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/iris');?>
             <?php $this->load->view('base/base/accessibility/toc');?>
         <?php endif?>
         
-        <div class="page">
+        <div class="inner page">
 <?php endif;?>
 
 <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">

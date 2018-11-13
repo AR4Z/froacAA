@@ -63,9 +63,9 @@
     <script src="<?php echo base_url()?>asset/js/keyboardObj.js"></script>
 <?php endif;?>
 
-<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
-<script src="<?php echo base_url() ?>asset/js/lo.js"></script>
 <script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
+<script src="<?php echo base_url() ?>asset/js/lo.js"></script>
+<script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
 
