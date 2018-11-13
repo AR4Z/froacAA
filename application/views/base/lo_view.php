@@ -56,6 +56,7 @@
     
     $('#oa').on('load', () => {
       learningObject.setLanguage()
+      accessibilityBar.structuralNavigation.htmlTableOfContents(learningObject.getDocument())
     })
   });
 </script>

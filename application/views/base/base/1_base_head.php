@@ -148,7 +148,6 @@
             font-size: calc(.8em + 1vw);
         }
     </style>
-
     
     <script type="text/javascript">    
     $(document).ready(function(){
