@@ -16,57 +16,12 @@
 </div>
 </div>
 <?php endif;?>
-
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="<?php echo base_url() ?>asset/js/popper.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/common-scripts.js"></script>
-<script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
 <script src="<?php echo base_url() ?>asset/js/bootstrap-select.min.js"></script>
-
-
-<?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
-<script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/howler.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/narrator.js"></script>
-<?php endif;?>
-
-<?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
-<script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
-<script src="<?php echo base_url() ?>asset/js/bootstrap-colorpicker.js"></script>
-<!--<script src="<?php echo base_url() ?>asset/js/modifyStyle.js"></script>-->
-<?php endif;?>
-
-<?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
-    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/screenReader.js"></script>
-<?php endif;?>
-
-<?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
-    <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/traductor-LSC.js"></script>
-<?php endif;?>
-
-<?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
-    <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
-    <script src="<?php echo base_url() ?>asset/js/structuralNavigation.js"></script>
-<?php endif;?>
-
-<?php if($this->session->userdata('need_keyboard') || !($this->session->userdata('logged_in'))):?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/js/jquery.keyboard.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/languages/es.min.js"></script>
-    <script src="<?php echo base_url()?>asset/js/keyboard.js"></script>
-<?php endif;?>
-
-<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
-<script src="<?php echo base_url()?>asset/js/loadAccessibilityBar.js"></script>
-<script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
-<script src="<?php echo base_url()?>asset/js/accessibilityBar.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 </body>
 </html>

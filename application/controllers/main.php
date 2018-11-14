@@ -62,7 +62,7 @@ class Main extends CI_Controller {
 					"id_view" => "searchOA"
 			)
 			;
-			$this->load->view ( 'base/'.$route.'_template', $content );
+			$this->load->view ( 'base/base_template', $content );
 		}else{
 
             $content = array (

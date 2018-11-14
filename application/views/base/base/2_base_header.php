@@ -48,6 +48,19 @@
             <?php echo $this->lang->line('signin'); ?> 
             </a>
         </li>
+        <?php elseif($this->session->userdata('role') == 1): ?>
+        <li class="nav-item dropdown">
+            <button class="btn btn-outline-dark btn-lg dropdown-toggle" id="navbarDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ADMIN</button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="<?php echo base_url()?>repositorio/lista">Lista de Repositorios</a>
+            <a class="dropdown-item" href="<?php echo base_url()?>repositorio/nuevo">Agregar Repositorios</a>
+            <a class="dropdown-item" href="<?php echo base_url()?>admin/lista_user">Lista de Usuarios </a>
+            <a class="dropdown-item" href="<?php echo base_url()?>usuario/nuevo_usuario">Agregar Usuarios</a>
+                <a onclick="localStorage.clear();" class="dropdown-item" href="<?php echo base_url()?>sesion/logout"><?php echo $this->lang->line('signout'); ?> </a>
+
+            </div>
+        </li>
         <?php else : ?>
         <?php foreach ($usr_data as $usr){} ?>
 

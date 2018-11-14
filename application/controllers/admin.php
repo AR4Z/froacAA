@@ -10,7 +10,7 @@ class Admin extends CI_Controller {
         if ($this->session->userdata ( 'logged_in' )) {
             $session_data = $this->session->userdata ( 'logged_in' );
             $rol = $this->usuario_model->get_rol ( $session_data ['username'] );
-            if ($rol [0] ['use_rol_id'] == 1) {
+            if ($rol[0] ['use_rol_id'] == 1) {
                 $content = array (
                     "user" => $session_data ['username'],
                     "usr_data" => $this->usuario_model->get_usr_data ( $session_data ['username'] ),
@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
                     "total_lo_score" => $this->admin_model->get_total_lo_score(),
                     "id_view"=> "dashboard"
                 );
-                $this->load->view ( 'base/admin_template', $content );
+                $this->load->view ( 'base/base_template', $content );
             } else {
                 $content = array (
                     "main_view" => "shared_views/init_view"

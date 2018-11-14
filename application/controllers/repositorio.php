@@ -27,12 +27,7 @@ class Repositorio extends CI_Controller{
                 "url" => "repositorio/lista/",
                 'id_view' => 'repos'
             );
-            if ($session_data ['username'] == "admin"){
-                $this->load->view('base/admin_template', $content);
-            }else{
-
-                $this->load->view('base/est_template', $content);
-            }
+            $this->load->view('base/base_template', $content);
 
         } else {
             $content = array(
@@ -117,7 +112,7 @@ class Repositorio extends CI_Controller{
                     "id_view" => "add_repo"
                 );
             }
-            $this->load->view('base/admin_template', $content);
+            $this->load->view('base/base_template', $content);
         }else {
             $this->lista();
         }

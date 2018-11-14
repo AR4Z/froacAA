@@ -205,11 +205,11 @@ public function load_lo($url, $lo_name){
             "sess" => 1,
             "url" => $url,
             "lo_name" => $lo_name,
-            "id_view" => "lo_view",
+            "id_view" => "lo_view"
         );
 
         if ($session_data ['username'] == "admin"){
-            $this->load->view('layouts/admin_template', $content);
+            $this->load->view('base/base_template', $content);
         }else{
             $this->load->view('base/base_template', $content);
         }
@@ -221,7 +221,7 @@ public function load_lo($url, $lo_name){
             "sess" => 0,
             "url" => $url,
             "lo_name" => $lo_name,
-            "id_view" => "lo_view",
+            "id_view" => "lo_view"
         );
         $this->load->view('base/base_template', $content);
     }

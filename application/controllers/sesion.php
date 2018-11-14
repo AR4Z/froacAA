@@ -59,9 +59,9 @@ class Sesion extends CI_Controller {
 
     public function verificar_rol() {
     	if ($this->session->userdata('logged_in')) {
-    		$session_data = $this->session->userdata('logged_in');
+        $session_data = $this->session->userdata('logged_in');
     		$rol = $this->usuario_model->get_rol($session_data['username']);
-
+        $this->session->set_userdata('role', $rol[0]['use_rol_id']);
     		if ($rol[0]['use_rol_id']>1) {
                 // pregunto si el usuario necesita adaptaciones de la interfaz
                 $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
@@ -134,7 +134,7 @@ class Sesion extends CI_Controller {
                 redirect(base_url().'admin', 'refresh'); // recordar configuración de enable_query_strings puede traer algunos problemas
     		}else{
                 $this->logout();
-            }
+        }
     	}
     }
 
@@ -152,7 +152,9 @@ class Sesion extends CI_Controller {
     }
 
     public function logout() {
-        $this->session->unset_userdata('logged_in');
+      $this->session->unset_userdata('logged_in');
+      $this->session->unset_userdata('role');
+        
         $this->session->unset_userdata('need_custom_interfaz');
         $this->session->unset_userdata('need_structural_nav');
         $this->session->unset_userdata('need_narrator');
