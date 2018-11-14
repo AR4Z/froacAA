@@ -5,7 +5,11 @@ class VoiceBrowser {
 
     this.commands = {
       'Ir a *textLink': (textLink) => {
-        this._goTo(textLink)
+        try {
+          this._goTo(textLink)
+        } catch(e) {
+          console.log(textLink)
+        }
       },
       'Formulario *numForm': this._focusForm,
       'Enfocar campo *textPlaceholder': this._focusField,
@@ -96,6 +100,9 @@ class VoiceBrowser {
         console.log('Speech recognized. Possible sentences said:');
         console.log(phrases);
       });
+
+      annyang.addCallback('result', this._processText.bind(this));
+
       annyang.start({ 
         continuous: false,
         debug: true
@@ -114,5 +121,24 @@ class VoiceBrowser {
 
   setUseSpaces(useSpaces) {
     this.useSpaces = useSpaces
+  }
+
+  getInitials(phrase) {
+    let initials
+
+    try {
+      phrase.match(/sigla (.*?) sigla/g).map((x) => {
+        initials = x.substr(5, x.length - 10).replace(/ /g,'').toUpperCase()
+        phrase = phrase.replace(x, initials)
+      })
+    } catch(e) {
+      console.log("there not initials")
+    }
+    
+    return phrase
+  }
+
+  _processText(userSaid) {
+    userSaid[0] = this.getInitials(userSaid[0])
   }
 }
