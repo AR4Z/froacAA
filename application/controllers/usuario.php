@@ -248,7 +248,8 @@ class Usuario extends CI_Controller {
                     "user" => $session_data ['username'],
                     "usr_data" => $this->usuario_model->get_usr_data ( $session_data ['username'] ),
                     //"usuarios" => $this->repositorio_model->get_user_repo()
-                    "rol" => $this->usuario_model->get_rol_data()
+                    "rol" => $this->usuario_model->get_rol_data(),
+                    "id_view" => "add_user"
                 );
             }
             $this->load->view('base/admin_template', $content);

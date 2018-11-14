@@ -1,16 +1,20 @@
-class voiceBrowser {
+class VoiceBrowser {
   constructor(language='es-CO', useSpaces=true) {
     this.language = language
     this.useSpaces = useSpaces
-    this._createPoppers()
 
     this.commands = {
-      'Ir a *textLink': this._goTo,
+      'Ir a *textLink': (textLink) => {
+        this._goTo(textLink)
+      },
       'Formulario *numForm': this._focusForm,
       'Enfocar campo *textPlaceholder': this._focusField,
       'Enviar formulario *numForm': this._sendForm,
       'Desactivar espacios': () => { this.setUseSpaces(false) },
       'Activar espacios': () => { this.setUseSpaces(true) },
+      'Escribir sigla *text': (text) => {
+        this._writeInField(text.replace(/ /g,'').toUpperCase())
+      },
       'Escribir *text': (text) => { this._writeInField(text) },
       'Añadir *text': this._addTextInField,
       'Borrar todo': this._deleteFieldContent,
@@ -38,6 +42,7 @@ class voiceBrowser {
 
     page.scrollBy(scrollConfig)
   }
+
   _deleteFieldContent(index=-1) {
     let field = document.activeElement
 
@@ -65,18 +70,15 @@ class voiceBrowser {
   }
 
   _sendForm(numForm) {
-    console.log(numForm)
     let form = document.getElementsByTagName('form')[parseInt(numForm) - 1]
     form.querySelector('input[type="submit"]').click()
   }
 
   _focusField(textPlaceholder) {
-    console.log(textPlaceholder)
     document.querySelectorAll(`[placeholder='${textPlaceholder}'i]`)[0].focus()
   }
 
   _focusForm(numForm) {
-    console.log(numForm)
     let form = document.getElementsByTagName('form')[parseInt(numForm) - 1]
     form.elements[0].focus()
   }
@@ -87,16 +89,18 @@ class voiceBrowser {
   }
 
   start() {
-    annyang.setLanguage(this.language)
-    annyang.addCommands(this.commands);
-    annyang.addCallback('result', function(phrases) {
-      console.log('Speech recognized. Possible sentences said:');
-      console.log(phrases);
-    });
-    annyang.start({ 
-      continuous: false,
-      debug: true
-     })
+    if(annyang) {
+      annyang.setLanguage(this.language)
+      annyang.addCommands(this.commands);
+      annyang.addCallback('result', function(phrases) {
+        console.log('Speech recognized. Possible sentences said:');
+        console.log(phrases);
+      });
+      annyang.start({ 
+        continuous: false,
+        debug: true
+      })
+    }
   }
 
   getLanguage() {

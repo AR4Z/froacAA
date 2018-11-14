@@ -14,6 +14,8 @@ class AccessibilityBar {
     this.virtualKeyboard
     this.structuralNavigation
     this.screenReader
+    this.voiceBrowser = new VoiceBrowser()
+    this.voiceBrowser.start()
   }
 
   fetchDataAccessibilityBar() {

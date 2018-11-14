@@ -59,7 +59,8 @@ class Repositorio extends CI_Controller{
                 "user" => $session_data['username'],
                 "main" => "admin/nuevo_repo_view",
                 "page" => "Registro",
-                "usuario" => $this->repo_model->get_user_repo()
+                "usuario" => $this->repo_model->get_user_repo(),
+                'id_view' => 'register_repo'
             );
             $this->load->view('include/adm_template1', $data);
         } else {
@@ -69,7 +70,16 @@ class Repositorio extends CI_Controller{
     }
 
     public function lo_rep($rep_id){
-        if ($this->session->userdata('logged_in')) {
+      $content = array(
+        "result" => $this->lo_model->get_rep_lo($rep_id),
+        "sess" => 1,
+        "user" => $session_data['username'],
+        "main_view" => "shared_views/result_view_st",
+        "url" => "repositorio/lista/",
+        "encabezado" => "Resultados de el repositorio",
+    );
+    $this->load->view("base/base_template",$content);
+        /*if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $content = array(
                 "result" => $this->lo_model->get_rep_lo($rep_id),
@@ -89,7 +99,7 @@ class Repositorio extends CI_Controller{
                 "encabezado" => "Resultados de el repositorio",
             );
             $this->load->view("base/base_template",$content);
-        }
+        }*/
 
     }
 
@@ -103,7 +113,8 @@ class Repositorio extends CI_Controller{
                     "main_view" => "admin/nuevo_repo_view",
                     "user" => $session_data ['username'],
                     "usr_data" => $this->usuario_model->get_usr_data ( $session_data ['username'] ),
-                    "usuarios" => $this->repositorio_model->get_user_repo()
+                    "usuarios" => $this->repositorio_model->get_user_repo(),
+                    "id_view" => "add_repo"
                 );
             }
             $this->load->view('base/admin_template', $content);
@@ -141,7 +152,8 @@ class Repositorio extends CI_Controller{
                 "main_view" => "admin/modificar_repo_view",
                 "page" => "Modificación",
                 "repomod" => $this->repositorio_model->get_repo_mod($rep_id),
-                "usuario" => $this->repositorio_model->get_user_repo()
+                "usuario" => $this->repositorio_model->get_user_repo(),
+                "id_view" => "edit_repo"
             );
             $this->load->view('base/admin_template', $content);
         } else {

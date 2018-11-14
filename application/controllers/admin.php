@@ -1,7 +1,4 @@
 <?php
-
-
-
 class Admin extends CI_Controller {
     public function __construct() {
         parent::__construct ();
@@ -49,7 +46,8 @@ class Admin extends CI_Controller {
                     "user" => $session_data ['username'],
                     "usr_data" => $this->usuario_model->get_usr_data ( $session_data ['username'] ),
                     "main_view" => "admin/lista_user",
-                    "users" => $this->admin_model->get_users()
+                    "users" => $this->admin_model->get_users(),
+                    "id_view" => "user_list"
                 );
                 $this->load->view ( 'base/admin_template', $content );
             } else {
@@ -80,7 +78,8 @@ class Admin extends CI_Controller {
                     "usr_data" => $this->usuario_model->get_usr_data($username),
                     "usr_all_data" => $this->usuario_model->get_all_usr_data($username),
                     "main_view" => "admin/editar_view",
-                    "rol" => $this->usuario_model->get_rol_data()
+                    "rol" => $this->usuario_model->get_rol_data(),
+                    "id_view" => "edit_user"
                 );
                 $this->load->view('base/admin_template', $content);
             } else {
