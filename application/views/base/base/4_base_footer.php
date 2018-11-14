@@ -44,7 +44,7 @@
     <script src="<?php echo base_url()?>asset/js/screenReaderObj.js"></script>
 <?php endif;?>
 
-<?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
+<?php if(($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
     <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
     <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>

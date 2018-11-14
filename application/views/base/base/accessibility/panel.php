@@ -16,8 +16,7 @@
             <a class="nav-link" id="screen-reader-tab" data-toggle="tab" href="#screen-reader" role="tab" aria-controls="<?php echo $this->lang->line('screen_reader'); ?>" aria-selected="false"><?php echo $this->lang->line('screen_reader'); ?></a>
         </li>
         <?php endif?>
-        <?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
-        <li class="nav-item">
+        <?php if(($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>        <li class="nav-item">
             <a class="nav-link" id="LSC-translator-tab" data-toggle="tab" href="#LSC-translator" role="tab" aria-controls="<?php echo $this->lang->line('lsc_translator'); ?>" aria-selected="false"><?php echo $this->lang->line('lsc_translator'); ?></a>
         </li>
         <?php endif?>
@@ -44,7 +43,7 @@
                 <?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="accessibilityBar.screenReader.setDefaultValues()" href="#"><?php echo $this->lang->line('screen_reader'); ?></a>
                 <?php endif?>
-                <?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
+                <?php if(($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
                 <a class="dropdown-item" onclick="accessibilityBar.lscTranslator.setDefaultValues()" href="#"><?php echo $this->lang->line('lsc_translator'); ?></a>
                 <?php endif?>
                 <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
@@ -73,7 +72,7 @@
             <?php $this->load->view('base/base/accessibility/screen_reader');?>
         <?php endif?>
         
-        <?php if($this->session->userdata('need_lsc_translator') || !($this->session->userdata('logged_in'))):?>
+        <?php if(($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
             <?php $this->load->view('base/base/accessibility/LSCTranslator');?>
         <?php endif?>
 

@@ -8,6 +8,7 @@ class AccessibilityBar {
     this.needScreenReader = needScreenReader
     this.loggedIn = loggedIn
     this.url = url
+
     this.narrator
     this.customInterfaz
     this.lscTranslator
@@ -84,27 +85,27 @@ class AccessibilityBar {
   }
 
   createAccessibilityElements() {
-    if (this.needStructuralNavigation || !this.loggedIn) {
+    if (this.needStructuralNavigation) {
       this.structuralNavigation = new StructuralNavigation(this.dataAccessibilityBar.data_structural_nav)
     }
 
-    if (this.needVirtualKeyboard || !this.loggedIn) {
+    if (this.needVirtualKeyboard) {
       this.virtualKeyboard = new VirtualKeyboard(this.dataAccessibilityBar.data_virtual_keyboard)
     }
 
-    if (this.needCustomInterfaz || !this.loggedIn) {
+    if (this.needCustomInterfaz) {
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
-    if (this.needNarrator || !this.loggedIn) {
+    if (this.needNarrator) {
       this.narrator = new Narrator(this.dataAccessibilityBar.data_narrator)
     }
 
-    if (this.needLscTranslator || !this.loggedIn) {
+    if (this.needLscTranslator) {
       this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
     }
 
-    if (this.needScreenReader || !this.loggedIn) {
+    if (this.needScreenReader) {
       this.screenReader = new ScreenReader(this.dataAccessibilityBar.data_screen_reader)
     }    
   }

@@ -174,7 +174,7 @@
       needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || !session_user;
       needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || !session_user;
       needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || !session_user;
-      needLscTranslator = Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || !session_user;
+      needLscTranslator = (Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || !session_user) && ("<?php echo $this->session->userdata('site_lang');?>" == 'spanish');
       needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || !session_user;
       needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || !session_user;
       idView = "<?php echo $id_view ?>" || "nada";
@@ -184,7 +184,7 @@
       accessibilityBar = new AccessibilityBar(session_user, 
         base_url, 
         needCustomInterfaz, 
-        needNarrator, 
+        needNarrator,
         needScreenReader, 
         needLscTranslator, 
         needVirtualKeyboard, 
@@ -208,17 +208,21 @@
 
 <?php if($id_view == 'login') : ?>
     <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
-    <?php $this->load->view('base/base/accessibility/iris');?>
+    <?php if($this->session->userdata('site_lang') == 'spanish'):?>
+        <?php $this->load->view('base/base/accessibility/iris');?>
+    <?php endif?>
     <?php $this->load->view('base/base/accessibility/toc');?>
     <?php else : ?>
-        <body>
-        <?php if($this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+    <body>
+        <?php if(($this->session->userdata('need_lsc_translator')  || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
             <?php $this->load->view('base/base/accessibility/iris');?>
-            <?php $this->load->view('base/base/accessibility/toc');?>
+        <?php endif?>
+        
+        <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+          <?php $this->load->view('base/base/accessibility/toc');?>
         <?php endif?>
         
         <div class="inner page">
 <?php endif;?>
-
 <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
 </audio>
