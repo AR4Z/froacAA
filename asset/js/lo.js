@@ -21,7 +21,7 @@ class LearningObject {
           window.loading_screen.finish()
         } else {
           this.iframeElement.onload = () => {
-            this.setLanguage()
+            //this.setLanguage()
             this.createAccessibilityBar()
             document.getElementById('div-lo').style.display = ''
             window.loading_screen.finish()
@@ -112,9 +112,9 @@ class LearningObject {
       accessibilityBar.dataAccessibilityBar = data
       accessibilityBar.createAccessibilityElements()
       
-      if(accessibilityBar.needStructuralNavigation) {
+      /*if(accessibilityBar.needStructuralNavigation) {
         accessibilityBar.structuralNavigation.htmlTableOfContents(this.getDocument())
-      }
+      }*/
 
       /*if(accessibilityBar.needNarrator) {
         accessibilityBar.narrator._loadTreeNarrator()

@@ -19,7 +19,7 @@ class Narrator {
       'sr-av': true,
       'js-sr-av': true,
     }
-    
+
     this.synth = window.speechSynthesis
     this.tree = undefined
     this.queue = []
@@ -40,11 +40,12 @@ class Narrator {
     this._loadLineStyle()
 
     hotkeys('ctrl+e', (event, handler) => {
-      event.preventDefault() 
+      event.preventDefault()
+      this._loadTreeNarrator()
+      this.tree.nextNode()
       this._narrator()
     });
 
-    this._loadTreeNarrator()
   }
 
   _setValuesInLocalStorage() {
@@ -83,43 +84,43 @@ class Narrator {
   _addEventChangeSpeedReading() {
     let optionsSpeedReading = document.querySelectorAll('input[name="speed-nr"]')
 
-    Array.prototype.forEach.call(optionsSpeedReading, opt => opt.addEventListener('change', this.changeSpeedReading))
+    Array.prototype.forEach.call(optionsSpeedReading, opt => opt.addEventListener('change', this.changeSpeedReading.bind(this)))
   }
 
   _addEventChangePitch() {
     let optionsPitch = document.querySelectorAll('input[name="pitch-nr"]')
 
-    Array.prototype.forEach.call(optionsPitch, opt => opt.addEventListener('change', this.changePitch))
+    Array.prototype.forEach.call(optionsPitch, opt => opt.addEventListener('change', this.changePitch.bind(this)))
   }
 
   _addEventChangeVolume() {
     let optionsVolume = document.querySelectorAll('input[name="volume-narrator"]')
 
-    Array.prototype.forEach.call(optionsVolume, opt => opt.addEventListener('change', this.changeVolume))
+    Array.prototype.forEach.call(optionsVolume, opt => opt.addEventListener('change', this.changeVolume.bind(this)))
   }
 
   _addEventChangeVoiceGender() {
     let optionsGender = document.querySelectorAll('input[name="gender-narrator"]')
 
-    Array.prototype.forEach.call(optionsGender, opt => opt.addEventListener('change', this.changeVoiceGender))
+    Array.prototype.forEach.call(optionsGender, opt => opt.addEventListener('change', this.changeVoiceGender.bind(this)))
   }
 
   _addEventChangeLinks() {
     let optionsLinks = document.querySelectorAll('input[name="links-narrator"]')
 
-    Array.prototype.forEach.call(optionsLinks, opt => opt.addEventListener('change', this.changeLinks))
+    Array.prototype.forEach.call(optionsLinks, opt => opt.addEventListener('change', this.changeLinks.bind))
   }
 
   _addEventChangeHighlight() {
     let optionsHighlight = document.querySelectorAll('input[name="highlight-narrator"]')
 
-    Array.prototype.forEach.call(optionsHighlight, opt => opt.addEventListener('change', this.changeHighlight))
+    Array.prototype.forEach.call(optionsHighlight, opt => opt.addEventListener('change', this.changeHighlight.bind(this)))
   }
 
   _addEventChangeReadingUnit() {
     let optionsReadingUnit = document.querySelectorAll('input[name="reading-unit-narrator"]')
 
-    Array.prototype.forEach.call(optionsReadingUnit, opt => opt.addEventListener('change', this.changeReadingUnit))
+    Array.prototype.forEach.call(optionsReadingUnit, opt => opt.addEventListener('change', this.changeReadingUnit.bind(this)))
   }
 
   setDefaultValues(all) {
@@ -185,6 +186,7 @@ class Narrator {
     optSelectedElm.setAttribute('default', false)
 
     localStorage.setItem('speed_reading_nr', this.speedReading)
+    this.configVoice.rate = validSpeed
   }
 
   changePitch() {
@@ -208,6 +210,7 @@ class Narrator {
     optSelectedElm.setAttribute('default', false)
 
     localStorage.setItem('pitch_nr', this.pitch)
+    this.configVoice.pitch = validPitch
   }
 
   changeVolume() {
@@ -231,6 +234,7 @@ class Narrator {
     optSelectedElm.setAttribute('default', false)
 
     localStorage.setItem('volume_id_nr', this.volume)
+    this.configVoice.volume = validVolume
   }
 
   changeVoiceGender() {
@@ -276,14 +280,7 @@ class Narrator {
     let optSelectedElm = Array.from(document.getElementsByName('highlight-narrator')).filter(radioOption => radioOption.checked)[0]
     let optionHighlightSelected = parseInt(optSelectedElm.value)
     let isDefault = optSelectedElm.default == 'true'
-    let validHighlights = {
-      1: 'word',
-      2: 'line',
-      3: 'sentence',
-      4: 'paragraph'
-    }
-
-    let validHighlight = validHighlights[optionHighlightSelected]
+    
     this.highlightId = optionHighlightSelected
 
     if (this.highlightId != localStorage.getItem('highlight_id_nr') && !isDefault) {
@@ -358,19 +355,22 @@ class Narrator {
   }
 
   _loadLineStyle() {
-    let linesStyle = `
-    <style id='line-style'>
-        .reading {
-            background-color: yellow;
-        }
-    </style>`
-
     let learningObjectHead = learningObject.getDocument().querySelector('head')
-    learningObjectHead.append(linesStyle)
+    let css = '.reading { background-color: yellow; }'
+    let lineStyle = this.learningObjectDocument.createElement('style')
+    lineStyle.type = 'text/css'
+
+    if (lineStyle.styleSheet) {
+      lineStyle.styleSheet.cssText = css;
+    } else {
+      lineStyle.appendChild(document.createTextNode(css))
+    }
+
+    learningObjectHead.appendChild(lineStyle)
   }
 
-  _isAllWhiteSpaces() {
-    return !(/[^\t\n\r ]/.test(nod.textContent.trim()));
+  _isAllWhiteSpaces(node) {
+    return !(/[^\t\n\r ]/.test(node.textContent.trim()));
   }
 
   _isValidNode(node) {
@@ -412,7 +412,7 @@ class Narrator {
     this.tree = this.learningObjectDocument.createTreeWalker(learningObjectBody,
       NodeFilter.SHOW_TEXT,
       filterNodes,
-      false)
+      false)    
   }
 
 
@@ -494,7 +494,6 @@ class Narrator {
   }
 
   _play() {
-    console.log(this.queue)
     this.synth.speak(this.queue[0]);
   }
 
@@ -542,13 +541,13 @@ class Narrator {
               }
             case 2:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 textForSpeech = [];
                 this.currentElements = [];
 
-                Array.from(HTMLlines).forEach(() => {
+                for (let i = 0; i < HTMLlines.length - 1; i++) {
                   this.tree.nextNode()
-                })
+                }
 
                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
                   const lineElement = HTMLlines[iLine];
@@ -589,7 +588,7 @@ class Narrator {
               }
             case 4:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 textForSpeech = [];
                 this.currentElements = [];
 
@@ -618,7 +617,7 @@ class Narrator {
           switch (this.highlightId) {
             case 1:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 let HTMLWords = [];
                 textForSpeech = [];
                 this.currentElements = [];
@@ -641,7 +640,7 @@ class Narrator {
               }
             case 2:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 textForSpeech = [];
                 this.currentElements = [];
 
@@ -660,7 +659,7 @@ class Narrator {
               }
             case 3:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 let HTMLSentences = [];
                 textForSpeech = [];
                 this.currentElements = [];
@@ -684,7 +683,7 @@ class Narrator {
               }
             case 4:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 textForSpeech = [];
                 this.currentElements = [];
 
@@ -708,7 +707,7 @@ class Narrator {
           switch (this.highlightId) {
             case 1:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 let HTMLWords = [];
                 textForSpeech = [];
                 this.currentElements = [];
@@ -731,7 +730,7 @@ class Narrator {
               }
             case 2:
               {
-                let HTMLlines = Array.prototype.slice.call(this._splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 this.currentElements = [];
                 textForSpeech = [];
                 let HTMLSentences = [];
@@ -774,7 +773,7 @@ class Narrator {
             case 4:
               {
 
-                let HTMLlines = Array.prototype.slice.call(splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 let HTMLSentences = [];
                 textForSpeech = [];
                 this.currentElements = [];
@@ -785,7 +784,7 @@ class Narrator {
                 }
 
                 for (let iLine = 0; iLine < HTMLlines.length; iLine++) {
-                  const sentencesInLineElements = splitInSentences(HTMLlines[iLine]);
+                  const sentencesInLineElements = this._splitInSentences(HTMLlines[iLine]);
 
                   for (let iSentences = 0; iSentences < sentencesInLineElements.length; iSentences++) {
                     HTMLSentences.push(sentencesInLineElements[iSentences]);
@@ -811,13 +810,13 @@ class Narrator {
           switch (this.highlightId) {
             case 1:
               {
-                let HTMLwords = splitInWords(this.tree.currentNode.parentNode);
+                let HTMLwords = this._splitInWords(this.tree.currentNode.parentNode);
                 textForSpeech = [];
                 this.currentElements = [];
 
                 for (let iWord = 0; iWord < HTMLwords.length; iWord++) {
                   const wordElement = HTMLwords[iWord];
-                  let txt = cleanText(wordElement.textContent);
+                  let txt = this._cleanText(wordElement.textContent);
                   textForSpeech.push(txt);
                   this.currentElements.push([wordElement]);
                 }
@@ -828,7 +827,7 @@ class Narrator {
               }
             case 2:
               {
-                let HTMLlines = Array.prototype.slice.call(splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode));
                 textForSpeech = [];
                 this.currentElements = [];
 
@@ -847,7 +846,7 @@ class Narrator {
               }
             case 3:
               {
-                let HTMLSentences = splitInSentences(this.tree.currentNode.parentNode);
+                let HTMLSentences = this._splitInSentences(this.tree.currentNode.parentNode);
                 textForSpeech = [];
                 this.currentElements = [];
 
@@ -864,7 +863,7 @@ class Narrator {
               }
             case 4:
               {
-                let HTMLlines = Array.prototype.slice.call(splitInLines(this.tree.currentNode.parentNode), 0);
+                let HTMLlines = Array.from(this._splitInLines(this.tree.currentNode.parentNode), 0);
                 let txt = "";
                 textForSpeech = [];
                 this.currentElements = [];
