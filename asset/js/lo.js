@@ -115,6 +115,10 @@ class LearningObject {
       if(accessibilityBar.needStructuralNavigation) {
         accessibilityBar.structuralNavigation.htmlTableOfContents(this.getDocument())
       }
+
+      /*if(accessibilityBar.needNarrator) {
+        accessibilityBar.narrator._loadTreeNarrator()
+      }*/
     })
     .catch(e => console.error(e))
   }
