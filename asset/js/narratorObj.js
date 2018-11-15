@@ -8,7 +8,19 @@ class Narrator {
     this.highlightId = preferencesNarrator.highlight_id
     this.readingUnitId = preferencesNarrator.reading_unit_id
 
-    this.learningObjectDocument = learningObject.getDocument()
+    if(idView == 'lo_view') {
+      this.learningObjectDocument = learningObject.getDocument()
+      hotkeys('ctrl+e', (event, handler) => {
+        event.preventDefault()
+        this._loadTreeNarrator()
+        this.tree.nextNode()
+        this._narrator()
+      });
+      
+      this._loadLineStyle()
+
+    }
+
     this.configVoice = {
       rate: this.speedReading,
       pitch: this.pitch,
@@ -37,14 +49,8 @@ class Narrator {
 
     this._setValuesInLocalStorage()
     this._loadNarrator()
-    this._loadLineStyle()
 
-    hotkeys('ctrl+e', (event, handler) => {
-      event.preventDefault()
-      this._loadTreeNarrator()
-      this.tree.nextNode()
-      this._narrator()
-    });
+    
 
   }
 

@@ -21,7 +21,7 @@ class LearningObject {
           window.loading_screen.finish()
         } else {
           this.iframeElement.onload = () => {
-            //this.setLanguage()
+            this.setLanguage()
             this.createAccessibilityBar()
             document.getElementById('div-lo').style.display = ''
             window.loading_screen.finish()
