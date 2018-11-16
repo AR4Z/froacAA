@@ -1,4 +1,4 @@
-<div id="container-iris" class="container-iris draggable" style="width:340px; height:475px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1001; position:absolute; top: calc(100% - 49px); left: calc(100% - 340px);display:none">
+<div id="container-iris" class="container-iris draggable" style="width:340px; height:475px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1001; position:absolute; top: calc(100% - 39px); left: calc(100% - 340px);display:none">
     <div class="container-top-iris" style="width:320px; height:40px; margin:auto;">
         <h5 style="text-align:center; color:white; font-weight: bold;">
         <?php echo $this->lang->line('lsc_translator'); ?>

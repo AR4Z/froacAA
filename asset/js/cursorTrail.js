@@ -8,6 +8,15 @@ class CursorTrail {
       y: 0
     }
     this.requestAnimationId = undefined
+
+    if(idView == 'lo_view'){
+      this.learningObject = learningObject
+      this.learningObjectDoc = this.learningObject.getDocument()
+      this.learningObjectNode = this.learningObject.iframeElement
+    } else {
+      this.learningObject = undefined
+    }
+
     this.createTrail(this.size)
     this._addMouseEvent()
   }
@@ -18,9 +27,9 @@ class CursorTrail {
       this.mouse.y = e.pageY
     })
 
-    if(learningObject) {
-      learningObject.getDocument().querySelector('body').addEventListener('mousemove', (e) => {
-        let nodeLearningObject = learningObject.iframeElement
+    if(this.learningObject) {
+      this.learningObjectDoc.querySelector('body').addEventListener('mousemove', (e) => {
+        let nodeLearningObject = this.learningObjectNode
 
         this.mouse.x = e.clientX + nodeLearningObject.getBoundingClientRect().x;
         this.mouse.y = e.clientY + nodeLearningObject.getBoundingClientRect().y;

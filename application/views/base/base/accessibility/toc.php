@@ -1,4 +1,4 @@
-<div id="container-toc" class="container-toc draggable" style="width:340px; height:49px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1001; position:absolute; top:calc(100% - 49px);left:0px; display:none;">
+<div id="container-toc" class="container-toc draggable" style="width:340px; height:49px; background-color:black; padding-top:10px; padding-bottom:5px; border-radius: 15px; z-index:1001; position:absolute; top:calc(100% - 39px);left:0px; display:none;">
     <div class="container-top-toc" style="width:320px; height:40px; margin:auto;">
         <h5 style="text-align:center; color:white; font-weight: bold;">
         <?php echo $this->lang->line('table_of_content'); ?>

@@ -640,7 +640,6 @@ class CustomInterfaz {
     let isChecked = checkbox.checked
     let isDefault = checkbox.default == 'true'
     let images = document.querySelectorAll('img')
-    console.log(isChecked)
     this.invertColorImage = isChecked
 
     if(isChecked) {
