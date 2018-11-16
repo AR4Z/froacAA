@@ -33,6 +33,8 @@ class LscTranslator {
         } else {
           this.maximize()
         }
+
+        this.containerIris.style.display = ''
       },
       stop: () => {
         localStorage.setItem('irisTopPos', this.containerIris.style.top)
@@ -40,7 +42,7 @@ class LscTranslator {
 
         this.irisTop = localStorage.getItem('irisTopPos')
         this.irisLeft = localStorage.getItem('irisLeftPos')
-      },
+      }
     });
 
 

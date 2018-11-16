@@ -31,7 +31,7 @@ class StructuralNavigation {
 
         this.tocTop = localStorage.getItem('tocTopPos')
         this.tocLeft = localStorage.getItem('tocLeftPos')
-      },
+      }
     });
     
     if(idView != 'lo_view'){
@@ -153,6 +153,7 @@ class StructuralNavigation {
         showtoc: `${ this.showToc }`
       })
     }
+
     if(!isChecked) {
       this.containerToc.style.display = 'none'
     } else {
