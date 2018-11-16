@@ -17,7 +17,17 @@ class CursorTrail {
       this.mouse.x = e.pageX
       this.mouse.y = e.pageY
     })
+
+    if(learningObject) {
+      learningObject.getDocument().querySelector('body').addEventListener('mousemove', (e) => {
+        let nodeLearningObject = learningObject.iframeElement
+
+        this.mouse.x = e.clientX + nodeLearningObject.getBoundingClientRect().x;
+        this.mouse.y = e.clientY + nodeLearningObject.getBoundingClientRect().y;
+      })
+    }
   }
+  
 
   createTrail(size) {
     this.size = size

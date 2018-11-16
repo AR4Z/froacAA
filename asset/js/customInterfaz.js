@@ -27,6 +27,13 @@ class CustomInterfaz {
     this.cursorUrl = preferencesInterfaz.cursor_url
     this.cursorTrail = new CursorTrail(0)
 
+    if(idView == 'lo_view'){
+      this.learningObject = learningObject
+      this.learningObjectDoc = this.learningObject.getDocument()
+    } else {
+      this.learningObject = undefined
+    }
+
     this._addEventChangeFontSize()
     this._addEventChangeSizeLineSpacing()
     this._addEventChangeFontType()
@@ -39,8 +46,6 @@ class CustomInterfaz {
     this._setValuesInLocalStorage()
     // charge the values received in each one of the characteristics of the interface to be applied
     this._loadCustomInterfaz()
-
-    
   }
 
   _setValuesInLocalStorage() {
@@ -149,13 +154,13 @@ class CustomInterfaz {
   _addEventChangeFontSize() {
     let inputFontSize = document.querySelector('input[name="fontSize"]')
 
-    inputFontSize.addEventListener('change', this.changeFontSize)
+    inputFontSize.addEventListener('change', this.changeFontSize.bind(this))
   }
 
   _addEventChangeSizeLineSpacing() {
     let inputSizeLineSpacing = document.querySelector('input[name="interlineSpaceSize"]')
   
-    inputSizeLineSpacing.addEventListener('change', this.changeSizeLine)
+    inputSizeLineSpacing.addEventListener('change', this.changeSizeLine.bind(this))
   }
   _addEventChangeContrast() {
     let optionsContrast = document.querySelectorAll('input[name="radioOptionscontrast"]')
@@ -210,7 +215,7 @@ class CustomInterfaz {
   _addEventChangeFontType() {
     let optionsFontType = document.querySelectorAll('input[name="type-font"]')
   
-    Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType))
+    Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType.bind(this)))
   }
 
   _addEventChangeCursorSize() {
@@ -233,7 +238,7 @@ class CustomInterfaz {
   _addEventChangeColorCursor() {
     let inputColorCursor = document.getElementsByName('colorMousePointer')[0]
 
-    inputColorCursor.addEventListener('change', this.changeCursorSize)
+    inputColorCursor.addEventListener('change', this.changeCursorSize.bind(this))
   }
 
   _addEventChangeTrailCursorSize() {
@@ -287,23 +292,26 @@ class CustomInterfaz {
   _addEventChangeInvertGeneral() {
     let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
     
-    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral)
+    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral.bind(this))
   }
 
   _addEventChangeInvertImages() {
     let checkboxInvertImages = document.getElementsByName('invertImages')[0]
 
-    checkboxInvertImages.addEventListener('change', this.changeInvertImages)
+    checkboxInvertImages.addEventListener('change', this.changeInvertImages.bind(this))
   }
 
   changeFontSize() {
-    console.log("change font size")
     let inputFontSize = document.getElementsByName('fontSize')[0]
     let html = document.getElementsByTagName('html')[0]
     let isDefault = inputFontSize.default == 'true'
 
     this.fontSize = parseInt(inputFontSize.value)
     html.style.fontSize = `${ this.fontSize }px`
+
+    if(this.learningObject) {
+      this.learningObjectDoc.querySelector('html').style.fontSize = `${ this.fontSize }px`
+    }
 
     if((this.fontSize != parseInt(localStorage.getItem('font_size'))) && !isDefault){
       accessibilityBar.updatePreferencesInterfaz({
@@ -324,6 +332,10 @@ class CustomInterfaz {
     this.sizeLineSpacing = parseFloat(inputSizeLine.value)
     body.style.lineHeight = `${ this.sizeLineSpacing }`
     
+    if(this.learningObject) {
+      this.learningObjectDoc.querySelector('body').style.lineHeight = `${ this.sizeLineSpacing }`
+    }
+
     if((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing'))) && !isDefault){
       accessibilityBar.updatePreferencesInterfaz({
         size_line_spacing: this.sizeLineSpacing
@@ -351,10 +363,24 @@ class CustomInterfaz {
 
     
     let classNameContrastSelected = classNameContrastOptions[optionContrastSelectedValue]
-    document.getElementsByTagName('body')[0].classList.remove(classNameContrastOptions[this.contrastColorsId])
-    document.getElementsByTagName('body')[0].classList.add(classNameContrastSelected)
-    this.contrastColorsId = optionContrastSelectedValue    
+    document.querySelector('body').classList.remove(classNameContrastOptions[this.contrastColorsId])
+    document.querySelector('body').classList.add(classNameContrastSelected)
+        
 
+    if(this.learningObject) {
+      if(!this.learningObjectDoc.getElementById('contrast-styles')) {
+        let linkContrastStyles = document.getElementById('contrast-styles').cloneNode()
+        this.learningObjectDoc.querySelector('head').appendChild(linkContrastStyles)
+      }
+
+      if(this.learningObjectDoc.querySelector('body').classList.contains(classNameContrastOptions[this.contrastColorsId])) {
+        this.learningObjectDoc.querySelector('body').classList.remove(classNameContrastOptions[this.contrastColorsId])
+      }
+
+      this.learningObjectDoc.querySelector('body').classList.add(classNameContrastSelected)
+    }
+
+    this.contrastColorsId = optionContrastSelectedValue
     if((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id'))) && !isDefault) {
       accessibilityBar.updatePreferencesInterfaz({
         contrast_colors_id: this.contrastColorsId
@@ -371,6 +397,10 @@ class CustomInterfaz {
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
     document.documentElement.style.setProperty('--foreground-color', `#${ color }`)
+    if(this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--foreground-color', `#${ color }`)  
+    }
+
     this.customColors.foreground_colour = color
 
     if((this.customColors.foreground_colour != localStorage.getItem('foreground_color')) && !isDefault){
@@ -378,6 +408,8 @@ class CustomInterfaz {
         foreground_colour: this.customColors.foreground_colour
       })
     }
+
+    
 
     inputColor.setAttribute('default', false)
 
@@ -389,6 +421,10 @@ class CustomInterfaz {
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
     document.documentElement.style.setProperty('--background-color', `#${ color }`)
+    if(this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--background-color', `#${ color }`)
+    }
+    
     this.customColors.background_colour = color
 
     if((this.customColors.background_colour != localStorage.getItem('background_color')) && !isDefault){
@@ -407,6 +443,10 @@ class CustomInterfaz {
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
     document.documentElement.style.setProperty('--link-color', `#${ color }`)
+    if(this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--link-color', `#${ color }`)
+    }
+
     this.customColors.link_colour = color
 
     if((this.customColors.link_colour != localStorage.getItem('link_color')) && !isDefault){
@@ -425,6 +465,10 @@ class CustomInterfaz {
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
     document.documentElement.style.setProperty('--highlight-color', `#${ color }`)
+    if(this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--highlight-color', `#${ color }`)
+    }
+
     this.customColors.highlight_colour = color
 
     if((this.customColors.highlight_colour != localStorage.getItem('highlight_color')) && !isDefault){
@@ -450,9 +494,23 @@ class CustomInterfaz {
       4: "'Source Code Pro', monospace"
     }
 
-    let body = document.getElementsByTagName('body')[0]
+    let idFonts = {
+      2: 'serif',
+      3: 'cantarell',
+      4: 'source-code-pro',
+    }
+
+    let body = document.querySelector('body')
     body.style.fontFamily = validFonts[optionFontSelected]
-    
+    if(this.learningObject) {
+      if(!this.learningObjectDoc.getElementById(idFonts[optionFontSelected]) && optionFontSelected != 1) {
+        let linkFont = document.getElementById(idFonts[optionFontSelected]).cloneNode()
+        this.learningObjectDoc.querySelector('head').appendChild(linkFont)
+      }
+
+      this.learningObjectDoc.querySelector('body').style.fontFamily = validFonts[optionFontSelected]
+    }
+
     if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id'))) && !isDefault) {
       accessibilityBar.updatePreferencesInterfaz({
         font_type_id: this.fontTypeId
@@ -479,7 +537,7 @@ class CustomInterfaz {
     }
 
     let sizeSelected = validSize[optionSizeSelected]
-    let body = document.getElementsByTagName('body')[0]
+    let body = document.querySelector('body')
     
     if(sizeSelected != 0) {
       $('body').awesomeCursor('mouse-pointer', {
@@ -488,6 +546,10 @@ class CustomInterfaz {
       })
     } else {
       body.style.cursor = 'auto'
+    }
+
+    if(this.learningObject) {
+      this.learningObjectDoc.querySelector('body').style.cursor = document.querySelector('body').style.cursor
     }
 
     if((this.cursorSizeId != localStorage.getItem('cursor_size_id') || 
@@ -546,13 +608,19 @@ class CustomInterfaz {
     let checkbox = document.getElementsByName('invertGeneral')[0]
     let isChecked = checkbox.checked
     let isDefault = checkbox.default == 'true'
-    let body = document.getElementsByTagName('body')[0]
+    let body = document.querySelector('body')
     this.invertColorGeneral = isChecked
 
     if (isChecked) {
       body.style.filter = 'invert(1)'
+      if(this.learningObject) {
+        this.learningObjectDoc.querySelector('body').style.filter = 'invert(1)'
+      }
     } else {
       body.style.filter = 'invert(0)'
+      if(this.learningObject) {
+        this.learningObjectDoc.querySelector('body').style.filter = 'invert(0)'
+      }
     }
 
     if((this.invertColorGeneral != localStorage.getItem('invert_color_general')) && !isDefault){
@@ -579,10 +647,26 @@ class CustomInterfaz {
       Array.from(images).forEach((image) => {
         image.style.filter = 'invert(1)'
       })
+
+      if(this.learningObject) {
+        let learningObjectImages = this.learningObjectDoc.querySelectorAll('img')
+        
+        Array.from(learningObjectImages).forEach((image) => {
+          image.style.filter = 'invert(1)'
+        })
+      }
     } else {
       Array.from(images).forEach((image) => {
         image.style.filter = 'invert(0)'
       })
+
+      if(this.learningObject) {
+        let learningObjectImages = this.learningObjectDoc.querySelectorAll('img')
+        
+        Array.from(learningObjectImages).forEach((image) => {
+          image.style.filter = 'invert(0)'
+        })
+      }
     }
 
     if((this.invertColorImage != localStorage.getItem('invert_color_image')) && !isDefault){
