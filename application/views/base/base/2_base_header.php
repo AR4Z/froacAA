@@ -25,7 +25,7 @@
 
         <ul class="socialLinks">
             <li>
-                    <a class="btn btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><?php echo $this->lang->line('accessibility'); ?> </a>
+                    <a class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button" aria-expanded="false" aria-controls="collapseExample"><?php echo $this->lang->line('accessibility'); ?> </a>
             </li>
         </ul>
         <?php endif;?>

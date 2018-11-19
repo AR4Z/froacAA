@@ -1,4 +1,4 @@
-<div class="collapse container-fluid" id="collapseExample">
+<div class="collapse container-fluid" id="accessibilityBar">
     <ul class="nav nav-tabs" id="accessibilityTab" role="tablist">
 
         <?php if( $this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
