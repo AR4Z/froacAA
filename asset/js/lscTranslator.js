@@ -10,8 +10,8 @@ class LscTranslator {
     this.irisTop = localStorage.getItem('irisTopPos') || 'calc(100% - 49px)'
     this.irisLeft = localStorage.getItem('irisLeftPos') || 'calc(100% - 340px)'
 
+    this.containerIris = document.getElementById('container-iris')    
     this.containerBodyIris = document.getElementById('container-body-iris')
-    this.containerIris = document.getElementById('container-iris')
     this.minimizeIrisButton = document.getElementById('minimize-iris')
     this.maximizeIrisButton = document.getElementById('maximize-iris')
     this.stopIrisButton = document.getElementById('stop-iris')
@@ -20,6 +20,7 @@ class LscTranslator {
 
     this.images = imagesLscTranslator
     this.phrases = phrasesLscTranslator
+    this.onEnd = undefined
 
     $(this.containerIris).draggable({
       containment: "parent",
@@ -273,12 +274,13 @@ class LscTranslator {
           frames: 13,
           cols: 1,
           loops: 1,
-          fps: parseInt(localStorage['sign_speed']),
+          fps: this.signSpeed,
           onEnd: () => {
             this.canvidControl.destroy()
             this.stopIrisButton.style.display = 'none'
             this.playIrisButton.style.display = 'none'
             this.pauseIrisButton.style.display = 'none'
+            this.onEnd()
           }
         };
       }
@@ -372,8 +374,8 @@ class LscTranslator {
     this.canvidControl.destroy()
   }
 
-  translate() {
-    let text = document.getElementById('input-iris').value
+  translate(txt) {
+    let text = document.getElementById('input-iris').value || txt
 
     if (this.canvidControl) {
       this.stop()

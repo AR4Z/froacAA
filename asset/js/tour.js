@@ -78,7 +78,7 @@ class Tour {
       }
     })
     this.buttons = `
-    <button class="btn btn-outline-success btn-lg" type="submit"> 
+    <button onclick="tour.interprete()" class="btn btn-outline-success btn-lg" type="submit"> 
     <i class="fas fa-sign-language"></i>
     Interpretar</button>
     <button class="btn btn-outline-success btn-lg" type="submit">
@@ -90,7 +90,7 @@ class Tour {
         popover: {
           title: 'Tamaño de fuente',
           description: `
-            Cambia el tamaño de la fuente escribiendo un número entre 9 y 36.
+            <p class="description">Cambia el tamaño de la fuente escribiendo un número entre 9 y 36.</p>
             <br/>
             ${ this.buttons }
             `,
@@ -102,7 +102,7 @@ class Tour {
         popover: {
           title: 'Tamaño de interlineado',
           description: `
-            Cambia el espacio entre una línea y otra con un numero entre 1 y 2.
+            <p class="description">Cambia el espacio entre una línea y otra con un numero entre 1 y 2. </p>
             <br/>
             ${ this.buttons }
             `,
@@ -114,7 +114,7 @@ class Tour {
         popover: {
           title: 'Contraste',
           description: `
-              Cambia los colores para una mejor visibilidad del contenido.
+              <p class="description">Cambia los colores para una mejor visibilidad del contenido.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -126,7 +126,7 @@ class Tour {
         popover: {
           title: 'Tipo de fuente',
           description: `
-              Puede cambiar el tipo de fuente con el cual se muestra el cotenido.
+              <p class="description">Puede cambiar el tipo de fuente con el cual se muestra el cotenido.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -138,7 +138,7 @@ class Tour {
         popover: {
           title: 'Configuración del cursor',
           description: `
-              Cambiar el tamaño del cursor y añadir un rastro que le permita ubicar rápidamente a este.
+              <p class="description">Cambiar el tamaño del cursor y añadir un rastro que le permita ubicar rápidamente a este.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -150,7 +150,7 @@ class Tour {
         popover: {
           title: 'Configuración de colores',
           description: `
-              Cambiar el contraste de las imagenes y elementos del contenido.
+              <p class="description">Cambiar el contraste de las imagenes y elementos del contenido.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -162,7 +162,7 @@ class Tour {
         popover: {
           title: 'Velocidad de lectura',
           description: `
-              Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.
+              <p class="description">Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -174,7 +174,7 @@ class Tour {
         popover: {
           title: 'Tono de voz',
           description: `
-              Elige entre estas opciones para que la voz sea mucho más amigable.
+              <p class="description">Elige entre estas opciones para que la voz sea mucho más amigable.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -186,7 +186,7 @@ class Tour {
         popover: {
           title: 'Volumen de voz',
           description: `
-              Cambie el volumen de voz.
+              <p class="description">Cambie el volumen de voz.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -198,7 +198,7 @@ class Tour {
         popover: {
           title: 'Genero de voz',
           description: `
-              Cambie el genero de  la voz.
+          <p class="description">Cambie el genero de  la voz.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -210,8 +210,8 @@ class Tour {
         popover: {
           title: 'Comportamiento con enlaces',
           description: `
-              Puede configurar cual va a ser el comportamiento a la hora de leer un enlace.
-              Reproducir un sonido especial, un efecto de voz o no leerlo.
+          <p class="description">Puede configurar cual va a ser el comportamiento a la hora de leer un enlace.
+              Reproducir un sonido especial, un efecto de voz o no leerlo.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -223,8 +223,8 @@ class Tour {
         popover: {
           title: 'Resaltado de texto',
           description: `
-              Que porción del texto va a ser resaltada cuando se lee un elemento. 
-              Una palabra, línea, oración o parrafo.
+          <p class="description">Que porción del texto va a ser resaltada cuando se lee un elemento. 
+              Una palabra, línea, oración o parrafo.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -236,7 +236,7 @@ class Tour {
         popover: {
           title: 'Lectura',
           description: `
-              Que porción del texto va a ser leida. Una palabra, línea, oración o parrafo.
+          <p class="description">Que porción del texto va a ser leida. Una palabra, línea, oración o parrafo.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -248,7 +248,7 @@ class Tour {
         popover: {
           title: 'Velocidad de lectura',
           description: `
-              Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.
+          <p class="description">Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -260,7 +260,7 @@ class Tour {
         popover: {
           title: 'Tono de voz',
           description: `
-              Elige entre estas opciones para que la voz sea mucho más amigable.
+          <p class="description">Elige entre estas opciones para que la voz sea mucho más amigable.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -272,7 +272,7 @@ class Tour {
         popover: {
           title: 'Volumen de voz',
           description: `
-              Cambie el volumen de voz.
+          <p class="description">Cambie el volumen de voz.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -284,7 +284,7 @@ class Tour {
         popover: {
           title: 'Genero de voz',
           description: `
-              Cambie el genero de  la voz.
+          <p class="description">Cambie el genero de  la voz.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -296,8 +296,8 @@ class Tour {
         popover: {
           title: 'Comportamiento con enlaces',
           description: `
-              Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. 
-              Reproducir un sonido especial, un efecto de voz o no leerlo.
+          <p class="description">Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. 
+              Reproducir un sonido especial, un efecto de voz o no leerlo.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -309,8 +309,8 @@ class Tour {
         popover: {
           title: 'Velocidad de señas',
           description: `
-              Cambie la velocidad con la cual se traduce el mensaje al lenguaje de señas. 
-              10, 20, 30 o 40 son los valores válidos.
+          <p class="description">Cambie la velocidad con la cual se traduce el mensaje al lenguaje de señas. 
+              10, 20, 30 o 40 son los valores válidos.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -322,7 +322,7 @@ class Tour {
         popover: {
           title: 'Modelo',
           description: `
-              Elija quien hará la traducción del mensaje, un avatar o un humano.
+          <p class="description">Elija quien hará la traducción del mensaje, un avatar o un humano.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -334,7 +334,7 @@ class Tour {
         popover: {
           title: 'Estrategia de nevagación',
           description: `
-              Cambie el orden en el cual se enfocan los elementos.
+          <p class="description">Cambie el orden en el cual se enfocan los elementos.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -346,9 +346,9 @@ class Tour {
         popover: {
           title: 'Modelo',
           description: `
-              Elija si quiere ver o no la tabla de contenidos del sitio. 
+          <p class="description">Elija si quiere ver o no la tabla de contenidos del sitio. 
               La tabla de contenidos le permite ver una lista de los encabezados de la página y 
-              acceder a ellos rápidamente.
+              acceder a ellos rápidamente.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -360,7 +360,7 @@ class Tour {
         popover: {
           title: 'Tamaño del teclado',
           description: `
-              Cambie el tamaño del teclado virtual.
+          <p class="description">Cambie el tamaño del teclado virtual.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -372,7 +372,7 @@ class Tour {
         popover: {
           title: 'Sonido del teclado',
           description: `
-              Puede reproducir o no un sonido al presionar una tecla del teclado virtual.
+          <p class="description">Puede reproducir o no un sonido al presionar una tecla del teclado virtual.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -384,7 +384,7 @@ class Tour {
         popover: {
           title: 'Usar teclado',
           description: `
-              Puede activar o desactivar el uso del teclado virtual.
+          <p class="description">Puede activar o desactivar el uso del teclado virtual.</p>
               <br/>
               ${ this.buttons }
             `,
@@ -397,9 +397,17 @@ class Tour {
   }
 
   interprete(txt) {
-    if (!txt) {
-      let activeStep = this.driver.getHighlightedElement()
-      txt = activeStep.description
+    if(!txt) {
+      const activeElement = this.driver.getHighlightedElement()
+      const titleNode = activeElement.popover.titleNode
+      const descriptionNode = activeElement.popover.descriptionNode
+      txt = `${ titleNode.textContent }. ${ descriptionNode.querySelector('.description').textContent }`
+    }
+    
+    accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
+
+    accessibilityBar.lscTranslator.onEnd = () => {
+      accessibilityBar.lscTranslator.containerIris.style.zIndex = 1001
     }
 
     accessibilityBar.lscTranslator.translate(txt)
