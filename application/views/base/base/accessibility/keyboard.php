@@ -1,6 +1,6 @@
 <div class="tab-pane fade" id="keyboard-cf" role="tabpanel" aria-labelledby="keyboard-tab">
     <div class="d-flex flex-row flex-nowrap">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-virtual-keyboard-size" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('keyboard_size'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+        <div id="card-virtual-keyboard-key-sound" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('sound'); ?>
@@ -71,7 +71,7 @@
             
         </div>
 
-        <div id="useKeyboardDiv" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+        <div id="card-virtual-keyboard-use" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('keyboard'); ?>

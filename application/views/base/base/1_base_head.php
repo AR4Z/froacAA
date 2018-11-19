@@ -28,6 +28,7 @@
       <script src="<?php echo base_url()?>asset/js/please-wait.js"></script>
     <?php endif;?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <style>
         .card {
@@ -202,6 +203,16 @@
       if (document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
+
+      tour = new Tour()
+      next = false
+      
+      $('#exampleModal').on('hidden.bs.modal', function (e) {
+        // do something...
+        if(next) {
+          tour.start()
+        }
+      })
     });
     </script>
 </head>
@@ -226,3 +237,38 @@
 <?php endif;?>
 <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
 </audio>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+      <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100">
+      <h2>¡Bienvenido a FROAC!</h2>
+      <p>
+        Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio.
+        En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.
+      </p>
+      </div>
+      <div class="modal-footer">
+        <div class="mr-auto">
+          <button class="btn btn-outline-success btn-lg" type="submit"> 
+          <i class="fas fa-sign-language"></i>
+          Interpretar</button>
+          <button class="btn btn-outline-success btn-lg" type="submit">
+          <i class="fas fa-headphones"></i>
+          Escuchar</button>
+        </div>
+        <button onclick="next=true" class="btn btn-primary"  data-dismiss="modal" type="submit">
+          Continuar
+        </button>       
+        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>

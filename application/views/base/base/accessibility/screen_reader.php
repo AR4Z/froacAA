@@ -1,6 +1,6 @@
 <div class="tab-pane fade" id="screen-reader" role="tabpanel" aria-labelledby="screen-reader-tab">
     <div class="d-flex flex-row flex-nowrap">
-    <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div id="card-screen-reader-speed" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('read_speed'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-screen-reader-pitch" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('voice_tone'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-screen-reader-volume" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('volume'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-screen-reader-voice-gender" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('gender_voice'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-screen-reader-link" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('links'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">

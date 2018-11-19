@@ -1,6 +1,6 @@
 <div class="tab-pane fade" id="interfaz" role="tabpanel" aria-labelledby="interfaz-tab">
     <div class="d-flex flex-row flex-nowrap">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-font-size" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('font_size'); ?></b>
@@ -22,7 +22,7 @@
 
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-interline-size" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('interline_size'); ?></b>
@@ -44,7 +44,7 @@
 
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
+        <div id="card-contrast-colors" class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('contrast'); ?></b>
@@ -171,7 +171,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 20rem;">
+        <div id="card-font-type" class="card bg-light mb-3" style="max-width: 20rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('font_type'); ?></b>
@@ -229,7 +229,9 @@
 
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
+    </div>
+    <div class="d-flex flex-row flex-nowrap">
+    <div id="card-config-cursor" class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('cursor_config'); ?>
@@ -300,7 +302,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+        <div id="card-config-colors" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
             <div class="card-header text-center">
                 <span>
                     <b><?php echo $this->lang->line('cfg_colors'); ?>
@@ -334,5 +336,7 @@
                 </div>
             </div>
         </div>
+    
     </div>
 </div>
+

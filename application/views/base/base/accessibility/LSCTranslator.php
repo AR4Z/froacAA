@@ -1,6 +1,6 @@
 <div class="tab-pane fade" id="LSC-translator" role="tabpanel" aria-labelledby="LSC-translator-tab">
     <div class="d-flex flex-row flex-nowrap">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-lsc-translator-speed" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('sign_speed'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">
@@ -18,7 +18,7 @@
 
             </div>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div id="card-lsc-translator-model" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center"><span><b><?php echo $this->lang->line('model'); ?></b></span></div>
             <div class="card-body">
                 <div class="row">

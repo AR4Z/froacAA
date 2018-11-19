@@ -158,17 +158,17 @@ class ScreenReader {
     this.tree = undefined
     this.manualMode = false
     this.utterance = undefined
-    
+
     hotkeys('ctrl+d,ctrl+p,ctrl+s,ctrl+a,ctrl+f,ctrl+g', (event, handler) => {
       event.preventDefault()
-      
-      switch(handler.key) {
+
+      switch (handler.key) {
         case 'ctrl+d':
-          if(this.synth.speaking){
+          if (this.synth.speaking) {
             this.synth.cancel()
           }
 
-          if(this.manualMode) {
+          if (this.manualMode) {
             this._next()
           }
           break
@@ -188,14 +188,14 @@ class ScreenReader {
           break
         case 'ctrl+g':
           let currentNode = this.tree.currentNode
-            
-          if(currentNode.tagName == 'IFRAME'){
+
+          if (currentNode.tagName == 'IFRAME') {
             this._loadTree(currentNode.contentWindow.document)
             this._screenReader()
           }
 
           break
-      }      
+      }
     })
 
     hotkeys.filter = () => {
@@ -421,7 +421,7 @@ class ScreenReader {
   }
 
   _isValidNode(node) {
-    if ($(node).is(':hidden') && !$(node).is(':visible')) {
+    if (!this.elementIsVisible(node)) {
       return false;
     }
 
@@ -536,7 +536,7 @@ class ScreenReader {
     this.tree.previousNode()
     this.utterance.onend = undefined
 
-    if(this.synth.speaking) {
+    if (this.synth.speaking) {
       this.synth.cancel()
     }
 
@@ -568,7 +568,7 @@ class ScreenReader {
   }
 
   _changeMode() {
-    if(this.manualMode){
+    if (this.manualMode) {
       this.manualMode = false;
       this._next()
     } else {
@@ -622,4 +622,259 @@ class ScreenReader {
     this._setStyle()
     this._play()
   }
+  shadowHost(fragment) {
+    // If host exists, this is a Shadow DOM fragment.
+    if ('host' in fragment)
+      return fragment.host;
+    else
+      return null;
+  };
+  composedParentNode(node) {
+    if (!node)
+      return null;
+    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+      return this.shadowHost( /** @type {DocumentFragment} */ (node));
+
+    var parentNode = node.parentNode;
+    if (!parentNode)
+      return null;
+
+    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+      return this.shadowHost( /** @type {DocumentFragment} */ (parentNode));
+
+    if (!parentNode.shadowRoot)
+      return parentNode;
+
+    // Shadow DOM v1
+    if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
+      var assignedSlot = node.assignedSlot;
+      if (HTMLSlotElement && assignedSlot instanceof HTMLSlotElement)
+        return this.composedParentNode(assignedSlot);
+    }
+
+    // Shadow DOM v0
+    if (typeof node.getDestinationInsertionPoints === 'function') {
+      var insertionPoints = node.getDestinationInsertionPoints();
+      if (insertionPoints.length > 0)
+        return this.composedParentNode(insertionPoints[insertionPoints.length - 1]);
+    }
+
+    return null;
+  };
+
+  elementIsTransparent(element) {
+    return element.style.opacity == '0';
+  }
+
+  elementHasZeroArea(element) {
+    var rect = element.getBoundingClientRect();
+    var width = rect.right - rect.left;
+    var height = rect.top - rect.bottom;
+    if (!width || !height)
+      return true;
+    return false;
+  }
+  isAncestor(ancestor, node) {
+    if (node == null)
+      return false;
+    if (node === ancestor)
+      return true;
+
+    var parentNode = this.composedParentNode(node);
+    return this.isAncestor(ancestor, parentNode);
+  }
+
+  overlappingElements(element) {
+    if (this.elementHasZeroArea(element))
+      return null;
+
+    var overlappingElements = [];
+    var clientRects = element.getClientRects();
+    for (var i = 0; i < clientRects.length; i++) {
+      var rect = clientRects[i];
+      var center_x = (rect.left + rect.right) / 2;
+      var center_y = (rect.top + rect.bottom) / 2;
+      var elementAtPoint = document.elementFromPoint(center_x, center_y);
+
+      if (elementAtPoint == null || elementAtPoint == element ||
+        this.isAncestor(elementAtPoint, element) ||
+        this.isAncestor(element, elementAtPoint)) {
+        continue;
+      }
+
+      var overlappingElementStyle = window.getComputedStyle(elementAtPoint, null);
+      if (!overlappingElementStyle)
+        continue;
+
+      var overlappingElementBg = this.getBgColor(overlappingElementStyle,
+        elementAtPoint);
+      if (overlappingElementBg && overlappingElementBg.alpha > 0 &&
+        overlappingElements.indexOf(elementAtPoint) < 0) {
+        overlappingElements.push(elementAtPoint);
+      }
+    }
+
+    return overlappingElements;
+  }
+
+  elementIsVisible(element) {
+    if (this.elementIsTransparent(element))
+      return false;
+    if (this.elementHasZeroArea(element))
+      return false;
+
+    var overlappingElements = this.overlappingElements(element);
+    if (overlappingElements.length)
+      return false;
+
+    return true;
+  }
+
+  getBgColor(style, element) {
+    var bgColorString = style.backgroundColor;
+    var bgColor = this.parseColor(bgColorString);
+    if (!bgColor)
+      return null;
+
+    if (style.opacity < 1)
+      bgColor.alpha = bgColor.alpha * style.opacity;
+
+    if (bgColor.alpha < 1) {
+      var parentBg = this.getParentBgColor(element);
+      if (parentBg == null)
+        return null;
+
+      bgColor = this.flattenColors(bgColor, parentBg);
+    }
+    return bgColor;
+  };
+
+  flattenColors(fgColor, bgColor) {
+    var alpha = fgColor.alpha;
+    var r = ((1 - alpha) * bgColor.red) + (alpha * fgColor.red);
+    var g = ((1 - alpha) * bgColor.green) + (alpha * fgColor.green);
+    var b = ((1 - alpha) * bgColor.blue) + (alpha * fgColor.blue);
+    var a = fgColor.alpha + (bgColor.alpha * (1 - fgColor.alpha));
+
+    return new Color(r, g, b, a);
+  };
+
+  parseColor(colorString) {
+    if (colorString === "transparent") {
+      return new Color(0, 0, 0, 0);
+    }
+    var rgbRegex = /^rgb\((\d+), (\d+), (\d+)\)$/;
+    var match = colorString.match(rgbRegex);
+
+    if (match) {
+      var r = parseInt(match[1], 10);
+      var g = parseInt(match[2], 10);
+      var b = parseInt(match[3], 10);
+      var a = 1;
+      return new Color(r, g, b, a);
+    }
+
+    var rgbaRegex = /^rgba\((\d+), (\d+), (\d+), (\d*(\.\d+)?)\)/;
+    match = colorString.match(rgbaRegex);
+    if (match) {
+      var r = parseInt(match[1], 10);
+      var g = parseInt(match[2], 10);
+      var b = parseInt(match[3], 10);
+      var a = parseFloat(match[4]);
+      return new Color(r, g, b, a);
+    }
+
+    return null;
+  };
+
+
+  getParentBgColor(element) {
+    /** @type {Element} */
+    var parent = element;
+    var bgStack = [];
+    var foundSolidColor = null;
+    while ((parent = this.parentElement(parent))) {
+      var computedStyle = window.getComputedStyle(parent, null);
+      if (!computedStyle)
+        continue;
+
+      var parentBg = this.parseColor(computedStyle.backgroundColor);
+      if (!parentBg)
+        continue;
+
+      if (computedStyle.opacity < 1)
+        parentBg.alpha = parentBg.alpha * computedStyle.opacity;
+
+      if (parentBg.alpha == 0)
+        continue;
+
+      bgStack.push(parentBg);
+
+      if (parentBg.alpha == 1) {
+        foundSolidColor = true;
+        break;
+      }
+    }
+
+    if (!foundSolidColor)
+      bgStack.push(new Color(255, 255, 255, 1));
+
+    var bg = bgStack.pop();
+    while (bgStack.length) {
+      var fg = bgStack.pop();
+      bg = this.flattenColors(fg, bg);
+    }
+    return bg;
+  };
+
+  composedParentNode(node) {
+    if (!node)
+      return null;
+    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+      return this.shadowHost( /** @type {DocumentFragment} */ (node));
+
+    var parentNode = node.parentNode;
+    if (!parentNode)
+      return null;
+
+    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+      return this.shadowHost( /** @type {DocumentFragment} */ (parentNode));
+
+    if (!parentNode.shadowRoot)
+      return parentNode;
+
+    // Shadow DOM v1
+    if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
+      var assignedSlot = node.assignedSlot;
+      if (HTMLSlotElement && assignedSlot instanceof HTMLSlotElement)
+        return this.composedParentNode(assignedSlot);
+    }
+
+    // Shadow DOM v0
+    if (typeof node.getDestinationInsertionPoints === 'function') {
+      var insertionPoints = node.getDestinationInsertionPoints();
+      if (insertionPoints.length > 0)
+        return this.composedParentNode(insertionPoints[insertionPoints.length - 1]);
+    }
+
+    return null;
+  };
+
+
+  parentElement(node) {
+    if (!node)
+      return null;
+
+    var parentNode = this.composedParentNode(node);
+    if (!parentNode)
+      return null;
+
+    switch (parentNode.nodeType) {
+      case Node.ELEMENT_NODE:
+        return /** @type {Element} */ (parentNode);
+      default:
+        return this.parentElement(parentNode);
+    }
+  };
+
 }
