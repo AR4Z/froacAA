@@ -77,6 +77,114 @@ class Tour {
         }
       }
     })
+    this.messages = {
+      spanish: {
+        welcome: {
+          title: '¡Bienvenido a FROAC!',
+          description: 'Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio. En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.'
+        },
+        fontSize: {
+          title: 'Tamaño de fuente',
+          description: 'Cambia el tamaño de la fuente escribiendo un número entre 9 y 36.'
+        },
+        interlineSize: {
+          title: 'Tamaño de interlineado',
+          description: 'Cambia el espacio entre una línea y otra con un numero entre 1 y 2.'
+        },
+        contrastColors: {
+          title: 'Contraste',
+          description: 'Cambia los colores para una mejor visibilidad del contenido.'
+        },
+        fontType: {
+          title: 'Tipo de fuente',
+          description: 'Puede cambiar el tipo de fuente con el cual se muestra el cotenido.'
+        },
+        configCursor: {
+          title: 'Configuración del cursor',
+          description: 'Cambiar el tamaño del cursor y añadir un rastro que le permita ubicar rápidamente a este.'
+        },
+        configColors: {
+          title: 'Configuración de colores',
+          description: 'Cambiar el contraste de las imagenes y elementos del contenido.'
+        },
+        narratorSpeed: {
+          title: 'Velocidad de lectura',
+          description: 'Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.'
+        },
+        narratorPitch: {
+          title: 'Tono de voz',
+          description: 'Elige entre estas opciones para que la voz sea mucho más amigable.'
+        },
+        narratorVolume: {
+          title: 'Volumen de voz',
+          description: 'Cambie el volumen de voz'
+        },
+        narratorVoiceGender: {
+          title: 'Genero de voz',
+          description: 'Cambie el genero de  la voz.'
+        },
+        narratorLink : {
+          title: 'Enlaces',
+          description: 'Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. Reproducir un sonido especial, un efecto de voz o no leerlo.'
+        },
+        narratorHighlight: {
+          title: 'Resaltado de texto',
+          description: 'Que porción del texto va a ser resaltada cuando se lee un elemento. Una palabra, línea, oración o parrafo.'
+        },
+        narratorReadUnit: {
+          title: 'Lectura',
+          description: 'Que porción del texto va a ser leida. Una palabra, línea, oración o parrafo.'
+        },
+        screenReaderSpeed: {
+          title: 'Velocidad de lectura',
+          description: 'Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.'
+        },
+        screenReaderPitch: {
+          title: 'Tono de voz',
+          description: 'Elige entre estas opciones para que la voz sea mucho más amigable.'
+        },
+        screenReaderVolume: {
+          title: 'Volumen de voz',
+          description: 'Cambie el volumen de voz'
+        },
+        screenReaderVoiceGender: {
+          title: 'Genero de voz',
+          description: 'Cambie el genero de  la voz.'
+        },
+        screenReaderLink : {
+          title: 'Enlaces',
+          description: 'Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. Reproducir un sonido especial, un efecto de voz o no leerlo.'
+        },
+        lscTranslatorSpeed: {
+          title: 'Velocidad de señas',
+          description: 'Cambie la velocidad con la cual se traduce el mensaje al lenguaje de señas. 10, 20, 30 o 40 son los valores válidos.'
+        },
+        lscTranslatorModel: {
+          title: 'Modelo',
+          description: 'Elija quien hará la traducción del mensaje, un avatar o un humano.'
+        },
+        structuralNavStrategyNav: {
+          title: 'Estrategia de navagación',
+          description: 'Cambie el orden en el cual se enfocan los elementos.'
+        },
+        structuralNavShowToc: {
+          title: 'Ver tabla de cotenido',
+          description: 'Elija si quiere ver o no la tabla de contenidos del sitio. La tabla de contenidos le permite ver una lista de los encabezados de la página y acceder a ellos rápidamente.'
+        },
+        virtualKeyboardSize: {
+          title: 'Tamaño del teclado',
+          description: 'Cambie el tamaño del teclado virtual.'
+        },
+        virtualKeyboardSound: {
+          title: 'Sonido del teclado',
+          description: 'Puede reproducir o no un sonido al presionar una tecla del teclado virtual.'
+        },
+        virtualKeyboardUse: {
+          title: 'Usar teclado',
+          description: 'Puede activar o desactivar el uso del teclado virtual.'
+        }
+      }
+    }
     this.buttons = `
     <button onclick="tour.interprete()" class="btn btn-outline-success btn-lg" type="submit"> 
     <i class="fas fa-sign-language"></i>
@@ -401,7 +509,14 @@ class Tour {
       const activeElement = this.driver.getHighlightedElement()
       const titleNode = activeElement.popover.titleNode
       const descriptionNode = activeElement.popover.descriptionNode
-      txt = `${ titleNode.textContent }. ${ descriptionNode.querySelector('.description').textContent }`
+      txt = `${ titleNode.textContent }. ${ descriptionNode.querySelector('.description').textContent } 
+      Click en anterior para volver.
+      Click en siguiente para continuar.
+      Click en cerrar para salir.`
+    }
+
+    if(accessibilityBar.lscTranslator.minimized) {
+      accessibilityBar.lscTranslator.maximize()
     }
     
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
@@ -411,6 +526,10 @@ class Tour {
     }
 
     accessibilityBar.lscTranslator.translate(txt)
+  }
+
+  speech(text) {
+  
   }
 
   start() {

@@ -251,21 +251,24 @@
     <div class="modal-content">
       <div class="modal-body text-center">
       <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100">
-      <h2>¡Bienvenido a FROAC!</h2>
-      <p>
+      <h2 class="title"">¡Bienvenido a FROAC!</h2>
+      <p class="description">
         Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio.
         En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.
       </p>
       </div>
       <div class="modal-footer">
         <div class="mr-auto">
-          <button class="btn btn-outline-success btn-lg" type="submit"> 
+          <button onclick="tour.welcome(this)" class="btn btn-outline-success btn-lg interprete-button" type="submit"> 
           <i class="fas fa-sign-language"></i>
           Interpretar</button>
-          <button class="btn btn-outline-success btn-lg" type="submit">
+          <button onclick="tour.welcome(thi)" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
           <i class="fas fa-headphones"></i>
           Escuchar</button>
         </div>
+        <button class="btn btn-danger"  data-dismiss="modal" type="submit">
+          Salir
+        </button>
         <button onclick="next=true" class="btn btn-primary"  data-dismiss="modal" type="submit">
           Continuar
         </button>
