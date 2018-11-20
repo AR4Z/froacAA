@@ -17,11 +17,19 @@ class Tour {
             $('#screen-reader-tab').off('shown.bs.tab')
           })
         } else if (elm.node.id == 'card-screen-reader-link') {
-          $('#LSC-translator-tab').tab('show')
-          $('#LSC-translator-tab').on('shown.bs.tab', (e) => {
-            this.driver.start(18)
-            $('#LSC-translator-tab').off('shown.bs.tab')
-          })
+          if (userLang == 'spanish') {
+            $('#LSC-translator-tab').tab('show')
+            $('#LSC-translator-tab').on('shown.bs.tab', (e) => {
+              this.driver.start(18)
+              $('#LSC-translator-tab').off('shown.bs.tab')
+            })
+          } else {
+            $('#structural-navigation-tab').tab('show')
+            $('#structural-navigation-tab').on('shown.bs.tab', (e) => {
+              this.driver.start(18)
+              $('#structural-navigation-tab').off('shown.bs.tab')
+            })
+          }
         } else if (elm.node.id == 'card-lsc-translator-model') {
           $('#structural-navigation-tab').tab('show')
           $('#structural-navigation-tab').on('shown.bs.tab', (e) => {
@@ -30,11 +38,15 @@ class Tour {
           })
         } else if (elm.node.id == 'card-structural-nav-show-toc') {
           $('#keyboard-tab').tab('show')
+
           $('#keyboard-tab').on('shown.bs.tab', (e) => {
-            this.driver.start(22)
+            if (userLang == 'spanish') {
+              this.driver.start(22)
+            } else {
+              this.driver.start(20)
+            }
             $('#keyboard-tab').off('shown.bs.tab')
           })
-
         } else {
           this.driver.moveNext()
         }
@@ -123,7 +135,7 @@ class Tour {
           title: 'Genero de voz',
           description: 'Cambie el genero de  la voz.'
         },
-        narratorLink : {
+        narratorLink: {
           title: 'Enlaces',
           description: 'Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. Reproducir un sonido especial, un efecto de voz o no leerlo.'
         },
@@ -151,7 +163,7 @@ class Tour {
           title: 'Genero de voz',
           description: 'Cambie el genero de  la voz.'
         },
-        screenReaderLink : {
+        screenReaderLink: {
           title: 'Enlaces',
           description: 'Puede configurar cual va a ser el comportamiento a la hora de leer un enlace. Reproducir un sonido especial, un efecto de voz o no leerlo.'
         },
@@ -229,7 +241,7 @@ class Tour {
           title: 'Gênero de voz',
           description: 'Altere o gênero da voz.'
         },
-        narratorLink : {
+        narratorLink: {
           title: 'Links',
           description: 'Você pode configurar qual será o comportamento ao ler um link. Tocar um som especial, um efeito de voz ou não lê-lo.'
         },
@@ -257,7 +269,7 @@ class Tour {
           title: 'Gênero de voz',
           description: 'Altere o gênero da voz.'
         },
-        screenReaderLink : {
+        screenReaderLink: {
           title: 'Links',
           description: 'Você pode configurar qual será o comportamento ao ler um link. Tocar um som especial, um efeito de voz ou não lê-lo.'
         },
@@ -327,7 +339,7 @@ class Tour {
           title: 'Gender of voice',
           description: 'Change the gender of the voice.'
         },
-        narratorLink : {
+        narratorLink: {
           title: 'Links',
           description: 'You can configure what the behavior will be when reading a link. Play a special sound, a voice effect or not read it.'
         },
@@ -355,7 +367,7 @@ class Tour {
           title: 'Gender of voice',
           description: 'Change the gender of the voice.'
         },
-        screenReaderLink : {
+        screenReaderLink: {
           title: 'Links',
           description: 'You can configure what the behavior will be when reading a link. Play a special sound, a voice effect or not read it.'
         },
@@ -389,384 +401,708 @@ class Tour {
         }
       }
     }
-    this.buttons = `
+    this.buttons =  `${ userLang == 'spanish' ? `
     <button onclick="tour.interprete()" class="btn btn-outline-success btn-lg" type="submit"> 
-    <i class="fas fa-sign-language"></i>
-    Interpretar</button>
+      <i class="fas fa-sign-language"></i>
+      Interpretar
+    </button>`: ''}
     <button class="btn btn-outline-success btn-lg" type="submit">
-    <i class="fas fa-headphones"></i>
-    Escuchar</button>
-    `
-    this.driver.defineSteps([{
-        element: '#card-font-size',
-        popover: {
-          title: `${ this.messages[userLang].fontSize.title }`,
-          description: `
+      <i class="fas fa-headphones"></i>
+      Escuchar
+    </button>`
+
+    if (userLang == 'spanish') {
+      this.driver.defineSteps([{
+          element: '#card-font-size',
+          popover: {
+            title: `${ this.messages[userLang].fontSize.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].fontSize.description }
             </p>
             <br/>
             ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-interline-size',
-        popover: {
-          title: `${ this.messages[userLang].interlineSize.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-interline-size',
+          popover: {
+            title: `${ this.messages[userLang].interlineSize.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].interlineSize.description }
             </p>
             <br/>
             ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-contrast-colors',
-        popover: {
-          title: `${ this.messages[userLang].contrastColors.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-contrast-colors',
+          popover: {
+            title: `${ this.messages[userLang].contrastColors.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].contrastColors.description }  
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-font-type',
-        popover: {
-          title: `${ this.messages[userLang].fontType.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-font-type',
+          popover: {
+            title: `${ this.messages[userLang].fontType.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].fontType.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-config-cursor',
-        popover: {
-          title: `${ this.messages[userLang].configCursor.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-config-cursor',
+          popover: {
+            title: `${ this.messages[userLang].configCursor.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].con }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'top'
-        }
-      },
-      {
-        element: '#card-config-colors',
-        popover: {
-          title: `${ this.messages[userLang].contrastColors.title }`,
-          description: `
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-config-colors',
+          popover: {
+            title: `${ this.messages[userLang].contrastColors.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].contrastColors.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'top'
-        }
-      },
-      {
-        element: '#card-narrator-speed',
-        popover: {
-          title: `${ this.messages[userLang].narratorSpeed.title }`,
-          description: `
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-narrator-speed',
+          popover: {
+            title: `${ this.messages[userLang].narratorSpeed.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorSpeed.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-narrator-pitch',
-        popover: {
-          title: `${ this.messages[userLang].narratorPitch.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-pitch',
+          popover: {
+            title: `${ this.messages[userLang].narratorPitch.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorPitch.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-narrator-volume',
-        popover: {
-          title: `${ this.messages[userLang].narratorVolume.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-volume',
+          popover: {
+            title: `${ this.messages[userLang].narratorVolume.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorVolume.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-narrator-voice-gender',
-        popover: {
-          title: `${ this.messages[userLang].narratorVoiceGender.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-voice-gender',
+          popover: {
+            title: `${ this.messages[userLang].narratorVoiceGender.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorVoiceGender.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-narrator-link',
-        popover: {
-          title: `${ this.messages[userLang].narratorLink.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-link',
+          popover: {
+            title: `${ this.messages[userLang].narratorLink.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorLink.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-narrator-highlight',
-        popover: {
-          title: `${ this.messages[userLang].narratorHighlight.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-highlight',
+          popover: {
+            title: `${ this.messages[userLang].narratorHighlight.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].narratorHighlight.description }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'top'
-        }
-      },
-      {
-        element: '#card-narrator-read-mode',
-        popover: {
-          title: `${ this.messages[userLang].narratorReadUnit.title }`,
-          description: `
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-narrator-read-mode',
+          popover: {
+            title: `${ this.messages[userLang].narratorReadUnit.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].narratorReadUnit.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'top'
-        }
-      },
-      {
-        element: '#card-screen-reader-speed',
-        popover: {
-          title: `${ this.messages[userLang].screenReaderSpeed.title }`,
-          description: `
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-screen-reader-speed',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderSpeed.title }`,
+            description: `
             <p class="description">
             ${ this.messages[userLang].screenReaderSpeed.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-screen-reader-pitch',
-        popover: {
-          title: `${ this.messages[userLang].screenReaderPitch.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-pitch',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderPitch.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].screenReaderPitch.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-screen-reader-volume',
-        popover: {
-          title: `${ this.messages[userLang].screenReaderVolume.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-volume',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderVolume.title }`,
+            description: `
               <p class="description">
                 ${ this.messages[userLang].screenReaderVolume.title }
               </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-screen-reader-voice-gender',
-        popover: {
-          title: `${ this.messages[userLang].screenReaderVoiceGender.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-voice-gender',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderVoiceGender.title }`,
+            description: `
             <p class="description">
             ${ this.messages[userLang].screenReaderVoiceGender.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-screen-reader-link',
-        popover: {
-          title: `${ this.messages[userLang].screenReaderLink.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-link',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderLink.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].screenReaderLink.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-lsc-translator-speed',
-        popover: {
-          title: `${ this.messages[userLang].lscTranslatorSpeed.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-lsc-translator-speed',
+          popover: {
+            title: `${ this.messages[userLang].lscTranslatorSpeed.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].lscTranslatorSpeed.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-lsc-translator-model',
-        popover: {
-          title: `${ this.messages[userLang].lscTranslatorModel.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-lsc-translator-model',
+          popover: {
+            title: `${ this.messages[userLang].lscTranslatorModel.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].lscTranslatorModel.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-structural-nav-strategy-nav',
-        popover: {
-          title: `${ this.messages[userLang].structuralNavStrategyNav.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-structural-nav-strategy-nav',
+          popover: {
+            title: `${ this.messages[userLang].structuralNavStrategyNav.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].structuralNavStrategyNav.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-structural-nav-show-toc',
-        popover: {
-          title: `${ this.messages[userLang].structuralNavShowToc.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-structural-nav-show-toc',
+          popover: {
+            title: `${ this.messages[userLang].structuralNavShowToc.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].structuralNavShowToc.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-virtual-keyboard-size',
-        popover: {
-          title: `${ this.messages[userLang].virtualKeyboardSize.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-size',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardSize.title }`,
+            description: `
             <p class="description">
               ${ this.messages[userLang].virtualKeyboardSize.description }
             </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-virtual-keyboard-key-sound',
-        popover: {
-          title: `${ this.messages[userLang].virtualKeyboardSound.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-key-sound',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardSound.title }`,
+            description: `
           <p class="description">
             ${ this.messages[userLang].virtualKeyboardSound.description }
           </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-      {
-        element: '#card-virtual-keyboard-use',
-        popover: {
-          title: `${ this.messages[userLang].virtualKeyboardUse.title }`,
-          description: `
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-use',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardUse.title }`,
+            description: `
           <p class="description">
             ${ this.messages[userLang].virtualKeyboardUse.description }
           </p>
               <br/>
               ${ this.buttons }
             `,
-          position: 'bottom'
-        }
-      },
-    ])
-
-    this.modalOpen = document.getElementById('modalTour')
+            position: 'bottom'
+          }
+        },
+      ])
+    } else {
+      this.driver.defineSteps([{
+          element: '#card-font-size',
+          popover: {
+            title: `${ this.messages[userLang].fontSize.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].fontSize.description }
+            </p>
+            <br/>
+            ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-interline-size',
+          popover: {
+            title: `${ this.messages[userLang].interlineSize.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].interlineSize.description }
+            </p>
+            <br/>
+            ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-contrast-colors',
+          popover: {
+            title: `${ this.messages[userLang].contrastColors.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].contrastColors.description }  
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-font-type',
+          popover: {
+            title: `${ this.messages[userLang].fontType.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].fontType.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-config-cursor',
+          popover: {
+            title: `${ this.messages[userLang].configCursor.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].con }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-config-colors',
+          popover: {
+            title: `${ this.messages[userLang].contrastColors.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].contrastColors.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-narrator-speed',
+          popover: {
+            title: `${ this.messages[userLang].narratorSpeed.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorSpeed.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-pitch',
+          popover: {
+            title: `${ this.messages[userLang].narratorPitch.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorPitch.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-volume',
+          popover: {
+            title: `${ this.messages[userLang].narratorVolume.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorVolume.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-voice-gender',
+          popover: {
+            title: `${ this.messages[userLang].narratorVoiceGender.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorVoiceGender.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-link',
+          popover: {
+            title: `${ this.messages[userLang].narratorLink.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorLink.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-narrator-highlight',
+          popover: {
+            title: `${ this.messages[userLang].narratorHighlight.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].narratorHighlight.description }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-narrator-read-mode',
+          popover: {
+            title: `${ this.messages[userLang].narratorReadUnit.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].narratorReadUnit.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'top'
+          }
+        },
+        {
+          element: '#card-screen-reader-speed',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderSpeed.title }`,
+            description: `
+            <p class="description">
+            ${ this.messages[userLang].screenReaderSpeed.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-pitch',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderPitch.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].screenReaderPitch.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-volume',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderVolume.title }`,
+            description: `
+              <p class="description">
+                ${ this.messages[userLang].screenReaderVolume.title }
+              </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-voice-gender',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderVoiceGender.title }`,
+            description: `
+            <p class="description">
+            ${ this.messages[userLang].screenReaderVoiceGender.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-screen-reader-link',
+          popover: {
+            title: `${ this.messages[userLang].screenReaderLink.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].screenReaderLink.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-structural-nav-strategy-nav',
+          popover: {
+            title: `${ this.messages[userLang].structuralNavStrategyNav.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].structuralNavStrategyNav.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-structural-nav-show-toc',
+          popover: {
+            title: `${ this.messages[userLang].structuralNavShowToc.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].structuralNavShowToc.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-size',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardSize.title }`,
+            description: `
+            <p class="description">
+              ${ this.messages[userLang].virtualKeyboardSize.description }
+            </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-key-sound',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardSound.title }`,
+            description: `
+          <p class="description">
+            ${ this.messages[userLang].virtualKeyboardSound.description }
+          </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+        {
+          element: '#card-virtual-keyboard-use',
+          popover: {
+            title: `${ this.messages[userLang].virtualKeyboardUse.title }`,
+            description: `
+          <p class="description">
+            ${ this.messages[userLang].virtualKeyboardUse.description }
+          </p>
+              <br/>
+              ${ this.buttons }
+            `,
+            position: 'bottom'
+          }
+        },
+      ])
+    }
   }
 
   interprete(txt) {
-    if(!txt) {
+    
+    if (!txt) {
       const activeElement = this.driver.getHighlightedElement()
       const titleNode = activeElement.popover.titleNode
       const descriptionNode = activeElement.popover.descriptionNode
-      txt = `${ titleNode.textContent }. ${ descriptionNode.querySelector('.description').textContent } 
-      Click en anterior para volver.
-      Click en siguiente para continuar.
-      Click en cerrar para salir.`
+      txt = `${ titleNode.textContent }. ${ descriptionNode.querySelector('.description').textContent }`
     }
 
-    if(accessibilityBar.lscTranslator.minimized) {
+    if (accessibilityBar.lscTranslator.minimized) {
       accessibilityBar.lscTranslator.maximize()
     }
-    
+
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
 
     accessibilityBar.lscTranslator.onEnd = () => {
@@ -777,7 +1113,7 @@ class Tour {
   }
 
   speech(text) {
-  
+
   }
 
   start() {

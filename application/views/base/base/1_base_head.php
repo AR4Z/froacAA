@@ -259,9 +259,12 @@
       </div>
       <div class="modal-footer">
         <div class="mr-auto">
+        <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
           <button onclick="tour.welcome(this)" class="btn btn-outline-success btn-lg interprete-button" type="submit"> 
-          <i class="fas fa-sign-language"></i>
-          Interpretar</button>
+            <i class="fas fa-sign-language"></i>
+            Interpretar
+          </button>
+        <?php endif;?>
           <button onclick="tour.welcome(thi)" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
           <i class="fas fa-headphones"></i>
           Escuchar</button>
