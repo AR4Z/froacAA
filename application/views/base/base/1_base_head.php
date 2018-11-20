@@ -213,6 +213,7 @@
           $('#accessibilityBar').collapse('show')
           $('#accessibilityBar').on('shown.bs.collapse', (e) => {
             tour.start()
+            $('#accessibilityBar').off('shown.bs.collapse')
           })
         }
       })
@@ -221,63 +222,147 @@
 </head>
 
 <?php if($id_view == 'login') : ?>
-    <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
-    <?php if($this->session->userdata('site_lang') == 'spanish'):?>
-        <?php $this->load->view('base/base/accessibility/iris');?>
-    <?php endif?>
-    <?php $this->load->view('base/base/accessibility/toc');?>
-    <?php else : ?>
-    <body>
-        <?php if(($this->session->userdata('need_lsc_translator')  || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
-            <?php $this->load->view('base/base/accessibility/iris');?>
-        <?php endif?>
-        
-        <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
-          <?php $this->load->view('base/base/accessibility/toc');?>
-        <?php endif?>
-        
-        <div class="inner page">
-<?php endif;?>
-<audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
-</audio>
-<!-- Button trigger modal 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>-->
 
-<!-- Modal -->
-<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-      <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100">
-      <h2 class="title"">¡Bienvenido a FROAC!</h2>
-      <p class="description">
-        Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio.
-        En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.
-      </p>
-      </div>
-      <div class="modal-footer">
-        <div class="mr-auto">
-        <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
-          <button onclick="tour.welcome(this)" class="btn btn-outline-success btn-lg interprete-button" type="submit"> 
-            <i class="fas fa-sign-language"></i>
-            Interpretar
-          </button>
-        <?php endif;?>
-          <button onclick="tour.welcome(thi)" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
-          <i class="fas fa-headphones"></i>
-          Escuchar</button>
+<body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
+  <?php if($this->session->userdata('site_lang') == 'spanish'):?>
+  <?php $this->load->view('base/base/accessibility/iris');?>
+  <?php endif?>
+  <?php $this->load->view('base/base/accessibility/toc');?>
+  <?php else : ?>
+
+  <body>
+    <?php if(($this->session->userdata('need_lsc_translator')  || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
+    <?php $this->load->view('base/base/accessibility/iris');?>
+    <?php endif?>
+
+    <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+    <?php $this->load->view('base/base/accessibility/toc');?>
+    <?php endif?>
+
+    <div class="inner page">
+      <?php endif;?>
+      <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
+      </audio>
+
+      <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <select class="selectpicker mr-0" data-width="105px" onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                    <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
+                      if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>
+                    <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php
+                      if($this->session->userdata('site_lang') == 'english') echo 'selected="selected"'; ?>>Inglés</option>
+                    <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese"
+                      <?php if($this->session->userdata('site_lang') == 'portuguese') echo 'selected="selected"';
+                      ?>>Portugués</option>
+                  </select>
+                </div>
+                <div class="row justify-content-md-center">
+                  <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100">
+                </div>
+                <div class="row justify-content-md-center">
+                  <h2 class="title">¡Bienvenido a FROAC!</h2>
+                  <p class="description">
+                    Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio.
+                    En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="mr-auto">
+                <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
+                <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
+                  type="submit">
+                  <i class="fas fa-sign-language"></i>
+                  Interpretar
+                </button>
+                <?php endif;?>
+                <button onclick="tour.welcome()" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                  <i class="fas fa-headphones"></i>
+                  Escuchar</button>
+              </div>
+              <button class="btn btn-danger" data-dismiss="modal" type="submit">
+                Salir
+              </button>
+              <button onclick="next=true" class="btn btn-primary" data-dismiss="modal" type="submit">
+                Continuar
+              </button>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-danger"  data-dismiss="modal" type="submit">
-          Salir
-        </button>
-        <button onclick="next=true" class="btn btn-primary"  data-dismiss="modal" type="submit">
-          Continuar
-        </button>
-        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
-    </div>
-  </div>
-</div>
+
+      <div class="modal fade bd-example-modal-lg" id="controlsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row justify-content-md-center">
+                  <h2 class="title">Atajos lector de pantalla</h2>
+                </div>
+                <dl class="row">
+                  <dt class="col-sm-3"><strong>Ctrl + s</strong></dt>
+                  <dd class="col-sm-9">Encender lector de pantalla</dd>
+                  <dt class="col-sm-3"><strong>Ctrl + d</strong></dt>
+                  <dd class="col-sm-9">Leer el siguiente elemento</dd>
+                  <dt class="col-sm-3">Ctrl + p</dt>
+                  <dd class="col-sm-9">Devolver al elemento anterior</dd>
+                  <dt class="col-sm-3">Ctrl + f</dt>
+                  <dd class="col-sm-9">Cambia el modo de automático a manual o manual a automático</dd>
+                  <dt class="col-sm-3">Ctrl + a</dt>
+                  <dd class="col-sm-9">Apaga el lector de pantalla</dd>
+                </dl>
+                <div class="row justify-content-md-center">
+                  <h2 class="title">Atajos narrador</h2>
+                </div>
+                <dl class="row">
+                  <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
+                  <dd class="col-sm-9">Enciende el narrador</dd>
+                </dl>
+                <div class="row justify-content-md-center">
+                  <h2 class="title">Comandos de voz</h2>
+                </div>
+                <dl class="row">
+                  <dt class="col-sm-4"><strong>Ir a *nombre enlace*</strong></dt>
+                  <dd class="col-sm-8">Hace click en el enlace</dd>
+                  <dt class="col-sm-4"><strong>Enfocar campo *nombre campo*</strong></dt>
+                  <dd class="col-sm-8">Enfoca el campo para escribir</dd>
+                  <dt class="col-sm-4"><strong>Enviar formulario</strong></dt>
+                  <dd class="col-sm-8">Envia el formulario que se este enfocando</dd>
+                  <dt class="col-sm-4"><strong>Escribir *contenido*</strong></dt>
+                  <dd class="col-sm-8">Escribe en el campo que se este enfocando</dd>
+                </dl>
+                <div class="row justify-content-md-center">
+                  <h2 class="title">Traductor a señas</h2>
+                </div>
+                <dl class="row justify-content-md-center">
+                  Para usar el traductor basta con seleccionar el texto que quiera ser traducido.
+                </dl>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="mr-auto">
+                <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
+                <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
+                  type="submit">
+                  <i class="fas fa-sign-language"></i>
+                  Interpretar
+                </button>
+                <?php endif;?>
+                <button onclick="tour.welcome()" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                  <i class="fas fa-headphones"></i>
+                  Escuchar</button>
+              </div>
+              <button onclick="next=true" class="btn btn-primary" data-dismiss="modal" type="submit">
+                Terminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
