@@ -282,7 +282,7 @@
                   Interpretar
                 </button>
                 <?php endif;?>
-                <button onclick="tour.welcome()" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
                   <i class="fas fa-headphones"></i>
                   Escuchar</button>
               </div>
@@ -349,13 +349,13 @@
             <div class="modal-footer">
               <div class="mr-auto">
                 <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
-                <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
+                <button onclick="tour.interprete('controls')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
                   Interpretar
                 </button>
                 <?php endif;?>
-                <button onclick="tour.welcome()" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                <button onclick="tour.speech('controls')" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
                   <i class="fas fa-headphones"></i>
                   Escuchar</button>
               </div>

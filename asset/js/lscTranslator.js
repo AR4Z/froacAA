@@ -4,7 +4,7 @@ class LscTranslator {
     this.clips = []
     this.signSpeed = preferencesLscTranslator.sign_speed
     this.modelId = preferencesLscTranslator.model_id
-
+    this.isTranslating = false
 
     this.minimized = localStorage.getItem('isMinimized') || 'true'
     this.irisTop = localStorage.getItem('irisTopPos') || 'calc(100% - 49px)'
@@ -20,7 +20,7 @@ class LscTranslator {
 
     this.images = imagesLscTranslator
     this.phrases = phrasesLscTranslator
-    this.onEnd = undefined
+    this.onEnd = () => null
 
     $(this.containerIris).draggable({
       containment: "parent",
@@ -280,6 +280,7 @@ class LscTranslator {
             this.stopIrisButton.style.display = 'none'
             this.playIrisButton.style.display = 'none'
             this.pauseIrisButton.style.display = 'none'
+            this.isTranslating = false
             this.onEnd()
           }
         };
@@ -293,6 +294,7 @@ class LscTranslator {
       height: 240,
       loaded: () => {
         this.canvidControl.play(0)
+        this.isTranslating = true
         this.pauseIrisButton.style.display = ''
         this.stopIrisButton.style.display = ''
       }
@@ -309,6 +311,7 @@ class LscTranslator {
     } else if (document.selection) { // IE?
       document.selection.empty();
     }
+
     if (idView === "lo_view") {
       if (iframeDocument.getSelection) {
         if (iframeDocument.getSelection().empty) { // Chrome
@@ -351,7 +354,6 @@ class LscTranslator {
       }
     }
 
-
     return copyText;
   }
 
@@ -371,13 +373,15 @@ class LscTranslator {
     this.pauseIrisButton.style.display = 'none'
     this.playIrisButton.style.display = 'none'
     this.stopIrisButton.style.display = 'none'
-    this.canvidControl.destroy()
+    this.isTranslating = false
+    this.canvidControl.destroy()    
+    this.onEnd()
   }
 
   translate(txt) {
     let text = document.getElementById('input-iris').value || txt
 
-    if (this.canvidControl) {
+    if (this.isTranslating) {
       this.stop()
     }
 

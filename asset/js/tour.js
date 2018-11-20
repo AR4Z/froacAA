@@ -1,5 +1,7 @@
 class Tour {
   constructor() {
+    this.synth = window.speechSynthesis
+    this.voices = this.synth.getVoices()
     this.messages = {
       spanish: {
         done: 'Terminar',
@@ -9,6 +11,22 @@ class Tour {
         welcome: {
           title: '¡Bienvenido a FROAC!',
           description: 'Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio. En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.'
+        },
+        screenReaderControls: {
+          title: 'Atajos lector de pantalla',
+          description: 'Ctrl + s Encender lector de pantalla. Ctrl + d Leer el siguiente elemento. Ctrl + p Devolver al elemento anterior. Ctrl + f Cambia el modo de automático a manual o manual a automático. Ctrl + a Apaga el lector de pantalla.'
+        },
+        narratorControls: {
+          title: 'Atajos narrador',
+          description: 'Ctrl + e Enciende el narrador' 
+        },
+        voiceCommands: {
+          title: 'Comandos de voz',
+          description: 'Ir a *nombre enlace* Hace click en el enlace. Enfocar campo *nombre campo* Enfoca el campo para escribir. Enviar formulario Envia el formulario que se este enfocando. Escribir *contenido* Escribe en el campo que se este enfocando.'
+        },
+        lscTranslator: {
+          title: 'Traductor a señas',
+          description: 'Para usar el traductor basta con seleccionar el texto que quiera ser traducido.'
         },
         'card-font-size': {
           title: 'Tamaño de fuente',
@@ -120,6 +138,22 @@ class Tour {
           title: '¡Bem vindo ao FROAC!',
           description: 'Temos ferramentas de acessibilidade para ajudá-lo a navegar em nosso site. Neste guia, você aprenderá a usá-las para aproveitar ao máximo.'
         },
+        screenReaderControls: {
+          title: 'Atalhos do Leitor de Tela',
+          description: 'Ctrl + s Liga o leitor de tela. Ctrl + d Lê o próximo elemento. Ctrl + p Volta para o elemento anterior. Ctrl + f Altera o modo de automático para manual ou manual para automático. Ctrl + a Desativa o leitor de tela.'
+        },
+        narratorControls: {
+          title: 'Atalhos do narrador',
+          description: 'Ctrl + e Liga o narrador' 
+        },
+        voiceCommands: {
+          title: 'Comandos de voz',
+          description: 'Ir para *link do nome* Clique no link. Campo de foco *nome do campo* Foque o campo para escrever. Enviar formulário Envie o formulário que você está focando. Escreva *conteúdo* Escreva no campo que você está focando.'
+        },
+        lscTranslator: {
+          title: 'Tradutor para assinar',
+          description: 'Para usar o tradutor, basta selecionar o texto que você deseja traduzir.'
+        },
         'card-font-size': {
           title: 'Tamanho da fonte',
           description: 'Altere o tamanho da fonte digitando um número entre 9 e 36.'
@@ -221,6 +255,22 @@ class Tour {
         welcome: {
           title: '¡Welcome to FROAC!',
           description: 'We have accessibility tools to help you navigate our site. In this guide you will learn to use them so that you can get the most out of them.'
+        },
+        screenReaderControls: {
+          title: 'Screen reader shortcuts',
+          description: 'Ctrl + s Turn on screen reader. Ctrl + d Read the next element. Ctrl + p Return to the previous element. Ctrl + f Changes the mode from automatic to manual or manual to automatic. Ctrl + a Turn off the screen reader.'
+        },
+        narratorControls: {
+          title: 'Narrator Shortcuts',
+          description: 'Ctrl + e Turn on the narrator' 
+        },
+        voiceCommands: {
+          title: 'Voice commands',
+          description: 'Go to *name link* Click on the link. Focus field *field name* Focus the field to write. Send form Send the form that you are focusing. Write *content* Write in the field you are focusing on.'
+        },
+        lscTranslator: {
+          title: 'Translator to sign',
+          description: 'To use the translator, just select the text that you want to be translated.'
         },
         'card-font-size': {
           title: 'Font size',
@@ -329,12 +379,21 @@ class Tour {
       closeBtnText: this.messages[userLang].close, // Text on the close button for this step
       nextBtnText: this.messages[userLang].next, // Next button text for this step
       prevBtnText: this.messages[userLang].previous,
+      allowClose: false,
       onReset: () => {
+        if(accessibilityBar.lscTranslator.isTranslating) {
+          accessibilityBar.lscTranslator.stop()
+        }
+
         $('#accessibilityBar').collapse('hide')        
         $('#controlsModal').modal('show')
       },
       onNext: (elm) => {
         this.driver.preventMove()
+
+        if(accessibilityBar.lscTranslator.isTranslating) {
+          accessibilityBar.lscTranslator.stop()
+        }
 
         if (elm.node.id == 'card-config-colors') {
           $('#narrator-tab').tab('show')
@@ -428,7 +487,7 @@ class Tour {
       <i class="fas fa-sign-language"></i>
       Interpretar
     </button>`: ''}
-    <button class="btn btn-outline-success btn-lg" type="submit">
+    <button onclick="tour.speech()" class="btn btn-outline-success btn-lg" type="submit">
       <i class="fas fa-headphones"></i>
       Escuchar
     </button>`
@@ -1118,21 +1177,58 @@ class Tour {
     if (!name) {
       const activeElement = this.driver.getHighlightedElement()
       text = `${ this.messages[userLang][activeElement.node.id].title }. ${ this.messages[userLang][activeElement.node.id].description }`
-    } else {
+    } else if (name== 'controls') {
+      text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }
+              ${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }
+              ${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }
+              ${ this.messages[userLang]['lscTranslator'].title }. ${ this.messages[userLang]['lscTranslator'].description }`      
+    } 
+    else {
       text = `${ this.messages[userLang][name].title }. ${ this.messages[userLang][name].description }`
     }
 
     if (accessibilityBar.lscTranslator.minimized) {
       accessibilityBar.lscTranslator.maximize()
     }
-
+    console.log("swsw")
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
 
     accessibilityBar.lscTranslator.onEnd = () => {
-      accessibilityBar.lscTranslator.containerIris.style.zIndex = 1001
+      accessibilityBar.lscTranslator.containerIris.style.zIndex = 2000
     }
 
     accessibilityBar.lscTranslator.translate(text)
+  }
+
+  speech(name) {
+    let text = ''
+
+    if (!name) {
+      const activeElement = this.driver.getHighlightedElement()
+      text = `${ this.messages[userLang][activeElement.node.id].title }. ${ this.messages[userLang][activeElement.node.id].description }`
+    } else if (name== 'controls') {
+      text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }
+              ${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }
+              ${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }
+              ${ this.messages[userLang]['lscTranslator'].title }. ${ this.messages[userLang]['lscTranslator'].description }`      
+    } 
+    else {
+      text = `${ this.messages[userLang][name].title }. ${ this.messages[userLang][name].description }`
+    }
+
+    let utter = new SpeechSynthesisUtterance(text)
+    if (userLang == 'english') {
+      utter.lang = 'en-GB'
+      utter.voice = this.voices[57]
+    } else if (userLang == 'portuguese') {
+      utter.lang = 'pt-BR'
+      utter.voice = this.voices[46]
+    } else {
+      utter.lang = 'es-419'
+      utter.voice = this.voices[65]
+    }
+
+    this.synth.speak(utter)
   }
 
   start() {
