@@ -381,63 +381,76 @@ class Tour {
       prevBtnText: this.messages[userLang].previous,
       allowClose: false,
       onReset: () => {
-        if(accessibilityBar.lscTranslator.isTranslating) {
+        if(accessibilityBar.lscTranslator 
+          && accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
         }
 
-        $('#accessibilityBar').collapse('hide')        
-        $('#controlsModal').modal('show')
+        accessibilityBar.collapseInstance.hide()
+      /*$('#controlsModal').modal('show')*/
       },
       onNext: (elm) => {
         this.driver.preventMove()
-
-        if(accessibilityBar.lscTranslator.isTranslating) {
+        if(accessibilityBar.lscTranslator 
+          && accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
         }
 
         if (elm.node.id == 'card-config-colors') {
-          $('#narrator-tab').tab('show')
-          $('#narrator-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(6)
-            $('#narrator-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.narrator.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.narrator.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.narrator.show()
         } else if (elm.node.id == 'card-narrator-read-mode') {
-          $('#screen-reader-tab').tab('show')
-          $('#screen-reader-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(13)
-            $('#screen-reader-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.screenReader.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.screenReader.show()
         } else if (elm.node.id == 'card-screen-reader-link') {
           if (userLang == 'spanish') {
-            $('#LSC-translator-tab').tab('show')
-            $('#LSC-translator-tab').on('shown.bs.tab', (e) => {
+            let handler = (e) => {
               this.driver.start(18)
-              $('#LSC-translator-tab').off('shown.bs.tab')
-            })
+              accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
+            }
+
+            accessibilityBar.tabs.lscTranslator.addEventListener('shown.bs.tab', handler)
+            accessibilityBar.tabsCollection.lscTranslator.show()
           } else {
-            $('#structural-navigation-tab').tab('show')
-            $('#structural-navigation-tab').on('shown.bs.tab', (e) => {
+            let handler = (e) => {
               this.driver.start(18)
-              $('#structural-navigation-tab').off('shown.bs.tab')
-            })
+              accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
+            }
+
+            accessibilityBar.tabs.structuralNav.addEventListener('shown.bs.tab', handler)
+            accessibilityBar.tabsCollection.structuralNav.show()
           }
         } else if (elm.node.id == 'card-lsc-translator-model') {
-          $('#structural-navigation-tab').tab('show')
-          $('#structural-navigation-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(20)
-            $('#structural-navigation-tab').off('shown.bs.tab')
-          })
-        } else if (elm.node.id == 'card-structural-nav-show-toc') {
-          $('#keyboard-tab').tab('show')
+            accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
+          }
 
-          $('#keyboard-tab').on('shown.bs.tab', (e) => {
-            if (userLang == 'spanish') {
+          accessibilityBar.tabs.structuralNav.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.structuralNav.show()
+        } else if (elm.node.id == 'card-structural-nav-show-toc') {
+          let handler = (e) => {
+            if(userLang == 'spanish') {
               this.driver.start(22)
             } else {
               this.driver.start(20)
             }
-            $('#keyboard-tab').off('shown.bs.tab')
-          })
+
+            accessibilityBar.tabs.virtualKeyboard.removeEventListener('shown.bs.tab', handler)
+          }
+          
+          accessibilityBar.tabs.virtualKeyboard.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.virtualKeyboard.show()
         } else {
           this.driver.moveNext()
         }
@@ -446,35 +459,45 @@ class Tour {
         this.driver.preventMove()
 
         if (elm.node.id == 'card-narrator-speed') {
-          $('#interfaz-tab').tab('show')
-          $('#interfaz-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(5)
-            $('#interfaz-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.interfaz.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.interfaz.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.interfaz.show()
         } else if (elm.node.id == 'card-screen-reader-speed') {
-          $('#narrator-tab').tab('show')
-          $('#narrator-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(12)
-            $('#narrator-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.narrator.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.narrator.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.narrator.show()
         } else if (elm.node.id == 'card-lsc-translator-speed') {
-          $('#screen-reader-tab').tab('show')
-          $('#screen-reader-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(17)
-            $('#screen-reader-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.screenReader.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.screenReader.show()
         } else if (elm.node.id == 'card-structural-nav-strategy-nav') {
-          $('#LSC-translator-tab').tab('show')
-          $('#LSC-translator-tab').on('shown.bs.tab', (e) => {
-            this.driver.start(19)
-            $('#LSC-translator-tab').off('shown.bs.tab')
-          })
+          let handler = (e) => {
+            this.driver.start(17)
+            accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.lscTranslator.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.lscTranslator.show()
         } else if (elm.node.id == 'card-virtual-keyboard-size') {
-          $('#structural-navigation-tab').tab('show')
-          $('#structural-navigation-tab').on('shown.bs.tab', (e) => {
+          let handler = (e) => {
             this.driver.start(21)
-            $('#structural-navigation-tab').off('shown.bs.tab')
-          })
+            accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
+          }
+
+          accessibilityBar.tabs.structuralNav.addEventListener('shown.bs.tab', handler)
+          accessibilityBar.tabsCollection.structuralNav.show()
         } else {
           this.driver.movePrevious()
         }
@@ -1194,6 +1217,7 @@ class Tour {
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
 
     accessibilityBar.lscTranslator.onEnd = () => {
+      console.log("haha")
       accessibilityBar.lscTranslator.containerIris.style.zIndex = 2000
     }
 

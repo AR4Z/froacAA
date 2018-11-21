@@ -207,17 +207,27 @@
       tour = new Tour()
       next = false
       
-      $('#introModal').modal('show')
-      $('#introModal').on('hidden.bs.modal', function (e) {
+      let introModal = document.getElementById('introModal')
+      let modalIntroInstance = new Modal(introModal)
+      modalIntroInstance.show()
+
+      introModal.addEventListener('hidden.bs.modal', e => {
+        if(accessibilityBar.lscTranslator 
+          && accessibilityBar.lscTranslator.isTranslating) {
+          accessibilityBar.lscTranslator.stop()
+        }
+
         if(next) {
-          $('#accessibilityBar').collapse('show')
-          $('#accessibilityBar').on('shown.bs.collapse', (e) => {
+          let handler = function (e) {
             tour.start()
-            $('#accessibilityBar').off('shown.bs.collapse')
-          })
+            accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
+          }
+
+          accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
+          accessibilityBar.collapseInstance.show()
         }
       })
-    });
+    })
     </script>
 </head>
 
@@ -262,7 +272,7 @@
                   </select>
                 </div>
                 <div class="row justify-content-md-center">
-                  <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100">
+                  <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">
                 </div>
                 <div class="row justify-content-md-center">
                   <h2 class="title">¡Bienvenido a FROAC!</h2>

@@ -18,7 +18,7 @@
 <?php endif;?>
 <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-<script src="<?php echo base_url()?>asset/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url()?>asset/js/bootstrap-native-v4.js"></script>
 <script src="<?php echo base_url()?>asset/js/color.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 

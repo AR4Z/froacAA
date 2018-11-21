@@ -374,7 +374,7 @@ class LscTranslator {
     this.playIrisButton.style.display = 'none'
     this.stopIrisButton.style.display = 'none'
     this.isTranslating = false
-    this.canvidControl.destroy()    
+    this.canvidControl.destroy()
     this.onEnd()
   }
 

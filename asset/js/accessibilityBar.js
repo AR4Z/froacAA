@@ -9,6 +9,12 @@ class AccessibilityBar {
     this.loggedIn = loggedIn
     this.url = url
 
+    this.button = document.getElementById('accessibilityBarButton')
+    this.collapse = document.getElementById(this.button.getAttribute('href').replace('#', ''))
+    this.collapseInstance = new Collapse(this.button)
+    this.tabs = {}
+    this.tabsCollection = {} 
+
     this.narrator
     this.customInterfaz
     this.lscTranslator
@@ -20,10 +26,10 @@ class AccessibilityBar {
   }
 
   fetchDataAccessibilityBar() {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       return fetch(`${ this.url }usuario/get_data_accessibility_bar`)
-      .then(r => r.json())
-      .catch(err => console.error(err))
+        .then(r => r.json())
+        .catch(err => console.error(err))
     } else {
       return new Promise((resolve, reject) => {
         resolve({
@@ -46,7 +52,7 @@ class AccessibilityBar {
               link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
             }
           },
-  
+
           data_narrator: {
             speed_reading: parseInt(localStorage.getItem('speed_reading_nr')) || 2,
             pitch_nr: parseInt(localStorage.getItem('pitch_nr')) || 2,
@@ -56,7 +62,7 @@ class AccessibilityBar {
             highlight_id: parseInt(localStorage.getItem('highlight_id_nr')) || 1,
             reading_unit_id: parseInt(localStorage.getItem('reading_unit_id_nr')) || 1
           },
-  
+
           data_screen_reader: {
             speed_reading_id: parseInt(localStorage.getItem('speed_reading_sr')) || 2,
             pitch_id: parseInt(localStorage.getItem('pitch_id_sr')) || 2,
@@ -64,17 +70,17 @@ class AccessibilityBar {
             voice_gender_id: parseInt(localStorage.getItem('voice_gender_id_sr')) || 1,
             links_id: parseInt(localStorage.getItem('links_id_sr')) || 2
           },
-  
+
           data_lsc_translator: {
             sign_speed: parseInt(localStorage.getItem('sign_speed')) || 20,
             model_id: parseInt(localStorage.getItem('model_id')) || 1
           },
-  
+
           data_structural_nav: {
             nav_strategy_id: parseInt(localStorage.getItem('nav_strategy_id')) || 1,
             showtoc: localStorage.getItem('show_toc') || 'f'
           },
-  
+
           data_virtual_keyboard: {
             kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
             play_key_sound: localStorage.getItem('play_key_sound') || 't'
@@ -86,32 +92,44 @@ class AccessibilityBar {
 
   createAccessibilityElements() {
     if (this.needStructuralNavigation) {
+      this.tabs.structuralNav = document.getElementById('structural-navigation-tab')
+      this.tabsCollection.structuralNav = new Tab(this.tabs.structuralNav)
       this.structuralNavigation = new StructuralNavigation(this.dataAccessibilityBar.data_structural_nav)
     }
 
     if (this.needVirtualKeyboard) {
+      this.tabs.virtualKeyboard = document.getElementById('keyboard-tab')
+      this.tabsCollection.virtualKeyboard = new Tab(this.tabs.virtualKeyboard)
       this.virtualKeyboard = new VirtualKeyboard(this.dataAccessibilityBar.data_virtual_keyboard)
     }
 
     if (this.needCustomInterfaz) {
+      this.tabs.interfaz = document.getElementById('interfaz-tab')
+      this.tabsCollection.interfaz = new Tab(this.tabs.interfaz)
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
     if (this.needNarrator) {
+      this.tabs.narrator = document.getElementById('narrator-tab')
+      this.tabsCollection.narrator = new Tab(this.tabs.narrator)
       this.narrator = new Narrator(this.dataAccessibilityBar.data_narrator)
     }
 
     if (this.needLscTranslator) {
+      this.tabs.lscTranslator = document.getElementById('LSC-translator-tab')
+      this.tabsCollection.lscTranslator = new Tab(this.tabs.lscTranslator)
       this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
     }
 
     if (this.needScreenReader) {
+      this.tabs.screenReader = document.getElementById('screen-reader-tab')
+      this.tabsCollection.screenReader = new Tab(this.tabs.screenReader)
       this.screenReader = new ScreenReader(this.dataAccessibilityBar.data_screen_reader)
-    }    
+    }
   }
 
   updatePreferencesInterfaz(preferencesInterface) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -121,26 +139,26 @@ class AccessibilityBar {
           preferencesInterface: preferencesInterface
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_interface_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesInterface).forEach(key => {
-          this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
-        });
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+        .then(() => {
+          Object.keys(preferencesInterface).forEach(key => {
+            this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
+          });
+        })
+        .catch((e) => {
+          console.error(e)
+        })
     } else {
       Object.keys(preferencesInterface).forEach(key => {
         this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
       });
     }
-    
+
   }
 
   updateCustomColors(customColors) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -150,13 +168,13 @@ class AccessibilityBar {
           customColors: customColors
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_custom_colors`, fetchData)
-      .then(() => {
-        Object.keys(customColors).forEach(key => {
-          this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
+        .then(() => {
+          Object.keys(customColors).forEach(key => {
+            this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
+          })
         })
-      })
     } else {
       Object.keys(customColors).forEach(key => {
         this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
@@ -165,7 +183,7 @@ class AccessibilityBar {
   }
 
   updatePreferencesNarrator(preferencesNarrator) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -175,13 +193,13 @@ class AccessibilityBar {
           preferencesNarrator: preferencesNarrator
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_narrator_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesNarrator).forEach(key => {
-          this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
+        .then(() => {
+          Object.keys(preferencesNarrator).forEach(key => {
+            this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
+          })
         })
-      })
     } else {
       Object.keys(preferencesNarrator).forEach(key => {
         this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
@@ -190,7 +208,7 @@ class AccessibilityBar {
   }
 
   updatePreferencesScreenReader(preferencesScreenReader) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -200,13 +218,13 @@ class AccessibilityBar {
           preferencesScreenReader: preferencesScreenReader
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_screen_reader_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesScreenReader).forEach(key => {
-          this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
+        .then(() => {
+          Object.keys(preferencesScreenReader).forEach(key => {
+            this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
+          })
         })
-      })
     } else {
       Object.keys(preferencesScreenReader).forEach(key => {
         this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
@@ -215,7 +233,7 @@ class AccessibilityBar {
   }
 
   updatePreferencesLscTranslator(preferencesLscTranslator) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -225,13 +243,13 @@ class AccessibilityBar {
           preferencesLscTranslator: preferencesLscTranslator
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_lsc_translator_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesLscTranslator).forEach(key => {
-          this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
+        .then(() => {
+          Object.keys(preferencesLscTranslator).forEach(key => {
+            this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
+          })
         })
-      })
     } else {
       Object.keys(preferencesLscTranslator).forEach(key => {
         this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
@@ -240,7 +258,7 @@ class AccessibilityBar {
   }
 
   updatePreferencesStructuralNav(preferencesStructuralNav) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -250,13 +268,13 @@ class AccessibilityBar {
           preferencesStructuralNav: preferencesStructuralNav
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesStructuralNav).forEach(key => {
-          this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
+        .then(() => {
+          Object.keys(preferencesStructuralNav).forEach(key => {
+            this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
+          })
         })
-      })
     } else {
       Object.keys(preferencesStructuralNav).forEach(key => {
         this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
@@ -265,7 +283,7 @@ class AccessibilityBar {
   }
 
   updatePreferencesKeyboard(preferencesKeyboard) {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -275,13 +293,13 @@ class AccessibilityBar {
           preferencesKeyboard: preferencesKeyboard
         })
       }
-  
+
       fetch(`${ this.url }usuario/update_keyboard_preferences`, fetchData)
-      .then(() => {
-        Object.keys(preferencesKeyboard).forEach(key => {
-          this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
+        .then(() => {
+          Object.keys(preferencesKeyboard).forEach(key => {
+            this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
+          })
         })
-      })
     } else {
       Object.keys(preferencesKeyboard).forEach(key => {
         this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
@@ -290,7 +308,7 @@ class AccessibilityBar {
   }
 
   updateAllPreferencesToDefault() {
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
         headers: {
@@ -299,16 +317,16 @@ class AccessibilityBar {
       }
 
       fetch(`${ this.url }usuario/set_all_preferences_to_default`, fetchData)
-      .then(() => {
-        this.setDataAccessibilityToDefault()        
-      })
+        .then(() => {
+          this.setDataAccessibilityToDefault()
+        })
     } else {
       this.setDataAccessibilityToDefault()
     }
   }
 
   setDataAccessibilityToDefault() {
-    if(this.needCustomInterfaz) {
+    if (this.needCustomInterfaz) {
       this.dataAccessibilityBar.data_custom_interfaz = {
         color_cursor: 'rgb(255,18,18)',
         contrast_colors_id: 1,
@@ -330,7 +348,7 @@ class AccessibilityBar {
       }
     }
 
-    if(this.needNarrator) {
+    if (this.needNarrator) {
       this.dataAccessibilityBar.data_narrator = {
         speed_reading: 2,
         pitch_nr: 2,
@@ -342,7 +360,7 @@ class AccessibilityBar {
       }
     }
 
-    if(this.needScreenReader) {
+    if (this.needScreenReader) {
       this.dataAccessibilityBar.data_screen_reader = {
         speed_reading_id: 2,
         pitch_id: 2,
@@ -352,21 +370,21 @@ class AccessibilityBar {
       }
     }
 
-    if(this.needLscTranslator) {
+    if (this.needLscTranslator) {
       this.dataAccessibilityBar.data_lsc_translator = {
         sign_speed: 20,
         model_id: 1
       }
     }
 
-    if(this.needStructuralNavigation) {
+    if (this.needStructuralNavigation) {
       this.dataAccessibilityBar.data_structural_nav = {
         nav_strategy_id: 1,
         showtoc: false
       }
     }
 
-    if(this.needVirtualKeyboard) {
+    if (this.needVirtualKeyboard) {
       this.dataAccessibilityBar.data_virtual_keyboard = {
         kb_size_id: 2,
         play_key_sound: true
@@ -375,27 +393,27 @@ class AccessibilityBar {
   }
 
   setDefaultAllValues() {
-    if(this.customInterfaz) {
+    if (this.customInterfaz) {
       this.customInterfaz.setDefaultValues(true)
     }
 
-    if(this.lscTranslator) {
+    if (this.lscTranslator) {
       this.lscTranslator.setDefaultValues(true)
     }
 
-    if(this.narrator) {
+    if (this.narrator) {
       this.narrator.setDefaultValues(true)
     }
 
-    if(this.screenReader) {
+    if (this.screenReader) {
       this.screenReader.setDefaultValues(true)
     }
 
-    if(this.virtualKeyboard) {
+    if (this.virtualKeyboard) {
       this.virtualKeyboard.setDefaultValues(true)
     }
 
-    if(this.structuralNavigation) {
+    if (this.structuralNavigation) {
       this.structuralNavigation.setDefaultValues(true)
     }
 
