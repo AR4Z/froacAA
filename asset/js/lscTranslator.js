@@ -206,34 +206,34 @@ class LscTranslator {
   }
 
   prepareText(text) {
-    let copyText = text;
+    let copyText = text
 
-    copyText = copyText.toLowerCase();
-    copyText = this.replaceAll(copyText, 'á', 'a');
-    copyText = this.replaceAll(copyText, 'é', 'e');
-    copyText = this.replaceAll(copyText, 'í', 'i');
-    copyText = this.replaceAll(copyText, 'ó', 'o');
-    copyText = this.replaceAll(copyText, 'ú', 'u');
-    copyText = this.replaceAll(copyText, 'ñ', 'n-');
+    copyText = copyText.toLowerCase()
+    copyText = this.replaceAll(copyText, 'á', 'a')
+    copyText = this.replaceAll(copyText, 'é', 'e')
+    copyText = this.replaceAll(copyText, 'í', 'i')
+    copyText = this.replaceAll(copyText, 'ó', 'o')
+    copyText = this.replaceAll(copyText, 'ú', 'u')
+    copyText = this.replaceAll(copyText, 'ñ', 'n-')
+    copyText = this.replaceAll(copyText, '+', 'mas')
+    copyText = this.replaceAll(copyText, /[.,\?\¿\/#!¡$%\^&\*;:{}=\-_`~()]/g, "")
+    copyText = this.replaceAll(copyText, /\s{2,}/g, " ")
 
-    copyText = this.replaceAll(copyText, /[.,\?\¿\/#!¡$%\^&\*;:{}=\-_`~()]/g, "");
-    copyText = this.replaceAll(copyText, /\s{2,}/g, " ");
+    copyText = copyText.trim()
 
-    copyText = copyText.trim();
-
-    return copyText;
+    return copyText
   }
 
   splitWordsInValidSigns(text) {
-    let imagesPath = [];
-    let imagesLetter = [];
-    let imagesNumbers = this.images.numeros;
+    let imagesPath = []
+    let imagesLetter = []
+    let imagesNumbers = this.images.numeros
 
-    const words = text.split(' ');
+    const words = text.split(' ')
 
     for (let iWord = 0; iWord < words.length; iWord++) {
-      const word = words[iWord];
-      imagesLetter = this.images[word[0]];
+      const word = words[iWord]
+      imagesLetter = this.images[word[0]]
 
       if (imagesNumbers.indexOf(word + ".jpg") != -1) {
         imagesPath.push("numeros" + '/' + imagesNumbers[imagesNumbers.indexOf(word + '.jpg')])
@@ -255,7 +255,7 @@ class LscTranslator {
     let base = `${ accessibilityBar.url }asset/img/lengua/`
 
     for (let index = 0; index < signsName.length; index++) {
-      const element = signsName[index];
+      const element = signsName[index]
 
       if ((index + 1) < signsName.length) {
         this.clips[index] = {
