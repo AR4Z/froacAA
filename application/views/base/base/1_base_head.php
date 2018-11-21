@@ -261,7 +261,7 @@
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <select class="selectpicker mr-0" data-width="105px" onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                  <!--<select class="selectpicker mr-0" data-width="105px" onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
                       if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>
                     <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php
@@ -269,7 +269,7 @@
                     <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese"
                       <?php if($this->session->userdata('site_lang') == 'portuguese') echo 'selected="selected"';
                       ?>>Portugués</option>
-                  </select>
+                  </select>-->
                 </div>
                 <div class="row justify-content-md-center">
                   <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">

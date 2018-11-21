@@ -387,7 +387,10 @@ class Tour {
         }
 
         accessibilityBar.collapseInstance.hide()
-      /*$('#controlsModal').modal('show')*/
+        let controlsModal = document.getElementById('controlsModal')
+        let controlsModalInit = new Modal(controlsModal)
+
+        controlsModalInit.show()
       },
       onNext: (elm) => {
         this.driver.preventMove()
@@ -483,16 +486,30 @@ class Tour {
           accessibilityBar.tabs.screenReader.addEventListener('shown.bs.tab', handler)
           accessibilityBar.tabsCollection.screenReader.show()
         } else if (elm.node.id == 'card-structural-nav-strategy-nav') {
-          let handler = (e) => {
-            this.driver.start(17)
-            accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
-          }
+          if(userLang == 'spanish') {
+            let handler = (e) => {
+              this.driver.start(17)
+              accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
+            }
+  
+            accessibilityBar.tabs.lscTranslator.addEventListener('shown.bs.tab', handler)
+            accessibilityBar.tabsCollection.lscTranslator.show()
+          } else {
+            let handler = (e) => {
+              this.driver.start(17)
+              accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
+            }
 
-          accessibilityBar.tabs.lscTranslator.addEventListener('shown.bs.tab', handler)
-          accessibilityBar.tabsCollection.lscTranslator.show()
+            accessibilityBar.tabs.screenReader.addEventListener('shown.bs.tab', handler)
+            accessibilityBar.tabsCollection.screenReader.show()
+          }
         } else if (elm.node.id == 'card-virtual-keyboard-size') {
           let handler = (e) => {
-            this.driver.start(21)
+            if(userLang == 'spanish') {
+              this.driver.start(21)
+            } else {
+              this.driver.start(19)
+            }
             accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
           }
 

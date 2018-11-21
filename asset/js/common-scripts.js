@@ -46,16 +46,11 @@ $(document).ready(function () {
   if (document.querySelectorAll('ul#accessibilityTab li').length == 2) {
     document.getElementById('reset-all').style.display = 'none'
   }
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-});
+})
 
 function contains(selector, text) {
   let elements = document.querySelectorAll(selector);
   return [].filter.call(elements, function (element) {
     return RegExp(text, 'i').test(element.textContent);
-  });
+  })
 }
-

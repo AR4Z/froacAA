@@ -350,7 +350,6 @@ class LscTranslator {
         copyText = this.replaceAll(copyText, element, writtenNumber(element, {
           lang: "es"
         }));
-
       }
     }
 
