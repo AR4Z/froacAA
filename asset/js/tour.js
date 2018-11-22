@@ -120,7 +120,7 @@ class Tour {
           title: 'Tamaño del teclado',
           description: 'Cambie el tamaño del teclado virtual.'
         },
-        'card-virtual-keyboard-sound': {
+        'card-virtual-keyboard-key-sound': {
           title: 'Sonido del teclado',
           description: 'Puede reproducir o no un sonido al presionar una tecla del teclado virtual.'
         },
@@ -238,7 +238,7 @@ class Tour {
           title: 'Tamanho do teclado',
           description: 'Altere o tamanho do teclado virtual.'
         },
-        'card-virtual-keyboard-sound': {
+        'card-virtual-keyboard-key-sound': {
           title: 'Som do teclado',
           description: 'Você pode tocar um som ou não pressionando uma tecla no teclado virtual.'
         },
@@ -364,7 +364,7 @@ class Tour {
           title: 'Keyboard size',
           description: 'Change the size of the virtual keyboard.'
         },
-        'card-virtual-keyboard-sound': {
+        'card-virtual-keyboard-key-sound': {
           title: 'Keyboard sound',
           description: 'You can play a sound or not by pressing a key on the virtual keyboard.'
         },
@@ -403,9 +403,19 @@ class Tour {
 
         controlsModal.addEventListener('shown.bs.modal', e => {
           this.speech('controls')
+
+          hotkeys('enter', (event, handler) => {
+            controlsModalInit.hide()
+          })
         })
 
         controlsModal.addEventListener('hidden.bs.modal', e => {
+          hotkeys.unbind('enter')
+
+          if(accessibilityBar.lscTranslator.isTranslating) {
+            accessibilityBar.lscTranslator.stop()
+          }
+
           if(this.synth.speaking) {
             this.synth.cancel()
           }
@@ -879,10 +889,10 @@ class Tour {
         {
           element: '#card-virtual-keyboard-key-sound',
           popover: {
-            title: `${ this.messages[userLang]['card-virtual-keyboard-sound'].title }`,
+            title: `${ this.messages[userLang]['card-virtual-keyboard-key-sound'].title }`,
             description: `
           <p class="description">
-            ${ this.messages[userLang]['card-virtual-keyboard-sound'].description }
+            ${ this.messages[userLang]['card-virtual-keyboard-key-sound'].description }
           </p>
               <br/>
               ${ this.buttons }
@@ -1203,10 +1213,10 @@ class Tour {
         {
           element: '#card-virtual-keyboard-key-sound',
           popover: {
-            title: `${ this.messages[userLang]['card-virtual-keyboard-sound'].title }`,
+            title: `${ this.messages[userLang]['card-virtual-keyboard-key-sound'].title }`,
             description: `
         <p class="description">
-          ${ this.messages[userLang]['card-virtual-keyboard-sound'].description }
+          ${ this.messages[userLang]['card-virtual-keyboard-key-sound'].description }
         </p>
             <br/>
             ${ this.buttons }
@@ -1235,6 +1245,10 @@ class Tour {
   interprete(name) {
     let text = ''
 
+    if(accessibilityBar.lscTranslator.isTranslating) {
+      accessibilityBar.lscTranslator.stop()
+    }
+
     if (!name) {
       const activeElement = this.driver.getHighlightedElement()
       text = `${ this.messages[userLang][activeElement.node.id].title }. ${ this.messages[userLang][activeElement.node.id].description }`
@@ -1254,7 +1268,7 @@ class Tour {
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
 
     accessibilityBar.lscTranslator.onEnd = () => {
-      accessibilityBar.lscTranslator.containerIris.style.zIndex = 2000
+      accessibilityBar.lscTranslator.containerIris.style.zIndex = 1001
     }
 
     accessibilityBar.lscTranslator.translate(text)
@@ -1262,6 +1276,10 @@ class Tour {
 
   speech(name) {
     let text = ''
+
+    if(this.synth.speaking) {
+      this.synth.cancel()
+    }
 
     if (!name) {
       const activeElement = this.driver.getHighlightedElement()

@@ -209,13 +209,20 @@
       
       let introModal = document.getElementById('introModal')
       let modalIntroInstance = new Modal(introModal)
-      modalIntroInstance.show()
 
       introModal.addEventListener('shown.bs.modal', e => {
+        hotkeys('enter', function(event,handler) {
+          next = true
+          modalIntroInstance.hide()
+        })
+
         tour.speech('welcome')
       })
 
+      modalIntroInstance.show()
+
       introModal.addEventListener('hidden.bs.modal', e => {
+        hotkeys.unbind('enter')
         if(tour.synth.speaking) {
           tour.synth.cancel()
         }
@@ -261,7 +268,6 @@
       <?php endif;?>
       <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
       </audio>
-
       <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

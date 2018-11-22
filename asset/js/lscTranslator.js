@@ -282,6 +282,7 @@ class LscTranslator {
             this.pauseIrisButton.style.display = 'none'
             this.isTranslating = false
             this.onEnd()
+            this.onEnd = () => null
           }
         };
       }
