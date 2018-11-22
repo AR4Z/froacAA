@@ -380,7 +380,18 @@ class Tour {
       nextBtnText: this.messages[userLang].next, // Next button text for this step
       prevBtnText: this.messages[userLang].previous,
       allowClose: false,
+      onHighlighted: (elm) => {
+        if(this.synth.speaking) {
+          this.synth.cancel()
+        }
+
+        this.speech()
+      },
       onReset: () => {
+        if(this.synth.speaking) {
+          this.synth.cancel()
+        }
+
         if(accessibilityBar.lscTranslator 
           && accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
@@ -390,10 +401,20 @@ class Tour {
         let controlsModal = document.getElementById('controlsModal')
         let controlsModalInit = new Modal(controlsModal)
 
+        controlsModal.addEventListener('shown.bs.modal', e => {
+          this.speech('controls')
+        })
+
+        controlsModal.addEventListener('hidden.bs.modal', e => {
+          if(this.synth.speaking) {
+            this.synth.cancel()
+          }
+        })
         controlsModalInit.show()
       },
       onNext: (elm) => {
         this.driver.preventMove()
+
         if(accessibilityBar.lscTranslator 
           && accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
@@ -1230,11 +1251,9 @@ class Tour {
     if (accessibilityBar.lscTranslator.minimized) {
       accessibilityBar.lscTranslator.maximize()
     }
-    console.log("swsw")
     accessibilityBar.lscTranslator.containerIris.style.zIndex = 5000000000
 
     accessibilityBar.lscTranslator.onEnd = () => {
-      console.log("haha")
       accessibilityBar.lscTranslator.containerIris.style.zIndex = 2000
     }
 
@@ -1258,6 +1277,7 @@ class Tour {
     }
 
     let utter = new SpeechSynthesisUtterance(text)
+
     if (userLang == 'english') {
       utter.lang = 'en-GB'
       utter.voice = this.voices[57]

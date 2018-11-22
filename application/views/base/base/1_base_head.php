@@ -211,7 +211,15 @@
       let modalIntroInstance = new Modal(introModal)
       modalIntroInstance.show()
 
+      introModal.addEventListener('shown.bs.modal', e => {
+        tour.speech('welcome')
+      })
+
       introModal.addEventListener('hidden.bs.modal', e => {
+        if(tour.synth.speaking) {
+          tour.synth.cancel()
+        }
+
         if(accessibilityBar.lscTranslator 
           && accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
