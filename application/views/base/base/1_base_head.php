@@ -151,7 +151,7 @@
         div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.large>span {
           position: static;
           font-size: calc(.8em + 1vw);
-        }
+        }  
     </style>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -211,15 +211,13 @@
       let modalIntroInstance = new Modal(introModal)
 
       introModal.addEventListener('shown.bs.modal', e => {
-        hotkeys('enter', function(event,handler) {
+        hotkeys('enter', function(event, handler) {
           next = true
           modalIntroInstance.hide()
         })
 
         tour.speech('welcome')
       })
-
-      modalIntroInstance.show()
 
       introModal.addEventListener('hidden.bs.modal', e => {
         hotkeys.unbind('enter')
@@ -242,12 +240,12 @@
           accessibilityBar.collapseInstance.show()
         }
       })
+
+      modalIntroInstance.show()
     })
     </script>
 </head>
-
 <?php if($id_view == 'login') : ?>
-
 <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
   <?php if($this->session->userdata('site_lang') == 'spanish'):?>
   <?php $this->load->view('base/base/accessibility/iris');?>
@@ -306,7 +304,8 @@
                   Interpretar
                 </button>
                 <?php endif;?>
-                <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button"
+                  type="submit">
                   <i class="fas fa-headphones"></i>
                   Escuchar</button>
               </div>
@@ -320,54 +319,61 @@
           </div>
         </div>
       </div>
-
       <div class="modal fade bd-example-modal-lg" id="controlsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
+        <div class="modal-dialog modal-lg" role="document" style="height: 95%;">
+          <div class="modal-content" style="height: 95%;">
             <div class="modal-body">
-              <div class="container-fluid">
-                <div class="row justify-content-md-center">
-                  <h2 class="title">Atajos lector de pantalla</h2>
+            <div id="controlsAccessibilityTools" style="height: 95%;" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner" style="height: 95%;">
+                  <div class="carousel-item active" >
+                    <div class="container-fluid">
+                      <div class="row justify-content-md-center">
+                        <h2 class="title">Atajos lector de pantalla</h2>
+                      </div>
+                      <dl class="row">
+                        <dt class="col-sm-3"><strong>Ctrl + s</strong></dt>
+                        <dd class="col-sm-9">Encender lector de pantalla</dd>
+                        <dt class="col-sm-3"><strong>Ctrl + d</strong></dt>
+                        <dd class="col-sm-9">Leer el siguiente elemento</dd>
+                        <dt class="col-sm-3">Ctrl + p</dt>
+                        <dd class="col-sm-9">Devolver al elemento anterior</dd>
+                        <dt class="col-sm-3">Ctrl + f</dt>
+                        <dd class="col-sm-9">Cambia el modo de automático a manual o manual a automático</dd>
+                        <dt class="col-sm-3">Ctrl + a</dt>
+                        <dd class="col-sm-9">Apaga el lector de pantalla</dd>
+                      </dl>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="container-fluid">
+                    <div class="row justify-content-md-center">
+                      <h2 class="title">Atajos narrador</h2>
+                    </div>
+                    <dl class="row">
+                      <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
+                      <dd class="col-sm-9">Enciende el narrador</dd>
+                    </dl>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="container-fluid">
+                    <div class="row justify-content-md-center">
+                      <h2 class="title">Comandos de voz</h2>
+                    </div>
+                    <dl class="row">
+                      <dt class="col-sm-4"><strong>Ir a *nombre enlace*</strong></dt>
+                      <dd class="col-sm-8">Hace click en el enlace</dd>
+                      <dt class="col-sm-4"><strong>Enfocar campo *nombre campo*</strong></dt>
+                      <dd class="col-sm-8">Enfoca el campo para escribir</dd>
+                      <dt class="col-sm-4"><strong>Enviar formulario</strong></dt>
+                      <dd class="col-sm-8">Envia el formulario que se este enfocando</dd>
+                      <dt class="col-sm-4"><strong>Escribir *contenido*</strong></dt>
+                      <dd class="col-sm-8">Escribe en el campo que se este enfocando</dd>
+                    </dl>
+                    </div>
+                  </div>
                 </div>
-                <dl class="row">
-                  <dt class="col-sm-3"><strong>Ctrl + s</strong></dt>
-                  <dd class="col-sm-9">Encender lector de pantalla</dd>
-                  <dt class="col-sm-3"><strong>Ctrl + d</strong></dt>
-                  <dd class="col-sm-9">Leer el siguiente elemento</dd>
-                  <dt class="col-sm-3">Ctrl + p</dt>
-                  <dd class="col-sm-9">Devolver al elemento anterior</dd>
-                  <dt class="col-sm-3">Ctrl + f</dt>
-                  <dd class="col-sm-9">Cambia el modo de automático a manual o manual a automático</dd>
-                  <dt class="col-sm-3">Ctrl + a</dt>
-                  <dd class="col-sm-9">Apaga el lector de pantalla</dd>
-                </dl>
-                <div class="row justify-content-md-center">
-                  <h2 class="title">Atajos narrador</h2>
-                </div>
-                <dl class="row">
-                  <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
-                  <dd class="col-sm-9">Enciende el narrador</dd>
-                </dl>
-                <div class="row justify-content-md-center">
-                  <h2 class="title">Comandos de voz</h2>
-                </div>
-                <dl class="row">
-                  <dt class="col-sm-4"><strong>Ir a *nombre enlace*</strong></dt>
-                  <dd class="col-sm-8">Hace click en el enlace</dd>
-                  <dt class="col-sm-4"><strong>Enfocar campo *nombre campo*</strong></dt>
-                  <dd class="col-sm-8">Enfoca el campo para escribir</dd>
-                  <dt class="col-sm-4"><strong>Enviar formulario</strong></dt>
-                  <dd class="col-sm-8">Envia el formulario que se este enfocando</dd>
-                  <dt class="col-sm-4"><strong>Escribir *contenido*</strong></dt>
-                  <dd class="col-sm-8">Escribe en el campo que se este enfocando</dd>
-                </dl>
-                <div class="row justify-content-md-center">
-                  <h2 class="title">Traductor a señas</h2>
-                </div>
-                <dl class="row justify-content-md-center">
-                  Para usar el traductor basta con seleccionar el texto que quiera ser traducido.
-                </dl>
               </div>
             </div>
             <div class="modal-footer">
@@ -379,13 +385,20 @@
                   Interpretar
                 </button>
                 <?php endif;?>
-                <button onclick="tour.speech('controls')" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                <button onclick="tour.speech('controls')" class="btn btn-outline-success btn-lg text-to-speech-button"
+                  type="submit">
                   <i class="fas fa-headphones"></i>
                   Escuchar</button>
               </div>
-              <button onclick="next=true" class="btn btn-primary" data-dismiss="modal" type="submit">
-                Terminar
-              </button>
+                <button id="prevButtonControls" onclick="tour.prevControlsSlide()" class="btn btn-outline-primary" type="submit">
+                  Anterior
+                </button>
+                <button id="nextButtonControls" onclick="tour.nextControlsSlide()" class="btn btn-outline-primary" type="submit">
+                  Siguiente
+                </button>
+                <button id="finishButtonControls" class="btn btn-primary" data-dismiss="modal" type="submit" style="display:none;">
+                  Terminar
+                </button>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@
 <script src="<?php echo base_url()?>asset/js/bootstrap-native-v4.js"></script>
 <script src="<?php echo base_url()?>asset/js/color.js"></script>
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
-
+<script src="<?php echo base_url() ?>asset/js/lory.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
 

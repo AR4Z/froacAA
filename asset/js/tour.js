@@ -2,6 +2,18 @@ class Tour {
   constructor() {
     this.synth = window.speechSynthesis
     this.voices = this.synth.getVoices()
+    this.lastStepTour = 0
+
+    this.carouselControlsElm = document.getElementById('controlsAccessibilityTools');
+    this.carouselControls = new Carousel(this.carouselControlsElm, {
+      interval: false,
+      pause: false,
+      keyboard: false
+    })
+
+    this.controlsModal = document.getElementById('controlsModal')
+    this.controlsModalInit = new Modal(this.controlsModal)
+
     this.messages = {
       spanish: {
         done: 'Terminar',
@@ -18,7 +30,7 @@ class Tour {
         },
         narratorControls: {
           title: 'Atajos narrador',
-          description: 'Ctrl + e Enciende el narrador' 
+          description: 'Ctrl + e Enciende el narrador'
         },
         voiceCommands: {
           title: 'Comandos de voz',
@@ -144,7 +156,7 @@ class Tour {
         },
         narratorControls: {
           title: 'Atalhos do narrador',
-          description: 'Ctrl + e Liga o narrador' 
+          description: 'Ctrl + e Liga o narrador'
         },
         voiceCommands: {
           title: 'Comandos de voz',
@@ -262,7 +274,7 @@ class Tour {
         },
         narratorControls: {
           title: 'Narrator Shortcuts',
-          description: 'Ctrl + e Turn on the narrator' 
+          description: 'Ctrl + e Turn on the narrator'
         },
         voiceCommands: {
           title: 'Voice commands',
@@ -381,58 +393,106 @@ class Tour {
       prevBtnText: this.messages[userLang].previous,
       allowClose: false,
       onHighlighted: (elm) => {
-        if(this.synth.speaking) {
+        if (this.synth.speaking) {
           this.synth.cancel()
         }
 
         this.speech()
       },
       onReset: () => {
-        if(this.synth.speaking) {
+        if (this.synth.speaking) {
           this.synth.cancel()
         }
 
-        if(accessibilityBar.lscTranslator 
-          && accessibilityBar.lscTranslator.isTranslating) {
+        if (accessibilityBar.lscTranslator &&
+          accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
         }
 
         accessibilityBar.collapseInstance.hide()
-        let controlsModal = document.getElementById('controlsModal')
-        let controlsModalInit = new Modal(controlsModal)
-
-        controlsModal.addEventListener('shown.bs.modal', e => {
+        let handlerControlsModal = () => {
           this.speech('controls')
 
-          hotkeys('enter', (event, handler) => {
-            controlsModalInit.hide()
+          hotkeys('enter,left,right', (event, handler) => {
+            switch (handler.key) {
+              case 'left':
+                {
+                  this.prevControlsSlide()
+                  break
+                }
+              case 'right':
+                {
+                  this.nextControlsSlide()
+                  break
+                }
+              case 'enter':
+                {
+                  if (this.carouselControls.getActiveIndex() == 2) {
+                    this.controlsModalInit.hide()
+                  }
+                  break
+                }
+            }
           })
-        })
 
-        controlsModal.addEventListener('hidden.bs.modal', e => {
-          hotkeys.unbind('enter')
+          this.controlsModal.removeEventListener('shown.bs.modal', handlerControlsModal)
+        }
 
-          if(accessibilityBar.lscTranslator.isTranslating) {
+        let handlerSlides = () => {
+          if (accessibilityBar.lscTranslator.isTranslating) {
             accessibilityBar.lscTranslator.stop()
           }
 
-          if(this.synth.speaking) {
+          if (this.synth.speaking) {
             this.synth.cancel()
           }
-        })
-        controlsModalInit.show()
+
+          if (this.carouselControls.getActiveIndex() == 2) {
+            document.getElementById('finishButtonControls').style.display = ''
+            document.getElementById('nextButtonControls').style.display = 'none'
+          } else {
+            document.getElementById('nextButtonControls').style.display = ''
+            document.getElementById('finishButtonControls').style.display = 'none'
+          }
+
+          this.speech('controls')
+        }
+
+        let handlerControlsModalHide = () => {
+          hotkeys.unbind('left')
+          hotkeys.unbind('right')
+          hotkeys.unbind('enter')
+
+          if (accessibilityBar.lscTranslator.isTranslating) {
+            accessibilityBar.lscTranslator.stop()
+          }
+
+          if (this.synth.speaking) {
+            this.synth.cancel()
+          }
+
+          this.controlsModal.removeEventListener('hidden.bs.modal', handlerControlsModalHide)
+          this.carouselControlsElm.removeEventListener('slid.bs.carousel', handlerSlides)
+        }
+
+        this.controlsModal.addEventListener('shown.bs.modal', handlerControlsModal)
+        this.carouselControlsElm.addEventListener('slid.bs.carousel', handlerSlides)
+        this.controlsModal.addEventListener('hidden.bs.modal', handlerControlsModalHide)
+
+        this.controlsModalInit.show()
       },
       onNext: (elm) => {
         this.driver.preventMove()
 
-        if(accessibilityBar.lscTranslator 
-          && accessibilityBar.lscTranslator.isTranslating) {
+        if (accessibilityBar.lscTranslator &&
+          accessibilityBar.lscTranslator.isTranslating) {
           accessibilityBar.lscTranslator.stop()
         }
 
         if (elm.node.id == 'card-config-colors') {
           let handler = (e) => {
             this.driver.start(6)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.narrator.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -441,6 +501,7 @@ class Tour {
         } else if (elm.node.id == 'card-narrator-read-mode') {
           let handler = (e) => {
             this.driver.start(13)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -450,6 +511,7 @@ class Tour {
           if (userLang == 'spanish') {
             let handler = (e) => {
               this.driver.start(18)
+              this.lastStepTour = this.driver.currentStep
               accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
             }
 
@@ -458,6 +520,7 @@ class Tour {
           } else {
             let handler = (e) => {
               this.driver.start(18)
+              this.lastStepTour = this.driver.currentStep
               accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
             }
 
@@ -467,6 +530,7 @@ class Tour {
         } else if (elm.node.id == 'card-lsc-translator-model') {
           let handler = (e) => {
             this.driver.start(20)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -474,19 +538,21 @@ class Tour {
           accessibilityBar.tabsCollection.structuralNav.show()
         } else if (elm.node.id == 'card-structural-nav-show-toc') {
           let handler = (e) => {
-            if(userLang == 'spanish') {
+            if (userLang == 'spanish') {
               this.driver.start(22)
             } else {
               this.driver.start(20)
             }
 
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.virtualKeyboard.removeEventListener('shown.bs.tab', handler)
           }
-          
+
           accessibilityBar.tabs.virtualKeyboard.addEventListener('shown.bs.tab', handler)
           accessibilityBar.tabsCollection.virtualKeyboard.show()
         } else {
           this.driver.moveNext()
+          this.lastStepTour = this.driver.currentStep
         }
       },
       onPrevious: (elm) => {
@@ -495,6 +561,7 @@ class Tour {
         if (elm.node.id == 'card-narrator-speed') {
           let handler = (e) => {
             this.driver.start(5)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.interfaz.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -503,6 +570,7 @@ class Tour {
         } else if (elm.node.id == 'card-screen-reader-speed') {
           let handler = (e) => {
             this.driver.start(12)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.narrator.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -511,23 +579,26 @@ class Tour {
         } else if (elm.node.id == 'card-lsc-translator-speed') {
           let handler = (e) => {
             this.driver.start(17)
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
           }
 
           accessibilityBar.tabs.screenReader.addEventListener('shown.bs.tab', handler)
           accessibilityBar.tabsCollection.screenReader.show()
         } else if (elm.node.id == 'card-structural-nav-strategy-nav') {
-          if(userLang == 'spanish') {
+          if (userLang == 'spanish') {
             let handler = (e) => {
-              this.driver.start(17)
+              this.driver.start(19)
+              this.lastStepTour = this.driver.currentStep
               accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
             }
-  
+
             accessibilityBar.tabs.lscTranslator.addEventListener('shown.bs.tab', handler)
             accessibilityBar.tabsCollection.lscTranslator.show()
           } else {
             let handler = (e) => {
               this.driver.start(17)
+              this.lastStepTour = this.driver.currentStep
               accessibilityBar.tabs.screenReader.removeEventListener('shown.bs.tab', handler)
             }
 
@@ -536,11 +607,13 @@ class Tour {
           }
         } else if (elm.node.id == 'card-virtual-keyboard-size') {
           let handler = (e) => {
-            if(userLang == 'spanish') {
+            if (userLang == 'spanish') {
               this.driver.start(21)
             } else {
               this.driver.start(19)
             }
+
+            this.lastStepTour = this.driver.currentStep
             accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
           }
 
@@ -548,9 +621,9 @@ class Tour {
           accessibilityBar.tabsCollection.structuralNav.show()
         } else {
           this.driver.movePrevious()
+          this.lastStepTour = this.driver.currentStep
         }
       },
-
     })
 
     this.buttons = `${ userLang == 'spanish' ? `
@@ -1245,20 +1318,34 @@ class Tour {
   interprete(name) {
     let text = ''
 
-    if(accessibilityBar.lscTranslator.isTranslating) {
+    if (accessibilityBar.lscTranslator.isTranslating) {
       accessibilityBar.lscTranslator.stop()
     }
 
     if (!name) {
       const activeElement = this.driver.getHighlightedElement()
       text = `${ this.messages[userLang][activeElement.node.id].title }. ${ this.messages[userLang][activeElement.node.id].description }`
-    } else if (name== 'controls') {
-      text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }
-              ${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }
-              ${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }
-              ${ this.messages[userLang]['lscTranslator'].title }. ${ this.messages[userLang]['lscTranslator'].description }`      
-    } 
-    else {
+    } else if (name == 'controls') {
+      const carouselActiveIndex = this.carouselControls.getActiveIndex()
+
+      switch (carouselActiveIndex) {
+        case 0:
+          {
+            text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }`
+            break
+          }
+        case 1:
+          {
+            text = `${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }`
+            break
+          }
+        case 2:
+          {
+            text = `${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }`
+            break
+          }
+      }
+    } else {
       text = `${ this.messages[userLang][name].title }. ${ this.messages[userLang][name].description }`
     }
 
@@ -1277,20 +1364,34 @@ class Tour {
   speech(name) {
     let text = ''
 
-    if(this.synth.speaking) {
+    if (this.synth.speaking) {
       this.synth.cancel()
     }
 
     if (!name) {
       const activeElement = this.driver.getHighlightedElement()
       text = `${ this.messages[userLang][activeElement.node.id].title }. ${ this.messages[userLang][activeElement.node.id].description }`
-    } else if (name== 'controls') {
-      text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }
-              ${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }
-              ${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }
-              ${ this.messages[userLang]['lscTranslator'].title }. ${ this.messages[userLang]['lscTranslator'].description }`      
-    } 
-    else {
+    } else if (name == 'controls') {
+      const carouselActiveIndex = this.carouselControls.getActiveIndex()
+
+      switch (carouselActiveIndex) {
+        case 0:
+          {
+            text = `${ this.messages[userLang]['screenReaderControls'].title }. ${ this.messages[userLang]['screenReaderControls'].description }`
+            break
+          }
+        case 1:
+          {
+            text = `${ this.messages[userLang]['narratorControls'].title }. ${ this.messages[userLang]['narratorControls'].description }`
+            break
+          }
+        case 2:
+          {
+            text = `${ this.messages[userLang]['voiceCommands'].title }. ${ this.messages[userLang]['voiceCommands'].description }`
+            break
+          }
+      }
+    } else {
       text = `${ this.messages[userLang][name].title }. ${ this.messages[userLang][name].description }`
     }
 
@@ -1312,5 +1413,27 @@ class Tour {
 
   start() {
     this.driver.start()
+  }
+
+  prevControlsSlide() {
+    if (this.carouselControls.getActiveIndex() == 0) {
+      this.controlsModalInit.hide()
+
+      let handler = (e) => {
+        this.driver.start(this.lastStepTour)
+        accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
+      }
+
+      accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
+      accessibilityBar.collapseInstance.show()
+    } else {
+      this.carouselControls.slideTo(this.carouselControls.getActiveIndex() - 1)
+    }
+  }
+
+  nextControlsSlide() {
+    if (this.carouselControls.getActiveIndex() < 2) {
+      this.carouselControls.slideTo(this.carouselControls.getActiveIndex() + 1)
+    }
   }
 }
