@@ -154,10 +154,10 @@
         }  
     </style>
     <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
       <?php if($id_view == 'lo_view'):?>
       window.loading_screen = window.pleaseWait({
-        logo: "<?php echo base_url()?>"+'asset/img/frog_min.png',
+        logo: "<?php echo base_url()?>" + 'asset/img/frog_min.png',
         backgroundColor: '#f8f9fa',
         loadingHtml: `
         <p class='loading-message'>Estamos procesando el objeto de aprendizaje</p>
@@ -170,7 +170,7 @@
         `
       });
       <?php endif;?>
-        
+
       session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
       needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || !session_user;
       needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || !session_user;
@@ -182,66 +182,71 @@
       base_url = "<?php echo base_url()?>";
       idView = "<?php echo $id_view ?>" || "nada";
       userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
-      accessibilityBar = new AccessibilityBar(session_user, 
-        base_url, 
-        needCustomInterfaz, 
+      accessibilityBar = new AccessibilityBar(session_user,
+        base_url,
+        needCustomInterfaz,
         needNarrator,
-        needScreenReader, 
-        needLscTranslator, 
-        needVirtualKeyboard, 
+        needScreenReader,
+        needLscTranslator,
+        needVirtualKeyboard,
         needStructuralNavigation)
+      
+      firstTime = "<?php echo $this->session->userdata('first_time');?>" == 'true'
 
       if (idView != 'lo_view') {
         accessibilityBar.fetchDataAccessibilityBar()
-        .then(data => {
-          accessibilityBar.dataAccessibilityBar = data
-          accessibilityBar.createAccessibilityElements()
-        })
-        .catch(e => console.error(e))
+          .then(data => {
+            accessibilityBar.dataAccessibilityBar = data
+            accessibilityBar.createAccessibilityElements()
+          })
+          .catch(e => console.error(e))
       }
 
       if (document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
+      if (firstTime || (localStorage.getItem('intro') == 'true')) {
+        tour = new Tour()
+        next = false
 
-      tour = new Tour()
-      next = false
-      
-      let introModal = document.getElementById('introModal')
-      let modalIntroInstance = new Modal(introModal)
+        let introModal = document.getElementById('introModal')
+        let modalIntroInstance = new Modal(introModal)
 
-      introModal.addEventListener('shown.bs.modal', e => {
-        hotkeys('enter', function(event, handler) {
-          next = true
-          modalIntroInstance.hide()
+        introModal.addEventListener('shown.bs.modal', e => {
+          hotkeys('enter', function (event, handler) {
+            next = true
+            modalIntroInstance.hide()
+          })
+
+          tour.speech('welcome')
         })
 
-        tour.speech('welcome')
-      })
-
-      introModal.addEventListener('hidden.bs.modal', e => {
-        hotkeys.unbind('enter')
-        if(tour.synth.speaking) {
-          tour.synth.cancel()
-        }
-
-        if(accessibilityBar.lscTranslator 
-          && accessibilityBar.lscTranslator.isTranslating) {
-          accessibilityBar.lscTranslator.stop()
-        }
-
-        if(next) {
-          let handler = function (e) {
-            tour.start()
-            accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
+        introModal.addEventListener('hidden.bs.modal', e => {
+          localStorage.setItem('intro', false)
+          hotkeys.unbind('enter')
+          if (tour.synth.speaking) {
+            tour.synth.cancel()
           }
 
-          accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
-          accessibilityBar.collapseInstance.show()
-        }
-      })
+          if (accessibilityBar.lscTranslator &&
+            accessibilityBar.lscTranslator.isTranslating) {
+            accessibilityBar.lscTranslator.stop()
+          }
 
-      modalIntroInstance.show()
+          if (next) {
+            let handler = function (e) {
+              tour.start()
+              accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
+            }
+
+            accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
+            accessibilityBar.collapseInstance.show()
+          }
+        })
+
+        modalIntroInstance.show()
+      }
+
     })
     </script>
 </head>
@@ -274,7 +279,7 @@
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <select onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                  <select onchange="localStorage.setItem('intro', true);javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
                       if($this->session->userdata('site_lang')
                       == 'spanish') echo 'selected="selected"'; ?>><?php echo $this->lang->line('spanish'); ?> </a></option>

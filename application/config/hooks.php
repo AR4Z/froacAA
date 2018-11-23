@@ -10,12 +10,19 @@
 |
 */
 
-$hook['post_controller_constructor'] = array(
+$hook['post_controller_constructor'][] = array(
     'class' => 'LanguageLoader',
     'function' => 'initialize',
     'filename' => 'LanguageLoader.php',
     'filepath' => 'hooks'
 );
+
+$hook['post_controller_constructor'][] = array(
+  'class'    => 'FirstTimeUser',
+  'function' => 'setCookie',
+  'filename' => 'FirstTimeUser.php',
+  'filepath' => 'hooks'
+  );
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
