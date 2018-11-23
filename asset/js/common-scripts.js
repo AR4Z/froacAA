@@ -16,27 +16,27 @@ $(document).ready(function () {
     e.preventDefault(), window.open($(this).attr("href"));
   });
 
-  if (!accessibilityBar.loggedIn|| accessibilityBar.needCustomInterfaz) {
+  if (!window.accessibilityBar.loggedIn|| window.accessibilityBar.needCustomInterfaz) {
     document.getElementById('interfaz').classList.add('show')
     document.getElementById('interfaz').classList.add('active')
     document.getElementById('interfaz-tab').classList.add('active')
     document.getElementById('interfaz-tab').setAttribute('aria-selected', true)
-  } else if (accessibilityBar.needNarrator) {
+  } else if (window.accessibilityBar.needNarrator) {
     document.getElementById('narrator').classList.add('show')
     document.getElementById('narrator').classList.add('active')
     document.getElementById('narrator-tab').classList.add('active')
     document.getElementById('narrator-tab').setAttribute('aria-selected', true)
-  } else if (accessibilityBar.needScreenReader) {
+  } else if (window.accessibilityBar.needScreenReader) {
     document.getElementById('screen-reader').classList.add('show')
     document.getElementById('screen-reader').classList.add('active')
     document.getElementById('screen-reader-tab').classList.add('active')
     document.getElementById('screen-reader-tab').setAttribute('aria-selected', true)
-  } else if (accessibilityBar.needLscTranslator) {
+  } else if (window.accessibilityBar.needLscTranslator) {
     document.getElementById('LSC-translator').classList.add('show')
     document.getElementById('LSC-translator').classList.add('active')
     document.getElementById('LSC-translator-tab').classList.add('active')
     document.getElementById('LSC-translator-tab').setAttribute('aria-selected', true)
-  } else if (accessibilityBar.needVirtualKeyboard) {
+  } else if (window.accessibilityBar.needVirtualKeyboard) {
     document.getElementById('keyboard-cf').classList.add('show')
     document.getElementById('keyboard-cf').classList.add('active')
     document.getElementById('keyboard-tab').classList.add('active')

@@ -32,7 +32,7 @@
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <style>
         .card {
-          min-height: 200px;
+          min-height: 225px;
           min-width: 200px;
           margin-right: 5px;
         }
@@ -111,7 +111,6 @@
           cursor: pointer;
         }
 
-        /* increased specificity to override repositioning style */
         div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey>span {
           position: static;
           font-size: calc(.7em + 1vw);
@@ -129,7 +128,6 @@
           cursor: pointer;
         }
 
-        /* increased specificity to override repositioning style */
         div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.small>span {
           position: static;
           font-size: calc(.6em + 1vw);
@@ -147,7 +145,6 @@
           cursor: pointer;
         }
 
-        /* increased specificity to override repositioning style */
         div.ui-keyboard button.ui-keyboard-button.ui-keyboard-actionkey.large>span {
           position: static;
           font-size: calc(.8em + 1vw);
