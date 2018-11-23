@@ -171,33 +171,33 @@
       });
       <?php endif;?>
 
-      session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
-      needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || !session_user;
-      needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || !session_user;
-      needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || !session_user;
-      needLscTranslator = (Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || !session_user) && ("<?php echo $this->session->userdata('site_lang');?>" == 'spanish');
-      needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || !session_user;
-      needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || !session_user;
-      idView = "<?php echo $id_view ?>" || "nada";
-      base_url = "<?php echo base_url()?>";
-      idView = "<?php echo $id_view ?>" || "nada";
-      userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
-      accessibilityBar = new AccessibilityBar(session_user,
-        base_url,
-        needCustomInterfaz,
-        needNarrator,
-        needScreenReader,
-        needLscTranslator,
-        needVirtualKeyboard,
-        needStructuralNavigation)
+      window.session_user = <?php echo json_encode($this->session->userdata('logged_in'));?>;
+      window.needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz');?>) || !session_user;
+      window.needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator');?>) || !session_user;
+      window.needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader');?>) || !session_user;
+      window.needLscTranslator = (Boolean(<?php echo $this->session->userdata('need_lsc_translator');?>) || !session_user) && ("<?php echo $this->session->userdata('site_lang');?>" == 'spanish');
+      window.needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav');?>) || !session_user;
+      window.needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard');?>) || !session_user;
+      window.idView = "<?php echo $id_view ?>" || "nada";
+      window.base_url = "<?php echo base_url()?>";
+      window.idView = "<?php echo $id_view ?>" || "nada";
+      window.userLang = "<?php echo $this->session->userdata('site_lang');?>" || "spanish";
+      window.accessibilityBar = new AccessibilityBar(session_user,
+        window.base_url,
+        window.needCustomInterfaz,
+        window.needNarrator,
+        window.needScreenReader,
+        window.needLscTranslator,
+        window.needVirtualKeyboard,
+        window.needStructuralNavigation)
       
-      firstTime = "<?php echo $this->session->userdata('first_time');?>" == 'true'
+      window.firstTime = "<?php echo $this->session->userdata('first_time');?>" == 'true'
 
-      if (idView != 'lo_view') {
-        accessibilityBar.fetchDataAccessibilityBar()
+      if (window.idView != 'lo_view') {
+        window.accessibilityBar.fetchDataAccessibilityBar()
           .then(data => {
-            accessibilityBar.dataAccessibilityBar = data
-            accessibilityBar.createAccessibilityElements()
+            window.accessibilityBar.dataAccessibilityBar = data
+            window.accessibilityBar.createAccessibilityElements()
           })
           .catch(e => console.error(e))
       }
@@ -205,42 +205,42 @@
       if (document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
-      if (firstTime || (localStorage.getItem('intro') == 'true')) {
-        tour = new Tour()
-        next = false
+      if (window.firstTime || (localStorage.getItem('intro') == 'true')) {
+        window.tour = new Tour()
+        window.next = false
 
         let introModal = document.getElementById('introModal')
         let modalIntroInstance = new Modal(introModal)
 
         introModal.addEventListener('shown.bs.modal', e => {
           hotkeys('enter', function (event, handler) {
-            next = true
+            window.next = true
             modalIntroInstance.hide()
           })
 
-          tour.speech('welcome')
+          window.tour.speech('welcome')
         })
 
         introModal.addEventListener('hidden.bs.modal', e => {
           localStorage.setItem('intro', false)
           hotkeys.unbind('enter')
-          if (tour.synth.speaking) {
-            tour.synth.cancel()
+          if (window.tour.synth.speaking) {
+            window.tour.synth.cancel()
           }
 
-          if (accessibilityBar.lscTranslator &&
-            accessibilityBar.lscTranslator.isTranslating) {
-            accessibilityBar.lscTranslator.stop()
+          if (window.accessibilityBar.lscTranslator &&
+            window.accessibilityBar.lscTranslator.isTranslating) {
+            window.accessibilityBar.lscTranslator.stop()
           }
 
           if (next) {
             let handler = function (e) {
-              tour.start()
-              accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
+              window.tour.start()
+              window.accessibilityBar.collapse.removeEventListener('shown.bs.collapse', handler)
             }
 
-            accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
-            accessibilityBar.collapseInstance.show()
+            window.accessibilityBar.collapse.addEventListener('shown.bs.collapse', handler)
+            window.accessibilityBar.collapseInstance.show()
           }
         })
 

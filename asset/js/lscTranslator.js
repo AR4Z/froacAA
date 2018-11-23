@@ -117,7 +117,7 @@ class LscTranslator {
     document.querySelector(`input[name='LSC-translator-model'][value='1']`).dispatchEvent(new Event('change'))
   
     if(!all) {
-      accessibilityBar.updatePreferencesLscTranslator({
+      window.accessibilityBar.updatePreferencesLscTranslator({
         sign_speed: 20,
         model_id: 1
       })
@@ -131,7 +131,7 @@ class LscTranslator {
     this.modelId = modelSelected
 
     if (this.modelId != parseInt(localStorage.getItem('model_id')) && !isDefault) {
-      accessibilityBar.updatePreferencesLscTranslator({
+      window.accessibilityBar.updatePreferencesLscTranslator({
         model_id: this.modelId
       })
     }
@@ -147,7 +147,7 @@ class LscTranslator {
     this.signSpeed = signSpeed
 
     if (this.signSpeed != parseInt(localStorage.getItem('sign_speed')) && !isDefault) {
-      accessibilityBar.updatePreferencesLscTranslator({
+      window.accessibilityBar.updatePreferencesLscTranslator({
         sign_speed: this.signSpeed
       })
     }

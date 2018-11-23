@@ -8,7 +8,7 @@ class Narrator {
     this.highlightId = preferencesNarrator.highlight_id
     this.readingUnitId = preferencesNarrator.reading_unit_id
 
-    if(idView == 'lo_view') {
+    if(window.idView == 'lo_view') {
       this.learningObjectDocument = learningObject.getDocument()
       hotkeys('ctrl+e', (event, handler) => {
         event.preventDefault()
@@ -159,7 +159,7 @@ class Narrator {
     document.querySelector(`input[name='reading-unit-narrator'][value='1']`).dispatchEvent(new Event('change'))
 
     if (!all) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         speed_reading: 2,
         pitch_nr: 2,
         volume_id: 2,
@@ -184,7 +184,7 @@ class Narrator {
     this.speedReading = optionSpeedSelected
 
     if (this.speedReading != localStorage.getItem('speed_reading_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         speed_reading: this.speedReading
       })
     }
@@ -208,7 +208,7 @@ class Narrator {
     this.pitch = optionPitchSelected
 
     if (this.pitch != localStorage.getItem('pitch_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         pitch_nr: this.pitch
       })
     }
@@ -232,7 +232,7 @@ class Narrator {
     this.volume = optionVolumeSelected
 
     if (this.volume != localStorage.getItem('volume_id_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         volume_id: this.volume
       })
     }
@@ -255,7 +255,7 @@ class Narrator {
     this.voiceGenderId = optionGenderSelected
 
     if (this.voiceGenderId != localStorage.getItem('voice_gender_id_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         voice_gender_id: this.voiceGenderId
       })
     }
@@ -272,7 +272,7 @@ class Narrator {
     this.linksId = optionLinkSelected
 
     if (this.linksId != localStorage.getItem('links_id_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         links_id: this.linksId
       })
     }
@@ -290,7 +290,7 @@ class Narrator {
     this.highlightId = optionHighlightSelected
 
     if (this.highlightId != localStorage.getItem('highlight_id_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         highlight_id: this.highlightId
       })
     }
@@ -307,7 +307,7 @@ class Narrator {
     this.readingUnitId = optionReadingUnitSelected
 
     if (this.readingUnitId != localStorage.getItem('reading_unit_id_nr') && !isDefault) {
-      accessibilityBar.updatePreferencesNarrator({
+      window.accessibilityBar.updatePreferencesNarrator({
         reading_unit_id: this.readingUnitId
       })
     }

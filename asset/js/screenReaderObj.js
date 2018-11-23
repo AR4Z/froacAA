@@ -312,7 +312,7 @@ class ScreenReader {
     this.speedReadingId = optionSpeedSelected
 
     if (this.speedReadingId != localStorage.getItem('speed_reading_sr') && !isDefault) {
-      accessibilityBar.updatePreferencesScreenReader({
+      window.accessibilityBar.updatePreferencesScreenReader({
         speed_reading_id: this.speedReadingId
       })
     }
@@ -335,7 +335,7 @@ class ScreenReader {
     this.pitchId = optionPitchSelected
 
     if (this.pitchId != localStorage.getItem('pitch_id_sr') && !isDefault) {
-      accessibilityBar.updatePreferencesScreenReader({
+      window.accessibilityBar.updatePreferencesScreenReader({
         pitch_id: this.pitchId
       })
     }
@@ -358,7 +358,7 @@ class ScreenReader {
     this.volumeId = optionVolumeSelected
 
     if (this.volumeId != localStorage.getItem('volume_id_sr') && !isDefault) {
-      accessibilityBar.updatePreferencesScreenReader({
+      window.accessibilityBar.updatePreferencesScreenReader({
         volume_id: this.volumeId
       })
     }
@@ -380,7 +380,7 @@ class ScreenReader {
     this.voiceGenderId = optionGenderSelected
 
     if (this.voiceGenderId != localStorage.getItem('voice_gender_id_sr') && !isDefault) {
-      accessibilityBar.updatePreferencesScreenReader({
+      window.accessibilityBar.updatePreferencesScreenReader({
         voice_gender_id: this.voiceGenderId
       })
     }
@@ -397,7 +397,7 @@ class ScreenReader {
     this.linksId = optionLinkSelected
 
     if (this.linksId != localStorage.getItem('links_id_sr') && !isDefault) {
-      accessibilityBar.updatePreferencesScreenReader({
+      window.accessibilityBar.updatePreferencesScreenReader({
         links_id: this.linksId
       })
     }
@@ -875,6 +875,5 @@ class ScreenReader {
       default:
         return this.parentElement(parentNode);
     }
-  };
-
+  }
 }

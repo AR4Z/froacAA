@@ -76,7 +76,7 @@ class LearningObject {
         }
 
         this.language = languages[data.language]
-        this.translate(userLang)
+        this.translate(window.userLang)
       })
       .catch(e => console.error(e))
   }
@@ -107,18 +107,10 @@ class LearningObject {
   }
 
   createAccessibilityBar() {
-    accessibilityBar.fetchDataAccessibilityBar()
+    window.accessibilityBar.fetchDataAccessibilityBar()
     .then(data => {
-      accessibilityBar.dataAccessibilityBar = data
-      accessibilityBar.createAccessibilityElements()
-      
-      /*if(accessibilityBar.needStructuralNavigation) {
-        accessibilityBar.structuralNavigation.htmlTableOfContents(this.getDocument())
-      }*/
-
-      /*if(accessibilityBar.needNarrator) {
-        accessibilityBar.narrator._loadTreeNarrator()
-      }*/
+      window.accessibilityBar.dataAccessibilityBar = data
+      window.accessibilityBar.createAccessibilityElements()
     })
     .catch(e => console.error(e))
   }

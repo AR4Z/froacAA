@@ -28,7 +28,7 @@ class CustomInterfaz {
     this.cursorTrail = new CursorTrail(0)
 
     if(idView == 'lo_view'){
-      this.learningObject = learningObject
+      this.learningObject = window.learningObject
       this.learningObjectDoc = this.learningObject.getDocument()
     } else {
       this.learningObject = undefined
@@ -135,7 +135,7 @@ class CustomInterfaz {
     document.querySelector(`input[name='invertGeneral']`).dispatchEvent(new Event('change'))
 
     if(!all) {
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
           color_cursor: 'rgb(255,18,18)',
           contrast_colors_id: 1,
           cursor_size_id: 1,
@@ -337,7 +337,7 @@ class CustomInterfaz {
     }
 
     if((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing'))) && !isDefault){
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         size_line_spacing: this.sizeLineSpacing
       })
     }
@@ -382,7 +382,7 @@ class CustomInterfaz {
 
     this.contrastColorsId = optionContrastSelectedValue
     if((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id'))) && !isDefault) {
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         contrast_colors_id: this.contrastColorsId
       })
     }
@@ -404,7 +404,7 @@ class CustomInterfaz {
     this.customColors.foreground_colour = color
 
     if((this.customColors.foreground_colour != localStorage.getItem('foreground_color')) && !isDefault){
-      accessibilityBar.updateCustomColors({
+      window.accessibilityBar.updateCustomColors({
         foreground_colour: this.customColors.foreground_colour
       })
     }
@@ -428,7 +428,7 @@ class CustomInterfaz {
     this.customColors.background_colour = color
 
     if((this.customColors.background_colour != localStorage.getItem('background_color')) && !isDefault){
-      accessibilityBar.updateCustomColors({
+      window.accessibilityBar.updateCustomColors({
         background_colour: this.customColors.background_colour
       })
     }
@@ -450,7 +450,7 @@ class CustomInterfaz {
     this.customColors.link_colour = color
 
     if((this.customColors.link_colour != localStorage.getItem('link_color')) && !isDefault){
-      accessibilityBar.updateCustomColors({
+      window.accessibilityBar.updateCustomColors({
         link_colour: this.customColors.link_colour
       })
     }
@@ -472,7 +472,7 @@ class CustomInterfaz {
     this.customColors.highlight_colour = color
 
     if((this.customColors.highlight_colour != localStorage.getItem('highlight_color')) && !isDefault){
-      accessibilityBar.updateCustomColors({
+      window.accessibilityBar.updateCustomColors({
         highlight_colour: this.customColors.highlight_colour
       })
     }
@@ -512,7 +512,7 @@ class CustomInterfaz {
     }
 
     if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id'))) && !isDefault) {
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         font_type_id: this.fontTypeId
       })
     }
@@ -554,7 +554,7 @@ class CustomInterfaz {
 
     if((this.cursorSizeId != localStorage.getItem('cursor_size_id') || 
     this.cursorColor != localStorage.getItem('color_cursor')) && !isDefault) {
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         cursor_size_id: this.cursorSizeId,
         color_cursor: this.cursorColor,
         cursor_url: body.style.cursor
@@ -592,7 +592,7 @@ class CustomInterfaz {
 
     if((this.trailCursorSizeId != parseInt(localStorage.getItem('trail_cursor_size_id')) ||
     this.trailCursorColor != localStorage.getItem('trail_cursor_color')) && !isDefault) {
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         trail_cursor_size_id: this.trailCursorSizeId,
         trail_cursor_color: this.trailCursorColor
       })
@@ -624,7 +624,7 @@ class CustomInterfaz {
     }
 
     if((this.invertColorGeneral != localStorage.getItem('invert_color_general')) && !isDefault){
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         invert_color_general: `${ this.invertColorGeneral }`
       })
     }
@@ -669,7 +669,7 @@ class CustomInterfaz {
     }
 
     if((this.invertColorImage != localStorage.getItem('invert_color_image')) && !isDefault){
-      accessibilityBar.updatePreferencesInterfaz({
+      window.accessibilityBar.updatePreferencesInterfaz({
         invert_color_image: `${ this.invertColorImage }`
       })
     }

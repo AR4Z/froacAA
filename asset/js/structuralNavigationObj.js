@@ -2,11 +2,11 @@ class StructuralNavigation {
   constructor(preferencesStructuralNavigation) {
     this.navStrategyId = preferencesStructuralNavigation.nav_strategy_id
     this.showToc = preferencesStructuralNavigation.showtoc
-    
+
     this.minimized = localStorage.getItem('isMinimizedToc') || 'true'
     this.tocTop = localStorage.getItem('tocTopPos')
     this.tocLeft = localStorage.getItem('tocLeftPos')
-    
+
     this.containerBodyToc = document.getElementById('container-body-toc')
     this.containerToc = document.getElementById('container-toc')
     this.minimizeTocButton = document.getElementById('minimize-toc')
@@ -33,11 +33,11 @@ class StructuralNavigation {
         this.tocLeft = localStorage.getItem('tocLeftPos')
       }
     });
-    
-    if(idView != 'lo_view'){
+
+    if (window.idView != 'lo_view') {
       this.htmlTableOfContents()
     }
-    
+
     this._addEventChangeNavStrategy()
     this._addEventChangeShowToc()
     this._addEventClickMaximize()
@@ -55,20 +55,20 @@ class StructuralNavigation {
   _loadStructuralNavigation() {
     document.querySelector(`input[name='navigation-strategy'][value='${ this.navStrategyId }']`).checked = true
     document.querySelector(`input[name='navigation-strategy'][value='${ this.navStrategyId }']`).dispatchEvent(new Event('change'))
-  
+
     document.querySelector(`input[name='showTOC']`).checked = this.showToc == 't' || this.showToc == 'true' ? true : false
     document.querySelector(`input[name='showTOC']`).dispatchEvent(new Event('change'))
   }
 
   _addEventChangeNavStrategy() {
     let optionsNavStrategy = document.querySelectorAll('input[name="navigation-strategy"]')
-    
+
     Array.prototype.forEach.call(optionsNavStrategy, opt => opt.addEventListener('change', this.changeNavStrategy))
   }
 
   _addEventChangeShowToc() {
     let checkboxShowToc = document.getElementsByName('showTOC')[0]
-    
+
     checkboxShowToc.addEventListener('change', this.changeShowToc.bind(this))
   }
 
@@ -84,13 +84,13 @@ class StructuralNavigation {
     document.querySelector(`input[name='navigation-strategy']`).setAttribute('default', true)
     document.querySelector(`input[name='navigation-strategy'][value='1']`).checked = true
     document.querySelector(`input[name='navigation-strategy'][value='1']`).dispatchEvent(new Event('change'))
-  
+
     document.querySelector(`input[name='showTOC']`).setAttribute('default', true)
     document.querySelector(`input[name='showTOC']`).checked = true
     document.querySelector(`input[name='showTOC']`).dispatchEvent(new Event('change'))
 
-    if(!all) {
-      accessibilityBar.updatePreferencesStructuralNav({
+    if (!all) {
+      window.accessibilityBar.updatePreferencesStructuralNav({
         nav_strategy_id: 1,
         showtoc: 'true'
       })
@@ -132,8 +132,8 @@ class StructuralNavigation {
     let isDefault = optSelectedElm.default == 'true'
     this.navStrategyId = optionNavStrategySelected
 
-    if(this.navStrategyId != parseInt(localStorage.getItem('nav_strategy_id')) && !isDefault) {
-      accessibilityBar.updatePreferencesStructuralNav({
+    if (this.navStrategyId != parseInt(localStorage.getItem('nav_strategy_id')) && !isDefault) {
+      window.accessibilityBar.updatePreferencesStructuralNav({
         nav_strategy_id: this.navStrategyId
       })
     }
@@ -148,13 +148,13 @@ class StructuralNavigation {
     let isDefault = checkbox.default == 'true'
     this.showToc = isChecked
 
-    if(this.showToc != localStorage.getItem('show_toc') && !isDefault) {
-      accessibilityBar.updatePreferencesStructuralNav({
+    if (this.showToc != localStorage.getItem('show_toc') && !isDefault) {
+      window.accessibilityBar.updatePreferencesStructuralNav({
         showtoc: `${ this.showToc }`
       })
     }
 
-    if(!isChecked) {
+    if (!isChecked) {
       this.containerToc.style.display = 'none'
     } else {
       this.containerToc.style.display = ''
@@ -169,27 +169,27 @@ class StructuralNavigation {
     let headings = [].slice.call(documentRef.body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
     let ul = documentRef.createElement('ul')
     headings.forEach((heading, index) => {
-        let anchor = documentRef.createElement('a');
-        anchor.setAttribute('name', 'toc' + index);
-        anchor.setAttribute('id', 'toc' + index);
-        
+      let anchor = documentRef.createElement('a');
+      anchor.setAttribute('name', 'toc' + index);
+      anchor.setAttribute('id', 'toc' + index);
 
-        let link = documentRef.createElement('a');
-        link.textContent = heading.textContent;
-        
-        if(customDoc) {
-          link.addEventListener('click', () => {
-            this.scrollInsideIframe(`toc${ index }`)
-          })
-        } else {
-          link.setAttribute('href', '#toc' + index);
-        }
 
-        let li = documentRef.createElement('li');
-        
-        li.appendChild(link);
-        ul.appendChild(li);
-        heading.parentNode.insertBefore(anchor, heading);
+      let link = documentRef.createElement('a');
+      link.textContent = heading.textContent;
+
+      if (customDoc) {
+        link.addEventListener('click', () => {
+          this.scrollInsideIframe(`toc${ index }`)
+        })
+      } else {
+        link.setAttribute('href', '#toc' + index);
+      }
+
+      let li = documentRef.createElement('li');
+
+      li.appendChild(link);
+      ul.appendChild(li);
+      heading.parentNode.insertBefore(anchor, heading);
     });
 
     this.containerBodyToc.appendChild(ul)
@@ -199,5 +199,5 @@ class StructuralNavigation {
     let iframeDocument = learningObject.getDocument()
     let posElement = iframeDocument.getElementById(id).offsetTop
     $(iframeDocument).contents().scrollTop(posElement)
-}
+  }
 }

@@ -10,7 +10,7 @@ class CursorTrail {
     this.requestAnimationId = undefined
 
     if(idView == 'lo_view'){
-      this.learningObject = learningObject
+      this.learningObject = window.learningObject
       this.learningObjectDoc = this.learningObject.getDocument()
       this.learningObjectNode = this.learningObject.iframeElement
     } else {
