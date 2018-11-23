@@ -246,6 +246,7 @@
     </script>
 </head>
 <?php if($id_view == 'login') : ?>
+
 <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
   <?php if($this->session->userdata('site_lang') == 'spanish'):?>
   <?php $this->load->view('base/base/accessibility/iris');?>
@@ -273,24 +274,25 @@
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <!--<select class="selectpicker mr-0" data-width="105px" onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                  <select onchange="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
-                      if($this->session->userdata('site_lang') == 'spanish') echo 'selected="selected"'; ?>>Español</option>
+                      if($this->session->userdata('site_lang')
+                      == 'spanish') echo 'selected="selected"'; ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
                     <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php
-                      if($this->session->userdata('site_lang') == 'english') echo 'selected="selected"'; ?>>Inglés</option>
+                      if($this->session->userdata('site_lang')
+                      == 'english') echo 'selected="selected"'; ?>><?php echo $this->lang->line('english'); ?> </a></option>
                     <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese"
-                      <?php if($this->session->userdata('site_lang') == 'portuguese') echo 'selected="selected"';
-                      ?>>Portugués</option>
-                  </select>-->
+                      <?php if($this->session->userdata('site_lang')
+                      == 'portuguese') echo 'selected="selected"'; ?>><?php echo $this->lang->line('portuguese'); ?> </a></option>
+                  </select>
                 </div>
                 <div class="row justify-content-md-center">
                   <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">
                 </div>
                 <div class="row justify-content-md-center">
-                  <h2 class="title">¡Bienvenido a FROAC!</h2>
+                  <h2 class="title"><?php echo $this->lang->line('welcome'); ?> </a></h2>
                   <p class="description">
-                    Contamos con herramientas de accesibilidad para ayudarte a navegar en nuestro sitio.
-                    En esta guia aprenderas a usarlas para que puedas sacar el mayor provecho.
+                  <?php echo $this->lang->line('description_intro_modal'); ?> </a>
                   </p>
                 </div>
               </div>
@@ -301,19 +303,19 @@
                 <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
-                  Interpretar
+                  <?php echo $this->lang->line('interprete'); ?> </a>
                 </button>
                 <?php endif;?>
                 <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button"
                   type="submit">
                   <i class="fas fa-headphones"></i>
-                  Escuchar</button>
+                  <?php echo $this->lang->line('listen'); ?> </a></button>
               </div>
               <button class="btn btn-danger" data-dismiss="modal" type="submit">
-                Salir
+              <?php echo $this->lang->line('exit'); ?> </a>
               </button>
               <button onclick="next=true" class="btn btn-primary" data-dismiss="modal" type="submit">
-                Continuar
+              <?php echo $this->lang->line('continue'); ?> </a>
               </button>
             </div>
           </div>
@@ -324,53 +326,54 @@
         <div class="modal-dialog modal-lg" role="document" style="height: 95%;">
           <div class="modal-content" style="height: 95%;">
             <div class="modal-body">
-            <div id="controlsAccessibilityTools" style="height: 95%;" class="carousel slide" data-ride="carousel" data-interval="false">
+              <div id="controlsAccessibilityTools" style="height: 95%;" class="carousel slide" data-ride="carousel"
+                data-interval="false">
                 <div class="carousel-inner" style="height: 95%;">
-                  <div class="carousel-item active" >
+                  <div class="carousel-item active">
                     <div class="container-fluid">
                       <div class="row justify-content-md-center">
-                        <h2 class="title">Atajos lector de pantalla</h2>
+                        <h2 class="title"><?php echo $this->lang->line('screen_reader_shortcuts'); ?> </a></h2>
                       </div>
                       <dl class="row">
                         <dt class="col-sm-3"><strong>Ctrl + s</strong></dt>
-                        <dd class="col-sm-9">Encender lector de pantalla</dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('on_screen_reader'); ?> </a></dd>
                         <dt class="col-sm-3"><strong>Ctrl + d</strong></dt>
-                        <dd class="col-sm-9">Leer el siguiente elemento</dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('next_screen_reader'); ?> </a></dd>
                         <dt class="col-sm-3">Ctrl + p</dt>
-                        <dd class="col-sm-9">Devolver al elemento anterior</dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('previous_screen_reader'); ?> </a></dd>
                         <dt class="col-sm-3">Ctrl + f</dt>
-                        <dd class="col-sm-9">Cambia el modo de automático a manual o manual a automático</dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('mode_screen_reader'); ?> </a></dd>
                         <dt class="col-sm-3">Ctrl + a</dt>
-                        <dd class="col-sm-9">Apaga el lector de pantalla</dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('off_screen_reader'); ?> </a></dd>
                       </dl>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="container-fluid">
-                    <div class="row justify-content-md-center">
-                      <h2 class="title">Atajos narrador</h2>
-                    </div>
-                    <dl class="row">
-                      <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
-                      <dd class="col-sm-9">Enciende el narrador</dd>
-                    </dl>
+                      <div class="row justify-content-md-center">
+                        <h2 class="title"><?php echo $this->lang->line('narrator_shortcuts'); ?> </a></h2>
+                      </div>
+                      <dl class="row">
+                        <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('on_narrator'); ?> </a></dd>
+                      </dl>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="container-fluid">
-                    <div class="row justify-content-md-center">
-                      <h2 class="title">Comandos de voz</h2>
-                    </div>
-                    <dl class="row">
-                      <dt class="col-sm-4"><strong>Ir a *nombre enlace*</strong></dt>
-                      <dd class="col-sm-8">Hace click en el enlace</dd>
-                      <dt class="col-sm-4"><strong>Enfocar campo *nombre campo*</strong></dt>
-                      <dd class="col-sm-8">Enfoca el campo para escribir</dd>
-                      <dt class="col-sm-4"><strong>Enviar formulario</strong></dt>
-                      <dd class="col-sm-8">Envia el formulario que se este enfocando</dd>
-                      <dt class="col-sm-4"><strong>Escribir *contenido*</strong></dt>
-                      <dd class="col-sm-8">Escribe en el campo que se este enfocando</dd>
-                    </dl>
+                      <div class="row justify-content-md-center">
+                        <h2 class="title"><?php echo $this->lang->line('voice_commands'); ?> </a></h2>
+                      </div>
+                      <dl class="row">
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('go_to_link'); ?> </a></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('do_click_link'); ?> </a></dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('focus_field'); ?> </a></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('write_focus_field'); ?> </a></dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('send_form'); ?> </a></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('send_focus_form'); ?> </a></dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('writer_content'); ?> </a></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('writer_in_current_field'); ?> </a></dd>
+                      </dl>
                     </div>
                   </div>
                 </div>
@@ -382,23 +385,23 @@
                 <button onclick="tour.interprete('controls')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
-                  Interpretar
+                  <?php echo $this->lang->line('interprete'); ?> </a>
                 </button>
                 <?php endif;?>
                 <button onclick="tour.speech('controls')" class="btn btn-outline-success btn-lg text-to-speech-button"
                   type="submit">
                   <i class="fas fa-headphones"></i>
-                  Escuchar</button>
+                  <?php echo $this->lang->line('listen'); ?> </a></button>
               </div>
-                <button id="prevButtonControls" onclick="tour.prevControlsSlide()" class="btn btn-outline-primary" type="submit">
-                  Anterior
-                </button>
-                <button id="nextButtonControls" onclick="tour.nextControlsSlide()" class="btn btn-outline-primary" type="submit">
-                  Siguiente
-                </button>
-                <button id="finishButtonControls" class="btn btn-primary" data-dismiss="modal" type="submit" style="display:none;">
-                  Terminar
-                </button>
+              <button id="prevButtonControls" onclick="tour.prevControlsSlide()" class="btn btn-outline-primary" type="submit">
+              <?php echo $this->lang->line('before'); ?> </a>
+              </button>
+              <button id="nextButtonControls" onclick="tour.nextControlsSlide()" class="btn btn-outline-primary" type="submit">
+              <?php echo $this->lang->line('next'); ?> </a>
+              </button>
+              <button id="finishButtonControls" class="btn btn-primary" data-dismiss="modal" type="submit" style="display:none;">
+              <?php echo $this->lang->line('finish'); ?> </a>
+              </button>
             </div>
           </div>
         </div>

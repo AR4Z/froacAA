@@ -439,7 +439,7 @@ class Tour {
         }
 
         let handlerSlides = () => {
-          if (accessibilityBar.lscTranslator.isTranslating) {
+          if (accessibilityBar.lscTranslator && accessibilityBar.lscTranslator.isTranslating) {
             accessibilityBar.lscTranslator.stop()
           }
 
@@ -463,7 +463,7 @@ class Tour {
           hotkeys.unbind('right')
           hotkeys.unbind('enter')
 
-          if (accessibilityBar.lscTranslator.isTranslating) {
+          if (accessibilityBar.lscTranslator && accessibilityBar.lscTranslator.isTranslating) {
             accessibilityBar.lscTranslator.stop()
           }
 
