@@ -439,8 +439,8 @@ class Tour {
         }
 
         let handlerSlides = () => {
-          if (window.accessibilityBar.lscTranslator 
-            && window.accessibilityBar.lscTranslator.isTranslating) {
+          if (window.accessibilityBar.lscTranslator &&
+            window.accessibilityBar.lscTranslator.isTranslating) {
             window.accessibilityBar.lscTranslator.stop()
           }
 
@@ -464,8 +464,8 @@ class Tour {
           hotkeys.unbind('right')
           hotkeys.unbind('enter')
 
-          if (window.accessibilityBar.lscTranslator 
-            && window.accessibilityBar.lscTranslator.isTranslating) {
+          if (window.accessibilityBar.lscTranslator &&
+            window.accessibilityBar.lscTranslator.isTranslating) {
             window.accessibilityBar.lscTranslator.stop()
           }
 
@@ -500,6 +500,22 @@ class Tour {
 
           window.accessibilityBar.tabs.narrator.addEventListener('shown.bs.tab', handler)
           window.accessibilityBar.tabsCollection.narrator.show()
+        } else if (elm.node.id == 'card-font-type') {
+          let handler = (e) => {
+            this.driver.start(4)
+            window.accessibilityBar.carouselCustomInterfazElm.removeEventListener('slid.bs.carousel', handler)
+          }
+
+          window.accessibilityBar.carouselCustomInterfazElm.addEventListener('slid.bs.carousel', handler)
+          window.accessibilityBar.carouselCustomInterfaz.slideTo(1)
+        } else if (elm.node.id == 'card-narrator-link') {
+          let handler = (e) => {
+            this.driver.start(11)
+            window.accessibilityBar.carouselNarratorElm.removeEventListener('slid.bs.carousel', handler)
+          }
+
+          window.accessibilityBar.carouselNarratorElm.addEventListener('slid.bs.carousel', handler)
+          window.accessibilityBar.carouselNarrator.slideTo(1)
         } else if (elm.node.id == 'card-narrator-read-mode') {
           let handler = (e) => {
             this.driver.start(13)
@@ -569,6 +585,24 @@ class Tour {
 
           window.accessibilityBar.tabs.interfaz.addEventListener('shown.bs.tab', handler)
           window.accessibilityBar.tabsCollection.interfaz.show()
+        } else if (elm.node.id == 'card-config-cursor') {
+          let handler = (e) => {
+            this.driver.start(3)
+            this.lastStepTour = this.driver.currentStep
+            window.accessibilityBar.carouselCustomInterfazElm.removeEventListener('slid.bs.carousel', handler)
+          }
+
+          window.accessibilityBar.carouselCustomInterfazElm.addEventListener('slid.bs.carousel', handler)
+          window.accessibilityBar.carouselCustomInterfaz.slideTo(0)
+        } else if (elm.node.id == 'card-narrator-highlight') {
+          let handler = (e) => {
+            this.driver.start(10)
+            this.lastStepTour = this.driver.currentStep
+            window.accessibilityBar.carouselNarratorElm.removeEventListener('slid.bs.carousel', handler)
+          }
+
+          window.accessibilityBar.carouselNarratorElm.addEventListener('slid.bs.carousel', handler)
+          window.accessibilityBar.carouselNarrator.slideTo(0)
         } else if (elm.node.id == 'card-screen-reader-speed') {
           let handler = (e) => {
             this.driver.start(12)
@@ -706,7 +740,7 @@ class Tour {
               <br/>
               ${ this.buttons }
             `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -720,7 +754,7 @@ class Tour {
               <br/>
               ${ this.buttons }
             `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -804,7 +838,7 @@ class Tour {
               <br/>
               ${ this.buttons }
             `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -818,7 +852,7 @@ class Tour {
               <br/>
               ${ this.buttons }
             `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -1058,7 +1092,7 @@ class Tour {
             <br/>
             ${ this.buttons }
           `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -1072,7 +1106,7 @@ class Tour {
             <br/>
             ${ this.buttons }
           `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -1156,7 +1190,7 @@ class Tour {
             <br/>
             ${ this.buttons }
           `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -1170,7 +1204,7 @@ class Tour {
             <br/>
             ${ this.buttons }
           `,
-            position: 'top'
+            position: 'bottom'
           }
         },
         {
@@ -1320,8 +1354,8 @@ class Tour {
   interprete(name) {
     let text = ''
 
-    if (window.accessibilityBar.lscTranslator 
-      && window.accessibilityBar.lscTranslator.isTranslating) {
+    if (window.accessibilityBar.lscTranslator &&
+      window.accessibilityBar.lscTranslator.isTranslating) {
       accessibilityBar.lscTranslator.stop()
     }
 

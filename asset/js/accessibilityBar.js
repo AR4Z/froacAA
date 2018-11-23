@@ -13,7 +13,11 @@ class AccessibilityBar {
     this.collapse = document.getElementById(this.button.getAttribute('href').replace('#', ''))
     this.collapseInstance = new Collapse(this.button)
     this.tabs = {}
-    this.tabsCollection = {} 
+    this.tabsCollection = {}
+    this.carouselCustomInterfazElm = null
+    this.carouselNarratorElm = null
+    this.carouselCustomInterfaz = {}
+    this.carouselNarrator = {}
 
     this.narrator
     this.customInterfaz
@@ -106,12 +110,24 @@ class AccessibilityBar {
     if (this.needCustomInterfaz) {
       this.tabs.interfaz = document.getElementById('interfaz-tab')
       this.tabsCollection.interfaz = new Tab(this.tabs.interfaz)
+      this.carouselCustomInterfazElm = document.getElementById('carouselInterfazCards')
+      this.carouselCustomInterfaz = new Carousel(document.getElementById('carouselInterfazCards'), {
+        interval: false,
+        pause: false,
+        keyboard: false
+      })
       this.customInterfaz = new CustomInterfaz(this.dataAccessibilityBar.data_custom_interfaz)
     }
 
     if (this.needNarrator) {
       this.tabs.narrator = document.getElementById('narrator-tab')
       this.tabsCollection.narrator = new Tab(this.tabs.narrator)
+      this.carouselNarratorElm = document.getElementById('carouselNarratorCards')
+      this.carouselNarrator = new Carousel(document.getElementById('carouselNarratorCards', {
+        interval: false,
+        pause: false,
+        keyboard: false
+      }))
       this.narrator = new Narrator(this.dataAccessibilityBar.data_narrator)
     }
 

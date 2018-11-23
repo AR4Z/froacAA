@@ -203,6 +203,7 @@
         document.getElementById(idView).classList.add('active')
       }
       if (window.firstTime || (localStorage.getItem('intro') == 'true')) {
+      //if(true){
         window.tour = new Tour()
         window.next = false
 
