@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form method="POST" action="<?php echo base_url();?>index.php/usuario/guardar"  role="form" enctype='multipart/form-data' id="form">
                     <div class="card border-0">
-                        <h3><?php echo $this->lang->line('personal_information'); ?></h3>
+                        <h2><?php echo $this->lang->line('personal_information'); ?></h2>
                         <div class="card-body">
                             <div class="form-group">
                                 <input type="hidden" value="2" name="tipoU">
@@ -28,8 +28,8 @@
                             <div id="nombre-validate">
                             </div>
                             <div class="form-group">
-                                <label for="apellidos" id="apellidos"><?php echo $this->lang->line('last_name'); ?></label>
-                                <input id="apellidos" type="text" class="form-control" name="apellidos" placeholder="<?php echo $this->lang->line('last_name'); ?>" aria-required="true" aria-labelledby="apellidos">
+                                <label for="apellidos" id="apellidosLabel"><?php echo $this->lang->line('last_name'); ?></label>
+                                <input id="apellidos" type="text" class="form-control" name="apellidos" placeholder="<?php echo $this->lang->line('last_name'); ?>" aria-required="true" aria-labelledby="apellidosLabel">
                             </div>
                             <div id="apellidos-validate">
                             </div>
@@ -75,13 +75,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="dissabilities"><?php echo $this->lang->line('have_disabilities'); ?>:</label>
-                                <br>
-                                <?php
+                              <fieldset aria-labelledby="have_dissabilities">
+                              <legend id="have_dissabilities" style="font-size:1rem;"><?php echo $this->lang->line('have_disabilities'); ?>:</legend>
+                              <br>
+                              <?php
                                   foreach ($dissabilities as $key) { ?>
-                                <label><input type="checkbox" name="dissabilities" value=" <?php echo $key->use_dissability_id ?> " aria-label="Presenta alguna de las siguientes discapacidades: <?php echo $key->use_dissability?>"/> <?php echo $key->use_dissability ?></label>
+                                <label><input type="checkbox" name="dissabilities" value=" <?php echo $key->use_dissability_id ?> "/> <?php echo $key->use_dissability ?></label>
                                 <br/>
                                 <?php } ?>
+                              </fieldset>
+                                
                             </div>
 
                             <div class="form-group">
@@ -93,8 +96,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label id="label_nivel_educativo" for="nevel_ed"><?php echo $this->lang->line('education_level'); ?>:</label>
-                                <select class="form-control input-sm m-bot15" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
+                                <label id="label_nivel_educativo" for="level_ed"><?php echo $this->lang->line('education_level'); ?>:</label>
+                                <select class="form-control input-sm m-bot15" id="level_ed" name="nevel_ed" aria-labelledby="label_nivel_educativo" role="listbox" aria-required="true">
                                     <?php
                                                     foreach ($nivel_educativo as $key) { ?>
                                     <option name="level[]" value="<?php echo $key->use_id_level ?>">
@@ -103,19 +106,26 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="form-group" role="group" aria-labelledby="label_preferences">
-                                <label id="label_preferences" for="pref"><?php echo $this->lang->line('educational_resource_pref'); ?></label><br/>
+                            <div class="form-group">
+                            <fieldset aria-labelledby="educational_resource">
+                            <legend id="educational_resource" style="font-size:1rem;"><?php echo $this->lang->line('educational_resource_pref'); ?></legend>
+                                <br/>
 
                                 <?php
                                                     foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
 
-                                <input type="checkbox" aria-labelledby="<?php echo $preferencia?>" aria-selected="true" name="pref[]" value=" <?php echo $key->use_pre_id ?> " aria-label="Preferencias de tipo de recurso educativo:  <?php echo $preferencia?>" /><label id="<?php echo $preferencia?>">
-                                    <?php echo $key->use_pre_preferencia ?></label><br />
+                               <label>
+                               <input type="checkbox" aria-selected="true" name="pref[]" value=" <?php echo $key->use_pre_id ?> "/>
+                                    <?php echo $key->use_pre_preferencia ?>
+                              </label>
+                              <br/>
                                 <?php } ?>
+                            </fieldset>
+                                
 
                             </div>
-                            <div class="form-group" role="group" aria-labelledby="label_interfaz">
-                                <label for="personaliceInterfaz" id="label_personalice_interfaz"><?php echo $this->lang->line('customize_interface'); ?></label>
+                            <div class="form-group" role="group" aria-labelledby="label_personalice_interfaz">
+                                <label for="useAdaptInterfaz" id="label_personalice_interfaz"><?php echo $this->lang->line('customize_interface'); ?></label>
                                 <select id="useAdaptInterfaz" class="form-control input-sm m-bot15" name="personaliceInterfaz" aria-labelledby="label_personalice_interfaz" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -128,7 +138,7 @@
                                 </select>
 
                             </div>
-                            <div class="form-group" role="group" aria-labelledby="label_narrator">
+                            <div class="form-group" role="group" aria-labelledby="label_use_narrator">
                                 <label for="useNarrator" id="label_use_narrator"><?php echo $this->lang->line('use_narrator'); ?></label>
                                 <select id="useNarrator" class="form-control input-sm m-bot15" name="useNarrator" aria-labelledby="label_use_narrator" role="listbox" aria-required="true">
                                     <?php
@@ -144,7 +154,7 @@
                             </div>
                             <div class="form-group" role="group" aria-labelledby="label_use_screen_reader">
                                 <label for="use_screen_reader" id="label_use_screen_reader"><?php echo $this->lang->line('use_screen_reader'); ?></label>
-                                <select id="useSr" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
+                                <select id="use_screen_reader" class="form-control input-sm m-bot15" name="useSr" aria-labelledby="label_use_screen_reader" role="listbox" aria-required="true">
                                     <?php
                                         foreach($optsAdapta as $key) {?>
                                             <?php if($key->option_use_id == 3): ?>
