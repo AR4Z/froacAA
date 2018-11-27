@@ -6,8 +6,6 @@ if ($sess == 1) {
 <script type="text/javascript">
     var dataResult = <?php echo json_encode($result[0]);?>
 </script>
-<link rel="stylesheet" href="<?php echo base_url()?>asset/raty/jquery.raty.css" />
-<script src="<?php echo base_url()?>asset/raty/jquery.raty.js"></script>
 <script src="<?php echo base_url()?>asset/js/pagination.min.js"></script>
 
 
@@ -15,7 +13,7 @@ if ($sess == 1) {
     <div class="card border-0">
 
         <h4 class="card-title"><?php echo $this->lang->line('message_result'); ?> <b>(<?php echo $palabras ?> )</b></h4>
-        <p class="no-results" ><?php echo $this->lang->line('no_results'); ?>.</p>
+        <p class="no-results"><?php echo $this->lang->line('no_results'); ?>.</p>
         <div id="show_oas" class="card-body">
 
         </div>
@@ -25,26 +23,11 @@ if ($sess == 1) {
     </div>
 </div>
 
-<!--<div class="col-lg-3" id="recomendacion">
-    <script>
-        //Script para mostrar recomendación
-        $(document).ready(function(){
-            $("#prueba").hide();
-            $("#prueba").text("<?php echo urlencode($oasadaptados) ?>");
-            $("#recomendacion").load("<?php echo base_url(); ?>index.php/lo/llenar_recomendacion/" + $("#prueba").text() + "");
-
-        });
-
-
-
-    </script>
-
-</div>-->
 
 
 <!-- Modal -->
 
-<div class="modal fade" id="dialog_medatada"  tabindex="-1" role="dialog" aria-labelledby="metadataModal" aria-hidden="true">
+<div class="modal fade" id="dialog_metadata"  tabindex="-1" role="dialog" aria-labelledby="metadataModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" role="document">
             <div class="modal-header">
@@ -59,7 +42,7 @@ if ($sess == 1) {
 
             <div class="modal-body"  id="dialog_metadata_result">
                 <div class="embed-responsive embed-responsive-21by9">
-                <iframe src="" class="insideiframe embed-responsive-item" style="display: none"></iframe>
+                <iframe id="metadataIframe" src="" class="insideiframe embed-responsive-item" style="display: none"></iframe>
                 </div>
                
             </div>
@@ -103,34 +86,30 @@ if ($sess == 1) {
 <!-- modal-->
 
 <script type="text/javascript">
-    $(document).ready(function () {
-       
-
-
-        page();
-    });
+    $(document).ready(() => {
+      page()
+    })
 
     function b64EncodeUnicode(str) {
-        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
-            return String.fromCharCode(parseInt(p1, 16))
-        }))
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+        return String.fromCharCode(parseInt(p1, 16))
+      }))
     }
 
     function page() {
-        var container = $('#nav_oas');
-        var info = dataResult;
-        var options = {
-            dataSource: info,
-            pageSize: 5,
-            callback: function (response, pagination) {
-                $('.paginationjs-pages ul').addClass('pagination justify-content-center');
-                $('.paginationjs-pages ul li').addClass('page-item');
-                $('.paginationjs-pages ul li a').addClass('page-link');
+      let container = $('#nav_oas')
+      let los = dataResult
+      let options = {
+        dataSource: los,
+        pageSize: 5,
+        callback: (response, pagination) => {
+          $('.paginationjs-pages ul').addClass('pagination justify-content-center')
+          $('.paginationjs-pages ul li').addClass('page-item')
+          $('.paginationjs-pages ul li a').addClass('page-link')
 
-                window.console && console.log(response, pagination);
-                var dataHtml = '';
-                $.each(response, function (index, item) {
-                    dataHtml += `
+          let dataHtml = '';
+          $.each(response, function (index, item) {
+            dataHtml += `
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">
@@ -146,7 +125,7 @@ if ($sess == 1) {
                             </p>
                         </div>
                         <div class="card-footer">
-                            <button onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" type="button" class="btn btn-lg btn-info card-link d-inline"  data-toggle="modal" data-target="#dialog_medatada">
+                            <button onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" type="button" class="btn btn-lg btn-info card-link d-inline" data-target="#dialog_medatada">
                                 <i class="fa fa-eye"></i> <?php echo $this->lang->line('see_metadata'); ?>
                             </button>
                             <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}">
@@ -157,92 +136,101 @@ if ($sess == 1) {
                         <br/>
                 `;
 
-                });
-                $('#show_oas').html(dataHtml);
-                if (!(dataResult.length != 0)) {
-                    $('.no-results').show();
-                } else {
-                    $('.no-results').hide();
-                }
-            }
-        };
-        container.pagination(options);
-    }
+          });
+          document.getElementById('show_oas').innerHTML = dataHtml
 
-    $(document).keypress(function (e) {
-        if ($("#dialog_medatada").hasClass('show') && (e.keycode == 13 || e.which == 13)) {
-            $('#dialog_medatada').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
+          if (dataResult.length == 0) {
+            document.querySelector('.no-results').style.display = ''
+          } else {
+            document.querySelector('.no-results').style.display = 'none'
+          }
         }
+      }
 
-    });
+      container.pagination(options)
+    }
 
     function verMetadata(id) {
-        $(".insideiframe").attr("src", "<?php echo base_url(); ?>index.php/lo/load_metadata/" + id);
-        $(".insideiframe").show();
+      let iframeMetadataLo = document.getElementById('metadataIframe')
+      let modalMetadata = document.getElementById('dialog_metadata')
+      let modalMetadataInit = new Modal(modalMetadata)
+      let handleShowModal = () => {
+        hotkeys('enter', () => {
+          modalMetadataInit.hide()
+        })
+      }
+      let handleHideModal = () => {
+        hotkeys.unbind('enter')
+      }
 
+      iframeMetadataLo.setAttribute('src', `<?php echo base_url(); ?>index.php/lo/load_metadata/${ id }`)
+      iframeMetadataLo.style.display = ''
+      
+      modalMetadata.addEventListener('shown.bs.modal', handleShowModal)
+      modalMetadata.addEventListener('hidden.bs.modal', handleHideModal)
+
+      modalMetadataInit.show()
     }
 
-    function verIndicadores(id, rank) {
-        var res = id.split("/");
+    /*function verIndicadores(id, rank) {
+      var res = id.split("/");
+      var lo_id = res[0];
+      var rep_id = res[1];
+      var username = res[2];
 
-        var lo_id = res[0];
-        var rep_id = res[1];
-        var username = res[2];
-        $("#dialog_inidicadores_result").load("<?php echo base_url(); ?>index.php/lo/load_indicadores/" + id);
-        $("#rank").text(rank);
-        <?php if ($logged == 1) { ?>
-        $.post("<?php echo base_url() ?>index.php/usuario/get_score/", {
-            username: username,
-            lo_id: lo_id,
-            rep_id: rep_id
-        }).done(function (data) {
-            // $.fn.raty.defaults.path = 'asset/raty/images/';
-            $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
-            $(".raty").attr("id", lo_id).attr("rep_id", rep_id).attr("username", username).raty({
-                score: data,
-                cancel: true,
-                click: function (score, evt) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo base_url() ?>index.php/usuario/set_score",
-                        data: {
-                            lo_id: this.id,
-                            rep_id: $(this).attr('rep_id'),
-                            username: $(this).attr('username'),
-                            score: score
-                        },
-                        success: function (datos) {}
-                    });
-                }
+      $("#dialog_inidicadores_result").load("<?php echo base_url(); ?>index.php/lo/load_indicadores/" + id);
+      $("#rank").text(rank);
+      <?php if ($logged == 1) { ?>
+      $.post("<?php echo base_url() ?>index.php/usuario/get_score/", {
+        username: username,
+        lo_id: lo_id,
+        rep_id: rep_id
+      }).done(function (data) {
+        // $.fn.raty.defaults.path = 'asset/raty/images/';
+        $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
+        $(".raty").attr("id", lo_id).attr("rep_id", rep_id).attr("username", username).raty({
+          score: data,
+          cancel: true,
+          click: function (score, evt) {
+            $.ajax({
+              type: "POST",
+              url: "<?php echo base_url() ?>index.php/usuario/set_score",
+              data: {
+                lo_id: this.id,
+                rep_id: $(this).attr('rep_id'),
+                username: $(this).attr('username'),
+                score: score
+              },
+              success: function (datos) {}
             });
+          }
         });
-        <?php }else{ ?>
-        $.post("<?php echo base_url() ?>index.php/lo/get_score_avg/", {
-            lo_id: lo_id,
-            rep_id: rep_id
-        }).done(function (data) {
+      });
+      <?php }else{ ?>
+      $.post("<?php echo base_url() ?>index.php/lo/get_score_avg/", {
+        lo_id: lo_id,
+        rep_id: rep_id
+      }).done(function (data) {
 
-            $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
-            $(".raty").attr("id", lo_id).attr("rep_id", rep_id).raty({
-                score: data,
-                cancel: true
-            });
+        $.fn.raty.defaults.path = '<?php echo base_url()?>asset/raty/images/';
+        $(".raty").attr("id", lo_id).attr("rep_id", rep_id).raty({
+          score: data,
+          cancel: true
         });
+      });
 
-        <?php }?>
+      <?php }?>
 
     }
     $(".titulo").click(function () { //cargando datos de lo elegido en las opciones de las busquedas
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url() ?>index.php/lo/set_visita",
-            data: "lo_id=" + this.id + "&rep_id=" + $(this).attr('rep_id') + "&logged=" + $(this).attr('logged') + "",
-            success: function (datos) {
-                // alert("Se guardaron los datos: " + datos);
-            }
-        });
+      $.ajax({
+        type: "POST",
+        url: "<?php echo base_url() ?>index.php/lo/set_visita",
+        data: "lo_id=" + this.id + "&rep_id=" + $(this).attr('rep_id') + "&logged=" + $(this).attr('logged') + "",
+        success: function (datos) {
+          // alert("Se guardaron los datos: " + datos);
+        }
+      });
 
-    });
+    });*/
 </script>

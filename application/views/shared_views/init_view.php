@@ -26,12 +26,12 @@
                 <div class="row">
                     <div class="col">
                         <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
-                            <div class="input-group mb-3" role="search" aria-label="Buscar objeto de aprendizaje">
-                                <input type="text" class="form-control form-control-lg"  id="search" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>" aria-label="<?php echo $this->lang->line('search_learning_object'); ?>" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <a class="btn btn-outline-success btn-lg" role="button" href="<?php echo base_url()?>usuario/busqueda"><?php echo $this->lang->line('search'); ?></a>
-                                </div>
-                            </div>
+                          <div role="search" class="input-group mb-3">
+                            <input type="search" aria-label="search text" class="form-control form-control-lg" id="searchLo" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
+                            <button type="submit" onclick="searchLo()" class="btn btn-outline-success btn-lg">
+                              <?php echo $this->lang->line('search');?>
+                            </button>
+                          </div> 
                         </div>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <nav id="nav_oas" aria-label="Navegación en obejtos de aprendizaje encontrados">
+                    <nav id="nav_oas" aria-label="Navegación en objetos de aprendizaje encontrados">
 
                     </nav>
                 </div>
@@ -133,31 +133,31 @@
     </section>
     
     <script>
-       function verify_params() {
-           var params = $("#hide-input").val();
-           params = params.toLowerCase().replace(/ /g, '_');
-           $("#result").load("<?php echo base_url(); ?>index.php/lo/buscar_lo/" + params + "/" + <?php echo $sess ?> + "/" + "<?php echo $usr ?>");
-       }
-       $("#result").show();
-       $("#search").keyup(function () {
-           $("#hide-s").show("slow");
-           $("#hide-s").attr('aria-hidden', 'false');
-           $("#show-s").hide("slow");
-           $("#show-s").attr('aria-hidden', 'true');
-           $("#hide-input").val($("#search").val());
-           $("#hide-input").focus();
-       });
-       $(".buscar").click(function () {
-           verify_params();
-           $("#info").hide("slow");
-           $("#info").attr('aria-hidden', 'true');
-       });
-       $(document).keypress(function (e) {
-           if (e.which == 13 && ($("#hide-input").val().length > 0)) {
-               verify_params();
-               $("#info").hide("slow");
-               $("#info").attr('aria-hidden', 'true');
+    $(document).ready(() => {
+      let inputSearch = document.getElementById('searchLo')
 
-           }
-       });
+      inputSearch.addEventListener('keyup', (event) => {
+        event.preventDefault()
+
+        if(event.keyCode === 13) {
+          searchLo()
+        }
+      })
+    })
+    function searchLo() {
+      let keywords = document.getElementById('searchLo').value
+      keywords = keywords.toLowerCase().replace(/ /g, '_')
+
+      fetch(`${ window.base_url }index.php/lo/buscar_lo/${ keywords }/<?php echo $sess ?>/<?php echo $usr ?>`)
+        .then(response => {
+          return response.text();
+        })
+        .then(body => {
+          let divShow = document.getElementById('show-s')
+          document.getElementById('result').style.display = ''
+          $(divShow).hide("slow")
+          divShow.setAttribute('aria-hidden', 'true')
+          $('#result').append(body)
+        })
+    }
     </script>
