@@ -19,7 +19,7 @@ $hook['post_controller_constructor'][] = array(
 
 $hook['post_controller_constructor'][] = array(
   'class'    => 'FirstTimeUser',
-  'function' => 'setCookie',
+  'function' => 'saveVisitor',
   'filename' => 'FirstTimeUser.php',
   'filepath' => 'hooks'
   );
