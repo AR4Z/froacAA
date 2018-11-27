@@ -13,15 +13,15 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <p>
+                  <label for="fontSizeInput">
                     <?php echo $this->lang->line('message_font_size'); ?>
-                  </p>
+                  </label>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <div class="input-group">
-                    <input type="number" name="fontSize" value="12" min="9" max="36">
+                    <input type="number" id="fontSizeInput" name="fontSize" value="12" min="9" max="36">
                   </div>
                 </div>
               </div>
@@ -37,15 +37,16 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <p>
+                  <label for="interlineSpaceSizeInput">
                     <?php echo $this->lang->line('message_interline_size'); ?>
-                  </p>
+                  </label>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <div class="input-group">
-                    <input type="number" name="interlineSpaceSize" value="1.5" min="1" max="2" step="0.1">
+                    <input type="number" id="interlineSpaceSizeInput" name="interlineSpaceSize" value="1.5" min="1" max="2"
+                      step="0.1">
                   </div>
                 </div>
               </div>
@@ -66,17 +67,17 @@
                     <?php echo $this->lang->line('message_contrast'); ?>
                   </p>
                 </div>
-
               </div>
 
               <div class="row">
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input" style="display:none;" type="radio" name="radioOptionscontrast"
-                      id="inlineRadio1" value="1">
-                    <label class="form-check-label contrast-label" for="inlineRadio1" data-toggle="tooltip"
+                      id="normalContrast" value="1">
+                    <label class="form-check-label contrast-label" for="normalContrast" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('normal'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
+                      <img alt="<?php echo $this->lang->line('normal_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
                     </label>
                   </div>
                 </div>
@@ -86,7 +87,8 @@
                       id="inlineRadio2" value="2" checked>
                     <label class="form-check-label contrast-label" for="inlineRadio2" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('black_white'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
+                      <img alt="<?php echo $this->lang->line('black_white_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
                     </label>
                   </div>
                 </div>
@@ -96,7 +98,8 @@
                       id="inlineRadio3" value="3">
                     <label class="form-check-label contrast-label" for="inlineRadio3" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('white_black'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
+                      <img alt="<?php echo $this->lang->line('white_black_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
                     </label>
                   </div>
                 </div>
@@ -106,7 +109,8 @@
                       id="inlineRadio4" value="4">
                     <label class="form-check-label contrast-label" for="inlineRadio4" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('black_yellow'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" />
+                      <img alt="<?php echo $this->lang->line('black_yellow_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" />
                     </label>
                   </div>
                 </div>
@@ -116,7 +120,8 @@
                       id="inlineRadio5" value="5">
                     <label class="form-check-label contrast-label" for="inlineRadio5" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('yellow_black'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" />
+                      <img alt="<?php echo $this->lang->line('yellow_black_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" />
                     </label>
                   </div>
 
@@ -127,7 +132,8 @@
                       id="inlineRadio6" value="6">
                     <label class="form-check-label contrast-label" for="inlineRadio6" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('gray'); ?>">
-                      <img style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
+                      <img alt="<?php echo $this->lang->line('gray_contrast'); ?>" style="height: 40px; width: 40px;"
+                        src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
                     </label>
                   </div>
                 </div>
@@ -146,42 +152,52 @@
               <div class="row">
                 <div class="col">
                   <div id="div-color-foreground" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('font_color'); ?></b>
+                    <label for="foregroundColorInput">
+                      <b class="no-high-contrast">
+                        <?php echo $this->lang->line('font_color'); ?></b>
+                    </label>
                     <br />
-                    <div id="cp3" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" name="foregroundColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                      <input type="text" id="foregroundColorInput" name="foregroundColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
                 </div>
                 <div class="col">
                   <div id="div-color-background" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('background_color'); ?></b>
+                    <label for="backgroundColorInput">
+                      <b class="no-high-contrast">
+                        <?php echo $this->lang->line('background_color'); ?></b>
+                    </label>
                     <br />
-                    <div id="cp4" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" name="backgroundColor" value="rgb(255, 255, 255)" class="jscolor form-control no-high-contrast no-invert-color" />
+                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                      <input type="text" id="backgroundColorInput" name="backgroundColor" value="rgb(255, 255, 255)"
+                        class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
 
                 </div>
                 <div class="col">
                   <div id="div-color-highlight" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('highlight_color'); ?></b>
+                    <label for="highlightColorInput">
+                      <b class="no-high-contrast">
+                        <?php echo $this->lang->line('highlight_color'); ?></b>
+                    </label>
                     <br />
-                    <div id="cp5" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" name="highlightColor" value="rgb(211, 211, 211)" class="jscolor form-control no-high-contrast no-invert-color" />
+                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                      <input type="text" id="highlightColorInput" name="highlightColor" value="rgb(211, 211, 211)"
+                        class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
                 </div>
                 <div class="col">
                   <div id="div-color-link" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('link_color'); ?></b>
+                    <label for="linkColorInput">
+                      <b class="no-high-contrast">
+                        <?php echo $this->lang->line('link_color'); ?></b>
+                    </label>
                     <br />
-                    <div id="cp6" class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" name="linkColor" value="rgb(255, 255, 0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                      <input type="text" id="linkColorInput" name="linkColor" value="rgb(255, 255, 0)" class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
                 </div>
@@ -196,52 +212,55 @@
               </span>
             </div>
             <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <p>
-                    <?php echo $this->lang->line('message_font_type'); ?>
-                  </p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type-font" id="defaultFont" value="1">
-                        <label class="form-check-label sans" for="defaultFont">Open Sans</label>
-                      </div>
-
-                    </div>
-
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type-font" id="serifFont" value="2">
-                        <label class="form-check-label serif" for="serifFont">Serif</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type-font" id="cantarellFont" value="3">
-                        <label class="form-check-label cantarell" for="cantarellFont">Cantarell</label>
-                      </div>
-
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type-font" id="sourceCodePROFont" value="4">
-                        <label class="form-check-label sourceCodePRO" for="sourceCodePROFont">Source Code PRO</label>
-                      </div>
-                    </div>
+              <fieldset role="radiogroup" aria-labelledby="group_font_type">
+                <div class="row">
+                  <div class="col">
+                    <legend id="group_font_type" style="font-size:1rem;">
+                      <?php echo $this->lang->line('message_font_type'); ?>
+                    </legend>
                   </div>
                 </div>
-              </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" role="radio" name="type-font" id="defaultFont"
+                            value="1">
+                          <label class="form-check-label sans" for="defaultFont">Open Sans</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" role="radio" name="type-font" id="serifFont"
+                            value="2">
+                          <label class="form-check-label serif" for="serifFont">Serif</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" role="radio" name="type-font" id="cantarellFont"
+                            value="3">
+                          <label class="form-check-label cantarell" for="cantarellFont">Cantarell</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" role="radio" name="type-font" id="sourceCodePROFont"
+                            value="4">
+                          <label class="form-check-label sourceCodePRO" for="sourceCodePROFont">Source Code PRO</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -266,41 +285,46 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col">
-                  <b>
-                    <?php echo $this->lang->line('size_cursor'); ?></b>
+                <fieldset class="col" role="radiogroup" aria-labelledby="group_size_cursor">
+                  <legend id="group_size_cursor" style="font-size:1rem; font-weight: bold;">
+                    <?php echo $this->lang->line('size_cursor'); ?>
+                  </legend>
                   <br />
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="normalSizeCursor"
+                    <input class="form-check-input" type="radio" role="radio" name="radioOptionsSizeCursor" id="normalSizeCursor"
                       value="1">
                     <label class="form-check-label" for="normalSizeCursor">
                       <?php echo $this->lang->line('no_change'); ?></label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize16" value="2">
+                    <input class="form-check-input" type="radio" role="radio" name="radioOptionsSizeCursor" id="cursorSize16"
+                      value="2">
                     <label class="form-check-label" for="cursorSize16">16 x 16</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize32" value="3">
+                    <input class="form-check-input" type="radio" role="radio" name="radioOptionsSizeCursor" id="cursorSize32"
+                      value="3">
                     <label class="form-check-label" for="cursorSize32">32 x 32</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radioOptionsSizeCursor" id="cursorSize40" value="4">
+                    <input class="form-check-input" type="radio" role="radio" name="radioOptionsSizeCursor" id="cursorSize40"
+                      value="4">
                     <label class="form-check-label" for="cursorSize40">40 x 40</label>
                   </div>
 
                   <div id="div-color-cursor" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('cursor_color'); ?></b>
+                    <label class="no-high-contrast" for="colorMousePointerInput" style="font-weight:bold">
+                      <?php echo $this->lang->line('cursor_color'); ?></label>
                     <br />
                     <div class="input-group formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" name="colorMousePointer" class="jscolor form-control no-high-contrast no-invert-color" />
+                      <input type="text" id="colorMousePointerInput" name="colorMousePointer" class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
-                </div>
-                <div class="col">
-                  <b>
-                    <?php echo $this->lang->line('size_trail'); ?></b>
+                </fieldset>
+                <fieldset class="col" role="radiogroup" aria-labelledby="group_trail_cursor">
+                  <legend id="group_trail_cursor" style="font-size:1rem;font-weight:bold;">
+                    <?php echo $this->lang->line('size_trail'); ?>
+                  </legend>
                   <br />
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="radioOptionsSizeCursorTrails" id="normalSizeCursorTrails"
@@ -319,14 +343,15 @@
                     <label class="form-check-label" for="cursorSizeTrails24">24</label>
                   </div>
                   <div id="div-color-cursor-trails" class="no-high-contrast" style="display:none">
-                    <b class="no-high-contrast">
-                      <?php echo $this->lang->line('trail_color'); ?></b>
+                    <label class="no-high-contrast" for="colorCursorTrails" style="font-weight:bold">
+                      <?php echo $this->lang->line('trail_color'); ?>
+                    </label>
                     <br />
-                    <div id="cp2" class="input-group formcolorpicker no-high-contrast no-invert-color">
+                    <div class="input-group formcolorpicker no-high-contrast no-invert-color">
                       <input type="text" name="colorCursorTrails" id="colorCursorTrails" class="jscolor form-control no-high-contrast no-invert-color" />
                     </div>
                   </div>
-                </div>
+                </fieldset>
               </div>
             </div>
           </div>
