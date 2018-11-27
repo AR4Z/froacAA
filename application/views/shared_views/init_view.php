@@ -6,7 +6,7 @@
                 <div class="col">
                     <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
                         <div class="input-group mb-3" role="search" aria-label="Buscar objeto de aprendizaje">
-                            <input type="text" class="form-control form-control-lg"  id="hide-input" placeholder="Buscar objeto de aprendizaje" aria-label="Buscar objeto de aprendizaje" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control form-control-lg"  id="hide-input" placeholder="Buscar objeto de aprendizaje" aria-label="Buscar objeto de aprendizaje">
                             <div class="input-group-append">
                                 <a class="btn btn-outline-success btn-lg" role="button" href=""><?php echo $this->lang->line('search'); ?></a>
                             </div>

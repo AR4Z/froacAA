@@ -16,21 +16,21 @@
         <div class="video" id="iris" style="width:320px; height:240px; margin:auto; background-image: url(<?php echo base_url()?>asset/img/lengua/conector_espera.jpg); position:relative">
         </div>
         <div id="control-iris" style="width:320px; height:40px; margin:auto; text-align: center; padding-top:10px; position:relative;">
-            <button id="play-iris" class="button button-raised button-primary button-circle button-small"
+            <button id="play-iris" aria-label="Reproducir traducción" class="button button-raised button-primary button-circle button-small"
                 style="display:none;">
                 <i class="fa fa-play"></i>
             </button>
-            <button id="pause-iris" class="button button-raised button-primary button-circle button-small"
+            <button id="pause-iris" aria-label="Pausar traducción" class="button button-raised button-primary button-circle button-small"
             style="display:none;">
                 <i class="fa fa-pause"></i>
             </button>
-            <button  id="stop-iris" class="button button-raised button-primary button-circle button-small"
+            <button  id="stop-iris" aria-label="Detener traducción" class="button button-raised button-primary button-circle button-small"
             style="display:none;">
                 <i class="fa fa-stop"></i>
             </button>
         </div>
         <div id="container-input-iris" style="width:320px; height:140px; margin:auto; position:relative; padding-top:10px;">
-            <textarea id="input-iris" placeholder="<?php echo $this->lang->line('message_text_lsc'); ?>" rows="4" cols="42" style="resize: none; position:relative"></textarea>
+            <textarea id="input-iris" aria-label="Texto para traducir" placeholder="<?php echo $this->lang->line('message_text_lsc'); ?>" rows="4" cols="42" style="resize: none; position:relative"></textarea>
             <a onclick="accessibilityBar.lscTranslator.clean()" class="button button-raised button-circle button-primary button-small" style="float:left; margin-top:5px"><i
                     class="fa fa-trash"></i></a>
 

@@ -53,7 +53,7 @@
         <fieldset role="radiogroup" aria-labelledby="group_voice_tone_sr">
           <div class="row">
             <div class="col">
-              <legend id="group_voice_tone_sr">
+              <legend id="group_voice_tone_sr" style="font-size:1rem;">
                 <?php echo $this->lang->line('message_voice_tone'); ?>
               </legend>
             </div>

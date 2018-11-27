@@ -41,10 +41,6 @@
           overflow-x: auto;
         }
 
-        .contrast-input[type="checkbox"][id^="cb"] {
-          display: none;
-        }
-
         .contrast-label {
           cursor: pointer;
         }
@@ -270,14 +266,14 @@
       <?php endif;?>
       <audio id="key-sound" src="<?php echo base_url() ?>asset/audios/key.mp3">
       </audio>
-      <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="labelWelcomeModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <select onchange="localStorage.setItem('intro', true);javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                  <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.setItem('intro', true);javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
                       if($this->session->userdata('site_lang')
                       == 'spanish') echo 'selected="selected"'; ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
@@ -293,7 +289,7 @@
                   <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">
                 </div>
                 <div class="row justify-content-md-center">
-                  <h2 class="title"><?php echo $this->lang->line('welcome'); ?> </a></h2>
+                  <h2 id="labelWelcomeModal" class="title"><?php echo $this->lang->line('welcome'); ?> </a></h2>
                   <p class="description">
                   <?php echo $this->lang->line('description_intro_modal'); ?> </a>
                   </p>
@@ -324,13 +320,14 @@
           </div>
         </div>
       </div>
-      <div class="modal fade bd-example-modal-lg" id="controlsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      <div class="modal fade bd-example-modal-lg" id="controlsModal" tabindex="-1" role="dialog" aria-labelledby="labelCommandsModal"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" style="height: 95%;">
           <div class="modal-content" style="height: 95%;">
             <div class="modal-body">
               <div id="controlsAccessibilityTools" style="height: 95%;" class="carousel slide" data-ride="carousel"
                 data-interval="false">
+                <h2 id="labelCommandsModal" class="sr-only">Comandos de herramientas de accesibilidad</h2>
                 <div class="carousel-inner" style="height: 95%;">
                   <div class="carousel-item active">
                     <div class="container-fluid">
