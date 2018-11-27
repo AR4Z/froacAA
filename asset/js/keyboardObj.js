@@ -138,7 +138,7 @@ class VirtualKeyboard {
   }
 
   createKeyboard() {
-    $(':input[type=text], :input[type=password]').keyboard({
+    $(':input[type=text], :input[type=password], :input[type=search]').keyboard({
       language: 'es',
       layout: 'qwerty',
       usePreview: false,
