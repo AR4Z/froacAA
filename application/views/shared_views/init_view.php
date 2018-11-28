@@ -5,11 +5,11 @@
             <div class="row" style="display: none;" id="hide-s"  aria-hidden="true">
                 <div class="col">
                     <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
-                        <div class="input-group mb-3" role="search" aria-label="Buscar objeto de aprendizaje">
-                            <input type="text" class="form-control form-control-lg"  id="hide-input" placeholder="Buscar objeto de aprendizaje" aria-label="Buscar objeto de aprendizaje">
-                            <div class="input-group-append">
-                                <a class="btn btn-outline-success btn-lg" role="button" href=""><?php echo $this->lang->line('search'); ?></a>
-                            </div>
+                        <div class="input-group mb-3" aria-label="Buscar objeto de aprendizaje">
+                        <input type="search" aria-label="search text" class="form-control form-control-lg" id="searchLoAux" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
+                            <button type="submit" onclick="searchLo()" class="btn btn-outline-success btn-lg">
+                              <?php echo $this->lang->line('search');?>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -135,28 +135,36 @@
     <script>
     $(document).ready(() => {
       let inputSearch = document.getElementById('searchLo')
-
-      inputSearch.addEventListener('keyup', (event) => {
+      let inputSearchAux = document.getElementById('searchLoAux')
+      let handleEnterKey = (event) => {
         event.preventDefault()
 
         if(event.keyCode === 13) {
           searchLo()
         }
-      })
+      }
+      inputSearch.addEventListener('keyup', handleEnterKey)
+      inputSearchAux.addEventListener('keyup', handleEnterKey)
     })
     function searchLo() {
-      let keywords = document.getElementById('searchLo').value
-      keywords = keywords.toLowerCase().replace(/ /g, '_')
+      let divShow = document.getElementById('show-s')
+      let divHide = document.getElementById('hide-s')
+      let keywords = divHide.style.display == 'none' ? document.getElementById('searchLo').value : document.getElementById('searchLoAux').value
+      let keywordsWithUnderscore = keywords.toLowerCase().replace(/ /g, '_')
 
-      fetch(`${ window.base_url }index.php/lo/buscar_lo/${ keywords }/<?php echo $sess ?>/<?php echo $usr ?>`)
+      fetch(`${ window.base_url }index.php/lo/buscar_lo/${ keywordsWithUnderscore }/<?php echo $sess ?>/<?php echo $usr ?>`)
         .then(response => {
           return response.text();
         })
-        .then(body => {
-          let divShow = document.getElementById('show-s')
+        .then(body => {          
+          document.getElementById('searchLoAux').value= keywords
           document.getElementById('result').style.display = ''
-          $(divShow).hide("slow")
+          document.getElementById('result').setAttribute('aria-hidden', 'false')
+          $(divShow).hide('slow')
+          $(divHide).show('slow')
           divShow.setAttribute('aria-hidden', 'true')
+          divHide.setAttribute('aria-hidden', 'false')
+          document.getElementById('result').innerHTML = ''
           $('#result').append(body)
         })
     }

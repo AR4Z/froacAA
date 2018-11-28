@@ -87,6 +87,7 @@ if ($sess == 1) {
 
 <script type="text/javascript">
     $(document).ready(() => {
+      $("#hide-s").show()
       page()
     })
 
