@@ -4,35 +4,42 @@ class LearningObject {
     this.name = name
     this.iframeElement = document.getElementById('oa')
 
-    this.loadLearningObject()
+    this.processLearningObject()
   }
 
   getDocument() {
     return this.iframeElement.contentWindow.document
   }
 
-  loadLearningObject() {
-    this.proccessLearningObject()
+  processLearningObject() {
+    this.cloneLearningObject()
       .then(data => {
-        data = JSON.parse(data)
-        if (data.path_lo == '404') {
-          document.getElementById('name-lo').style.display = 'none'
-          document.getElementById('error').style.display = ''
-          window.loading_screen.finish()
+        let idTaskCloneLo = data.id_task_clone_lo
+
+        if (idTaskCloneLo) {
+          this.refreshId = setInterval(() => {
+            this.checkCloneStatus(idTaskCloneLo)
+          }, 1000)
         } else {
-          this.iframeElement.onload = () => {
-            this.setLanguage()
-            this.createAccessibilityBar()
-            document.getElementById('div-lo').style.display = ''
-            window.loading_screen.finish()
-          }
-          this.iframeElement.src = `${ base_url }LOs/${data.path_lo}?time=${Date.now()}`
+          this.loadLearningObjet(data.path_lo)
         }
+
       })
-      .catch(() => window.loading_screen.finish())
+      .catch((e) => console.error(e))
   }
 
-  proccessLearningObject() {
+  loadLearningObjet(path_lo) {
+    this.iframeElement.onload = () => {
+      this.setLanguage()
+      this.createAccessibilityBar()
+      document.getElementById('div-lo').style.display = ''
+      window.loading_screen.finish()
+    }
+
+    this.iframeElement.src = `${ base_url }LOs/${ path_lo }?time=${ Date.now() }`
+  }
+
+  cloneLearningObject() {
     let fetchData = {
       method: 'POST',
       headers: {
@@ -44,9 +51,38 @@ class LearningObject {
       })
     }
 
-    return fetch(`${ base_url }lo/getLO`, fetchData)
-      .then(r => r.json())
+    return fetch('http://127.0.0.1:8000/v1/lo/', fetchData)
+      .then(r => {
+        if (r.status == 200) {
+          return r.json()
+        }
+      })
       .catch(e => window.loading_screen.finish())
+  }
+
+  checkCloneStatus(task_clone_id) {
+    let fetchData = {
+      method: 'GET',
+    }
+    return fetch(`http://127.0.0.1:8000/v1/lo/${ task_clone_id }`, fetchData)
+      .then(r => {
+        if (r.status == 404) {
+          clearInterval(this.refreshId)
+          document.getElementById('name-lo').style.display = 'none'
+          document.getElementById('error').style.display = ''
+          window.loading_screen.finish()
+          return Promise.reject()
+        } else {
+          return r.json()
+        }
+      })
+      .then(data => {
+        if (data.status == 'SUCCESS') {
+          clearInterval(this.refreshId)
+          this.loadLearningObjet(data.path_lo)
+        }
+      })
+      .catch(e => console.error(e))
   }
 
   getLanguage() {
@@ -108,10 +144,10 @@ class LearningObject {
 
   createAccessibilityBar() {
     window.accessibilityBar.fetchDataAccessibilityBar()
-    .then(data => {
-      window.accessibilityBar.dataAccessibilityBar = data
-      window.accessibilityBar.createAccessibilityElements()
-    })
-    .catch(e => console.error(e))
+      .then(data => {
+        window.accessibilityBar.dataAccessibilityBar = data
+        window.accessibilityBar.createAccessibilityElements()
+      })
+      .catch(e => console.error(e))
   }
 }
