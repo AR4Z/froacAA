@@ -13,75 +13,8 @@ class ScreenReader {
       volume: undefined
     }
     this.voices = this.synth.getVoices()
-
-    this.messages = {
-      'spanish': [
-        "Lector de pantalla encendido",
-        "Enlace",
-        "Para seguir el link, presione la tecla enter",
-        "Botón",
-        "Para presionar el botón, presione la tecla espacio",
-        "Encabezado nivel",
-        "Imagen",
-        "Campo de formulario tipo texto",
-        "Valor",
-        "Vacío",
-        "Escriba el valor y presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento",
-        "Campo de formulario tipo contraseña",
-        "Estado",
-        "Lleno",
-        "Casilla de verificación",
-        "Seleccionada",
-        "No seleccionada",
-        "No seleccionada. Presione la tecla enter para seleccionar.",
-        "Opción única",
-        "Para entrar al iframe presionar control + g, presione control + f para seguir en modo automático o control + d para pasar al siguiente elemento.",
-      ],
-      'english': [
-        "Screen reader on",
-        "Link",
-        "To follow the link, press the enter key",
-        "Button",
-        "To press the button, press the space key",
-        "Header level",
-        "Image",
-        "Form type text field",
-        "Value",
-        "Empty",
-        "Enter the value and press control + f to continue in automatic mode or control + d to move to the next element",
-        "Password type form field",
-        "State",
-        "Full",
-        "Checkbox",
-        "Selected",
-        "Not selected",
-        "Not selected Press the enter key to select.",
-        "Single option",
-        "To enter iframe press control + g, press control + f to continue in automatic mode or control + d to move to the next element.",
-      ],
-      'portuguese': [
-        "Leitor de tela em",
-        "Link",
-        "Para seguir o link, pressione a tecla Enter",
-        "Botão",
-        "Para pressionar o botão, pressione a tecla de espaço",
-        "Nível de cabeçalho",
-        "Image",
-        "Campo de texto do tipo de formulário",
-        "Valor",
-        "Vazio",
-        "Insira o valor e pressione control + f para continuar no modo automático ou control + d para passar para o próximo elemento",
-        "Campo de formulário do tipo de senha",
-        "Estado",
-        "Completo",
-        "Caixa de seleção",
-        "Seleccionado",
-        "Não selecionado",
-        "Não selecionado. Pressione a tecla Enter para selecionar.",
-        "Opção única",
-        "Para inserir iframe pressione Ctrl + g, pressione control + f para continuar no modo automático ou control + d para mover para o próximo elemento.",
-      ]
-    }
+    this.messages = {}
+    this._loadMessages()
 
     this.mappings = {
       a: 'link',
@@ -101,7 +34,7 @@ class ScreenReader {
 
     this.announcers = {
       link(element) {
-        return `${this.messages[userLang][1]}, ${ this._computeAccessibleName( element ) }. ${ this.messages[userLang][2] }.`;
+        return `${ this.messages[userLang].link }, ${ this._computeAccessibleName(element) }. ${ this.messages[userLang].follow_link }.`;
       },
 
       /*button(element) {
@@ -111,7 +44,7 @@ class ScreenReader {
       heading(element) {
         const level = element.getAttribute('aria-level') || element.tagName[1]
 
-        return `${ this.messages[userLang][5] } ${ level }, ${ this._computeAccessibleName( element ) }`
+        return `${ this.messages[userLang].level_heading } ${ level }, ${ this._computeAccessibleName( element ) }`
       },
 
       paragraph(element) {
@@ -119,20 +52,33 @@ class ScreenReader {
       },
 
       image(element) {
-        return `${ this.messages[userLang][6] }, ${ this._computeAccessibleName( element ) }`
+        return `${ this.messages[userLang].image }, ${ this._computeAccessibleName( element ) }`
       },
 
       input(element) {
         if (element.type == 'text') {
-          return `${ this.messages[userLang][7] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][8] }: ${element.value ? element.value :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
+          return `
+          ${ this.messages[userLang].text_field }, ${ this._computeAccessibleName(element) }. 
+          ${ this.messages[userLang].value }: 
+          ${ element.value ? element.value :  this.messages[userLang].empty }. 
+          ${ this.messages[userLang].write_in_field }.`
         } else if(element.type == 'search') {
           return `Campo de formulario para búsqueda valor...`
         }else if (element.type == 'password') {
-          return `${ this.messages[userLang][11] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.value ? this.messages[userLang][13] : this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
+          return `
+          ${ this.messages[userLang].password_field }, ${this._computeAccessibleName(element) }. 
+          ${ this.messages[userLang].state }: 
+          ${ element.value ? this.messages[userLang].full : this.messages[userLang][9].empty }.
+          ${ this.messages[userLang].write_in_field }.`
         } else if (element.type == 'checkbox') {
-          return `${this.messages[userLang][14]}: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15] : this.messages[userLang][16]}`;
+          return `
+          ${ this.messages[userLang].checkbox }, ${ this._computeAccessibleName(element) }.
+          ${ this.messages[userLang].state }:
+          ${ element.checked ? this.messages[userLang].selected : this.messages[userLang].not_selected }.`
         } else if (element.type == 'radio') {
-          return `${this.messages[userLang][18]}: Para ${ this._getText(document.getElementById(element.closest('fieldset').getAttribute('aria-labelledby'))) } ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15]: this.messages[userLang][17]} `;
+          return `${ this.messages[userLang].unique_option }, para ${ this._getText(document.getElementById(element.closest('fieldset').getAttribute('aria-labelledby'))) } ${this._computeAccessibleName(element)}. 
+          ${ this.messages[userLang].state }:
+          ${ element.checked ? this.messages[userLang].selected : this.messages[userLang].not_selected }.`
         } else if (element.type == 'number') {
           return `Campo de formulario tipo número: ${ this._computeAccessibleName(element) } Acepta valores desde ${ element.getAttribute('min') } hasta ${ element.getAttribute('max') }. ${element.value ? `Valor: ${ element.value }` :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`
         }
@@ -151,7 +97,7 @@ class ScreenReader {
       },
 
       iframe(element) {
-        return `Iframe, ${ this._computeAccessibleName(element)}. ${ this.messages[userLang][19] }`;
+        return `Iframe, ${ this._computeAccessibleName(element)}. ${ this.messages[userLang].iframe }`;
       },
 
       tab(element) {
@@ -431,6 +377,12 @@ class ScreenReader {
     localStorage.setItem('links_id_sr', this.voiceLinksId)
   }
 
+  _loadMessages() {
+    fetch(`${ base_url }/asset/js/srMessages.json`)
+    .then(r => r.json())
+    .then(data => this.messages = data)
+    .catch(e => console.error(e))
+  }
 
   _getText(element) {
     let parentElement = element;
