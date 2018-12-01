@@ -27,7 +27,7 @@
     <ul class="socialLinks">
       <li>
         <a id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
-          aria-expanded="false" aria-controls="collapseExample">
+          aria-expanded="false" aria-controls="accessibilityBar">
           <?php echo $this->lang->line('accessibility'); ?> </a>
       </li>
     </ul>
@@ -47,7 +47,7 @@
   <ul class="nav navbar-nav ml-auto">
     <?php if(!$this->session->userdata('logged_in')): ?>
     <li class="nav-item">
-      <a class="btn btn-outline-dark btn-lg" href="<?php echo base_url()?>login" role="button">
+      <a class="btn btn-outline-dark btn-lg" href="<?php echo base_url()?>login">
         <?php echo $this->lang->line('signin'); ?>
       </a>
     </li>

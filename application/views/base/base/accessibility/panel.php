@@ -1,4 +1,4 @@
-<div class="collapse container-fluid" id="accessibilityBar">
+<div class="collapse container-fluid" id="accessibilityBar" aria-label="Barra de accesibilidad">
     <ul class="nav nav-tabs" id="accessibilityTab" role="tablist">
 
         <?php if( $this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>

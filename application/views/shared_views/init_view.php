@@ -6,7 +6,7 @@
                 <div class="col">
                     <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
                         <div class="input-group mb-3" aria-label="Buscar objeto de aprendizaje">
-                        <input type="search" aria-label="search text" class="form-control form-control-lg" id="searchLoAux" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
+                        <input type="search" aria-label="Buscar objeto de aprendizaje" class="form-control form-control-lg" id="searchLoAux" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
                             <button type="submit" onclick="searchLo()" class="btn btn-outline-success btn-lg">
                               <?php echo $this->lang->line('search');?>
                             </button>
@@ -27,7 +27,7 @@
                     <div class="col">
                         <div class="flexBox" style="display: flex;flex-flow: row wrap;justify-content: center;">
                           <div role="search" class="input-group mb-3">
-                            <input type="search" aria-label="search text" class="form-control form-control-lg" id="searchLo" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
+                            <input type="search" aria-label="Buscar objeto de aprendizaje" class="form-control form-control-lg" id="searchLo" placeholder="<?php echo $this->lang->line('search_learning_object'); ?>">
                             <button type="submit" onclick="searchLo()" class="btn btn-outline-success btn-lg">
                               <?php echo $this->lang->line('search');?>
                             </button>
@@ -146,6 +146,7 @@
       inputSearch.addEventListener('keyup', handleEnterKey)
       inputSearchAux.addEventListener('keyup', handleEnterKey)
     })
+
     function searchLo() {
       let divShow = document.getElementById('show-s')
       let divHide = document.getElementById('hide-s')

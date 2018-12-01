@@ -1,5 +1,5 @@
 <div class="tab-pane fade" id="interfaz" role="tabpanel" aria-labelledby="interfaz-tab">
-  <div id="carouselInterfazCards" class="carousel slide" data-ride="carousel" data-interval="false">
+  <div id="carouselInterfazCards" class="carousel slide" data-ride="carousel" data-interval="false" aria-label="Opciones de accesibilidad para la interfaz">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <div class="d-flex flex-row flex-nowrap">
@@ -74,7 +74,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="normalContrast"
-                      value="1">
+                      value="1" aria-label="<?php echo $this->lang->line('black_white'); ?>">
                     <label class="form-check-label contrast-label" for="normalContrast" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('normal'); ?>">
                       <img alt="<?php echo $this->lang->line('normal'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
@@ -87,7 +87,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio2"
-                      value="2" checked>
+                      value="2" aria-label="<?php echo $this->lang->line('black_white'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio2" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('black_white'); ?>">
                       <img alt="<?php echo $this->lang->line('black_white'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
@@ -100,7 +100,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio3"
-                      value="3">
+                      value="3" aria-label="<?php echo $this->lang->line('white_black'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio3" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('white_black'); ?>">
                       <img alt="<?php echo $this->lang->line('white_black'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
@@ -113,7 +113,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio4"
-                      value="4">
+                      value="4" aria-label="<?php echo $this->lang->line('black_yellow'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio4" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('black_yellow'); ?>">
                       <img alt="<?php echo $this->lang->line('black_yellow'); ?>" style="height: 40px; width: 40px;"
@@ -127,7 +127,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio5"
-                      value="5">
+                      value="5" aria-label="<?php echo $this->lang->line('yellow_black'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio5" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('yellow_black'); ?>">
                       <img alt="<?php echo $this->lang->line('yellow_black'); ?>" style="height: 40px; width: 40px;"
@@ -142,7 +142,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio6"
-                      value="6">
+                      value="6" aria-label="<?php echo $this->lang->line('gray'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio6" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('gray'); ?>">
                       <img alt="<?php echo $this->lang->line('gray'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
@@ -155,7 +155,7 @@
                 <div class="col">
                   <div class="">
                     <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio7"
-                      value="7">
+                      value="7" aria-label="<?php echo $this->lang->line('customized'); ?>">
                     <label class="form-check-label contrast-label" for="inlineRadio7" data-toggle="tooltip"
                       data-placement="bottom" title="<?php echo $this->lang->line('customized'); ?>">
                       <i class="fa fa-wrench" style="font-size:40px;"></i>
@@ -418,7 +418,7 @@
       </div>
     </div>
     <a style="top:35%;color:black;height:50px;width: 50px;background-color: #bbb;border-radius: 50%;" class="carousel-control-next"
-      href="#carouselInterfazCards" role="button" data-slide="next">
+      href="#carouselInterfazCards" role="button" data-slide="next" aria-controls="carouselInterfazCards">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Siguiente</span>
     </a>

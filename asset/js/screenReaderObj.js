@@ -94,7 +94,7 @@ class ScreenReader {
       p: 'paragraph',
       html: 'page',
       img: 'image',
-      textbox: 'input',
+      textbox: 'textbox',
       input: 'input',
       iframe: 'iframe',
     }
@@ -104,33 +104,37 @@ class ScreenReader {
         return `${this.messages[userLang][1]}, ${ this._computeAccessibleName( element ) }. ${ this.messages[userLang][2] }.`;
       },
 
-      button(element) {
-        return `${ this.messages[userLang[3]] }, ${ this._computeAccessibleName( element ) }. ${ this.messages[userLang[4]] }.`;
-      },
+      /*button(element) {
+        return `${ this.messages[userLang][3] }, ${ this._computeAccessibleName( element ) }. ${ this.messages[userLang[4]] }.`;
+      },*/
 
       heading(element) {
-        const level = element.getAttribute('aria-level') || element.tagName[1];
+        const level = element.getAttribute('aria-level') || element.tagName[1]
 
-        return `${ this.messages[userLang][5] } ${ level }, ${ this._computeAccessibleName( element ) }`;
+        return `${ this.messages[userLang][5] } ${ level }, ${ this._computeAccessibleName( element ) }`
       },
 
       paragraph(element) {
-        return element.textContent;
+        return element.textContent
       },
 
       image(element) {
-        return `${ this.messages[userLang][6] }, ${ this._computeAccessibleName( element ) }`;
+        return `${ this.messages[userLang][6] }, ${ this._computeAccessibleName( element ) }`
       },
 
       input(element) {
-        if (element.type == "text") {
+        if (element.type == 'text') {
           return `${ this.messages[userLang][7] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][8] }: ${element.value ? element.value :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
-        } else if (element.type == "password") {
+        } else if(element.type == 'search') {
+          return `Campo de formulario para búsqueda valor...`
+        }else if (element.type == 'password') {
           return `${ this.messages[userLang][11] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.value ? this.messages[userLang][13] : this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
-        } else if (element.type == "checkbox") {
+        } else if (element.type == 'checkbox') {
           return `${this.messages[userLang][14]}: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15] : this.messages[userLang][16]}`;
-        } else if (element.type == "radio") {
-          return `${this.messages[userLang[18]]}: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15]: this.messages[userLang][17]} `;
+        } else if (element.type == 'radio') {
+          return `${this.messages[userLang][18]}: Para ${ this._getText(document.getElementById(element.closest('fieldset').getAttribute('aria-labelledby'))) } ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15]: this.messages[userLang][17]} `;
+        } else if (element.type == 'number') {
+          return `Campo de formulario tipo número: ${ this._computeAccessibleName(element) } Acepta valores desde ${ element.getAttribute('min') } hasta ${ element.getAttribute('max') }. ${element.value ? `Valor: ${ element.value }` :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`
         }
       },
 
@@ -148,6 +152,27 @@ class ScreenReader {
 
       iframe(element) {
         return `Iframe, ${ this._computeAccessibleName(element)}. ${ this.messages[userLang][19] }`;
+      },
+
+      tab(element) {
+        return `Tab, ${ this._computeAccessibleName(element) }. ${ element.getAttribute('aria-selected') == 'true' ? 'Activa' : 'Presione enter para activar'}`
+      },
+
+      button(element) {
+        let textElement = this._getText(element)
+
+        if(element.tagName != 'BUTTON' && element.tagName != 'A') {
+          console.log("entry")
+          element = this._isALink(element).nodeLink
+        }
+
+        if (element.getAttribute('aria-haspopup')) {
+          return `Menu desplegable, ${ this._computeAccessibleName(element) }. ${ element.getAttribute('aria-expanded') != 'true' ? 'Presione enter para leer' : 'Presione ctrl + g para leer.'}`
+        } else if (element.getAttribute('aria-expanded')) {
+          return `Botón para abrir, ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. ${ element.getAttribute('aria-expanded') != 'true' ? 'Presione enter para abrir y leer.' : 'Presione ctrl + g para leer.'}`
+        } else if(element.getAttribute('aria-controls')) {
+          return `Botón para controlar ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. Descripción: ${ textElement }`
+        }
       },
 
       default (element) {
@@ -193,7 +218,6 @@ class ScreenReader {
             this._loadTree(currentNode.contentWindow.document)
             this._screenReader()
           }
-
           break
       }
     })
@@ -421,29 +445,37 @@ class ScreenReader {
   }
 
   _isValidNode(node) {
-    if (!this.elementIsVisible(node)) {
-      return false;
+    if(this.elementIsVisible(this.parentElement(node)) && node.classList.contains('sr-only')) {
+      return true
     }
 
-    if (node.tagName == "LABEL") {
-      return false;
+    if (!this.elementIsVisible(node)) {
+      return false
+    }
+
+    if (this.parentElement(node).tagName == 'LABEL') {
+      return false
+    }
+
+    if (node.tagName == 'LABEL' || node.tagName == 'LEGEND') {
+      return false
     }
 
     if (node.tagName != "INPUT" &&
       node.tagName != "IMG" &&
       node.tagName != "IFRAME" &&
       this._isAllWhiteSpaces(node)) {
-      return false;
+      return false
     }
 
     if (node.tagName != "INPUT" &&
       node.tagName != "IMG" &&
       node.tagName != "IFRAME" &&
       this._getText(node) == '') {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   _loadTree(doc = document) {
@@ -471,19 +503,20 @@ class ScreenReader {
     }
   }
 
-
-
   _computeAccessibleName(element) {
     let content = '';
 
     if (element.getAttribute('aria-label')) {
-      return element.getAttribute('aria-label');
+      return element.getAttribute('aria-label')
+    } else if (element.getAttribute('aria-control')) {
+      return element.getAttribute('aria-control')
     } else if (element.getAttribute("title")) {
-      return element.getAttribute("title");
+      return element.getAttribute("title")
     } else if (element.getAttribute('alt')) {
-      return element.getAttribute('alt');
+      return element.getAttribute('alt')
     } else if (element.getAttribute('aria-labelledby') || this._findLabelForControl(element, document)) {
-      return this._getText(this._findLabelForControl(element, document));
+      let textLabel = this._getText(this._findLabelForControl(element, document)) || this._findLabelForControl(element, document).textContent      
+      return textLabel
     }
 
     content = this._getText(element);
@@ -509,26 +542,35 @@ class ScreenReader {
   }
 
   _computeRole(element) {
-    const name = element.tagName.toLowerCase();
-
-    if (element.getAttribute('role') && name != 'a') {
-      return element.getAttribute('role');
+    const name = element.tagName.toLowerCase()
+    const ROLES = {
+      radio: 'input',
+      textbox: 'input'
+    }
+    
+    if (element.getAttribute('role')) {
+      return ROLES[element.getAttribute('role')] || element.getAttribute('role')
     } else if (this._isALink(element).isLink) {
-      return this.mappings['a'];
+      if(this._isALink(element).nodeLink != element) {
+        return this._computeRole(this._isALink(element).nodeLink)
+      } else {
+        this.mappings['a']
+      }
     }
 
-    return this.mappings[name] || 'default';
+    return this.mappings[name] || 'default'
   }
 
   _setStyle() {
-    const node = this.tree.currentNode;
+    const node = this.tree.currentNode
 
-    node.style.outline = "solid black";
+    node.style.outline = "solid black"
   }
-  _removeStyle() {
-    const node = this.tree.currentNode;
 
-    node.style.outline = '';
+  _removeStyle() {
+    const node = this.tree.currentNode
+
+    node.style.outline = ''
   }
 
   _previous() {
@@ -549,7 +591,7 @@ class ScreenReader {
     if (this.tree.nextNode()) {
       this._screenReader()
     } else {
-      return;
+      return
     }
   }
 
@@ -578,8 +620,8 @@ class ScreenReader {
   }
 
   _screenReader() {
-    let node = this.tree.currentNode;
-    let role = this._computeRole(node);
+    let node = this.tree.currentNode
+    let role = this._computeRole(node)
     let text = ''
 
     if (this.announcers[role].bind(this)) {
@@ -622,258 +664,299 @@ class ScreenReader {
     this._setStyle()
     this._play()
   }
+
   shadowHost(fragment) {
-    // If host exists, this is a Shadow DOM fragment.
-    if ('host' in fragment)
-      return fragment.host;
-    else
-      return null;
-  };
+    if ('host' in fragment) {
+      return fragment.host
+    }
+
+    return null
+  }
+
   composedParentNode(node) {
-    if (!node)
-      return null;
-    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
-      return this.shadowHost( /** @type {DocumentFragment} */ (node));
+    if (!node) {
+      return null
+    }
+    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      return this.shadowHost(node)
+    }
 
-    var parentNode = node.parentNode;
-    if (!parentNode)
-      return null;
+    let parentNode = node.parentNode;
+    if (!parentNode) {
+      return null
+    }
 
-    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
-      return this.shadowHost( /** @type {DocumentFragment} */ (parentNode));
+    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      return this.shadowHost(parentNode)
+    }
 
-    if (!parentNode.shadowRoot)
-      return parentNode;
+    if (!parentNode.shadowRoot) {
+      return parentNode
+    }
 
-    // Shadow DOM v1
     if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
-      var assignedSlot = node.assignedSlot;
-      if (HTMLSlotElement && assignedSlot instanceof HTMLSlotElement)
-        return this.composedParentNode(assignedSlot);
+      let assignedSlot = node.assignedSlot
+
+      if (HTMLSlotElement && assignedSlot instanceof HTMLSlotElement) {
+        return this.composedParentNode(assignedSlot)
+      }
     }
 
-    // Shadow DOM v0
     if (typeof node.getDestinationInsertionPoints === 'function') {
-      var insertionPoints = node.getDestinationInsertionPoints();
-      if (insertionPoints.length > 0)
-        return this.composedParentNode(insertionPoints[insertionPoints.length - 1]);
+      let insertionPoints = node.getDestinationInsertionPoints()
+
+      if (insertionPoints.length > 0) {
+        return this.composedParentNode(insertionPoints[insertionPoints.length - 1])
+      }
     }
 
-    return null;
-  };
+    return null
+  }
 
   elementIsTransparent(element) {
-    return element.style.opacity == '0';
+    return element.style.opacity == '0'
   }
 
   elementHasZeroArea(element) {
-    var rect = element.getBoundingClientRect();
-    var width = rect.right - rect.left;
-    var height = rect.top - rect.bottom;
-    if (!width || !height)
-      return true;
-    return false;
-  }
-  isAncestor(ancestor, node) {
-    if (node == null)
-      return false;
-    if (node === ancestor)
-      return true;
+    let rect = element.getBoundingClientRect()
+    let width = rect.right - rect.left
+    let height = rect.top - rect.bottom
 
-    var parentNode = this.composedParentNode(node);
-    return this.isAncestor(ancestor, parentNode);
+    if (!width || !height) {
+      return true
+    }
+
+    return false
+  }
+
+  isAncestor(ancestor, node) {
+    if (node == null) {
+      return false
+    }
+    if (node === ancestor) {
+      return true
+    }
+
+    let parentNode = this.composedParentNode(node)
+    return this.isAncestor(ancestor, parentNode)
   }
 
   overlappingElements(element) {
-    if (this.elementHasZeroArea(element))
-      return null;
+    if (this.elementHasZeroArea(element)) {
+      return null
+    }
 
-    var overlappingElements = [];
-    var clientRects = element.getClientRects();
-    for (var i = 0; i < clientRects.length; i++) {
-      var rect = clientRects[i];
-      var center_x = (rect.left + rect.right) / 2;
-      var center_y = (rect.top + rect.bottom) / 2;
-      var elementAtPoint = document.elementFromPoint(center_x, center_y);
+    let overlappingElements = []
+    let clientRects = element.getClientRects()
+    for (let i = 0; i < clientRects.length; i++) {
+      let rect = clientRects[i]
+      let center_x = (rect.left + rect.right) / 2
+      let center_y = (rect.top + rect.bottom) / 2
+      let elementAtPoint = document.elementFromPoint(center_x, center_y)
 
       if (elementAtPoint == null || elementAtPoint == element ||
         this.isAncestor(elementAtPoint, element) ||
         this.isAncestor(element, elementAtPoint)) {
-        continue;
+        continue
       }
 
-      var overlappingElementStyle = window.getComputedStyle(elementAtPoint, null);
-      if (!overlappingElementStyle)
-        continue;
+      let overlappingElementStyle = window.getComputedStyle(elementAtPoint, null)
+      if (!overlappingElementStyle) {
+        continue
+      }
 
-      var overlappingElementBg = this.getBgColor(overlappingElementStyle,
-        elementAtPoint);
+      let overlappingElementBg = this.getBgColor(overlappingElementStyle, elementAtPoint)
       if (overlappingElementBg && overlappingElementBg.alpha > 0 &&
         overlappingElements.indexOf(elementAtPoint) < 0) {
-        overlappingElements.push(elementAtPoint);
+        overlappingElements.push(elementAtPoint)
       }
     }
 
-    return overlappingElements;
+    return overlappingElements
   }
 
   elementIsVisible(element) {
-    if (this.elementIsTransparent(element))
-      return false;
-    if (this.elementHasZeroArea(element))
-      return false;
+    if (this.elementIsTransparent(element)) {
+      return false
+    }
+    if (this.elementHasZeroArea(element)) {
+      return false
+    }
 
-    var overlappingElements = this.overlappingElements(element);
-    if (overlappingElements.length)
-      return false;
+    let overlappingElements = this.overlappingElements(element)
+    if (overlappingElements.length) {
+      return false
+    }
 
-    return true;
+    return true
   }
 
   getBgColor(style, element) {
-    var bgColorString = style.backgroundColor;
-    var bgColor = this.parseColor(bgColorString);
-    if (!bgColor)
-      return null;
+    let bgColorString = style.backgroundColor;
+    let bgColor = this.parseColor(bgColorString);
 
-    if (style.opacity < 1)
-      bgColor.alpha = bgColor.alpha * style.opacity;
+    if (!bgColor) {
+      return null
+    }
+
+    if (style.opacity < 1) {
+      bgColor.alpha = bgColor.alpha * style.opacity
+    }
 
     if (bgColor.alpha < 1) {
-      var parentBg = this.getParentBgColor(element);
-      if (parentBg == null)
-        return null;
+      let parentBg = this.getParentBgColor(element)
+      if (parentBg == null) {
+        return null
+      }
 
-      bgColor = this.flattenColors(bgColor, parentBg);
+      bgColor = this.flattenColors(bgColor, parentBg)
     }
-    return bgColor;
-  };
+
+    return bgColor
+  }
 
   flattenColors(fgColor, bgColor) {
-    var alpha = fgColor.alpha;
-    var r = ((1 - alpha) * bgColor.red) + (alpha * fgColor.red);
-    var g = ((1 - alpha) * bgColor.green) + (alpha * fgColor.green);
-    var b = ((1 - alpha) * bgColor.blue) + (alpha * fgColor.blue);
-    var a = fgColor.alpha + (bgColor.alpha * (1 - fgColor.alpha));
+    let alpha = fgColor.alpha
+    let r = ((1 - alpha) * bgColor.red) + (alpha * fgColor.red)
+    let g = ((1 - alpha) * bgColor.green) + (alpha * fgColor.green)
+    let b = ((1 - alpha) * bgColor.blue) + (alpha * fgColor.blue)
+    let a = fgColor.alpha + (bgColor.alpha * (1 - fgColor.alpha))
 
-    return new Color(r, g, b, a);
-  };
+    return new Color(r, g, b, a)
+  }
 
   parseColor(colorString) {
     if (colorString === "transparent") {
       return new Color(0, 0, 0, 0);
     }
-    var rgbRegex = /^rgb\((\d+), (\d+), (\d+)\)$/;
-    var match = colorString.match(rgbRegex);
+
+    let rgbRegex = /^rgb\((\d+), (\d+), (\d+)\)$/
+    let match = colorString.match(rgbRegex)
 
     if (match) {
-      var r = parseInt(match[1], 10);
-      var g = parseInt(match[2], 10);
-      var b = parseInt(match[3], 10);
-      var a = 1;
+      let r = parseInt(match[1], 10)
+      let g = parseInt(match[2], 10)
+      let b = parseInt(match[3], 10)
+      let a = 1
+
       return new Color(r, g, b, a);
     }
 
-    var rgbaRegex = /^rgba\((\d+), (\d+), (\d+), (\d*(\.\d+)?)\)/;
-    match = colorString.match(rgbaRegex);
+    let rgbaRegex = /^rgba\((\d+), (\d+), (\d+), (\d*(\.\d+)?)\)/
+    match = colorString.match(rgbaRegex)
+
     if (match) {
-      var r = parseInt(match[1], 10);
-      var g = parseInt(match[2], 10);
-      var b = parseInt(match[3], 10);
-      var a = parseFloat(match[4]);
-      return new Color(r, g, b, a);
+      let r = parseInt(match[1], 10)
+      let g = parseInt(match[2], 10)
+      let b = parseInt(match[3], 10)
+      let a = parseFloat(match[4])
+
+      return new Color(r, g, b, a)
     }
 
-    return null;
-  };
+    return null
+  }
 
 
   getParentBgColor(element) {
-    /** @type {Element} */
-    var parent = element;
-    var bgStack = [];
-    var foundSolidColor = null;
+    let parent = element
+    let bgStack = []
+    let foundSolidColor = null
+
     while ((parent = this.parentElement(parent))) {
-      var computedStyle = window.getComputedStyle(parent, null);
-      if (!computedStyle)
-        continue;
+      let computedStyle = window.getComputedStyle(parent, null)
+      if (!computedStyle) {
+        continue
+      }
 
-      var parentBg = this.parseColor(computedStyle.backgroundColor);
-      if (!parentBg)
-        continue;
+      let parentBg = this.parseColor(computedStyle.backgroundColor)
+      if (!parentBg) {
+        continue
+      }
 
-      if (computedStyle.opacity < 1)
-        parentBg.alpha = parentBg.alpha * computedStyle.opacity;
+      if (computedStyle.opacity < 1) {
+        parentBg.alpha = parentBg.alpha * computedStyle.opacity
+      }
 
-      if (parentBg.alpha == 0)
-        continue;
+      if (parentBg.alpha == 0) {
+        continue
+      }
 
-      bgStack.push(parentBg);
+      bgStack.push(parentBg)
 
       if (parentBg.alpha == 1) {
-        foundSolidColor = true;
-        break;
+        foundSolidColor = true
+        break
       }
     }
 
-    if (!foundSolidColor)
-      bgStack.push(new Color(255, 255, 255, 1));
-
-    var bg = bgStack.pop();
-    while (bgStack.length) {
-      var fg = bgStack.pop();
-      bg = this.flattenColors(fg, bg);
+    if (!foundSolidColor) {
+      bgStack.push(new Color(255, 255, 255, 1))
     }
-    return bg;
-  };
+
+    let bg = bgStack.pop()
+    while (bgStack.length) {
+      let fg = bgStack.pop()
+      bg = this.flattenColors(fg, bg)
+    }
+
+    return bg
+  }
 
   composedParentNode(node) {
-    if (!node)
-      return null;
-    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
-      return this.shadowHost( /** @type {DocumentFragment} */ (node));
+    if (!node) {
+      return null
+    }
+    if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      return this.shadowHost(node)
+    }
 
-    var parentNode = node.parentNode;
-    if (!parentNode)
-      return null;
+    let parentNode = node.parentNode
+    if (!parentNode) {
+      return null
+    }
 
-    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
-      return this.shadowHost( /** @type {DocumentFragment} */ (parentNode));
+    if (parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      return this.shadowHost(parentNode)
+    }
 
-    if (!parentNode.shadowRoot)
-      return parentNode;
+    if (!parentNode.shadowRoot) {
+      return parentNode
+    }
 
-    // Shadow DOM v1
     if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
-      var assignedSlot = node.assignedSlot;
+      let assignedSlot = node.assignedSlot
+
       if (HTMLSlotElement && assignedSlot instanceof HTMLSlotElement)
-        return this.composedParentNode(assignedSlot);
+        return this.composedParentNode(assignedSlot)
     }
 
-    // Shadow DOM v0
     if (typeof node.getDestinationInsertionPoints === 'function') {
-      var insertionPoints = node.getDestinationInsertionPoints();
+      let insertionPoints = node.getDestinationInsertionPoints()
+
       if (insertionPoints.length > 0)
-        return this.composedParentNode(insertionPoints[insertionPoints.length - 1]);
+        return this.composedParentNode(insertionPoints[insertionPoints.length - 1])
     }
 
-    return null;
-  };
+    return null
+  }
 
 
   parentElement(node) {
-    if (!node)
-      return null;
+    if (!node) {
+      return null
+    }
 
-    var parentNode = this.composedParentNode(node);
-    if (!parentNode)
-      return null;
+    let parentNode = this.composedParentNode(node)
+    if (!parentNode) {
+      return null
+    }
 
     switch (parentNode.nodeType) {
       case Node.ELEMENT_NODE:
-        return /** @type {Element} */ (parentNode);
+        return parentNode
       default:
-        return this.parentElement(parentNode);
+        return this.parentElement(parentNode)
     }
   }
 }

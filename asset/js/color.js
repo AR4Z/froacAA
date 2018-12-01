@@ -1,15 +1,15 @@
 class Color {
   constructor(red, green, blue, alpha) {
     /** @type {number} */
-    this.red = red;
+    this.red = red
 
     /** @type {number} */
-    this.green = green;
+    this.green = green
 
     /** @type {number} */
-    this.blue = blue;
+    this.blue = blue
 
     /** @type {number} */
-    this.alpha = alpha;
-  };
+    this.alpha = alpha
+  }
 }
