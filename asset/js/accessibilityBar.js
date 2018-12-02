@@ -1,15 +1,15 @@
 /** Class representing Accessibility Bar. */
 class AccessibilityBar {
   /**
-   * Create Accessibility Bar
-   * @param {Boolean} loggedIn 
-   * @param {String} url 
-   * @param {Boolean} needCustomInterfaz - Need use custom interfaz feature.
-   * @param {Boolean} needNarrator - Need use narrator feature.
-   * @param {Boolean} needScreenReader - Need use screen reader feature.
-   * @param {Boolean} needLscTranslator - Need use lsc translator.
-   * @param {Boolean} needVirtualKeyboard  - Need virtual keyboard.
-   * @param {Boolean} needStructuralNavigation - Need structural navigation.
+   * Create Accessibility Bar.
+   * @param {Boolean} loggedIn - user is logged?
+   * @param {String} url - base url froac.
+   * @param {Boolean} needCustomInterfaz - Need use custom interfaz tool.
+   * @param {Boolean} needNarrator - Need use narrator tool.
+   * @param {Boolean} needScreenReader - Need use screen reader tool.
+   * @param {Boolean} needLscTranslator - Need use lsc translator tool.
+   * @param {Boolean} needVirtualKeyboard  - Need virtual keyboard tool.
+   * @param {Boolean} needStructuralNavigation - Need structural navigation tool.
    */
   constructor(loggedIn, url, needCustomInterfaz, needNarrator, needScreenReader, needLscTranslator, needVirtualKeyboard, needStructuralNavigation) {
     this.needCustomInterfaz = needCustomInterfaz
@@ -32,7 +32,7 @@ class AccessibilityBar {
      */
     this.collapse = document.getElementById(this.button.getAttribute('href').replace('#', ''))
     /**
-     * Bootstrap Collapse instance
+     * Bootstrap Collapse instance.
      * @type {Collapse}
      */
     this.collapseInstance = new Collapse(this.button)
@@ -59,12 +59,12 @@ class AccessibilityBar {
      */
     this.tabsCollection = {}
     /**
-     * HtmlElement that represents carousel of custom interfaz tab
+     * HtmlElement that represents carousel of custom interfaz tab.
      * @type {?HTMLElement}
      */
     this.carouselCustomInterfazElm = null
     /**
-     * HtmlElement that represents carousel of narrator tab
+     * HtmlElement that represents carousel of narrator tab.
      * @type {?HTMLElement}
      */
     this.carouselNarratorElm = null
@@ -80,45 +80,51 @@ class AccessibilityBar {
     this.carouselNarrator = null
 
     /**
-     * Narrator object
+     * Narrator object.
      * @type {?Narrator}
      */
     this.narrator = null
     /**
-     * Custom interfaz object
+     * Custom interfaz object.
      * @type {?CustomInterfaz}
      */
     this.customInterfaz = null
     /**
-     * Lsc translator object
+     * Lsc translator object.
      * @type {?LscTranslator}
      */
     this.lscTranslator = null
     /**
-     * Virtual keyboard object
+     * Virtual keyboard object.
      * @type {?VirtualKeyboard}
      */
     this.virtualKeyboard = null
     /**
-     * Structural Navigation object
+     * Structural Navigation object.
      * @type {?StructuralNavigation}
      */
     this.structuralNavigation = null
     /**
-     * Screen Reader object
+     * Screen Reader object.
      * @type {?ScreenReader}
      */
     this.screenReader = null
     /**
-     * Voice Browser object
+     * Voice Browser object.
      * @type {?VoiceBrowser}
      */
     this.voiceBrowser = new VoiceBrowser()
 
-    // Voice Browser does not depend of user model, so automatically on
+    // Voice Browser does not depend of user model, so automatically on.
     this.voiceBrowser.start()
   }
 
+  /**
+   * Obtain user preferences for accessibility tools or 
+   * for a visitor use local storage data or values by default.
+   * @public
+   * @returns {Promise} Promise object with preferences for accessibility bar tools
+   */
   fetchDataAccessibilityBar() {
     if (this.loggedIn) {
       return fetch(`${ this.url }usuario/get_data_accessibility_bar`)
@@ -184,6 +190,11 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Create accessibility tools based in user preferences.
+   * @public
+   * @returns {void}
+   */
   createAccessibilityElements() {
     if (this.needStructuralNavigation) {
       this.tabs.structuralNav = document.getElementById('structural-navigation-tab')
@@ -234,6 +245,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Updates of the preferences interface in the user model and the dataAccesibilityBar.data_custom_interfaz 
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccessibilityBar.data_custom_interfaz property.
+   * @param {Object} preferencesInterface - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesInterfaz(preferencesInterface) {
     if (this.loggedIn) {
       let fetchData = {
@@ -262,7 +281,14 @@ class AccessibilityBar {
     }
 
   }
-
+  /**
+   * Update the custom colors of the interface in the user model and the dataAccesibilityBar.data_custom_interfaz.custom_colors
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccessibilityBar.data_custom_interfaz.custom_colors property.
+   * @param {Object} customColors - Colors that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updateCustomColors(customColors) {
     if (this.loggedIn) {
       let fetchData = {
@@ -288,6 +314,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Update the narrator preferences in the user model and the dataAccesibilityBar.data_narrator
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccesibilityBar.data_narrator property.
+   * @param {Object} preferencesNarrator - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesNarrator(preferencesNarrator) {
     if (this.loggedIn) {
       let fetchData = {
@@ -313,6 +347,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Update the screen reader preferences in the user model and the dataAccesibilityBar.data_screen_reader
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccesibilityBar.data_screen_reader property.
+   * @param {Object} preferencesScreenReader - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesScreenReader(preferencesScreenReader) {
     if (this.loggedIn) {
       let fetchData = {
@@ -338,6 +380,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Update the lsc translator preferences in the user model and the dataAccesibilityBar.data_lsc_translator
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccesibilityBar.data_lsc_translator property.
+   * @param {Object} preferencesLscTranslator - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesLscTranslator(preferencesLscTranslator) {
     if (this.loggedIn) {
       let fetchData = {
@@ -363,6 +413,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Update the structural navigation preferences in the user model and the dataAccesibilityBar.data_structural_nav
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccesibilityBar.data_structural_nav property.
+   * @param {Object} preferencesStructuralNav - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesStructuralNav(preferencesStructuralNav) {
     if (this.loggedIn) {
       let fetchData = {
@@ -388,6 +446,14 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * Update the virtual keyboard preferences in the user model and the dataAccesibilityBar.data_virtual_keyboard
+   * property of the accessibilityBar object, if the user is not logged in 
+   * just update the dataAccesibilityBar.data_virtual_keyboard property.
+   * @param {Object} preferencesKeyboard - Preferences that have been changed by the user.
+   * @public
+   * @returns {void}
+   */
   updatePreferencesKeyboard(preferencesKeyboard) {
     if (this.loggedIn) {
       let fetchData = {
@@ -412,8 +478,13 @@ class AccessibilityBar {
       })
     }
   }
-
-  updateAllPreferencesToDefault() {
+  /**
+   * Update the values of all the tools in the accessibility bar in the user model and call 
+   * setDataAccessibilityToDefault to update the accessibility bar object data to its default values.
+   * @private
+   * @returns {void}
+   */
+  _updateAllPreferencesToDefault() {
     if (this.loggedIn) {
       let fetchData = {
         method: 'POST',
@@ -430,8 +501,13 @@ class AccessibilityBar {
       this.setDataAccessibilityToDefault()
     }
   }
-
-  setDataAccessibilityToDefault() {
+  /**
+   * According to the accessibility bar tools that the user is using, thie method changes his values to his value by defect
+   * in the dataAccessibilityBar property of the accessibilityBar object.
+   * @private
+   * @returns {void}
+   */
+  _setDataAccessibilityToDefault() {
     if (this.needCustomInterfaz) {
       this.dataAccessibilityBar.data_custom_interfaz = {
         color_cursor: 'rgb(255,18,18)',
@@ -498,6 +574,11 @@ class AccessibilityBar {
     }
   }
 
+  /**
+   * This method is used to update the values of all the accessibility bar tools that the user is using to their default values.
+   * @public
+   * @returns {void}
+   */
   setDefaultAllValues() {
     if (this.customInterfaz) {
       this.customInterfaz.setDefaultValues(true)
