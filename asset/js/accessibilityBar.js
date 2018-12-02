@@ -2,14 +2,14 @@
 class AccessibilityBar {
   /**
    * Create Accessibility Bar.
-   * @param {Boolean} loggedIn - user is logged?
-   * @param {String} url - base url froac.
-   * @param {Boolean} needCustomInterfaz - Need use custom interfaz tool.
-   * @param {Boolean} needNarrator - Need use narrator tool.
-   * @param {Boolean} needScreenReader - Need use screen reader tool.
-   * @param {Boolean} needLscTranslator - Need use lsc translator tool.
-   * @param {Boolean} needVirtualKeyboard  - Need virtual keyboard tool.
-   * @param {Boolean} needStructuralNavigation - Need structural navigation tool.
+   * @param {boolean} loggedIn - user is logged?
+   * @param {string} url - base url froac.
+   * @param {boolean} needCustomInterfaz - Need use custom interfaz tool.
+   * @param {boolean} needNarrator - Need use narrator tool.
+   * @param {boolean} needScreenReader - Need use screen reader tool.
+   * @param {boolean} needLscTranslator - Need use lsc translator tool.
+   * @param {boolean} needVirtualKeyboard  - Need virtual keyboard tool.
+   * @param {boolean} needStructuralNavigation - Need structural navigation tool.
    */
   constructor(loggedIn, url, needCustomInterfaz, needNarrator, needScreenReader, needLscTranslator, needVirtualKeyboard, needStructuralNavigation) {
     this.needCustomInterfaz = needCustomInterfaz
@@ -44,7 +44,7 @@ class AccessibilityBar {
      *  'myAccessiblityBarFeature': HtmlElementTabOfMyFeature
      *  ...
      * }
-     * @type {Object}
+     * @type {object}
      */
     this.tabs = {}
     /**
@@ -55,7 +55,7 @@ class AccessibilityBar {
      *  'myAccessiblityBarFeature': new Tab(...)
      *  ...
      * }
-     * @type {Object}
+     * @type {object}
      */
     this.tabsCollection = {}
     /**
@@ -249,7 +249,7 @@ class AccessibilityBar {
    * Updates of the preferences interface in the user model and the dataAccesibilityBar.data_custom_interfaz 
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccessibilityBar.data_custom_interfaz property.
-   * @param {Object} preferencesInterface - Preferences that have been changed by the user.
+   * @param {object} preferencesInterface - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -285,7 +285,7 @@ class AccessibilityBar {
    * Update the custom colors of the interface in the user model and the dataAccesibilityBar.data_custom_interfaz.custom_colors
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccessibilityBar.data_custom_interfaz.custom_colors property.
-   * @param {Object} customColors - Colors that have been changed by the user.
+   * @param {object} customColors - Colors that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -318,7 +318,7 @@ class AccessibilityBar {
    * Update the narrator preferences in the user model and the dataAccesibilityBar.data_narrator
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccesibilityBar.data_narrator property.
-   * @param {Object} preferencesNarrator - Preferences that have been changed by the user.
+   * @param {object} preferencesNarrator - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -351,7 +351,7 @@ class AccessibilityBar {
    * Update the screen reader preferences in the user model and the dataAccesibilityBar.data_screen_reader
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccesibilityBar.data_screen_reader property.
-   * @param {Object} preferencesScreenReader - Preferences that have been changed by the user.
+   * @param {object} preferencesScreenReader - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -384,7 +384,7 @@ class AccessibilityBar {
    * Update the lsc translator preferences in the user model and the dataAccesibilityBar.data_lsc_translator
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccesibilityBar.data_lsc_translator property.
-   * @param {Object} preferencesLscTranslator - Preferences that have been changed by the user.
+   * @param {object} preferencesLscTranslator - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -417,7 +417,7 @@ class AccessibilityBar {
    * Update the structural navigation preferences in the user model and the dataAccesibilityBar.data_structural_nav
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccesibilityBar.data_structural_nav property.
-   * @param {Object} preferencesStructuralNav - Preferences that have been changed by the user.
+   * @param {object} preferencesStructuralNav - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -450,7 +450,7 @@ class AccessibilityBar {
    * Update the virtual keyboard preferences in the user model and the dataAccesibilityBar.data_virtual_keyboard
    * property of the accessibilityBar object, if the user is not logged in 
    * just update the dataAccesibilityBar.data_virtual_keyboard property.
-   * @param {Object} preferencesKeyboard - Preferences that have been changed by the user.
+   * @param {object} preferencesKeyboard - Preferences that have been changed by the user.
    * @public
    * @returns {void}
    */
@@ -495,10 +495,10 @@ class AccessibilityBar {
 
       fetch(`${ this.url }usuario/set_all_preferences_to_default`, fetchData)
         .then(() => {
-          this.setDataAccessibilityToDefault()
+          this._setDataAccessibilityToDefault()
         })
     } else {
-      this.setDataAccessibilityToDefault()
+      this._setDataAccessibilityToDefault()
     }
   }
   /**
@@ -604,6 +604,6 @@ class AccessibilityBar {
       this.structuralNavigation.setDefaultValues(true)
     }
 
-    this.updateAllPreferencesToDefault()
+    this._updateAllPreferencesToDefault()
   }
 }
