@@ -16,6 +16,7 @@ class LearningObject {
         let idTaskCloneLo = data.id_task_clone_lo
 
         if (idTaskCloneLo) {
+          // check cloning process status every second
           this.refreshId = setInterval(() => {
             this.checkCloneStatus(idTaskCloneLo)
           }, 1000)
@@ -167,7 +168,7 @@ class LearningObject {
   /**
    * Using a google translator script that is embedded in the cloning process of the 
    * learning object translates that object.
-   * @param {string} language
+   * @param {string} language - language to which you want to translate the object of learning
    * @returns {void}
    */
   translate(language) {
