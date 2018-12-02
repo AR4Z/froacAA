@@ -1,12 +1,62 @@
+/**
+ * @typedef CustomColors
+ * @property {string} foregroundColor - Font color
+ * @property {string} backgroundColor - Background color
+ * @property {string} highlightColor  - Highlight color
+ * @property {string} linkColor       - Link color
+ */
+/** Class representing Custom Interface. */
 class CustomInterfaz {
+  /**
+   * Create Custom Interface.
+   * @param {object} preferencesInterfaz 
+   */
   constructor(preferencesInterfaz) {
+    /** @type {number} */
     this.fontSize = preferencesInterfaz.font_size
+    /** @type {number} */
     this.sizeLineSpacing = preferencesInterfaz.size_line_spacing
+    /**
+     * Id for font type.
+     * 1 => Open sans
+     * 2 => Serif
+     * 3 => Cantarell
+     * 4 => Source code PRO
+     * @type {number}
+     */
     this.fontTypeId = preferencesInterfaz.font_type_id
+    /**
+     * Id for cursor size.
+     * 1 => not change
+     * 2 => 16x16 px
+     * 3 => 32x32 px
+     * 4 => 40x40 px
+     * @type {number}
+     */
     this.cursorSizeId = preferencesInterfaz.cursor_size_id
+    /**
+     * Id for cursor trail size.
+     * 1 => not use
+     * 2 => 12 dots
+     * 3 => 24 dots
+     * @type {number} 
+     */
     this.trailCursorSizeId = preferencesInterfaz.trail_cursor_size_id
+    /**
+     * Id for contrast colors.
+     * 1 => not change
+     * 2 => black - white
+     * 3 => white - black
+     * 4 => black -yellow
+     * 5 => yellow - black
+     * 6 => gray
+     * 7 => custom
+     * @type {number}
+     */
     this.contrastColorsId = preferencesInterfaz.contrast_colors_id
+    /** @type {string} */
     this.cursorColor = preferencesInterfaz.color_cursor
+    /** @type {CustomColors} */
     this.customColors = preferencesInterfaz.custom_colors
 
     if(preferencesInterfaz.invert_color_general == 'f') {
@@ -20,18 +70,24 @@ class CustomInterfaz {
     } else if(preferencesInterfaz.invert_color_image == 't'){
       preferencesInterfaz.invert_color_image = true
     }
-
+    /** @type {boolean} */
     this.invertColorGeneral = preferencesInterfaz.invert_color_general
+    /** @type {boolean} */    
     this.invertColorImage = preferencesInterfaz.invert_color_image
+    /** @type {string} */
     this.trailCursorColor = preferencesInterfaz.trail_cursor_color
+    /** @type {string} */
     this.cursorUrl = preferencesInterfaz.cursor_url
+    /** @type {CursorTrail} */
     this.cursorTrail = new CursorTrail(0)
 
     if(idView == 'lo_view'){
+      /** @type {LearningObject} */
       this.learningObject = window.learningObject
+      /** @type {Document} */
       this.learningObjectDoc = this.learningObject.getDocument()
     } else {
-      this.learningObject = undefined
+      this.learningObject = null
     }
 
     this._addEventChangeFontSize()
@@ -42,12 +98,16 @@ class CustomInterfaz {
     this._addEventChangeTrailCursorSize()
     this._addEventChangeInvertGeneral()
     this._addEventChangeInvertImages()
-    // I keep the values of each of the interface characteristics in the localStorage
+
     this._setValuesInLocalStorage()
-    // charge the values received in each one of the characteristics of the interface to be applied
     this._loadCustomInterfaz()
   }
 
+  /**
+   * Save preferences user of custom interface in localStorage
+   * @private
+   * @returns {void}
+   */
   _setValuesInLocalStorage() {
     localStorage.setItem('cursor_size_id', this.cursorSizeId)
     localStorage.setItem('color_cursor', this.cursorColor)
@@ -62,6 +122,12 @@ class CustomInterfaz {
     localStorage.setItem('cursor_url', this.cursorUrl)
   }
 
+  /**
+   * It gives a value to each one of the options of the interface and I execute 
+   * each one of the functions so that the given value is reflected in the user interface.
+   * @private
+   * @returns {void}
+   */
   _loadCustomInterfaz() {
     document.querySelector(`input[name='fontSize']`).value = parseInt(this.fontSize)
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
@@ -101,7 +167,24 @@ class CustomInterfaz {
 
   }
 
+  /**
+   * Fix each of the options of the interface to its default value.
+   * @param {boolean} all - all accessibilityBar tools at their default value?
+   * @returns {void}
+   */
   setDefaultValues(all) {
+    /*
+      The default attribute given to each of the elements serves to know, 
+      in each of the functions that are responsible for applying 
+      the changes to the user interface, if the change is due to the user wants to set the 
+      preferences of the interface to its default value this in order to avoid making a request to the server for each of the preferences. 
+
+      At the end of this method a request is made to update all the values to their default 
+      value in the user's model and in the data of the object accessibilityBar. 
+      In the case that all is true then the accessiblityBar object is responsible for changing all preferences to their default 
+      value of all the tools in the accessibility bar.
+    */
+
     document.querySelector(`input[name='fontSize']`).setAttribute('default', true)
     document.querySelector(`input[name='fontSize']`).value = 12
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
@@ -151,21 +234,38 @@ class CustomInterfaz {
     }
   }
 
+  /**
+   * Listen change font size input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeFontSize() {
     let inputFontSize = document.querySelector('input[name="fontSize"]')
 
     inputFontSize.addEventListener('change', this.changeFontSize.bind(this))
   }
 
+  /**
+   * Listen change size line spacing input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeSizeLineSpacing() {
     let inputSizeLineSpacing = document.querySelector('input[name="interlineSpaceSize"]')
   
     inputSizeLineSpacing.addEventListener('change', this.changeSizeLine.bind(this))
   }
+
+  /**
+   * Listen change contrast colors radio buttons
+   * @private
+   * @returns {void}
+   */
   _addEventChangeContrast() {
     let optionsContrast = document.querySelectorAll('input[name="radioOptionscontrast"]')
 
     Array.prototype.forEach.call(optionsContrast, opt => opt.addEventListener('change', (e) => {
+      // decide if show custom colors inputs, 7 is id for use custom colors
       if (parseInt(e.target.value) == 7) {
         this._showCustomContrastColors()
       } else {
@@ -176,6 +276,11 @@ class CustomInterfaz {
     }))
   }
 
+  /**
+   * Shows the custom colors inputs and adds events for when those inputs are changed.
+   * @private
+   * @returns {void}
+   */
   _showCustomContrastColors() {
     document.getElementById('div-color-foreground').style.display = 'block'
     document.getElementById('div-color-background').style.display = 'block'
@@ -205,6 +310,11 @@ class CustomInterfaz {
     inputLinkColor.dispatchEvent(new Event('change'))
   }
 
+  /**
+   * hide custom colors inputs
+   * @private
+   * @returns {void}
+   */
   _hideCustomContrastColors() {
     document.getElementById('div-color-foreground').style.display = 'none'
     document.getElementById('div-color-background').style.display = 'none'
@@ -212,12 +322,22 @@ class CustomInterfaz {
     document.getElementById('div-color-highlight').style.display = 'none'
   }
 
+  /**
+   * Listen change for font type radio buttons
+   * @private
+   * @returns {void}
+   */
   _addEventChangeFontType() {
     let optionsFontType = document.querySelectorAll('input[name="type-font"]')
   
     Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType.bind(this)))
   }
 
+  /**
+   * Listen change for cursor size radio buttons and show input cursor color
+   * @private
+   * @returns {void}
+   */
   _addEventChangeCursorSize() {
     let optionsCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursor"]')
   
@@ -235,12 +355,22 @@ class CustomInterfaz {
     }))    
   }
 
+  /**
+   * Listen change for cursor color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeColorCursor() {
     let inputColorCursor = document.getElementsByName('colorMousePointer')[0]
 
     inputColorCursor.addEventListener('change', this.changeCursorSize.bind(this))
   }
 
+  /**
+   * Listen change for cursor trail radio buttons and show cursor trail color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeTrailCursorSize() {
     let optionsTrailCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursorTrails"')
 
@@ -259,48 +389,88 @@ class CustomInterfaz {
     }))
   }
 
+  /**
+   * Listen change for color of cursor trail input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeTrailCursorColor() {
     let inputColorTrailCursor = document.getElementsByName('colorCursorTrails')[0]
 
     inputColorTrailCursor.addEventListener('change', this.changeCursorTrail.bind(this))
   }
 
+  /**
+   * Listen change for foreground color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeForegroundColor() {
     let inputForegroundColor = document.getElementsByName('foregroundColor')[0]
 
     inputForegroundColor.addEventListener('change', this.changeForegroundColor.bind(this))
   }
 
+  /**
+   * Listen change for background color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeBackgroundColor() {
     let inputBakgroundColor = document.getElementsByName('backgroundColor')[0]
 
     inputBakgroundColor.addEventListener('change', this.changeBackgroundColor.bind(this))
   }
 
+  /**
+   * Listen change for link color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeLinkColor() {
     let inputLinkColor = document.getElementsByName('linkColor')[0]
 
     inputLinkColor.addEventListener('change', this.changeLinkColor.bind(this))
   }
 
+  /**
+   * Listen change for highlight color input
+   * @private
+   * @returns {void}
+   */
   _addEventChangeHighlightColor() {
     let inputHighlightColor = document.getElementsByName('highlightColor')[0]
 
     inputHighlightColor.addEventListener('change', this.changeHighlightColor.bind(this))
   }
 
+  /**
+   * Listen change for invert color interface checkbox
+   * @private
+   * @returns {void}
+   */
   _addEventChangeInvertGeneral() {
     let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
     
     checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral.bind(this))
   }
 
+  /**
+   * Listen change for invert color image checkbox
+   * @private
+   * @returns {void}
+   */
   _addEventChangeInvertImages() {
     let checkboxInvertImages = document.getElementsByName('invertImages')[0]
 
     checkboxInvertImages.addEventListener('change', this.changeInvertImages.bind(this))
   }
 
+  /**
+   * Apply changes font size in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeFontSize() {
     let inputFontSize = document.getElementsByName('fontSize')[0]
     let html = document.getElementsByTagName('html')[0]
@@ -324,6 +494,11 @@ class CustomInterfaz {
     localStorage.setItem('font_size', this.fontSize) 
   }
 
+  /**
+   * Apply changes interline size in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeSizeLine() {
     let inputSizeLine = document.getElementsByName("interlineSpaceSize")[0]
     let body = document.getElementsByTagName('body')[0]
@@ -347,6 +522,11 @@ class CustomInterfaz {
     localStorage.setItem('size_line_spacing', this.sizeLineSpacing)    
   }
 
+  /**
+   * Apply changes contrast colors in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeContrastColors() {
     let optionContrastSelected = Array.from(document.getElementsByName('radioOptionscontrast')).filter(radioOption => radioOption.checked)[0]
     let optionContrastSelectedValue = parseInt(optionContrastSelected.value)
@@ -392,6 +572,11 @@ class CustomInterfaz {
     localStorage.setItem('contrast_colors_id', this.contrastColorsId)
   }
 
+  /**
+   * Apply changes foreground color in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeForegroundColor() {
     let inputColor = document.getElementsByName('foregroundColor')[0]
     let color = inputColor.value
@@ -416,6 +601,11 @@ class CustomInterfaz {
     localStorage.setItem('foreground_color', this.customColors.foreground_colour)
   }
 
+  /**
+   * Apply changes background color in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeBackgroundColor() {
     let inputColor = document.getElementsByName('backgroundColor')[0]
     let color = inputColor.value
@@ -438,6 +628,11 @@ class CustomInterfaz {
     localStorage.setItem('background_color', this.customColors.background_colour)
   }
 
+  /**
+   * Apply changes link color in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeLinkColor() {
     let inputColor = document.getElementsByName('linkColor')[0]
     let color = inputColor.value
@@ -460,6 +655,11 @@ class CustomInterfaz {
     localStorage.setItem('link_color', this.customColors.link_colour)
   }
 
+  /**
+   * Apply changes highlight color in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeHighlightColor() {
     let inputColor = document.getElementsByName('highlightColor')[0]
     let color = inputColor.value
@@ -482,6 +682,11 @@ class CustomInterfaz {
     localStorage.setItem('highlight_color', color)
   }
 
+  /**
+   * Apply changes font type in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeFontType() {
     let optionSelectedElm = Array.from(document.getElementsByName('type-font')).filter(radioOption => radioOption.checked)[0]
     let optionFontSelected = parseInt(optionSelectedElm.value)
@@ -522,6 +727,11 @@ class CustomInterfaz {
     localStorage['font_type_id'] = this.fontTypeId
   }
 
+  /**
+   * Apply changes cursor size in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeCursorSize() {
     let optionSelectedElm = Array.from(document.getElementsByName('radioOptionsSizeCursor')).filter(radioOption => radioOption.checked)[0]
     let optionSizeSelected = parseInt(optionSelectedElm.value)
@@ -568,6 +778,11 @@ class CustomInterfaz {
     localStorage.setItem('cursor_url', body.style.cursor)
   }
 
+  /**
+   * Apply changes cursor trail in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeCursorTrail() {
     let optionSelectedElm = Array.from(document.getElementsByName('radioOptionsSizeCursorTrails')).filter(radioOption => radioOption.checked)[0]
     let optionCursorTrailSelected = parseInt(optionSelectedElm.value)
@@ -604,6 +819,11 @@ class CustomInterfaz {
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
   }
 
+  /**
+   * Apply changes invert all colors in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeInvertGeneral() {
     let checkbox = document.getElementsByName('invertGeneral')[0]
     let isChecked = checkbox.checked
@@ -635,6 +855,11 @@ class CustomInterfaz {
 
   }
 
+  /**
+   * Apply changes invert colors images in user interface and update value in accessibility bar data
+   * @public
+   * @returns {void}
+   */
   changeInvertImages() {
     let checkbox = document.getElementsByName('invertImages')[0]
     let isChecked = checkbox.checked
