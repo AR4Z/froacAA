@@ -1,4 +1,16 @@
+/** Class representing Accessibility Bar. */
 class AccessibilityBar {
+  /**
+   * Create Accessibility Bar
+   * @param {Boolean} loggedIn 
+   * @param {String} url 
+   * @param {Boolean} needCustomInterfaz - Need use custom interfaz feature.
+   * @param {Boolean} needNarrator - Need use narrator feature.
+   * @param {Boolean} needScreenReader - Need use screen reader feature.
+   * @param {Boolean} needLscTranslator - Need use lsc translator.
+   * @param {Boolean} needVirtualKeyboard  - Need virtual keyboard.
+   * @param {Boolean} needStructuralNavigation - Need structural navigation.
+   */
   constructor(loggedIn, url, needCustomInterfaz, needNarrator, needScreenReader, needLscTranslator, needVirtualKeyboard, needStructuralNavigation) {
     this.needCustomInterfaz = needCustomInterfaz
     this.needNarrator = needNarrator
@@ -9,23 +21,101 @@ class AccessibilityBar {
     this.loggedIn = loggedIn
     this.url = url
 
+    /**
+     * HtmlElement button that open accessibility bar.
+     * @type {HTMLElement}
+     */
     this.button = document.getElementById('accessibilityBarButton')
+    /**
+     * HtmlElement where it's accessibility bar tabs.
+     * @type {HTMLElement}
+     */
     this.collapse = document.getElementById(this.button.getAttribute('href').replace('#', ''))
+    /**
+     * Bootstrap Collapse instance
+     * @type {Collapse}
+     */
     this.collapseInstance = new Collapse(this.button)
+    /**
+     * Contains HtmlElements that represent are each of the tabs in the accessibility bar.
+     * 
+     * For example:
+     * {
+     *  'myAccessiblityBarFeature': HtmlElementTabOfMyFeature
+     *  ...
+     * }
+     * @type {Object}
+     */
     this.tabs = {}
+    /**
+     * Contains Bootstrap Tabs instances that represent are each of the tabs in the accessibility bar.
+     * 
+     * For example:
+     * {
+     *  'myAccessiblityBarFeature': new Tab(...)
+     *  ...
+     * }
+     * @type {Object}
+     */
     this.tabsCollection = {}
+    /**
+     * HtmlElement that represents carousel of custom interfaz tab
+     * @type {?HTMLElement}
+     */
     this.carouselCustomInterfazElm = null
+    /**
+     * HtmlElement that represents carousel of narrator tab
+     * @type {?HTMLElement}
+     */
     this.carouselNarratorElm = null
-    this.carouselCustomInterfaz = {}
-    this.carouselNarrator = {}
+    /**
+     * Bootstrap Carousel instance for custom interfaz.
+     * @type {?Carousel}
+     */
+    this.carouselCustomInterfaz = null
+    /**
+     * Bootstrap Carousel instance for narrator.
+     * @type {?Carousel}
+     */
+    this.carouselNarrator = null
 
-    this.narrator
-    this.customInterfaz
-    this.lscTranslator
-    this.virtualKeyboard
-    this.structuralNavigation
-    this.screenReader
+    /**
+     * Narrator object
+     * @type {?Narrator}
+     */
+    this.narrator = null
+    /**
+     * Custom interfaz object
+     * @type {?CustomInterfaz}
+     */
+    this.customInterfaz = null
+    /**
+     * Lsc translator object
+     * @type {?LscTranslator}
+     */
+    this.lscTranslator = null
+    /**
+     * Virtual keyboard object
+     * @type {?VirtualKeyboard}
+     */
+    this.virtualKeyboard = null
+    /**
+     * Structural Navigation object
+     * @type {?StructuralNavigation}
+     */
+    this.structuralNavigation = null
+    /**
+     * Screen Reader object
+     * @type {?ScreenReader}
+     */
+    this.screenReader = null
+    /**
+     * Voice Browser object
+     * @type {?VoiceBrowser}
+     */
     this.voiceBrowser = new VoiceBrowser()
+
+    // Voice Browser does not depend of user model, so automatically on
     this.voiceBrowser.start()
   }
 

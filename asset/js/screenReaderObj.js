@@ -37,10 +37,6 @@ class ScreenReader {
         return `${ this.messages[userLang].link }, ${ this._computeAccessibleName(element) }. ${ this.messages[userLang].follow_link }.`;
       },
 
-      /*button(element) {
-        return `${ this.messages[userLang][3] }, ${ this._computeAccessibleName( element ) }. ${ this.messages[userLang[4]] }.`;
-      },*/
-
       heading(element) {
         const level = element.getAttribute('aria-level') || element.tagName[1]
 
@@ -62,9 +58,9 @@ class ScreenReader {
           ${ this.messages[userLang].value }: 
           ${ element.value ? element.value :  this.messages[userLang].empty }. 
           ${ this.messages[userLang].write_in_field }.`
-        } else if(element.type == 'search') {
+        } else if (element.type == 'search') {
           return `Campo de formulario para búsqueda valor...`
-        }else if (element.type == 'password') {
+        } else if (element.type == 'password') {
           return `
           ${ this.messages[userLang].password_field }, ${this._computeAccessibleName(element) }. 
           ${ this.messages[userLang].state }: 
@@ -76,23 +72,11 @@ class ScreenReader {
           ${ this.messages[userLang].state }:
           ${ element.checked ? this.messages[userLang].selected : this.messages[userLang].not_selected }.`
         } else if (element.type == 'radio') {
-          return `${ this.messages[userLang].unique_option }, para ${ this._getText(document.getElementById(element.closest('fieldset').getAttribute('aria-labelledby'))) } ${this._computeAccessibleName(element)}. 
+          return `${ this.messages[userLang].unique_option }, ${this._computeAccessibleName(element)}. 
           ${ this.messages[userLang].state }:
           ${ element.checked ? this.messages[userLang].selected : this.messages[userLang].not_selected }.`
         } else if (element.type == 'number') {
           return `Campo de formulario tipo número: ${ this._computeAccessibleName(element) } Acepta valores desde ${ element.getAttribute('min') } hasta ${ element.getAttribute('max') }. ${element.value ? `Valor: ${ element.value }` :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`
-        }
-      },
-
-      textbox(element) {
-        if (element.type == "text") {
-          return `${ this.messages[userLang][7] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][8] }: ${element.value ? element.value :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
-        } else if (element.type == "password") {
-          return `${ this.messages[userLang][11] }: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.value ? this.messages[userLang][13] : this.messages[userLang][9]}. ${this.messages[userLang][10]}.`;
-        } else if (element.type == "checkbox") {
-          return `${this.messages[userLang][14]}: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15] : this.messages[userLang][16]}`;
-        } else if (element.type == "radio") {
-          return `${this.messages[userLang[18]]}: ${this._computeAccessibleName(element)}. ${ this.messages[userLang][12] }: ${element.checked ? this.messages[userLang][15]: this.messages[userLang][17]} `;
         }
       },
 
@@ -107,7 +91,7 @@ class ScreenReader {
       button(element) {
         let textElement = this._getText(element)
 
-        if(element.tagName != 'BUTTON' && element.tagName != 'A') {
+        if (element.tagName != 'BUTTON' && element.tagName != 'A') {
           console.log("entry")
           element = this._isALink(element).nodeLink
         }
@@ -116,7 +100,7 @@ class ScreenReader {
           return `Menu desplegable, ${ this._computeAccessibleName(element) }. ${ element.getAttribute('aria-expanded') != 'true' ? 'Presione enter para leer' : 'Presione ctrl + g para leer.'}`
         } else if (element.getAttribute('aria-expanded')) {
           return `Botón para abrir, ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. ${ element.getAttribute('aria-expanded') != 'true' ? 'Presione enter para abrir y leer.' : 'Presione ctrl + g para leer.'}`
-        } else if(element.getAttribute('aria-controls')) {
+        } else if (element.getAttribute('aria-controls')) {
           return `Botón para controlar ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. Descripción: ${ textElement }`
         }
       },
@@ -379,9 +363,9 @@ class ScreenReader {
 
   _loadMessages() {
     fetch(`${ base_url }/asset/js/srMessages.json`)
-    .then(r => r.json())
-    .then(data => this.messages = data)
-    .catch(e => console.error(e))
+      .then(r => r.json())
+      .then(data => this.messages = data)
+      .catch(e => console.error(e))
   }
 
   _getText(element) {
@@ -397,7 +381,7 @@ class ScreenReader {
   }
 
   _isValidNode(node) {
-    if(this.elementIsVisible(this.parentElement(node)) && node.classList.contains('sr-only')) {
+    if (this.elementIsVisible(this.parentElement(node)) && node.classList.contains('sr-only')) {
       return true
     }
 
@@ -455,25 +439,7 @@ class ScreenReader {
     }
   }
 
-  _computeAccessibleName(element) {
-    let content = '';
-
-    if (element.getAttribute('aria-label')) {
-      return element.getAttribute('aria-label')
-    } else if (element.getAttribute('aria-control')) {
-      return element.getAttribute('aria-control')
-    } else if (element.getAttribute("title")) {
-      return element.getAttribute("title")
-    } else if (element.getAttribute('alt')) {
-      return element.getAttribute('alt')
-    } else if (element.getAttribute('aria-labelledby') || this._findLabelForControl(element, document)) {
-      let textLabel = this._getText(this._findLabelForControl(element, document)) || this._findLabelForControl(element, document).textContent      
-      return textLabel
-    }
-
-    content = this._getText(element);
-    return content;
-  }
+  _computeAccessibleName(element) {}
 
   _isALink(node) {
     let currentNode = node;
@@ -499,11 +465,11 @@ class ScreenReader {
       radio: 'input',
       textbox: 'input'
     }
-    
+
     if (element.getAttribute('role')) {
       return ROLES[element.getAttribute('role')] || element.getAttribute('role')
     } else if (this._isALink(element).isLink) {
-      if(this._isALink(element).nodeLink != element) {
+      if (this._isALink(element).nodeLink != element) {
         return this._computeRole(this._isALink(element).nodeLink)
       } else {
         this.mappings['a']
