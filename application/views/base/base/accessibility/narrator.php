@@ -113,7 +113,7 @@
                 <div class="row">
                   <div class="col">
                     <legend id="group_narrator_volume" style="font-size:1rem;">
-                      <?php echo $this->lang->line('message_volume'); ?>.
+                      <?php echo $this->lang->line('message_volume'); ?>
                     </legend>
                   </div>
                 </div>
@@ -162,7 +162,7 @@
                 <div class="row">
                   <div class="col">
                     <legend id="group_gender_voice_narrator" style="font-size:1rem;">
-                      <?php echo $this->lang->line('message_gender_voice'); ?>.
+                      <?php echo $this->lang->line('message_gender_voice'); ?>
                     </legend>
                   </div>
                 </div>
@@ -201,7 +201,7 @@
                 <div class="row">
                   <div class="col">
                     <legend id="group_link_narrator" style="font-size:1rem;">
-                      <?php echo $this->lang->line('message_links'); ?>.
+                      <?php echo $this->lang->line('message_links'); ?>
                     </legend>
                   </div>
                 </div>
@@ -266,7 +266,7 @@
                 <div class="row">
                   <div class="col">
                     <legend id="group_highlight_narrator" style="font-size:1rem;">
-                      <?php echo $this->lang->line('message_highlight'); ?>.
+                      <?php echo $this->lang->line('message_highlight'); ?>
                     </legend>
                   </div>
                 </div>
@@ -325,7 +325,7 @@
                 <div class="row">
                   <div class="col">
                     <legend id="group_read_mode_highlight" style="font-size:1rem;">
-                      <?php echo $this->lang->line('message_read_mode'); ?>.
+                      <?php echo $this->lang->line('message_read_mode'); ?>
                     </legend>
                   </div>
                 </div>

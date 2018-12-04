@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col">
               <legend id="group_nav_strategy" style="font-size:1rem;">
-                <?php echo $this->lang->line('message_nav_strategy'); ?>.
+                <?php echo $this->lang->line('message_nav_strategy'); ?>
               </legend>
             </div>
           </div>
@@ -54,16 +54,14 @@
         <div class="row">
           <div class="col">
             <label for="showTocCheck">
-              <?php echo $this->lang->line('message_toc'); ?>.</p>
+              <?php echo $this->lang->line('message_toc'); ?>
+            </label>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <br />
-            <div class="form-check checkbox-slider--b">
-              <input name="showTOC" id="showTocCheck" type="checkbox" />
-              <span></span>
-            </div>
+            <br/>
+            <input type="checkbox" name="showTOC" id="showTocCheck"/>
           </div>
         </div>
       </div>

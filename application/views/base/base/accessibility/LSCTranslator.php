@@ -28,7 +28,7 @@
           <div class="row">
             <div class="col">
               <legend id="group_model_lsc_translator" style="font-size:1rem;">
-                <?php echo $this->lang->line('message_model'); ?>.
+                <?php echo $this->lang->line('message_model'); ?>
               </legend>
             </div>
           </div>

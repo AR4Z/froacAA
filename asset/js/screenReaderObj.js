@@ -76,7 +76,7 @@ class ScreenReader {
           ${ this.messages[userLang].state }:
           ${ element.checked ? this.messages[userLang].selected : this.messages[userLang].not_selected }.`
         } else if (element.type == 'number') {
-          return `Campo de formulario tipo número: ${ this._computeAccessibleName(element) } Acepta valores desde ${ element.getAttribute('min') } hasta ${ element.getAttribute('max') }. ${element.value ? `Valor: ${ element.value }` :  this.messages[userLang][9]}. ${this.messages[userLang][10]}.`
+          return `Campo de formulario tipo número: ${ this._computeAccessibleName(element) } Acepta valores desde ${ element.getAttribute('min') } hasta ${ element.getAttribute('max') }. ${element.value ? `Valor: ${ element.value }` :  this.messages[userLang].empty }. ${ this.messages[userLang].write_in_field }.`
         }
       },
 
@@ -439,7 +439,22 @@ class ScreenReader {
     }
   }
 
-  _computeAccessibleName(element) {}
+  _computeAccessibleName(element) {
+    let content = '';
+
+    if (element.getAttribute('aria-label')) {
+      return element.getAttribute('aria-label')
+    } else if (element.getAttribute("title")) {
+      return element.getAttribute("title")
+    } else if (element.getAttribute('alt')) {
+      return element.getAttribute('alt')
+    } else if (element.getAttribute('aria-labelledby') || this._findLabelForControl(element, document)) {
+      return this._getText(this._findLabelForControl(element, document));
+    }
+
+    content = this._getText(element);
+    return content;
+  }
 
   _isALink(node) {
     let currentNode = node;

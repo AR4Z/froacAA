@@ -66,17 +66,12 @@
         </div>
         <div class="row">
           <div class="col">
-            <br />
-            <div class="form-check checkbox-slider--b">
               <input name="play_key_sound" id="playKeySoundCheck" type="checkbox" />
               <span></span>
-            </div>
           </div>
         </div>
       </div>
-
     </div>
-
     <div id="card-virtual-keyboard-use" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
       <div class="card-header text-center">
         <span>
@@ -89,20 +84,15 @@
         <div class="row">
           <div class="col">
             <label for="useKeyboardCheck">
-              <?php echo $this->lang->line('use_kb'); ?>.</label>
+              <?php echo $this->lang->line('use_kb'); ?></label>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <br />
-            <div class="form-check checkbox-slider--b">
               <input name="useKeyboard" id="useKeyboardCheck" type="checkbox" />
-              <span></span>
-            </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>

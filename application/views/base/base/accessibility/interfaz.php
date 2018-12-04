@@ -61,165 +61,166 @@
               </span>
             </div>
             <div class="card-body">
-            <fieldset role="radiogroup" aria-labelledby="group_contrast">
-              <div class="row">
-                <div class="col">
-                  <legend id="group_contrast" style="font-size:1rem;">
-                    <?php echo $this->lang->line('message_contrast'); ?>
-                  </legend>
+              <fieldset role="radiogroup" aria-labelledby="group_contrast">
+                <div class="row">
+                  <div class="col">
+                    <legend id="group_contrast" style="font-size:1rem;">
+                      <?php echo $this->lang->line('message_contrast'); ?>
+                    </legend>
+                  </div>
                 </div>
-              </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="normalContrast" value="1" aria-label="<?php echo $this->lang->line('normal'); ?>">
+                      <label class="form-check-label contrast-label" for="normalContrast" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('normal'); ?>">
+                        <img alt="<?php echo $this->lang->line('normal'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('normal'); ?>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio2" value="2" aria-label="<?php echo $this->lang->line('black_white'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio2" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('black_white'); ?>">
+                        <img alt="<?php echo $this->lang->line('black_white'); ?>" style="height: 40px; width: 40px;"
+                          src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('black_white'); ?>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio3" value="3" aria-label="<?php echo $this->lang->line('white_black'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio3" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('white_black'); ?>">
+                        <img alt="<?php echo $this->lang->line('white_black'); ?>" style="height: 40px; width: 40px;"
+                          src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('white_black'); ?>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio4" value="4" aria-label="<?php echo $this->lang->line('black_yellow'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio4" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('black_yellow'); ?>">
+                        <img alt="<?php echo $this->lang->line('black_yellow'); ?>" style="height: 40px; width: 40px;"
+                          src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('black_yellow'); ?>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio5" value="5" aria-label="<?php echo $this->lang->line('yellow_black'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio5" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('yellow_black'); ?>">
+                        <img alt="<?php echo $this->lang->line('yellow_black'); ?>" style="height: 40px; width: 40px;"
+                          src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('yellow_black'); ?>
+                        </span>
+                      </label>
+                    </div>
 
-              <div class="row">
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="normalContrast"
-                      value="1" aria-label="<?php echo $this->lang->line('black_white'); ?>">
-                    <label class="form-check-label contrast-label" for="normalContrast" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('normal'); ?>">
-                      <img alt="<?php echo $this->lang->line('normal'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/no.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('normal'); ?>
-                      </span>
-                    </label>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio6" value="6" aria-label="<?php echo $this->lang->line('gray'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio6" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('gray'); ?>">
+                        <img alt="<?php echo $this->lang->line('gray'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('gray'); ?>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast"
+                        id="inlineRadio7" value="7" aria-label="<?php echo $this->lang->line('customized'); ?>">
+                      <label class="form-check-label contrast-label" for="inlineRadio7" data-toggle="tooltip"
+                        data-placement="bottom" title="<?php echo $this->lang->line('customized'); ?>">
+                        <i class="fa fa-wrench" style="font-size:40px;"></i>
+                        <span class="sr-only">
+                          <?php echo $this->lang->line('customized'); ?>
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio2"
-                      value="2" aria-label="<?php echo $this->lang->line('black_white'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio2" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('black_white'); ?>">
-                      <img alt="<?php echo $this->lang->line('black_white'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/black-white.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('black_white'); ?>
-                      </span>
-                    </label>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div id="div-color-foreground" class="no-high-contrast" style="display:none">
+                      <label for="foregroundColorInput">
+                        <b class="no-high-contrast">
+                          <?php echo $this->lang->line('font_color'); ?></b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="foregroundColorInput" name="foregroundColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio3"
-                      value="3" aria-label="<?php echo $this->lang->line('white_black'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio3" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('white_black'); ?>">
-                      <img alt="<?php echo $this->lang->line('white_black'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/white-black.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('white_black'); ?>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio4"
-                      value="4" aria-label="<?php echo $this->lang->line('black_yellow'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio4" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('black_yellow'); ?>">
-                      <img alt="<?php echo $this->lang->line('black_yellow'); ?>" style="height: 40px; width: 40px;"
-                        src="<?php echo base_url() ?>asset/img/iconContrast/black-yellow.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('black_yellow'); ?>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio5"
-                      value="5" aria-label="<?php echo $this->lang->line('yellow_black'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio5" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('yellow_black'); ?>">
-                      <img alt="<?php echo $this->lang->line('yellow_black'); ?>" style="height: 40px; width: 40px;"
-                        src="<?php echo base_url() ?>asset/img/iconContrast/yellow-black.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('yellow_black'); ?>
-                      </span>
-                    </label>
-                  </div>
+                  <div class="col">
+                    <div id="div-color-background" class="no-high-contrast" style="display:none">
+                      <label for="backgroundColorInput">
+                        <b class="no-high-contrast">
+                          <?php echo $this->lang->line('background_color'); ?></b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="backgroundColorInput" name="backgroundColor" value="rgb(255, 255, 255)"
+                          class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
 
-                </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio6"
-                      value="6" aria-label="<?php echo $this->lang->line('gray'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio6" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('gray'); ?>">
-                      <img alt="<?php echo $this->lang->line('gray'); ?>" style="height: 40px; width: 40px;" src="<?php echo base_url() ?>asset/img/iconContrast/gray.png" />
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('gray'); ?>
-                      </span>
-                    </label>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="">
-                    <input class="form-check-input contrast-input sr-only" type="radio" name="radioOptionscontrast" id="inlineRadio7"
-                      value="7" aria-label="<?php echo $this->lang->line('customized'); ?>">
-                    <label class="form-check-label contrast-label" for="inlineRadio7" data-toggle="tooltip"
-                      data-placement="bottom" title="<?php echo $this->lang->line('customized'); ?>">
-                      <i class="fa fa-wrench" style="font-size:40px;"></i>
-                      <span class="sr-only">
-                        <?php echo $this->lang->line('customized'); ?>
-                      </span>
-                    </label>
+                  <div class="col">
+                    <div id="div-color-highlight" class="no-high-contrast" style="display:none">
+                      <label for="highlightColorInput">
+                        <b class="no-high-contrast">
+                          <?php echo $this->lang->line('highlight_color'); ?></b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="highlightColorInput" name="highlightColor" value="rgb(211, 211, 211)"
+                          class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col">
-                  <div id="div-color-foreground" class="no-high-contrast" style="display:none">
-                    <label for="foregroundColorInput">
-                      <b class="no-high-contrast">
-                        <?php echo $this->lang->line('font_color'); ?></b>
-                    </label>
-                    <br />
-                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" id="foregroundColorInput" name="foregroundColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                  <div class="col">
+                    <div id="div-color-link" class="no-high-contrast" style="display:none">
+                      <label for="linkColorInput">
+                        <b class="no-high-contrast">
+                          <?php echo $this->lang->line('link_color'); ?></b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="linkColorInput" name="linkColor" value="rgb(255, 255, 0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div id="div-color-background" class="no-high-contrast" style="display:none">
-                    <label for="backgroundColorInput">
-                      <b class="no-high-contrast">
-                        <?php echo $this->lang->line('background_color'); ?></b>
-                    </label>
-                    <br />
-                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" id="backgroundColorInput" name="backgroundColor" value="rgb(255, 255, 255)"
-                        class="jscolor form-control no-high-contrast no-invert-color" />
-                    </div>
-                  </div>
-
-                </div>
-                <div class="col">
-                  <div id="div-color-highlight" class="no-high-contrast" style="display:none">
-                    <label for="highlightColorInput">
-                      <b class="no-high-contrast">
-                        <?php echo $this->lang->line('highlight_color'); ?></b>
-                    </label>
-                    <br />
-                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" id="highlightColorInput" name="highlightColor" value="rgb(211, 211, 211)"
-                        class="jscolor form-control no-high-contrast no-invert-color" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div id="div-color-link" class="no-high-contrast" style="display:none">
-                    <label for="linkColorInput">
-                      <b class="no-high-contrast">
-                        <?php echo $this->lang->line('link_color'); ?></b>
-                    </label>
-                    <br />
-                    <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
-                      <input type="text" id="linkColorInput" name="linkColor" value="rgb(255, 255, 0)" class="jscolor form-control no-high-contrast no-invert-color" />
-                    </div>
-                  </div>
-                </div>
-              </div>
               </fieldset>
             </div>
           </div>
@@ -392,24 +393,27 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <b>
-                    <?php echo $this->lang->line('invert_color'); ?></b>
-                  <br />
-                  <div class="form-check checkbox-slider--b">
-                    <label>
-                      <input name="invertImages" type="checkbox" />
-                      <span>
-                        <?php echo $this->lang->line('images'); ?></span>
-                    </label>
+                  <fieldset role="group" aria-labelledby="group_invert_colors">
+                    <legend id="group_invert_colors" style="font-size:1rem;font-weight:bold;">
+                    <?php echo $this->lang->line('invert_color'); ?>
+                    </legend>
+                    <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="invertImagesCheck" name="invertImages">
+                      <label class="form-check-label" for="invertImagesCheck" style="margin-left:5px;">
+                        <?php echo $this->lang->line('images'); ?>
+                      </label>
+                    </div>
                   </div>
-                  <br />
-                  <div class="form-check checkbox-slider--b">
-                    <label>
-                      <input name="invertGeneral" type="checkbox" />
-                      <span>
-                        <?php echo $this->lang->line('general'); ?></span>
-                    </label>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="invertGeneralCheck" name="invertGeneral">
+                      <label class="form-check-label" for="invertGeneralCheck" style="margin-left:5px;">
+                        <?php echo $this->lang->line('general'); ?>
+                      </label>
+                    </div>
                   </div>
+                  </fieldset>
                 </div>
               </div>
             </div>
