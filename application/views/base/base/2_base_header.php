@@ -61,7 +61,7 @@
         <a class="dropdown-item" href="<?php echo base_url()?>repositorio/nuevo">Agregar Repositorios</a>
         <a class="dropdown-item" href="<?php echo base_url()?>admin/lista_user">Lista de Usuarios </a>
         <a class="dropdown-item" href="<?php echo base_url()?>usuario/nuevo_usuario">Agregar Usuarios</a>
-        <a onclick="localStorage.clear();" class="dropdown-item" href="<?php echo base_url()?>sesion/logout">
+        <a onclick="localStorage.clear();localStorage.setItem('firstTime', 'false');" class="dropdown-item" href="<?php echo base_url()?>sesion/logout">
           <?php echo $this->lang->line('signout'); ?> </a>
 
       </div>

@@ -183,7 +183,7 @@
         window.needVirtualKeyboard,
         window.needStructuralNavigation)
       
-      window.firstTime = "<?php echo $this->session->userdata('first_time');?>" == 'true'
+      window.firstTime = localStorage.getItem('firstTime') === null
 
       if (window.idView != 'lo_view') {
         window.accessibilityBar.fetchDataAccessibilityBar()
@@ -197,7 +197,7 @@
       if (document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
-      if (window.firstTime || (localStorage.getItem('intro') == 'true')) {
+      if (window.firstTime) {
       //if(true){
         window.tour = new Tour()
         window.next = false
@@ -215,7 +215,7 @@
         })
 
         introModal.addEventListener('hidden.bs.modal', e => {
-          localStorage.setItem('intro', false)
+          localStorage.setItem('firstTime', false)
           hotkeys.unbind('enter')
           if (window.tour.synth.speaking) {
             window.tour.synth.cancel()
@@ -272,7 +272,7 @@
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.setItem('intro', true);javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                  <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.removeItem('firstTime');javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
                       if($this->session->userdata('site_lang')
                       == 'spanish') echo 'selected="selected"'; ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
