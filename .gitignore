@@ -99,3 +99,4 @@ typings/
 .serverless
 .htaccess
 /asset/img/lengua
+.vscode

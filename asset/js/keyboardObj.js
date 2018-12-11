@@ -21,7 +21,7 @@ class VirtualKeyboard {
      */
     this.keyboardSizeClass = ''
     /** @type {boolean} */
-    this.useKeyboard = localStorage.getItem('use_keyboard') || true
+    this.useKeyboard = localStorage.getItem('use_keyboard') == 'true'
 
     this._addEventChangeKeyboardSize()
     this._addEventChangePlayKeySound()
@@ -39,6 +39,7 @@ class VirtualKeyboard {
   _setValuesInLocalStorage() {
     localStorage.setItem('kb_size_id', this.keyboardSizeId)
     localStorage.setItem('play_key_sound', this.playKeySound)
+    localStorage.setItem('use_keyboard', this.useKeyboard)
   }
 
   /**
@@ -54,7 +55,7 @@ class VirtualKeyboard {
     document.querySelector(`input[name='play_key_sound']`).checked = this.playKeySound == 't' || this.playKeySound == 'true' ? true : false
     document.querySelector(`input[name='play_key_sound']`).dispatchEvent(new Event('change'))
   
-    document.querySelector(`input[name='useKeyboard']`).checked = this.useKeyboard == 'true' || true
+    document.querySelector(`input[name='useKeyboard']`).checked = this.useKeyboard
     document.querySelector(`input[name='useKeyboard']`).dispatchEvent(new Event('change'))
   }
 
