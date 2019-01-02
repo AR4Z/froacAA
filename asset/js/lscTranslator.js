@@ -194,7 +194,10 @@ class LscTranslator {
    * @returns {void}
    */
   _addEventSelectionText() {
-    document.onmouseup = this.setSelectionText.bind(this)
+    if(window.idView == 'lo_view') {
+      learningObject.getDocument().onmouseup = () => { this.setSelectionText(learningObject.getDocument()) }
+    }
+    document.onmouseup = () => { this.setSelectionText(document) }
   }
 
   /**
@@ -487,7 +490,7 @@ class LscTranslator {
   forgetUserSelection() {
     if (window.getSelection) {
       if (window.getSelection().empty) { // Chrome
-        window.getSelection().empty();
+        window.getSelection().empty()
       } else if (window.getSelection().removeAllRanges) { // Firefox
         window.getSelection().removeAllRanges();
       }
@@ -495,23 +498,23 @@ class LscTranslator {
       document.selection.empty();
     }
 
-    if (idView === "lo_view") {
-      if (iframeDocument.getSelection) {
-        if (iframeDocument.getSelection().empty) { // Chrome
-          iframeDocument.getSelection().empty();
-        } else if (iframeDocument.getSelection().removeAllRanges) { // Firefox
-          iframeDocument.getSelection().removeAllRanges();
+    /*if (window.idView === 'lo_view') {
+      if (learningObject.getDocument().getSelection) {
+        if (learningObject.getDocument().getSelection().empty) { // Chrome
+          learningObject.getDocument().empty();
+        } else if (learningObject.getDocument().removeAllRanges) { // Firefox
+          learningObject.getDocument().removeAllRanges()
         }
       }
-    }
+    }*/
   }
   /**
    * Load selection text in text input of lsc translator.
    * @public
    * @returns {void}
    */
-  setSelectionText() {
-    let selection = (document.all) ? (document.selection.createRange().text) : document.getSelection()
+  setSelectionText(doc) {
+    let selection = (doc.all) ? (doc.selection.createRange().text) : doc.getSelection()
     selection = selection.toString()
 
     let selectionText = selection

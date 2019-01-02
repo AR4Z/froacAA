@@ -84,6 +84,7 @@ class LearningObject {
         if (r.status == 200) {
           return r.json()
         }
+        return r.json()
       })
       .catch(e => window.loading_screen.finish())
   }
