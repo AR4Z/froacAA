@@ -276,8 +276,9 @@ class Usuario extends CI_Controller {
      * para verificar si ya existe en la base de datos
      */
     public function verify_username(){
-
+        $_POST = json_decode(file_get_contents('php://input'), true);
         $username = $_POST["username"];
+        //echo $_POST;
         $username = strtolower($username);
         $result = $this->usuario_model->verify_username($username);
         header('Content-Type: application/json');
