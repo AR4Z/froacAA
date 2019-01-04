@@ -383,9 +383,11 @@
     </div>
 <script text="text/javascript">
   const registerForm = document.querySelector('form[name="registerForm"]')
+  let validator;
   document.addEventListener("DOMContentLoaded", () => {
-    const validator = new Validator(registerForm, {
+    validator = new Validator(registerForm, {
       name: {
+        required: true,
         minLength: 3
       }
     }, {}, {})
