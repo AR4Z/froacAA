@@ -2,15 +2,18 @@ class Validator {
   constructor(form, fields, customRules, customMessages) {
     this.rules = {
       required: (value, params) => {
-        return value.length !== 0
+        console.log("required");
+        return value.length !== 0;
       },
 
       minLength: (value, params) => {
+        console.log("minLength");
         console.log(value, params);
         return value.length >= params;
       },
 
       maxLength: (value, params) => {
+        console.log("maxLength");
         return value.length <= params;
       },
       ...customRules
@@ -34,9 +37,11 @@ class Validator {
     this.validate(e.target)
       .then(() => {
         console.log("ready");
+        this._hideErrors();
       })
       .catch(() => {
         console.error("error");
+        this._showErrors();
       });
   }
 
@@ -80,48 +85,85 @@ class Validator {
       fields[fieldName] = {
         rules: fieldNames[fieldName],
         fieldElement: this.handleForm.querySelector(`[name='${fieldName}']`),
-        errors: []
+        error: null
       };
     }
 
     return fields;
   }
 
-  _showErrors(field) {
+  _showErrors() {
+    const fields = this.fields;
 
+    for (var keyField in fields) {
+      const field = fields[keyField];
+
+      if (!field.error) {
+        continue;
+      }
+
+      const fieldElement = field["fieldElement"];
+      const errorDivNode = document.createElement("div");
+      const errorTextNode = document.createTextNode(field.error);
+
+      errorDivNode.className = 'validate-error';
+      errorDivNode.appendChild(errorTextNode);
+      fieldElement.parentNode.appendChild(errorDivNode);
+    }
+  }
+
+  _hideErrors() {
+    const fields = this.fields;
+
+    for (var keyField in fields) {
+      const field = fields[keyField];
+
+      if (field.error) {
+        continue;
+      }
+
+      const fieldElement = field["fieldElement"];
+      const errorDivNode = fieldElement.parentNode.getElementsByClassName('validate-error')[0];
+
+      fieldElement.parentNode.removeChild(errorDivNode);
+    }
   }
 
   validate(field) {
     const fieldElement = field;
     const rulesForThisField = Object.keys(
-      this.fields[fieldElement.getAttribute('name')].rules
+      this.fields[fieldElement.getAttribute("name")].rules
     );
+    const fieldName = fieldElement.getAttribute("name");
     const validPromises = [];
+    let error = false;
 
     rulesForThisField.forEach(rule => {
-      const ruleParams = this.fields[fieldElement.getAttribute('name')].rules[
-        rule
-      ];
+      const ruleParams = this.fields[fieldName].rules[rule];
       const ruleMethod = this.rules[rule];
+
       validPromises.push(
         new Promise((resolve, reject) => {
-          if(ruleMethod(fieldElement.value, ruleParams)) {
-            resolve();
+          if (error) {
+            return reject();
+          }
+
+          if (ruleMethod(fieldElement.value, ruleParams)) {
+            this.fields[fieldElement.getAttribute("name")].error = null;
+            return resolve();
           } else {
-            this.fields[fieldElement.getAttribute('name')].errors.push(this.errorMessages[rule])
-            reject();
+            this.fields[
+              fieldElement.getAttribute("name")
+            ].error = this.errorMessages[rule];
+            error = true;
+            return reject();
           }
         })
       );
-
-      /*if (!ruleMethod(fieldElement.value, ruleParams)) {
-        console.log(this.errorMessages[rule]);
-        this.errors.push(this.errorMessages[rule]);
-      } else {
-        console.log("nice");
-      }*/
     });
 
-    return Promise.all(validPromises);
+    return validPromises.reduce((promiseChain, currentTask) => {
+      return promiseChain.then(() => currentTask.then());
+    }, Promise.resolve());
   }
 }
