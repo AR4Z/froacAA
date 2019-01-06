@@ -386,11 +386,21 @@
   let validator;
   document.addEventListener("DOMContentLoaded", () => {
     validator = new Validator(registerForm, {
-      name: {
-        required: true,
-        minLength: 3
+      fields: {
+        name: {
+          required: true,
+          minLength: 3
+        },
+        username: {
+          required: true,
+          remote: {
+            url: '<?php echo base_url()?>index.php/usuario/verify_username',
+            method: "post",
+            nameData: 'username'
+          }
+        }
       }
-    }, {}, {})
+    })
   })
   
 </script>

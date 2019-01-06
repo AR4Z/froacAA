@@ -1,5 +1,5 @@
 class Validator {
-  constructor(form, fields, customRules, customMessages) {
+  constructor(form, settings) {
     this.rules = {
       required: (value, params) => {
         console.log("required");
@@ -16,19 +16,41 @@ class Validator {
         console.log("maxLength");
         return value.length <= params;
       },
-      ...customRules
+
+      remote: (value, params) => {
+        console.log("remote");
+        const body = {};
+        body[params.nameData] = value;
+        const data = {
+          method: params.method,
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        return fetch(params.url, data)
+          .then(res => res.json())
+          .then(data => {
+            if (!data.success) {
+              return Promise.resolve();
+            } else {
+              return Promise.reject();
+            }
+          });
+      },
+      ...settings.customRules
     };
 
     this.errorMessages = {
       minLength: "This field must have at least {0} characters",
       maxLength: "This field must have max {0} characters",
       required: "This field is required",
-      ...customMessages
+      remote: "Invalid value",
+      ...settings.customMessages
     };
 
     this.handleForm = form;
-    this.errors = [];
-    this.fields = this._getFields(fields);
+    this.fields = this._getFields(settings.fields);
     this._addEventChange();
     this._addEventSubmit();
   }
@@ -36,31 +58,32 @@ class Validator {
   _handleChange(e) {
     this.validate(e.target)
       .then(() => {
-        console.log("ready");
         this._hideErrors();
       })
       .catch(() => {
-        console.error("error");
         this._showErrors();
       });
   }
 
   _handleSubmit(e) {
     const fieldsNames = Object.keys(this.fields);
+    const validePromisesFields = [];
 
     fieldsNames.forEach(fieldName => {
       const fieldElement = this.fields[fieldName]["fieldElement"];
 
-      this.validate(fieldElement);
+      validePromisesFields.push(this.validate(fieldElement));
     });
 
-    if (this.errors.length > 0) {
-      e.preventDefault();
-
-      return false;
-    }
-
-    return true;
+    Promise.all(validePromisesFields)
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        e.preventDefault();
+        this._showErrors();
+        return false;
+      });
   }
 
   _addEventSubmit() {
@@ -97,18 +120,25 @@ class Validator {
 
     for (var keyField in fields) {
       const field = fields[keyField];
+      const fieldElement = field["fieldElement"];
 
-      if (!field.error) {
-        continue;
+      if (
+        !fieldElement.parentNode.getElementsByClassName("validate-error").length
+      ) {
+        const errorDivNode = document.createElement("div");
+        errorDivNode.className = "validate-error";
+        fieldElement.parentNode.appendChild(errorDivNode);
       }
 
-      const fieldElement = field["fieldElement"];
-      const errorDivNode = document.createElement("div");
-      const errorTextNode = document.createTextNode(field.error);
+      const errorDivNode = fieldElement.parentNode.getElementsByClassName(
+        "validate-error"
+      )[0];
 
-      errorDivNode.className = 'validate-error';
-      errorDivNode.appendChild(errorTextNode);
-      fieldElement.parentNode.appendChild(errorDivNode);
+      if (field.error) {
+        errorDivNode.innerHTML = field.error;
+      } else {
+        errorDivNode.innerHTML = "";
+      }
     }
   }
 
@@ -117,15 +147,16 @@ class Validator {
 
     for (var keyField in fields) {
       const field = fields[keyField];
+      const fieldElement = field["fieldElement"];
+      const errorDivNode = fieldElement.parentNode.getElementsByClassName(
+        "validate-error"
+      )[0];
 
       if (field.error) {
         continue;
       }
 
-      const fieldElement = field["fieldElement"];
-      const errorDivNode = fieldElement.parentNode.getElementsByClassName('validate-error')[0];
-
-      fieldElement.parentNode.removeChild(errorDivNode);
+      errorDivNode.innerHTML = "";
     }
   }
 
@@ -142,24 +173,41 @@ class Validator {
       const ruleParams = this.fields[fieldName].rules[rule];
       const ruleMethod = this.rules[rule];
 
-      validPromises.push(
-        new Promise((resolve, reject) => {
-          if (error) {
-            return reject();
-          }
+      if (rule === "remote" && !error) {
+        validPromises.push(
+          ruleMethod(fieldElement.value, ruleParams)
+            .then(() => {
+              this.fields[fieldElement.getAttribute("name")].error = null;
+              return Promise.resolve();
+            })
+            .catch(() => {
+              this.fields[
+                fieldElement.getAttribute("name")
+              ].error = this.errorMessages[rule];
+              error = true;
+              return Promise.reject();
+            })
+        );
+      } else {
+        validPromises.push(
+          new Promise((resolve, reject) => {
+            if (error) {
+              return reject();
+            }
 
-          if (ruleMethod(fieldElement.value, ruleParams)) {
-            this.fields[fieldElement.getAttribute("name")].error = null;
-            return resolve();
-          } else {
-            this.fields[
-              fieldElement.getAttribute("name")
-            ].error = this.errorMessages[rule];
-            error = true;
-            return reject();
-          }
-        })
-      );
+            if (ruleMethod(fieldElement.value, ruleParams)) {
+              this.fields[fieldElement.getAttribute("name")].error = null;
+              return resolve();
+            } else {
+              this.fields[
+                fieldElement.getAttribute("name")
+              ].error = this.errorMessages[rule];
+              error = true;
+              return reject();
+            }
+          })
+        );
+      }
     });
 
     return validPromises.reduce((promiseChain, currentTask) => {
