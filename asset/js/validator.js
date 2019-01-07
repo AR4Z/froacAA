@@ -1,24 +1,69 @@
 class Validator {
   constructor(form, settings) {
     this.rules = {
-      required: (value, params) => {
-        console.log("required");
-        return value.length !== 0;
+      required: value => {
+        return value !== "";
       },
 
       minLength: (value, params) => {
-        console.log("minLength");
-        console.log(value, params);
         return value.length >= params;
       },
 
       maxLength: (value, params) => {
-        console.log("maxLength");
         return value.length <= params;
       },
 
+      notZero: value => {
+        return parseInt(value, 10) > 0;
+      },
+
+      int: value => {
+        return new RegExp(/^[0-9]+$/gi).test(value);
+      },
+
+      float: value => {
+        value = value.toString().replace(/\,/, ".");
+        return (
+          this.int(value) || new RegExp(/^([0-9])+(\.)([0-9]+$)/gi).test(value)
+        );
+      },
+
+      min: (value, param) => {
+        value = value.toString().replace(/\,/, ".");
+
+        if (
+          new RegExp(/^[0-9]+$/gi).test(value) ||
+          new RegExp(/^([0-9])+(\.)([0-9]+$)/gi).test(value)
+        ) {
+          return parseFloat(value) >= parseFloat(param);
+        }
+        return parseInt(value, 10) >= parseInt(param, 10);
+      },
+
+      max: (value, param) => {
+        value = value.toString().replace(/\,/, ".");
+
+        if (
+          new RegExp(/^[0-9]+$/gi).test(value) ||
+          new RegExp(/^([0-9])+(\.)([0-9]+$)/gi).test(value)
+        ) {
+          return parseFloat(value) <= parseFloat(param);
+        }
+        return parseInt(value, 10) <= parseInt(param, 10);
+      },
+
+      email: value => {
+        return new RegExp(
+          /^(("[\w-\s]+")|([\w\-]+(?:\.[\w\-]+)*)|("[\w-\s]+")([\w\-]+(?:\.[\w\-]+)*))(@((?:[\w\-]+\.)*\w[\w\-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+        ).test(value);
+      },
+      equalsToField: (value, param) => {
+        const fieldValue = this.fields[param].fieldElement.value;
+
+        return value === fieldValue;
+      },
+      ...settings.customRules,
       remote: (value, params) => {
-        console.log("remote");
         const body = {};
         body[params.nameData] = value;
         const data = {
@@ -28,23 +73,30 @@ class Validator {
             "Content-Type": "application/json"
           }
         };
+
         return fetch(params.url, data)
           .then(res => res.json())
           .then(data => {
-            if (!data.success) {
+            if (params.check(data)) {
               return Promise.resolve();
             } else {
               return Promise.reject();
             }
           });
-      },
-      ...settings.customRules
+      }
     };
 
     this.errorMessages = {
+      required: "This field is required",
       minLength: "This field must have at least {0} characters",
       maxLength: "This field must have max {0} characters",
-      required: "This field is required",
+      notZero: "This field cannot be zero",
+      int: "This field must be a integer",
+      float: "This field must be a float",
+      min: "This field must have be greater than {0}",
+      max: "This field must have be less than {0}",
+      email: "Email address is invalid",
+      equalsToField: "The value does not match that of {0}",
       remote: "Invalid value",
       ...settings.customMessages
     };

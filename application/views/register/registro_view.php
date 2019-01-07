@@ -384,21 +384,63 @@
 <script text="text/javascript">
   const registerForm = document.querySelector('form[name="registerForm"]')
   let validator;
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener('DOMContentLoaded', () => {
     validator = new Validator(registerForm, {
       fields: {
         name: {
           required: true,
           minLength: 3
         },
+        lastName: {
+          required: true,
+          minLength: 3
+        },
         username: {
           required: true,
+          validateUsername: true,
           remote: {
             url: '<?php echo base_url()?>index.php/usuario/verify_username',
-            method: "post",
-            nameData: 'username'
+            method: 'post',
+            nameData: 'username',
+            check: (data) => {
+              return !data.success;
+            }
           }
+        },
+        email: {
+          required: true,
+          email: true,
+          remote: {
+            url: '<?php echo base_url()?>index.php/usuario/verify_email',
+            method: 'post',
+            nameData: 'mail',
+            check: (data) => {
+              return !data.success;
+            }
+          }
+        },
+        birthDate: {
+          required: true
+        },
+        password: {
+          required: true
+        },
+        passwordConfirmation: {
+          required: true,
+          equalsToField: 'password'
+        },
+        institutionName: {
+          required: true
         }
+      },
+      customRules: {
+        validateUsername: (value, params) => {
+          let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
+          return re.test(value);
+        }
+      },
+      customMessages: {
+        validateUsername: 'Invalid username'
       }
     })
   })
