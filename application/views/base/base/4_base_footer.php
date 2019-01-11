@@ -18,7 +18,7 @@
 </div>
 </div>
 <?php endif;?>
-<script src="<?php echo base_url() ?>asset/js/validator.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>asset/js/form-validator.js"></script>
 <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
 <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
 <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"></link>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"/>
 <div class="content-inner" role="main">
     <div class="container-fluid">
         <br/>
@@ -23,7 +23,8 @@
                                 <input
                                   type="text"
                                   class="name form-control"
-                                  name="name" placeholder="<?php echo $this->lang->line('name'); ?>"
+                                  name="name"
+                                  placeholder="<?php echo $this->lang->line('name'); ?>"
                                   id="inputName"
                                   aria-labelledby="labelName"
                                   aria-required="true"
@@ -69,7 +70,8 @@
                                   type="email"
                                   id="inputEmail"
                                   class="form-control"
-                                  name="email" placeholder="<?php echo $this->lang->line('email'); ?>"
+                                  name="email"
+                                  placeholder="<?php echo $this->lang->line('email'); ?>"
                                   aria-required="true"
                                   aria-labelledby="labelEmail"
                                   data-validate-field="email"
@@ -190,14 +192,13 @@
                               <fieldset aria-labelledby="legendEducationalResource">
                                 <legend id="legendEducationalResource" style="font-size:1rem;"><?php echo $this->lang->line('educational_resource_pref'); ?></legend>
                                   <br/>
-
                                   <?php
                                     foreach ($preferencias as $key) { $preferencia = preg_replace('/\s+/', '', $key -> use_pre_preferencia);?>
                                       <label>
                                         <input
                                           type="checkbox"
                                           aria-selected="true"
-                                          name="educationalResource"
+                                          name="educationalResource[]"
                                           value="<?php echo $key->use_pre_id ?>"
                                         />
                                         <?php echo $key->use_pre_preferencia ?>
@@ -383,7 +384,10 @@
     </div>
 <script text="text/javascript">
   const registerForm = document.querySelector('form[name="registerForm"]')
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
   let validator;
+
   document.addEventListener('DOMContentLoaded', () => {
     validator = new Validator(registerForm, {
       fields: {
@@ -413,34 +417,186 @@
           remote: {
             url: '<?php echo base_url()?>index.php/usuario/verify_email',
             method: 'post',
-            nameData: 'mail',
+            nameData: 'email',
             check: (data) => {
               return !data.success;
             }
           }
         },
         birthDate: {
-          required: true
+          required: true,
+          date: 'yyyy-mm-dd',
+          dateLess: '1975-01-01',
+          dateMax: yesterday
         },
         password: {
           required: true
         },
         passwordConfirmation: {
           required: true,
-          equalsToField: 'password'
+          confirmation: 'password'
         },
         institutionName: {
           required: true
         }
       },
-      customRules: {
+      rules: {
         validateUsername: (value, params) => {
-          let re = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
-          return re.test(value);
+          const regExUsername = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/;
+          return regExUsername.test(value);
         }
       },
-      customMessages: {
-        validateUsername: 'Invalid username'
+      messages: {
+        validateUsername: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('invalid_username'); ?></div>",
+        required: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('required_field'); ?></div>",
+        minLength: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('min_length_field'); ?></div>",
+        username: {
+          remote: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('use_username'); ?></div>"
+        },
+        email: {
+          remote: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('use_email'); ?></div>"
+        },
+        birthDate: {
+          date: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('invalid_birthdate'); ?></div>",
+          dateMax: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('invalid_birthdate_range'); ?></div>",
+          dateLess: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('invalid_birthdate_range'); ?></div>"
+        },
+        passwordConfirmation: {
+          confirmation: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('error_confirm_password'); ?></div>"
+        }
+      },
+
+      submit: e => {
+        return new Promise((resolve, reject) => {
+          console.log(e);
+          const form = e.target;
+          const newUserAdaptInfo = {
+            needCustomInterfaz: parseInt(form.querySelector("select[name='personaliceInterfaz']").value) < 3,
+            needScreenReader: parseInt(form.querySelector("select[name='useSr']").value) < 3,
+            needNarrator: parseInt(form.querySelector("select[name='useNarrator']").value) < 3,
+            needLscTranslator: parseInt(form.querySelector("select[name='useLSCTranslator']").value) < 3,
+            needStructuralNav: parseInt(form.querySelector("select[name='useStructuralNav']").value) < 3,
+            needVirtualKeyboard: parseInt(form.querySelector("select[name='useKeyboard']").value) < 3,
+          }
+
+          if (newUserAdaptInfo.needCustomInterfaz) {
+            const interfazPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'cursor_size_id': localStorage.getItem('cursor_size_id'),
+              'color_cursor': localStorage.getItem('color_cursor'),
+              'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+              'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+              'invert_color_image': localStorage.getItem('invert_color_image'),
+              'invert_color_general': localStorage.getItem('invert_color_general'),
+              'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+              'font_size': localStorage.getItem('font_size'),
+              'font_type_id': localStorage.getItem('font_type_id'),
+              'size_line_spacing': localStorage.getItem('size_line_spacing'),
+              'cursor_url': localStorage.getItem('cursor_url'),
+            }
+
+            const customColors = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'foreground_colour': localStorage.getItem('foreground_colour'),
+              'background_colour': localStorage.getItem('background_colour'),
+              'highlight_colour': localStorage.getItem('highlight_colour'),
+              'link_colour': localStorage.getItem('link_colour')
+            }
+
+            const inputCustomColors = document.createElement('input');
+            inputCustomColors.setAttribute('type', 'hidden');
+            inputCustomColors.setAttribute('name', 'customColors')
+            inputCustomColors.value = JSON.stringify(customColors);
+
+            const inputInterfazPreferences = document.createElement('input');
+            inputInterfazPreferences.setAttribute('type', 'hidden');
+            inputInterfazPreferences.setAttribute('name', 'interfazPreferences')
+            inputInterfazPreferences.value = JSON.stringify(interfazPreferences);
+
+            form.appendChild(inputCustomColors);
+            form.appendChild(inputInterfazPreferences);
+          }
+
+          if (newUserAdaptInfo.needNarrator) {
+            const narratorPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'speed_reading': localStorage.getItem('speed_reading_nr'),
+              'pitch_nr': localStorage.getItem('pitch_nr'),
+              'volume_id': localStorage.getItem('volume_id_nr'),
+              'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+              'links_id': localStorage.getItem('links_id_nr'),
+              'highlight_id': localStorage.getItem('highlight_id_nr'),
+              'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+              'read_puncts': localStorage.getItem('read_puncts'),
+              'punct_signs': localStorage.getItem('punct_signs'),
+            }
+
+            const inputNarratorPreferences = document.createElement('input');
+            inputNarratorPreferences.setAttribute('type', 'hidden');
+            inputNarratorPreferences.setAttribute('name', 'narratorPreferences')
+            inputNarratorPreferences.value = JSON.stringify(narratorPreferences);
+            form.appendChild(inputNarratorPreferences);
+          }
+
+          if (newUserAdaptInfo.needScreenReader) {
+            const screenReaderPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'speed_reading_id': localStorage.getItem('speed_reading_sr'),
+              'pitch_id': localStorage.getItem('pitch_id_sr'),
+              'volume_id': localStorage.getItem('volume_id_sr'),
+              'voice_gender_id': localStorage.getItem('voice_gender_id_sr'),
+              'links_id': localStorage.getItem('links_id_sr'),
+            }
+
+            const inputScreenReaderPreferences = document.createElement('input');
+            inputScreenReaderPreferences.setAttribute('type', 'hidden');
+            inputScreenReaderPreferences.setAttribute('name', 'screenReaderPreferences');
+            inputScreenReaderPreferences.value = JSON.stringify(screenReaderPreferences);
+            form.appendChild(inputScreenReaderPreferences);
+          }
+
+          if (newUserAdaptInfo.needLscTranslator) {
+            const lscTranslatorPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'sign_speed': localStorage.getItem('sign_speed'),
+              'model_id': localStorage.getItem('model_id')
+            }
+
+            const inputLscTranslatorPreferences = document.createElement('input');
+            inputLscTranslatorPreferences.setAttribute('type', 'hidden');
+            inputLscTranslatorPreferences.setAttribute('name', 'lscTranslatorPreferences');
+            inputLscTranslatorPreferences.value = JSON.stringify(lscTranslatorPreferences);
+            form.appendChild(inputLscTranslatorPreferences);
+          }
+
+          if (newUserAdaptInfo.needStructuralNav) {
+            const structuralNavPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'nav_strategy_id': localStorage.getItem('nav_strategy_id'),
+              'showtoc': localStorage.getItem('show_toc')
+            }
+
+            const inputStructuralNavPreferences = document.createElement('input');
+            inputStructuralNavPreferences.setAttribute('type', 'hidden');
+            inputStructuralNavPreferences.setAttribute('name', 'structuralNavPreferences');
+            inputStructuralNavPreferences.value = JSON.stringify(structuralNavPreferences);
+            form.appendChild(inputStructuralNavPreferences);
+          }
+
+          if (newUserAdaptInfo.needVirtualKeyboard) {
+            const keyboardPreferences = {
+              'use_username': form.querySelector("input[name='username']").value,
+              'kb_size_id': localStorage.getItem('kb_size_id'),
+              'play_key_sound': localStorage.getItem('play_key_sound')
+            }
+            const inputKeyboardPreferences = document.createElement('input');
+            inputKeyboardPreferences.setAttribute('type', 'hidden');
+            inputKeyboardPreferences.setAttribute('name', 'keyboardPreferences');
+            inputKeyboardPreferences.value = JSON.stringify(keyboardPreferences);
+            form.appendChild(inputKeyboardPreferences);
+          }
+          return resolve();
+        })
       }
     })
   })

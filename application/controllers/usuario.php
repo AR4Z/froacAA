@@ -227,9 +227,10 @@ class Usuario extends CI_Controller {
      * para verificar si ya existe en la base de datos
      */
      public function verify_email(){
-        $mail = $_POST["mail"];
-        $mail = strtolower($mail);
-        $result = $this->usuario_model->verify_email($mail);
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $email = $_POST['email'];
+        $email = strtolower($email);
+        $result = $this->usuario_model->verify_email($email);
         header('Content-Type: application/json');
         echo json_encode(array(
             'success' =>($result>=1),
@@ -781,13 +782,13 @@ class Usuario extends CI_Controller {
         );
         $dataNarrator = json_decode($this->input->post('narratorPreferences'), TRUE);
         $dataScreenReader = json_decode($this->input->post('screenReaderPreferences'), TRUE);
-        $dataLSCTranslator = json_decode($this->input->post('LSCTranslatorPreferences'), TRUE);
+        $dataLSCTranslator = json_decode($this->input->post('lscTranslatorPreferences'), TRUE);
         $dataStructuralNav = json_decode($this->input->post('structuralNavPreferences'), TRUE);
         $dataKeyboard = json_decode($this->input->post('keyboardPreferences'), TRUE);
 
 
         $this->usuario_model->guardar_estudiante();
-        foreach ($_POST['pref'] as $key => $value) {
+        foreach ($_POST['educationalResource'] as $key => $value) {
             $this->usuario_model->insert_pref($value, $this->input->post('username'));
         }
 
@@ -800,7 +801,7 @@ class Usuario extends CI_Controller {
         $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard);
 
 
-        if($_POST["necesidadespecial"]!=""){
+        /*if($_POST["necesidadespecial"]!=""){
             $this->usuario_model->has_need($this->input->post('username'));
             $need_vision = null;
             $need_visiondescri = null;
@@ -964,7 +965,7 @@ class Usuario extends CI_Controller {
                     $need_motriz, $need_motrizdescri, $need_coginitiva, $need_cognitivatexto,
                     $need_cognitivainstru, $need_cognitivaconcentra);
             }
-        }
+        }*/
         $name = $this->input->post('nombre') . ' ' . $this->input->post('apellido');
         
         $this->session->set_userdata('username', $this->input->post('username'));
