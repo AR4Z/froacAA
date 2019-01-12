@@ -29,6 +29,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">  
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <style>
         .card {
@@ -289,7 +290,7 @@
                   <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">
                 </div>
                 <div class="row justify-content-md-center">
-                  <h2 id="labelWelcomeModal" class="title"><?php echo $this->lang->line('welcome'); ?> </a></h2>
+                  <h2 id="labelWelcomeModal" class="title"><?php echo $this->lang->line('welcome'); ?> </h2>
                   <p class="description">
                   <?php echo $this->lang->line('description_intro_modal'); ?> </a>
                   </p>
@@ -302,19 +303,20 @@
                 <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
-                  <?php echo $this->lang->line('interprete'); ?> </a>
+                  <?php echo $this->lang->line('interprete'); ?> 
                 </button>
                 <?php endif;?>
                 <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button"
                   type="submit">
                   <i class="fas fa-headphones"></i>
-                  <?php echo $this->lang->line('listen'); ?> </a></button>
+                  <?php echo $this->lang->line('listen'); ?>
+                </button>
               </div>
               <button class="btn btn-danger" data-dismiss="modal" type="submit">
-              <?php echo $this->lang->line('exit'); ?> </a>
+              <?php echo $this->lang->line('exit'); ?>
               </button>
               <button onclick="next=true" class="btn btn-primary" data-dismiss="modal" type="submit">
-              <?php echo $this->lang->line('continue'); ?> </a>
+              <?php echo $this->lang->line('continue'); ?>
               </button>
             </div>
           </div>
@@ -332,47 +334,47 @@
                   <div class="carousel-item active">
                     <div class="container-fluid">
                       <div class="row justify-content-md-center">
-                        <h2 class="title"><?php echo $this->lang->line('screen_reader_shortcuts'); ?> </a></h2>
+                        <h2 class="title"><?php echo $this->lang->line('screen_reader_shortcuts'); ?> </h2>
                       </div>
                       <dl class="row">
                         <dt class="col-sm-3"><strong>Ctrl + s</strong></dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('on_screen_reader'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('on_screen_reader'); ?> </dd>
                         <dt class="col-sm-3"><strong>Ctrl + d</strong></dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('next_screen_reader'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('next_screen_reader'); ?> </dd>
                         <dt class="col-sm-3">Ctrl + p</dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('previous_screen_reader'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('previous_screen_reader'); ?></dd>
                         <dt class="col-sm-3">Ctrl + f</dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('mode_screen_reader'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('mode_screen_reader'); ?> </dd>
                         <dt class="col-sm-3">Ctrl + a</dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('off_screen_reader'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('off_screen_reader'); ?> </dd>
                       </dl>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="container-fluid">
                       <div class="row justify-content-md-center">
-                        <h2 class="title"><?php echo $this->lang->line('narrator_shortcuts'); ?> </a></h2>
+                        <h2 class="title"><?php echo $this->lang->line('narrator_shortcuts'); ?></h2>
                       </div>
                       <dl class="row">
                         <dt class="col-sm-3"><strong>Ctrl + e</strong></dt>
-                        <dd class="col-sm-9"><?php echo $this->lang->line('on_narrator'); ?> </a></dd>
+                        <dd class="col-sm-9"><?php echo $this->lang->line('on_narrator'); ?> </dd>
                       </dl>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="container-fluid">
                       <div class="row justify-content-md-center">
-                        <h2 class="title"><?php echo $this->lang->line('voice_commands'); ?> </a></h2>
+                        <h2 class="title"><?php echo $this->lang->line('voice_commands'); ?> </h2>
                       </div>
                       <dl class="row">
-                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('go_to_link'); ?> </a></strong></dt>
-                        <dd class="col-sm-8"><?php echo $this->lang->line('do_click_link'); ?> </a></dd>
-                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('focus_field'); ?> </a></strong></dt>
-                        <dd class="col-sm-8"><?php echo $this->lang->line('write_focus_field'); ?> </a></dd>
-                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('send_form'); ?> </a></strong></dt>
-                        <dd class="col-sm-8"><?php echo $this->lang->line('send_focus_form'); ?> </a></dd>
-                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('writer_content'); ?> </a></strong></dt>
-                        <dd class="col-sm-8"><?php echo $this->lang->line('writer_in_current_field'); ?> </a></dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('go_to_link'); ?></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('do_click_link'); ?> </dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('focus_field'); ?></strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('write_focus_field'); ?> </dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('send_form'); ?> </strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('send_focus_form'); ?> </dd>
+                        <dt class="col-sm-4"><strong><?php echo $this->lang->line('writer_content'); ?> </strong></dt>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('writer_in_current_field'); ?></dd>
                       </dl>
                     </div>
                   </div>
@@ -385,22 +387,22 @@
                 <button onclick="tour.interprete('controls')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
-                  <?php echo $this->lang->line('interprete'); ?> </a>
+                  <?php echo $this->lang->line('interprete'); ?> 
                 </button>
                 <?php endif;?>
                 <button onclick="tour.speech('controls')" class="btn btn-outline-success btn-lg text-to-speech-button"
                   type="submit">
                   <i class="fas fa-headphones"></i>
-                  <?php echo $this->lang->line('listen'); ?> </a></button>
+                  <?php echo $this->lang->line('listen'); ?> </button>
               </div>
               <button id="prevButtonControls" onclick="tour.prevControlsSlide()" class="btn btn-outline-primary" type="submit">
-              <?php echo $this->lang->line('before'); ?> </a>
+              <?php echo $this->lang->line('before'); ?>
               </button>
               <button id="nextButtonControls" onclick="tour.nextControlsSlide()" class="btn btn-outline-primary" type="submit">
-              <?php echo $this->lang->line('next'); ?> </a>
+              <?php echo $this->lang->line('next'); ?>
               </button>
               <button id="finishButtonControls" class="btn btn-primary" data-dismiss="modal" type="submit" style="display:none;">
-              <?php echo $this->lang->line('finish'); ?> </a>
+              <?php echo $this->lang->line('finish'); ?> 
               </button>
             </div>
           </div>

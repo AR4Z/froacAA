@@ -606,4 +606,8 @@ class AccessibilityBar {
 
     this._updateAllPreferencesToDefault()
   }
+
+  open() {
+    this.collapseInstance.show();
+  }
 }

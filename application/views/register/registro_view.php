@@ -216,7 +216,7 @@
                                 </label>
                                 <select
                                   id="useCustomInterfaz"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="personaliceInterfaz"
                                   aria-labelledby="labelCustomInterfaz"
                                   role="listbox"
@@ -243,7 +243,7 @@
                               </label>
                                 <select
                                   id="useNarrator"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="useNarrator"
                                   aria-labelledby="labelUseNarrator"
                                   role="listbox"
@@ -269,7 +269,7 @@
                               </label>
                                 <select
                                   id="useScreenReader"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="useSr"
                                   aria-labelledby="labelUseScreenReader"
                                   role="listbox"
@@ -296,11 +296,12 @@
                               </label>
                                 <select
                                   id="useLSCTranslator"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="useLSCTranslator"
                                   aria-labelledby="labelUseLscTranslator"
                                   role="listbox"
                                   aria-required="true"
+                                  class="useAccessibilityTools"
                                 >
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -324,11 +325,12 @@
                               </label>
                                 <select
                                   id="useStructuralNav"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="useStructuralNav"
                                   aria-labelledby="labelUseStructuralNav"
                                   role="listbox"
                                   aria-required="true"
+                                  class="useAccessibilityTools"
                                 >
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -351,11 +353,12 @@
                               </label>
                                 <select
                                   id="useKeyboard"
-                                  class="form-control input-sm m-bot15"
+                                  class="form-control input-sm m-bot15 useAccessibilityTools"
                                   name="useKeyboard"
                                   aria-labelledby="labelUseVirtualKeyboard"
                                   role="listbox"
                                   aria-required="true"
+                                  class="useAccessibilityTools"
                                 >
                                   <?php
                                         foreach($optsAdapta as $key) {?>
@@ -389,6 +392,20 @@
   let pickerBirthDate;
 
   document.addEventListener('DOMContentLoaded', () => {
+    Array.from(document.querySelectorAll('select.useAccessibilityTools')).forEach((select) => {
+      select.addEventListener('change', (e) => {
+        if (e.target.value < 3) {
+          Toastify({
+            text: `Puede cambiar la configuración de las herramientas de accesibilidad dando click <a onclick="document.getElementsByClassName('page')[0].scrollBy({top: -2000, behavior: 'smooth'});window.accessibilityBar.open();">AQUÍ</a>`,
+            duration: 3000,
+            close: true,
+            gravity: 'top', 
+            positionLeft: false,
+          }).showToast();
+        }
+      })
+    });
+
     pickerBirthDate = new Pikaday({
       field: document.getElementById('inputBirthDate'),
       format: 'YYYY-MM-DD',
@@ -613,5 +630,4 @@
       }
     })
   })
-  
 </script>
