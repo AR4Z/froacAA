@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>asset/css/datepicker.css" rel="stylesheet"/>
 <div class="content-inner" role="main">
     <div class="container-fluid">
         <br/>
@@ -387,8 +386,22 @@
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   let validator;
+  let pickerBirthDate;
 
   document.addEventListener('DOMContentLoaded', () => {
+    pickerBirthDate = new Pikaday({
+      field: document.getElementById('inputBirthDate'),
+      format: 'YYYY-MM-DD',
+      toString(date, format) {
+        const day = ('0' + date.getDate()).slice(-2);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+      },
+      minDate: new Date('1975-01-01'),
+      maxDate: yesterday
+    });
+
     validator = new Validator(registerForm, {
       fields: {
         name: {

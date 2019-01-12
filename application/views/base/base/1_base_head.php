@@ -28,6 +28,7 @@
     <?php endif;?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/css/keyboard-dark.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
     <style>
         .card {

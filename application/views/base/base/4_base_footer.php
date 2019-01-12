@@ -19,6 +19,7 @@
 </div>
 <?php endif;?>
 <script type="text/javascript" src="<?php echo base_url() ?>asset/js/form-validator.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 <script src="<?php echo base_url() ?>asset/js/jquery-ui.min.js"></script>
 <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
 <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>
@@ -28,13 +29,10 @@
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
-
-
 <?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/narratorObj.js"></script>
 <?php endif;?>
-
 <?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/jscolor.js"></script>
