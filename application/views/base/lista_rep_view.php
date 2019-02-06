@@ -2,7 +2,6 @@
 <!--main content start-->
 <section id="main-content" role="main">
     <section class="wrapper">
-
         <section class="panel">
             <header class="panel-heading">
                  Repositorios Federados en FROAC</b>

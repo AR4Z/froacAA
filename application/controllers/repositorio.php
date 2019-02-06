@@ -150,7 +150,7 @@ class Repositorio extends CI_Controller{
                 "usuario" => $this->repositorio_model->get_user_repo(),
                 "id_view" => "edit_repo"
             );
-            $this->load->view('base/admin_template', $content);
+            $this->load->view('base/base_template', $content);
         } else {
             //If no session, redirect to login page
             redirect('init', 'refresh');
@@ -173,19 +173,13 @@ class Repositorio extends CI_Controller{
     public function cosechado($actualizar, $idrepository, $lastupdate, $cadenaoai, $metadata, $fechainicio, $fechafin) {
         //echo "Sale por este lado"+$actualizar;
 
-       /* if ($actualizar == "1") //Todo
+        if ($actualizar == "1") //Todo
             $url = "http://localhost:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=&fechafin=";
         if ($actualizar == "2") //Ultima Actualización
             $url = "http://localhost:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $lastupdate . "&fechafin=";
         if ($actualizar == "3") //Rango de Fechas
             $url = "http://localhost:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $fechainicio . "&fechafin=" . $fechafin . "";
-        */ if ($actualizar == "1") //Todo
-          $url = "http://froac.manizales.unal.edu.co:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=&fechafin=";
-          if ($actualizar == "2") //Ultima Actualización
-          $url = "http://froac.manizales.unal.edu.co:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $lastupdate . "&fechafin=";
-          if ($actualizar == "3") //Rango de Fechas
-          $url = "http://froac.manizales.unal.edu.co:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $fechainicio . "&fechafin=" . $fechafin . "";
-
+        
         $tags = get_meta_tags($url);
         return $tags;
     }
@@ -227,7 +221,7 @@ class Repositorio extends CI_Controller{
                         $datestamp = $header->item(0)->getElementsByTagName('datestamp')->item(0)->nodeValue;
                         $xmlo = '';
                         //Si el estado del record no es 'deleted' obtengo el xml
-                        if ($status != 'deleted') {
+                        if ($status != 'deleted' && $oa->getElementsByTagName('lom')->length >0) {
                             $xmlo0 = $oa->getElementsByTagName('lom');
                             $xmlo1 = $xmlo0->item(0);
                             $xml = $xmlo1->ownerDocument->saveXML($xmlo1);
@@ -240,7 +234,7 @@ class Repositorio extends CI_Controller{
                         $last = "";
                         if ($vlr == 0) {
                             //Quiere decir que no existe un registro de ese OA, entonces lo inserto si no se ha eliminado
-                            if ($status != 'deleted') {
+                            if ($status != 'deleted' && $oa->getElementsByTagName('lom')->length >0) {
                                 $data = array(
                                     'rep_id' => $idrepository,
                                     'lo_id' => $lo_id,
@@ -258,12 +252,12 @@ class Repositorio extends CI_Controller{
                                 $last = $consu['lo_lastmodified'];
                             }
                             //Quiere decir que ya existe un registro de ese OA, entonces debo actualizarlo
-                            if ($status != 'deleted') {
+                            if ($status != 'deleted'  && $oa->getElementsByTagName('lom')->length >0) {
 								//Ya existe registro y no se ha eliminado, sino modificado
-                                if ($last != $lo_lastmodified) {
+                                //if ($last != $lo_lastmodified) {
                                     //Datos que se van a modificar
                                     $data = array(
-                                        'lo_lastmodified' => $lo_lastmodified,
+                                        'lo_lastmodified' => $last,
                                         'lo_xml_lom' => $xmlo
                                     );
 
@@ -281,7 +275,7 @@ class Repositorio extends CI_Controller{
 
                                     $this->repositorio_model->update_table($data, 'lo', $campos, $valores); //---- Modifica en la tabla 'lo' lo correspondiente
 
-                                }
+                                //}
                             }
 							else
 							{
@@ -305,7 +299,7 @@ class Repositorio extends CI_Controller{
                                 $this->repositorio_model->update_table($data, 'lo', $campos, $valores);
                             }
                         }
-                        if ($status != 'deleted') {
+                        if ($status != 'deleted'  && $oa->getElementsByTagName('lom')->length >0) {
                             if ($last != $datestamp) {
                                 $meta = $oa->getElementsByTagName('metadata')->item(0);
                                 $this->importGeneral($meta, $idrepository, $lo_id);

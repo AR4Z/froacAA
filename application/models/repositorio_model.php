@@ -79,24 +79,24 @@ Class Repositorio_model extends CI_Model{
     public function modificar_repo() {
         $today = date("Y-m-d");
         $data = array(
-            "rep_host" => $this->input->post('host'),
-            "rep_port" => $this->input->post('puerto'),
-            "rep_databasename" => $this->input->post('basededatos'),
-            "rep_loggin" => $this->input->post('usuario'),
-            "rep_password" => $this->input->post('contrasena'),
-            "rep_affiliation" => $this->input->post('entidad'),
-            "rep_registrationdate" => $this->input->post('registrationdate'),
-            "rep_url" => $this->input->post('url'),
-            "rep_typerepository" => $this->input->post('tiporepositorio'),
-            "rep_email" => $this->input->post('email'),
-            "rep_name" => $this->input->post('nombrerepositorio'),
-            "rep_metadata_inf" => $this->input->post('metadata'),
-            "rep_frequency" => $this->input->post('periodicidad'),
+            "rep_host" => $this->input->post('rep_host'),
+            "rep_port" => $this->input->post('rep_port'),
+            "rep_databasename" => $this->input->post('rep_databasename'),
+            "rep_loggin" => $this->input->post('rep_loggin'),
+            "rep_password" => $this->input->post('rep_password'),
+            "rep_affiliation" => $this->input->post('rep_affiliation'),
+            "rep_registrationdate" => $this->input->post('rep_registrationdate'),
+            "rep_url" => $this->input->post('rep_url'),
+            "rep_typerepository" => $this->input->post('rep_typerepository'),
+            "rep_email" => $this->input->post('rep_email'),
+            "rep_name" => $this->input->post('rep_name'),
+            "rep_metadata_inf" => $this->input->post('rep_metadata_inf'),
+            "rep_frequency" => $this->input->post('rep_frequency'),
             "rep_lastupdate" => $today,
-            "rep_countoas" => $this->input->post('countoas'),
-            "use_username" => $this->input->post('usuariorepo')
+            "rep_countoas" => $this->input->post('rep_countoas'),
+            "use_username" => $this->input->post('use_username')
         );
-        $this->db->where('rep_id', intval($this->input->post('repository')));
+        $this->db->where('rep_id', intval($this->input->post('rep_repository')));
         $this->db->update('repository', $data);
     }
      public function get_lo($rep_id, $lo_id) {
