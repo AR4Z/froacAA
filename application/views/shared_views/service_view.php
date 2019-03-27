@@ -1,13 +1,10 @@
 <?php
-
-
 if($_GET){
     $tabla = array_key_exists('val', $_GET) ? $_GET['val'] : null;
     $xml = buscar_loget($tabla);
     //echo json_encode($xml);
     echo  $_GET['callback'].'('.json_encode($xml) .')';
 }
-
 function buscar_loget($params) {
     $arrayParams = explode(" ", $params);//casting un string en array
     foreach ($arrayParams as $key => $value){
@@ -26,57 +23,48 @@ function buscar_loget($params) {
     }
     $palabras = implode(", ", $arrayParams);//casting un array a string separando los elementos con coma
     $params = implode("_", $arrayParams);//casting de un array a string separando los elementos con _
-    $andParams = "('" . preg_replace('/_/', ' & ', $params) . "')";//se reemplaza el _ por &
-    $orParams = "('" . preg_replace('/_/', ' | ', $params) . "')";//se reemplaza el _ po |
+    $andParams = "('spanish', '" . preg_replace('/_/', ' & ', $params) . "')";
+    $orParams = "('spanish','" . preg_replace('/_/', ' | ', $params) . "')";
     #var_dump(get_oas_bget($orParams,$andParams));
     return get_oas_bget($orParams,$andParams);
     #$this->load->model("lo_model");
     #return $this->lo_model->get_oas_bget($orParams,$andParams),
  }
-
 function get_oas_bget($orParams, $andParams) {
     #echo $orParams;
-
-    $dbconn3 = pg_connect("host='localhost' port='5432' dbname='froacn' user='postgres' password='%froac$'");
-
+    $dbconn3 = pg_connect("host='localhost' port='5432' dbname='froacaa' user='postgres' password='%froac$'");
     $andQuery = pg_fetch_all(pg_query(#$this->db->query(
-        "SELECT lo_id, rep_id, lo_xml_lom, ts_rank_cd(campo_busqueda_index_col, query) AS rank
+        "SELECT rep_id, lo_id, lo_xml_lom, ts_rank_cd(campo_busqueda_index_col, query) AS rank
 		FROM lo, to_tsquery" . $andParams . "query
 		WHERE query @@ campo_busqueda_index_col and lo_location is not null 
 		ORDER BY rank DESC;"
     ));//sql incluyenndo las palabras
-
     $orQuery =  pg_fetch_all(pg_query(#$this->db->query(
-        "SELECT lo_id, rep_id, lo_xml_lom, ts_rank_cd(campo_busqueda_index_col, query) AS rank
+        "SELECT rep_id, lo_id, lo_xml_lom, ts_rank_cd(campo_busqueda_index_col, query) AS rank
         FROM lo, to_tsquery" . $orParams . "query
         WHERE query @@ campo_busqueda_index_col and lo_location is not null 
         ORDER BY rank DESC;"
     ));//sql cualquiera de las palabras
-
     $result = array();
     $resultAnd = array();
     $resultOr = array();
-
     foreach ($orQuery as $or) {//resultados del or
         array_push($resultOr, $or);//agregar elemento a un arreglo de or
     }
         
-
     foreach ($andQuery as $and) {//resultados del and
     array_push($resultAnd, $and);//agregar elemento a un arreglo de and
     }
     #var_dump($resultAnd);
-
     
     //echo $orParams;
     #array_push($result, $resultAnd);
     #array_push($result, $resultOr);//unir arreglo and y arreglo or
      
-
     $arregloOr= array();
     $arregloAnd= array();
-
     foreach ($resultAnd as $key) {
+        array_push($arregloAnd, $key['rep_id']."-".$key['lo_id']);
         array_push($arregloAnd, $key['lo_xml_lom']);
     }
     $evitDatRep=true;
@@ -92,19 +80,14 @@ function get_oas_bget($orParams, $andParams) {
                 $evitDatRep=true;
             }
         }
-
         if($evitDatRep){
+            array_push($arregloOr, $key['rep_id']."-".$key['lo_id']);
             array_push($arregloOr, $key['lo_xml_lom']);
         }
     }
-
-
     $result = array_merge($result, $arregloAnd);
     $result = array_merge($result, $arregloOr);
-
     #var_dump($result);
     return $result;
 }
-
-
 ?>

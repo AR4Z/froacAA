@@ -301,6 +301,10 @@ if ($this->input->post('cantidad6')!='') {
 
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
+        
+        foreach($this->input->post('dissabilities') as $dissability) {
+            $this->usuario_model->insert_dissability($dissability, $this->input->post('username'));
+        }
     }
 
     public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard,$dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard){

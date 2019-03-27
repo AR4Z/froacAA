@@ -239,3 +239,4 @@ $lang["english"] = "English";
 $lang["portuguese"] = "Portuguese";
 $lang["required_field"] = "This field is required.";
 $lang["min_length_field"] = "This field must have at least {0} characters.";
+$lang["sitemap"] = "Sitemap";

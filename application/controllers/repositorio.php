@@ -315,20 +315,20 @@ class Repositorio extends CI_Controller{
 
         /////// Con esta secci�n se realiza actualizacion de fecha de ultima actualizacion en repositorio //////
         //Datos que se van a modificar
-	$hoy = getdate();
-	$rep_lastupdate = $hoy['year']."-".$hoy['mon']."-".$hoy['mday'];
+	    $hoy = getdate();
+	    $rep_lastupdate = $hoy['year']."-".$hoy['mon']."-".$hoy['mday'];
 
-	$cantlo = $this->repositorio_model->get_cantlo_repo($idrepository);
+	    $cantlo = $this->repositorio_model->get_cantlo_repo($idrepository);
 
-	$datar = array(
-            'rep_lastupdate' => $rep_lastupdate,
-	    'rep_countoas' => $cantlo
-        );
+	    $datar = array(
+          'rep_lastupdate' => $rep_lastupdate,
+	        'rep_countoas' => $cantlo
+      );
 
         //Capos para poner en el where
-	$camposr = array(
-            '0' => 'rep_id'
-        );
+	    $camposr = array(
+          '0' => 'rep_id'
+      );
 
         //Valores para poner en el where
         $valoresr = array(
@@ -336,8 +336,9 @@ class Repositorio extends CI_Controller{
         );
 
         $this->repositorio_model->update_table($datar, 'repository', $camposr, $valoresr);
+        $this->lo_model->update_kb_for_search();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
         $this->lista();
     }
 

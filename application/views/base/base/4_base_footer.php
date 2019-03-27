@@ -10,6 +10,7 @@
               height="32" width="88" src="http://www.w3.org/WAI/wcag1AA-blue" alt="Icono de conformidad con el Nivel Doble-A,
                             de las Directrices de Accesibilidad para el
                             Contenido Web 1.0 del W3C-WAI"></a></p>
+        <a href="<?php echo base_url()?>usuario/sitemap"><?php echo $this->lang->line('sitemap'); ?></a>
       </div>
     </div>
   </div>

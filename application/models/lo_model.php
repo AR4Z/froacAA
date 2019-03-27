@@ -2,25 +2,43 @@
 
 Class Lo_model extends CI_Model {
 
-    function get_oas_b($orParams, $andParams) {
-
-        $andQuery = $this->db->query(
-            "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
-                    lo_keyword, lo_location, 
-                    ts_rank_cd(campo_busqueda_index_col, query) AS rank
-                    FROM lo, to_tsquery" . $andParams . "query
-                        WHERE query @@ campo_busqueda_index_col
-                        and lo_location is not null ORDER BY rank DESC;"
-        );
-
-        $orQuery = $this->db->query(
-            "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
-                    lo_keyword, lo_location,
-                     ts_rank_cd(campo_busqueda_index_col, query) AS rank
-                    FROM lo, to_tsquery" . $orParams . "query
-                        WHERE query @@ campo_busqueda_index_col and lo_location is not null
-                        ORDER BY rank DESC;"
-        );
+    function get_oas_b($orParams, $andParams, $language=false) {
+        if($language) {
+            $andQuery = $this->db->query(
+                "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
+                        lo_keyword, lo_location, lo_xml_lom,
+                        ts_rank_cd(campo_busqueda_index_col, query) AS rank
+                        FROM lo, to_tsquery" . $andParams . "query
+                            WHERE query @@ campo_busqueda_index_col
+                            and lo_location is not null and lo_language='".$language."' ORDER BY rank DESC;"
+            );
+          
+            $orQuery = $this->db->query(
+                "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
+                        lo_keyword, lo_location, lo_xml_lom,
+                         ts_rank_cd(campo_busqueda_index_col, query) AS rank
+                        FROM lo, to_tsquery" . $orParams . "query
+                            WHERE query @@ campo_busqueda_index_col and lo_location is not null and lo_language='".$language."' ORDER BY rank DESC;"
+            );
+        } else {
+            $andQuery = $this->db->query(
+                "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
+                        lo_keyword, lo_location, lo_xml_lom,
+                        ts_rank_cd(campo_busqueda_index_col, query) AS rank
+                        FROM lo, to_tsquery" . $andParams . "query
+                            WHERE query @@ campo_busqueda_index_col
+                            and lo_location is not null  ORDER BY rank DESC;"
+            );
+          
+            $orQuery = $this->db->query(
+                "SELECT lo_id, rep_id, lo_title, lo_language, lo_description,
+                        lo_keyword, lo_location, lo_xml_lom,
+                         ts_rank_cd(campo_busqueda_index_col, query) AS rank
+                        FROM lo, to_tsquery" . $orParams . "query
+                            WHERE query @@ campo_busqueda_index_col and lo_location is not null  ORDER BY rank DESC;"
+            );
+        }
+        
         $result = array();
         $resultAnd = array();
         $resultOr = array();
@@ -39,8 +57,6 @@ Class Lo_model extends CI_Model {
 
 
     function get_oas_full($val){
-
-        
         if($val[0]!=''){
             if ($val[1]!='') {
                 if ($val[2]!='') {
@@ -169,6 +185,11 @@ Class Lo_model extends CI_Model {
         $this->db->where('lo_location', $url);
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    
+    public function update_kb_for_search() {
+        $this->db->query("UPDATE lo SET campo_busqueda_index_col = to_tsvector('spanish'::regconfig, (((COALESCE(lo_title, ''::character varying)::text || ' '::text) || COALESCE(lo_description, ''::character varying)::text) || ' '::text) || COALESCE(lo_keyword, ''::character varying)::text)");
     }
 
 //    function get_metadata($lo_id, $rep_id) {

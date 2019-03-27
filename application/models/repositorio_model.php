@@ -126,5 +126,4 @@ Class Repositorio_model extends CI_Model{
 		$query = $this->db->get();
         return $query->num_rows();
     }
-
 }

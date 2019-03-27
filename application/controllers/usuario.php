@@ -1299,7 +1299,13 @@ cadena y enviar al modelo estos valores
 
     }*/
 
-
+    public function sitemap() {
+        $content = array (
+            'main_view' => 'shared_views/sitemap',
+            'id_view' => 'sitemap'
+        );
+        $this->load->view('base/base_template', $content);
+    }
 
 
 }

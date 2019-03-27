@@ -146,7 +146,7 @@
                                 <label>
                                   <input
                                     type="checkbox"
-                                    name="dissabilities"
+                                    name="dissabilities[]"
                                     value="<?php echo $key->use_dissability_id ?>"
                                   />
                                   <?php echo $key->use_dissability ?>

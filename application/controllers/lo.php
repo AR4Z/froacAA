@@ -14,6 +14,22 @@ Class Lo extends CI_Controller {
     }
 
     public function buscar_lo($params, $sess, $user) {
+        $dissabilities_id = array();
+        $languages = [
+            "spanish" => "es",
+            "portuguese" => "pt",
+            "english" => "en"
+        ];
+        $lang = $languages[$this->session->userdata('site_lang')];
+        if($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $dissabilities = $this->usuario_model->get_discapacidad_est($session_data['username']);
+            
+            foreach($dissabilities as $dissability) {
+              array_push($dissabilities_id, $dissability->use_dissability_id);
+            }
+            print_r($dissabilities_id);
+        }
         $params = urldecode($params);
         $params = preg_replace('/_+/', '_', $params);
         if (substr($params, -1) == "_") {
@@ -43,14 +59,31 @@ Class Lo extends CI_Controller {
         $params = implode("_", $arrayParams);
         $andParams = "('spanish', '" . preg_replace('/_/', ' & ', $params) . "')";
         $orParams = "('spanish','" . preg_replace('/_/', ' | ', $params) . "')";
-        $result = $this->lo_model->get_oas_b($orParams,$andParams);
+        $result = $this->lo_model->get_oas_b($orParams, $andParams, $lang);
+
+
+        /*foreach($result as $oa) {
+          $oa['val'] = 0;
+        }*/
+
+        if(in_array(1, $dissabilities_id)) {
+          
+        }
+
+        foreach($result as $oa) {
+          $xmlstr = $oa[0]['lo_xml_lom'];
+          $xml = new SimpleXMLElement($xmlstr);
+          $arrays =  json_decode(json_encode((array)$xml),1);
+          print_r($arrays);
+        }
+
         $content = array(
             "result" => $result,
             "palabras" => $palabras,
             "sess" => $sess,
             "user" => $user
         );
-        $this->load->view("base/result_view",$content);
+        $this->load->view("base/result_view", $content);
      }
        // print_r($andParams);
        // print_r($orParams);
@@ -181,9 +214,7 @@ Class Lo extends CI_Controller {
 
 
 public function load_indicadores($id_lo, $id_rep, $username){
-
     echo $id_lo, $id_rep, $username;
-
 }
 
 
@@ -252,11 +283,10 @@ public function getLanguage() {
     echo json_encode($response);
 }
 
-public function get_score_avg(){
-    $result = $this->lo_model->get_avg_score();
-    $avg = round($result[0]['avg']);
-    echo $avg;
-}
-
+    public function get_score_avg(){
+        $result = $this->lo_model->get_avg_score();
+        $avg = round($result[0]['avg']);
+        echo $avg;
+    }
 
 }
