@@ -49,9 +49,8 @@ Class Lo_model extends CI_Model {
         foreach ($orQuery->result_array() as $or) {
             array_push($resultOr, $or);
         }
-        //echo $orParams;
-        array_push($result, $resultAnd);
-        array_push($result, $resultOr);
+        $result = array_unique(array_merge($resultAnd, $resultOr), SORT_REGULAR);
+        
         return $result;
     }
 

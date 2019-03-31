@@ -717,7 +717,6 @@ if ($this->input->post('cantidad6')!='') {
     }
 
     function actualizar_passwd($passwd, $username){
-
         $data = array(
             "use_clave"          =>  $passwd
         );
@@ -733,6 +732,14 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result_array();
     }
 
+    function get_etnica($username) {
+        $this->db->select('use_etnica');
+        $this->db->from('use_student');
+        $this->db->where('use_username', $username);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->result();
+    }
     /*
     function update_test($estilo,$cant_V,$cant_A,$cant_R,$cant_K,$cant_G,$cant_S, $id) {
 
