@@ -162,6 +162,16 @@ class Repositorio extends CI_Controller{
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $this->repositorio_model->modificar_repo();
+            
+            $url = "http://0.0.0.0:8083/schedule?repo=".$this->input->post('rep_repository')."&&days=".$this->input->post('rep_frequency')."&&cadenaoai=".$this->input->post('rep_host')."&&metadata=".$this->input->post('rep_metadata_inf');
+            $ch = curl_init();  
+ 
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 
+            $output=curl_exec($ch);
+ 
+            curl_close($ch);
             $this->lista();
         } else {
             //If no session, redirect to login page
@@ -196,8 +206,9 @@ class Repositorio extends CI_Controller{
         $fechafin = $this->input->post("fechafin");
         $resp = $this->cosechado($actualizar, $idrepository, $lastupdate, $cadenaoai, $metadata, $fechainicio, $fechafin);
         //Verifica que sí se generaran XML... lo que retorna la función "cosechado"
+        echo(count($resp));
         if (count($resp) > 0) {
-
+            
             //Se recorre el vector que tiene las url de los xml
             foreach ($resp as $res) {
                 //Ubicación de los archivos xml

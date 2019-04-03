@@ -54,7 +54,7 @@
               </div>
               <div class="form-group">
                 <label for="inputPeriodUpdates">Perio. Actualizaciones (días)</label>
-                <input type="text" class="form-control" id="inputPeriodUpdates" readonly />
+                <input type="text" class="form-control" id="inputPeriodUpdates" name="rep_frequency"/>
               </div>
               <div class="form-group">
                 <label for="inputRepositoryUser">Usuario repositorio</label>
