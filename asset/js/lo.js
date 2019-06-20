@@ -51,6 +51,8 @@ class LearningObject {
       document.getElementById('div-lo').style.display = ''
       // hide loading_screen splash
       window.loading_screen.finish()
+      // set event for listen leave page
+      this.setLeavePage();
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache
@@ -210,5 +212,15 @@ class LearningObject {
         window.accessibilityBar.createAccessibilityElements()
       })
       .catch(e => console.error(e))
+  }
+
+  setLeavePage() {
+    window.addEventListener('beforeunload', function (e) {
+      console.log("eyyyy")
+      // Cancel the event
+      e.preventDefault();
+      // Chrome requires returnValue to be set
+      e.returnValue = '';
+    });
   }
 }
