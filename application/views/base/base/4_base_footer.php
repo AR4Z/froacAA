@@ -1,4 +1,4 @@
-<?php if(!($id_view == 'login')) : ?>
+<?php if (!($id_view == 'login')) : ?>
 <footer class="main-footer">
   <div class="container-fluid">
     <div class="row">
@@ -31,11 +31,11 @@
 <script src="<?php echo base_url()?>asset/js/bootstrap-notify.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lining.js"></script>
 <script src="<?php echo base_url() ?>asset/js/button.js"></script>
-<?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
+<?php if ($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/jquery.blast.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/narratorObj.js"></script>
 <?php endif;?>
-<?php if($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
+<?php if ($this->session->userdata('need_custom_interfaz') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url() ?>asset/js/jquery.awesome-cursor.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/jscolor.js"></script>
 <script src="<?php echo base_url()?>asset/js/trailDots.js"></script>
@@ -43,22 +43,22 @@
 <script src="<?php echo base_url()?>asset/js/customInterfaz.js"></script>
 <?php endif;?>
 
-<?php if($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
+<?php if ($this->session->userdata('need_screen_reader') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url()?>asset/js/screenReaderObj.js"></script>
 <?php endif;?>
 
-<?php if(($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
+<?php if (($this->session->userdata('need_lsc_translator') || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
 <script src="<?php echo base_url() ?>asset/js/written-number.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/canvid.js"></script>
 <script src="<?php echo base_url() ?>asset/js/dataLscTranslator.min.js"></script>
 <script src="<?php echo base_url() ?>asset/js/lscTranslator.js"></script>
 <?php endif;?>
 
-<?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+<?php if ($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
 <script src="<?php echo base_url() ?>asset/js/structuralNavigationObj.js"></script>
 <?php endif;?>
 
-<?php if($this->session->userdata('need_virtual_keyboard') || !($this->session->userdata('logged_in'))):?>
+<?php if ($this->session->userdata('need_virtual_keyboard') || !($this->session->userdata('logged_in'))):?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/js/jquery.keyboard.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/languages/es.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/keyboardObj.js"></script>
@@ -70,6 +70,10 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 <script src="<?php echo base_url()?>asset/js/voiceBrowser.js"></script>
 <script src="<?php echo base_url()?>asset/js/tour.js"></script>
-</body>
+<?php if ($id_view == 'lo_view') : ?>
+<script src="<?php echo base_url()?>asset/js/starRating.js"></script>
+<script src="<?php echo base_url()?>asset/js/ratingLO.js"></script>
 
+<?php endif;?>
+</body>
 </html>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
     <link rel="stylesheet" id="fontAwesomess" href="<?php echo base_url() ?>asset/css/font-awesome.min.css">
     <link id='open-sans' href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" id="font">
-    <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_custom_interfaz')):?>
+    <?php if (!($this->session->userdata('logged_in')) || $this->session->userdata('need_custom_interfaz')):?>
         <link id='serif' rel="stylesheet" href='https://fonts.googleapis.com/css?family=PT+Serif' >
         <link id='cantarell' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Cantarell'>
         <link id='source-code-pro' rel="stylesheet" href='https://fonts.googleapis.com/css?family=Source+Code+Pro'>
@@ -22,7 +22,7 @@
     <link href="<?php echo base_url() ?>asset/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/flag-icon.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>asset/css/bootstrap-select.min.css" rel="stylesheet">
-    <?php if($id_view == 'lo_view'):?>
+    <?php if ($id_view == 'lo_view'):?>
       <link href="<?php echo base_url() ?>asset/css/please-wait.css" rel="stylesheet">
       <script src="<?php echo base_url()?>asset/js/please-wait.js"></script>
     <?php endif;?>
@@ -31,6 +31,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">  
     <script src="<?php echo base_url() ?>asset/js/jquery.js"></script>
+    <?php if ($id_view == 'lo_view') : ?>
+    <link href="<?php echo base_url() ?>asset/css/star-rating.css" rel="stylesheet">
+    <?php endif;?>
     <style>
         .card {
           min-height: 225px;
@@ -149,7 +152,7 @@
     </style>
     <script type="text/javascript">
     $(document).ready(function () {
-      <?php if($id_view == 'lo_view'):?>
+      <?php if ($id_view == 'lo_view'):?>
       window.loading_screen = window.pleaseWait({
         logo: "<?php echo base_url()?>" + 'asset/img/frog_min.png',
         backgroundColor: '#f8f9fa',
@@ -245,21 +248,21 @@
     })
     </script>
 </head>
-<?php if($id_view == 'login') : ?>
+<?php if ($id_view == 'login') : ?>
 
 <body class="login-body" style='line-height:1.5; font-family:"Open Sans", sans-serif; cursor: auto;'>
-  <?php if($this->session->userdata('site_lang') == 'spanish'):?>
+  <?php if ($this->session->userdata('site_lang') == 'spanish'):?>
   <?php $this->load->view('base/base/accessibility/iris');?>
   <?php endif?>
   <?php $this->load->view('base/base/accessibility/toc');?>
   <?php else : ?>
 
   <body>
-    <?php if(($this->session->userdata('need_lsc_translator')  || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
+    <?php if (($this->session->userdata('need_lsc_translator')  || !$this->session->userdata('logged_in')) && ($this->session->userdata('site_lang') == 'spanish')):?>
     <?php $this->load->view('base/base/accessibility/iris');?>
     <?php endif?>
 
-    <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+    <?php if ($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
     <?php $this->load->view('base/base/accessibility/toc');?>
     <?php endif?>
 
@@ -276,14 +279,20 @@
                 <div class="row">
                   <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.removeItem('firstTime');javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
-                      if($this->session->userdata('site_lang')
-                      == 'spanish') echo 'selected="selected"'; ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
+                      if ($this->session->userdata('site_lang')
+                      == 'spanish') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
                     <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php
-                      if($this->session->userdata('site_lang')
-                      == 'english') echo 'selected="selected"'; ?>><?php echo $this->lang->line('english'); ?> </a></option>
+                      if ($this->session->userdata('site_lang')
+                      == 'english') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('english'); ?> </a></option>
                     <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese"
-                      <?php if($this->session->userdata('site_lang')
-                      == 'portuguese') echo 'selected="selected"'; ?>><?php echo $this->lang->line('portuguese'); ?> </a></option>
+                      <?php if ($this->session->userdata('site_lang')
+                      == 'portuguese') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('portuguese'); ?> </a></option>
                   </select>
                 </div>
                 <div class="row justify-content-md-center">
@@ -299,7 +308,7 @@
             </div>
             <div class="modal-footer">
               <div class="mr-auto">
-                <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
+                <?php if ($this->session->userdata('site_lang') == 'spanish') : ?>
                 <button onclick="tour.interprete('welcome')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>
@@ -383,7 +392,7 @@
             </div>
             <div class="modal-footer">
               <div class="mr-auto">
-                <?php if($this->session->userdata('site_lang') == 'spanish') : ?>
+                <?php if ($this->session->userdata('site_lang') == 'spanish') : ?>
                 <button onclick="tour.interprete('controls')" class="btn btn-outline-success btn-lg interprete-button"
                   type="submit">
                   <i class="fas fa-sign-language"></i>

@@ -10,7 +10,7 @@ class LearningObject {
     this.name = name
     /** @type {HTMLElement} */
     this.iframeElement = document.getElementById('oa')
-
+    this.ratingLO;
     this.cloneLearningObject()
       .then(data => {
         let idTaskCloneLo = data.id_task_clone_lo
@@ -51,8 +51,8 @@ class LearningObject {
       document.getElementById('div-lo').style.display = ''
       // hide loading_screen splash
       window.loading_screen.finish()
-      // set event for listen leave page
-      this.setLeavePage();
+      // object for rate lo
+      this.ratingLO = new RatingLO();
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache
@@ -212,15 +212,5 @@ class LearningObject {
         window.accessibilityBar.createAccessibilityElements()
       })
       .catch(e => console.error(e))
-  }
-
-  setLeavePage() {
-    window.addEventListener('beforeunload', function (e) {
-      console.log("eyyyy")
-      // Cancel the event
-      e.preventDefault();
-      // Chrome requires returnValue to be set
-      e.returnValue = '';
-    });
   }
 }

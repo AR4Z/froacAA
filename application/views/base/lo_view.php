@@ -15,7 +15,6 @@
                                     src=""></iframe>
                             </div>
                           </div>
-                        <!-- Esto es una prueba de vizualización de el objeto -->
                     </div>
                     <div id="error" class="jumbotron jumbotron-fluid" style="display:none;">
                                 <div class="container">
@@ -29,10 +28,95 @@
                                  </div>
                             </div>
                 </div>
-                
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Evaluar objeto de aprendizaje
+</button>
             </div>
         </div>
     </section>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Evaluar objeto de aprendizaje</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-8">
+            El recurso le permitió aprender sobre el tema.
+            </div>
+            <div class="col-md-4">
+           
+            <span id="effectiveness" class="rating stars" data-stars="5" data-default-rating="0"></span>
+            
+            </div>
+            
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-8">
+            Recomendaría este recurso a otra persona.
+            </div>
+            <div class="col-md-4">
+            <span id="motivation" class="rating stars" data-stars="5" data-default-rating="0"></span>
+            </div>
+            
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-8">
+            Pudo interactuar con facilidad y claridad con el recurso.
+            </div>
+            <div class="col-md-4">
+            <span id="usability" class="rating stars" data-stars="5" data-default-rating="0"></span>
+            </div>
+            
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-8">
+            El recurso no presenta barreras que le impidan acceder a los diferentes elementos que lo conforman.
+            </div>
+            <div class="col-md-4">
+            <span id="accessibility" class="rating stars" data-stars="5" data-default-rating="0"></span>
+            </div>
+            
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-8">
+            Considera que los aspectos de presentación y navegación son acordes con sus preferencias y/o necesidades.
+
+
+            </div>
+            <div class="col-md-4">
+            <span id="adaptability" class="rating stars" data-stars="5" data-default-rating="0"></span>
+            </div>
+            
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-8">
+            Haga un comentario respecto a su percepción general del recurso.
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
   let lo_url = "<?php echo base64_decode($url); ?>";
   let lo_name = "<?php echo base64_decode($lo_name); ?>";
