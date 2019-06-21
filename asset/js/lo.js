@@ -5,9 +5,11 @@ class LearningObject {
    * @param {sting} url - learning object src
    * @param {string} name - learning object name
    */
-  constructor(url, name) {
-    this.url = url
-    this.name = name
+  constructor(url, name, idLO, idRep) {
+    this.url = url;
+    this.name = name;
+    this.idLO = idLO;
+    this.idRep = idRep;
     /** @type {HTMLElement} */
     this.iframeElement = document.getElementById('oa')
     this.ratingLO;
@@ -52,11 +54,11 @@ class LearningObject {
       // hide loading_screen splash
       window.loading_screen.finish()
       // object for rate lo
-      this.ratingLO = new RatingLO();
+      this.ratingLO = new RatingLO(this.idLO, this.idRep);
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache
-    this.iframeElement.src = `${ base_url }LOs/${ path_lo }?time=${ Date.now() }`
+    this.iframeElement.src = `${base_url}LOs/${path_lo}?time=${Date.now()}`
   }
 
   /**
@@ -105,7 +107,7 @@ class LearningObject {
     let fetchData = {
       method: 'GET',
     }
-    return fetch(`http://127.0.0.1:8000/v1/lo/${ task_clone_id }`, fetchData)
+    return fetch(`http://127.0.0.1:8000/v1/lo/${task_clone_id}`, fetchData)
       .then(r => {
         if (r.status == 404) {
           // remove the interval that is responsible for reviewing the status of the cloning process
@@ -143,7 +145,7 @@ class LearningObject {
       })
     }
 
-    return fetch(`${ window.base_url }lo/getLanguage`, fetchData)
+    return fetch(`${window.base_url}lo/getLanguage`, fetchData)
       .then(r => r.json())
       .catch(e => console.error(e))
   }

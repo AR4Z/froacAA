@@ -1132,7 +1132,7 @@ Class Lo extends CI_Controller
 
 	public
 
-	function load_lo($url, $lo_name)
+	function load_lo($url, $lo_name, $lo_id, $rep_id)
 	{
 		if ($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
@@ -1144,6 +1144,8 @@ Class Lo extends CI_Controller
 				"sess" => 1,
 				"url" => $url,
 				"lo_name" => $lo_name,
+				"lo_id" => $lo_id,
+				"rep_id" => $rep_id,
 				"id_view" => "lo_view"
 			);
 			if ($session_data['username'] == "admin") {
@@ -1159,6 +1161,8 @@ Class Lo extends CI_Controller
 				"sess" => 0,
 				"url" => $url,
 				"lo_name" => $lo_name,
+				"lo_id" => $lo_id,
+				"rep_id" => $rep_id,
 				"id_view" => "lo_view"
 			);
 			$this->load->view('base/base_template', $content);
@@ -1201,5 +1205,15 @@ Class Lo extends CI_Controller
 		$result = $this->lo_model->get_avg_score();
 		$avg = round($result[0]['avg']);
 		echo $avg;
+	}
+
+	public function rateLearningObject() {
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $_POST = json_decode(file_get_contents('php://input'), true);
+			$data = $_POST['rate'];
+			$data['username'] = $session_data['username'];
+            $this->lo_model->rate_learning_object($data);
+        }
 	}
 }

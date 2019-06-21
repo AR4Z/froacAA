@@ -95,7 +95,7 @@ if ($sess == 1) {
                             <button onclick="verMetadata('${item['lo_id']}/${item['rep_id']}')" type="button" class="btn btn-lg btn-info card-link d-inline" data-target="#dialog_medatada">
                                 <i class="fa fa-eye"></i> <?php echo $this->lang->line('see_metadata'); ?>
                             </button>
-                            <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}">
+                            <a id="${item['lo_id']}" target="_blank" rep_id="${item['rep_id']}" logged="<?php echo $logged ?>" class="btn btn-lg btn-success card-link d-inline" href="<?php echo base_url()?>lo/load_lo/${b64EncodeUnicode(item['lo_location'])}/${b64EncodeUnicode(item['lo_title'])}/${b64EncodeUnicode(item['lo_id'])}/${b64EncodeUnicode(item['rep_id'])}">
                                 <i class="fa fa-eye"></i> <?php echo $this->lang->line('see_object'); ?>
                             </a>
                         </div>

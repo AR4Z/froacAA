@@ -29,13 +29,13 @@
                             </div>
                 </div>
                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ratingModal">
   Evaluar objeto de aprendizaje
 </button>
             </div>
         </div>
     </section>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -103,14 +103,18 @@
         </div>
         <hr/>
         <div class="row">
-            <div class="col-md-8">
-            Haga un comentario respecto a su percepción general del recurso.
+            <div class="col-md-12">
+            <div class="form-group">
+    <label for="exampleFormControlTextarea1">Haga un comentario respecto a su percepción general del recurso.</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
             </div>
+            
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="sendRateButton">Save changes</button>
       </div>
     </div>
   </div>
@@ -118,9 +122,13 @@
 
 
 <script type="text/javascript">
-  let lo_url = "<?php echo base64_decode($url); ?>";
-  let lo_name = "<?php echo base64_decode($lo_name); ?>";
+  
   $(document).ready(function () {
-    learningObject = new LearningObject(lo_url, lo_name)
+    const lo_url = "<?php echo base64_decode($url); ?>";
+    const lo_name = "<?php echo base64_decode($lo_name); ?>";
+    const lo_id = "<?php echo base64_decode($lo_id); ?>";
+    const rep_id = "<?php echo base64_decode($rep_id); ?>";
+    
+    learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id)
   });
 </script>
