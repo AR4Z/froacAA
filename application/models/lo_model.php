@@ -216,6 +216,15 @@ class Lo_model extends CI_Model
         }
     }
 
+    public function get_user_rate_learning_object($username, $lo_id, $rep_id) {
+        $query = $this->db->get_where('lo_rating', array(
+            'lo_id' => $lo_id,
+            'rep_id' => $rep_id,
+            'use_username' => $username));
+        
+        return $query->result_array();
+    }
+
 //    function get_metadata($lo_id, $rep_id) {
 //
 //

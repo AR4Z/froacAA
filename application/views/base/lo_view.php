@@ -128,7 +128,8 @@
     const lo_name = "<?php echo base64_decode($lo_name); ?>";
     const lo_id = "<?php echo base64_decode($lo_id); ?>";
     const rep_id = "<?php echo base64_decode($rep_id); ?>";
-    
-    learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id)
+    const user_lo_rank = <?php echo $user_lo_rank;?>;
+  
+    learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id, user_lo_rank[0])
   });
 </script>

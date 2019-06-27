@@ -1,5 +1,26 @@
 class RatingLO {
-    constructor(idLO, idRep, username) {
+    constructor(idLO, idRep, userLORank) {
+        if (userLORank) {
+            this.rate = {
+                effectiveness: Number(userLORank.effectiveness),
+                motivation: Number(userLORank.motivation),
+                usability: Number(userLORank.usability),
+                accessibility: Number(userLORank.accessibility),
+                adaptability: Number(userLORank.adaptability),
+                lo_id: idLO,
+                rep_id: idRep
+            }
+        } else {
+            this.rate = {
+                effectiveness: 0,
+                motivation: 0,
+                usability: 0,
+                accessibility: 0,
+                adaptability: 0,
+                lo_id: idLO,
+                rep_id: idRep
+            }
+        }
         this.simpleRatingObjects = [];
         this.instanceRatingObjects();
         //this.setLeavePage()
@@ -22,18 +43,6 @@ class RatingLO {
             positionLeft: false
         })
 
-        this.rate = {
-            effectiveness: 0,
-            motivation: 0,
-            usability: 0,
-            accessibility: 0,
-            adaptability: 0,
-            comments: null,
-            lo_id: idLO,
-            rep_id: idRep,
-            use_username: username
-        }
-
         this.setEventclickButtonSendRate();
     }
 
@@ -42,9 +51,12 @@ class RatingLO {
 
         Array.from(htmlStarElements).forEach(starElement => {
             let simpleRating = new SimpleStarRating(starElement)
+        
             starElement.addEventListener('rate', e => {
                 this.rate[starElement.id] = e.detail;
             });
+            simpleRating.setCurrentRating(this.rate[starElement.id])
+            
 
             this.simpleRatingObjects.push(simpleRating)
         });
@@ -72,8 +84,7 @@ class RatingLO {
             adaptability: 0,
             comments: null,
             lo_id: idLO,
-            rep_id: idRep,
-            use_username: username
+            rep_id: idRep
         }
     }
 
