@@ -6,6 +6,22 @@ class RatingLO {
         this.ratingModal = document.getElementById('ratingModal')
         this.ratingModalInit = new Modal(this.ratingModal)
         this.buttonSendRate = document.getElementById('sendRateButton')
+        this.successRankedNotification = Toastify({
+            text: 'Gracias por tu calificación',
+            duration: 3000,
+            close: true,
+            gravity: 'top',
+            positionLeft: false
+        })
+
+        this.failRankedNotification = Toastify({
+            text: 'Ha ocurrido un error. Intenta de nuevo mas tarde',
+            duration: 3000,
+            close: true,
+            gravity: 'top',
+            positionLeft: false
+        })
+
         this.rate = {
             effectiveness: 0,
             motivation: 0,
@@ -47,6 +63,20 @@ class RatingLO {
         this.buttonSendRate.addEventListener('click', this.setRate.bind(this));
     }
 
+    resetRanked() {
+        this.rate = {
+            effectiveness: 0,
+            motivation: 0,
+            usability: 0,
+            accessibility: 0,
+            adaptability: 0,
+            comments: null,
+            lo_id: idLO,
+            rep_id: idRep,
+            use_username: username
+        }
+    }
+
     setRate() {
         const fetchData = {
             method: 'POST',
@@ -59,7 +89,14 @@ class RatingLO {
         }
 
         return fetch(`${window.base_url}lo/rateLearningObject`, fetchData)
-            .then(r => r.json())
-            .catch(e => console.error(e))
+            .then(r => {
+                r.json()
+                this.ratingModalInit.hide();
+                this.successRankedNotification.showToast();
+            }).catch(e => {
+                this.ratingModalInit.hide();
+                this.resetRanked();
+                this.failRankedNotification.showToast();
+            })
     }
 }
