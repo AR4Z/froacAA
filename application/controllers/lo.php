@@ -1120,7 +1120,6 @@ class Lo extends CI_Controller
         if ($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
 			$user_lo_rank = json_encode($this->lo_model->get_user_rate_learning_object($session_data['username'], base64_decode($lo_id), base64_decode($rep_id)));
-			echo $user_lo_rank;
             $content = array(
                 "user" => $session_data['username'],
                 "usr_data" => $this->usuario_model->get_usr_data($session_data['username']) ,

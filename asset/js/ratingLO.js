@@ -1,6 +1,11 @@
 class RatingLO {
-    constructor(idLO, idRep, userLORank) {
+    constructor(idLO, idRep, userLORank, iframeLODocument) {
+        this.iframeLODocument = iframeLODocument
+        this.userInteractWithLO = false
+        this.showModalForAskRating = true
+
         if (userLORank) {
+            this.showModalForAskRating = false
             this.rate = {
                 effectiveness: Number(userLORank.effectiveness),
                 motivation: Number(userLORank.motivation),
@@ -11,6 +16,8 @@ class RatingLO {
                 rep_id: idRep
             }
         } else {
+            this.setEventInteractionLO()
+            this.setLeavePage()
             this.rate = {
                 effectiveness: 0,
                 motivation: 0,
@@ -21,12 +28,14 @@ class RatingLO {
                 rep_id: idRep
             }
         }
+
         this.simpleRatingObjects = [];
         this.instanceRatingObjects();
-        //this.setLeavePage()
         this.ratingModal = document.getElementById('ratingModal')
         this.ratingModalInit = new Modal(this.ratingModal)
         this.buttonSendRate = document.getElementById('sendRateButton')
+        this.buttonNeverAskAgain = document.getElementById('neverAskAgainButton')
+
         this.successRankedNotification = Toastify({
             text: 'Gracias por tu calificación',
             duration: 3000,
@@ -44,6 +53,7 @@ class RatingLO {
         })
 
         this.setEventclickButtonSendRate();
+        this.setEventClickbuttonNeverAskAgain();
     }
 
     instanceRatingObjects() {
@@ -51,28 +61,45 @@ class RatingLO {
 
         Array.from(htmlStarElements).forEach(starElement => {
             let simpleRating = new SimpleStarRating(starElement)
-        
+
             starElement.addEventListener('rate', e => {
                 this.rate[starElement.id] = e.detail;
             });
             simpleRating.setCurrentRating(this.rate[starElement.id])
-            
+
 
             this.simpleRatingObjects.push(simpleRating)
         });
     }
 
     setLeavePage() {
-        window.addEventListener('beforeunload', function (e) {
-            // Cancel the event
-            e.preventDefault();
-            // Chrome requires returnValue to be set
-            e.returnValue = '';
-        });
+        const aHtmlElements = document.getElementsByTagName('a')
+
+        Array.from(aHtmlElements).forEach(aHtmlElement => {
+            aHtmlElement.addEventListener('click', e => {
+                if (this.userInteractWithLO && this.showModalForAskRating) {
+                    e.preventDefault()
+                    this.ratingModalInit.show()
+                }
+            })
+        })
+    }
+
+    setEventInteractionLO() {
+        this.iframeLODocument.addEventListener('click', e => {
+            this.userInteractWithLO = true;
+        })
     }
 
     setEventclickButtonSendRate() {
         this.buttonSendRate.addEventListener('click', this.setRate.bind(this));
+    }
+
+    setEventClickbuttonNeverAskAgain() {
+        this.buttonNeverAskAgain.addEventListener('click', e => {
+            this.showModalForAskRating = false
+            this.ratingModalInit.hide()
+        })
     }
 
     resetRanked() {
