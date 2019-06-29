@@ -5,12 +5,13 @@ class LearningObject {
    * @param {sting} url - learning object src
    * @param {string} name - learning object name
    */
-  constructor(url, name, idLO, idRep, userLORank) {
+  constructor(url, name, idLO, idRep, userLORank, gralLORank) {
     this.url = url;
     this.name = name;
     this.idLO = idLO;
     this.idRep = idRep;
     this.userLORank = userLORank;
+    this.gralLORank = gralLORank;
   
     /** @type {HTMLElement} */
     this.iframeElement = document.getElementById('oa')
@@ -56,7 +57,7 @@ class LearningObject {
       // hide loading_screen splash
       window.loading_screen.finish()
       // object for rate lo
-      this.ratingLO = new RatingLO(this.idLO, this.idRep, this.userLORank, this.getDocument());
+      this.ratingLO = new RatingLO(this.idLO, this.idRep, this.userLORank, this.gralLORank, this.getDocument());
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache

@@ -189,12 +189,12 @@ class Lo_model extends CI_Model
 
     public function rate_learning_object($data)
     {
-        $query = $this->db->get_where('lo_rating', array(
+        $query_user_rate = $this->db->get_where('lo_rating', array(
             'lo_id' => $data['lo_id'],
             'rep_id' => $data['rep_id'],
             'use_username' => $data['username']));
 
-        if ($query->num_rows() != 1) {
+        if ($query_user_rate->num_rows() != 1) {
             $this->db->insert('lo_rating', array('lo_id' => $data['lo_id'],
                 'rep_id' => $data['rep_id'],
                 'use_username'  => $data['username'],
@@ -216,12 +216,28 @@ class Lo_model extends CI_Model
         }
     }
 
-    public function get_user_rate_learning_object($username, $lo_id, $rep_id) {
+    public function get_user_rate_learning_object($username, $lo_id, $rep_id)
+    {
         $query = $this->db->get_where('lo_rating', array(
             'lo_id' => $lo_id,
             'rep_id' => $rep_id,
             'use_username' => $username));
         
+        return $query->result_array();
+    }
+
+    public function get_lo_gral_rating($lo_id, $rep_id)
+    {
+
+        $this->db->select_avg('effectiveness');
+        $this->db->select_avg('motivation');
+        $this->db->select_avg('usability');
+        $this->db->select_avg('accessibility');
+        $this->db->select_avg('adaptability');
+        $query = $this->db->get_where('lo_rating', array(
+            'lo_id' => $lo_id,
+            'rep_id' => $rep_id));
+
         return $query->result_array();
     }
 

@@ -1,8 +1,10 @@
 class RatingLO {
-    constructor(idLO, idRep, userLORank, iframeLODocument) {
+    constructor(idLO, idRep, userLORank, gralLORank, iframeLODocument) {
         this.iframeLODocument = iframeLODocument
         this.userInteractWithLO = false
         this.showModalForAskRating = true
+        this.simpleGralRatingObjects = []
+        this.containerGralratingStars = document.getElementById('starsGralRatingContainer')
 
         if (userLORank) {
             this.showModalForAskRating = false
@@ -29,13 +31,27 @@ class RatingLO {
             }
         }
 
+        if (gralLORank) {
+            this.gralLORank = {
+                effectiveness: Number(gralLORank.effectiveness),
+                motivation: Number(gralLORank.motivation),
+                usability: Number(gralLORank.usability),
+                accessibility: Number(gralLORank.accessibility),
+                adaptability: Number(gralLORank.adaptability),
+                lo_id: idLO,
+                rep_id: idRep
+            };
+            this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability ) / 5
+            this.instanceGralRatingObjects();
+        }
+
         this.simpleRatingObjects = [];
+
         this.instanceRatingObjects();
         this.ratingModal = document.getElementById('ratingModal')
         this.ratingModalInit = new Modal(this.ratingModal)
         this.buttonSendRate = document.getElementById('sendRateButton')
         this.buttonNeverAskAgain = document.getElementById('neverAskAgainButton')
-
         this.successRankedNotification = Toastify({
             text: 'Gracias por tu calificación',
             duration: 3000,
@@ -70,6 +86,45 @@ class RatingLO {
 
             this.simpleRatingObjects.push(simpleRating)
         });
+    }
+
+    instanceGralRatingObjects() {
+        const htmlGralStarsElements = document.getElementsByClassName('gral-stars');
+
+        Array.from(htmlGralStarsElements).forEach(starElement => {
+            let simpleRating = new SimpleStarRating(starElement)
+            switch (starElement.id) {
+                case 'gralEffectiveness': {
+                    simpleRating.setCurrentRating(this.gralLORank.effectiveness)
+                    break;
+                }
+                case 'gralMotivation': {
+                    simpleRating.setCurrentRating(this.gralLORank.motivation)
+                    break;
+                }
+                case 'gralUsability': {
+                    simpleRating.setCurrentRating(this.gralLORank.usability)
+                    break;
+                }
+                case 'gralAccessibility': {
+                    simpleRating.setCurrentRating(this.gralLORank.accessibility)
+                    break;
+                }
+                case 'gralAdaptability': {
+                    simpleRating.setCurrentRating(this.gralLORank.adaptability)
+                    break;
+                }
+                case 'gral': {
+                    simpleRating.setCurrentRating(this.gralLORank.gral)
+                    break;
+                }
+            }
+            simpleRating.disable()
+
+            this.simpleGralRatingObjects.push(simpleRating)
+
+        })
+        this.containerGralratingStars.removeAttribute('style')
     }
 
     setLeavePage() {

@@ -1117,6 +1117,7 @@ class Lo extends CI_Controller
 
     public function load_lo($url, $lo_name, $lo_id, $rep_id)
     {
+        $lo_rating = json_encode($this->lo_model->get_lo_gral_rating(base64_decode($lo_id), base64_decode($rep_id)));
         if ($this->session->userdata('logged_in')) {
 			$session_data = $this->session->userdata('logged_in');
 			$user_lo_rank = json_encode($this->lo_model->get_user_rate_learning_object($session_data['username'], base64_decode($lo_id), base64_decode($rep_id)));
@@ -1130,6 +1131,7 @@ class Lo extends CI_Controller
                 "lo_name" => $lo_name,
                 "lo_id" => $lo_id,
                 "rep_id" => $rep_id,
+                "lo_rating"=> $lo_rating,
                 "user_lo_rank" => $user_lo_rank,
                 "id_view" => "lo_view"
             );
@@ -1145,6 +1147,7 @@ class Lo extends CI_Controller
                 "url" => $url,
                 "lo_name" => $lo_name,
                 "lo_id" => $lo_id,
+                "lo_rating"=> $lo_rating,
                 "rep_id" => $rep_id,
                 "id_view" => "lo_view"
             );

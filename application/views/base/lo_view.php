@@ -28,6 +28,21 @@
                                  </div>
                             </div>
                 </div>
+                <div id="gralRatingDiv">
+                  <div id="starsGralRatingContainer" style="display:none;">
+                  <span id="gralEffectiveness" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  <span id="gralMotivation" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  <span id="gralUsability" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  <span id="gralAccessibility" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  <span id="gralAdaptability" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  <span id="gral" class="rating gral-stars" data-stars="5" data-default-rating="0"></span>
+                  </div>
+                  <div id="noRating">
+                    <span>
+                      El objeto no ha sido calificado.
+                    </span>
+                  </div>
+                </div>
                 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ratingModal">
   Evaluar objeto de aprendizaje
@@ -129,7 +144,8 @@
     const lo_id = "<?php echo base64_decode($lo_id); ?>";
     const rep_id = "<?php echo base64_decode($rep_id); ?>";
     const user_lo_rank = <?php echo $user_lo_rank;?>;
+    const gral_lo_rank = <?php echo $lo_rating; ?>;
   
-    learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id, user_lo_rank[0])
+    learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id, user_lo_rank[0], gral_lo_rank[0])
   });
 </script>
