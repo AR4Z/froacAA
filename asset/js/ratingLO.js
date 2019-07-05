@@ -41,8 +41,9 @@ class RatingLO {
                 lo_id: idLO,
                 rep_id: idRep
             };
-            this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability ) / 5
+            this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability) / 5
             this.instanceGralRatingObjects();
+            this.updateValueForGralRatingObjects();
         }
 
         this.simpleRatingObjects = [];
@@ -93,38 +94,45 @@ class RatingLO {
 
         Array.from(htmlGralStarsElements).forEach(starElement => {
             let simpleRating = new SimpleStarRating(starElement)
-            switch (starElement.id) {
+            simpleRating.disable()
+            this.simpleGralRatingObjects.push({
+                'id': starElement.id,
+                'simpleRatingObject': simpleRating
+            })
+        })
+        this.containerGralratingStars.removeAttribute('style')
+    }
+
+    updateValueForGralRatingObjects() {
+        this.simpleGralRatingObjects.forEach(simpleRating => {
+
+            switch (simpleRating.id) {
                 case 'gralEffectiveness': {
-                    simpleRating.setCurrentRating(this.gralLORank.effectiveness)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.effectiveness)
                     break;
                 }
                 case 'gralMotivation': {
-                    simpleRating.setCurrentRating(this.gralLORank.motivation)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.motivation)
                     break;
                 }
                 case 'gralUsability': {
-                    simpleRating.setCurrentRating(this.gralLORank.usability)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.usability)
                     break;
                 }
                 case 'gralAccessibility': {
-                    simpleRating.setCurrentRating(this.gralLORank.accessibility)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.accessibility)
                     break;
                 }
                 case 'gralAdaptability': {
-                    simpleRating.setCurrentRating(this.gralLORank.adaptability)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.adaptability)
                     break;
                 }
                 case 'gral': {
-                    simpleRating.setCurrentRating(this.gralLORank.gral)
+                    simpleRating.simpleRatingObject.setCurrentRating(this.gralLORank.gral)
                     break;
                 }
             }
-            simpleRating.disable()
-
-            this.simpleGralRatingObjects.push(simpleRating)
-
         })
-        this.containerGralratingStars.removeAttribute('style')
     }
 
     setLeavePage() {
@@ -159,15 +167,50 @@ class RatingLO {
 
     resetRanked() {
         this.rate = {
+            ...this.rate,
             effectiveness: 0,
             motivation: 0,
             usability: 0,
             accessibility: 0,
             adaptability: 0,
-            comments: null,
-            lo_id: idLO,
-            rep_id: idRep
         }
+    }
+
+    getGralRate() {
+        const fetchData = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                lo_id: this.rate.lo_id,
+                rep_id: this.rate.rep_id
+            })
+        }
+
+        return fetch(`${window.base_url}lo/getLOGralRating`, fetchData)
+            .then(r => {
+                r.json().then(data => {
+                    const rateResponse = data[0]
+                    this.gralLORank = {
+                        ...this.gralLORank,
+                        effectiveness: Number(rateResponse.effectiveness),
+                        motivation: Number(rateResponse.motivation),
+                        usability: Number(rateResponse.usability),
+                        accessibility: Number(rateResponse.accessibility),
+                        adaptability: Number(rateResponse.adaptability),
+
+                    }
+
+                    this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability) / 5
+                    this.updateValueForGralRatingObjects();
+                    this.ratingModalInit.hide();
+                });
+
+            }).catch(e => {
+                console.log(e)
+                alert("error")
+            })
     }
 
     setRate() {
@@ -184,7 +227,7 @@ class RatingLO {
         return fetch(`${window.base_url}lo/rateLearningObject`, fetchData)
             .then(r => {
                 r.json()
-                this.ratingModalInit.hide();
+                this.getGralRate()
                 this.successRankedNotification.showToast();
             }).catch(e => {
                 this.ratingModalInit.hide();

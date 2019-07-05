@@ -1197,4 +1197,12 @@ class Lo extends CI_Controller
             $this->lo_model->rate_learning_object($data);
         }
     }
+
+    public function getLOGralRating() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $rating = $this->lo_model->get_lo_gral_rating($_POST['lo_id'], $_POST['rep_id']);
+        header('Content-Type: application/json');
+        $json = json_encode($rating);
+        echo($json);
+    }
 }
