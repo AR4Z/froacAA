@@ -1148,6 +1148,7 @@ class Lo extends CI_Controller
                 "lo_name" => $lo_name,
                 "lo_id" => $lo_id,
                 "lo_rating"=> $lo_rating,
+                "user_lo_rank"=> json_encode(array()),
                 "rep_id" => $rep_id,
                 "id_view" => "lo_view"
             );

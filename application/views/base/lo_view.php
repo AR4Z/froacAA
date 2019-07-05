@@ -54,10 +54,11 @@
                                     </div>
 
                                 </div>
-                                <!-- Button trigger modal -->
+                                <?php if ($this->session->userdata('logged_in')) : ?>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ratingModal">
                     Evaluar objeto de aprendizaje
                 </button>
+                <?php endif;?>
                                 <div id="noRating">
                                     <span>
                       El objeto no ha sido calificado.
