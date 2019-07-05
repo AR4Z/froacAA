@@ -5,6 +5,7 @@ class RatingLO {
         this.showModalForAskRating = true
         this.simpleGralRatingObjects = []
         this.containerGralratingStars = document.getElementById('starsGralRatingContainer')
+        this.containerNoRating = document.getElementById('noRating')
 
         if (userLORank) {
             this.showModalForAskRating = false
@@ -31,7 +32,8 @@ class RatingLO {
             }
         }
 
-        if (gralLORank) {
+        if (gralLORank.effectiveness) {
+            console.log(gralLORank)
             this.gralLORank = {
                 effectiveness: Number(gralLORank.effectiveness),
                 motivation: Number(gralLORank.motivation),
@@ -41,9 +43,12 @@ class RatingLO {
                 lo_id: idLO,
                 rep_id: idRep
             };
+
             this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability) / 5
             this.instanceGralRatingObjects();
             this.updateValueForGralRatingObjects();
+            this.containerGralratingStars.removeAttribute('style')
+            this.containerNoRating.setAttribute('style', 'display:none')
         }
 
         this.simpleRatingObjects = [];
@@ -100,7 +105,6 @@ class RatingLO {
                 'simpleRatingObject': simpleRating
             })
         })
-        this.containerGralratingStars.removeAttribute('style')
     }
 
     updateValueForGralRatingObjects() {
@@ -201,10 +205,16 @@ class RatingLO {
                         adaptability: Number(rateResponse.adaptability),
 
                     }
-
+                    if (!this.simpleGralRatingObjects.length) {
+                        this.instanceGralRatingObjects()
+                        this.containerGralratingStars.removeAttribute('style')
+                        this.containerNoRating.setAttribute('style', 'display:none')
+                    }
                     this.gralLORank['gral'] = (this.gralLORank.effectiveness + this.gralLORank.motivation + this.gralLORank.usability + this.gralLORank.accessibility + this.gralLORank.adaptability) / 5
                     this.updateValueForGralRatingObjects();
+                   
                     this.ratingModalInit.hide();
+                    
                 });
 
             }).catch(e => {
