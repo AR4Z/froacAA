@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a class="btn btn-success pull-right" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
+            <a id="accessibilityBarButton" class="btn btn-success pull-right" data-toggle="collapse" href="#accessibilityBar" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
         </div>
     </div>
     <form role="form" aria-label="Iniciar seción en FROAC" class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">

@@ -31,6 +31,7 @@ class AccessibilityBar {
      * @type {HTMLElement}
      */
     this.collapse = document.getElementById(this.button.getAttribute('href').replace('#', ''))
+    console.log(this.collapse)
     /**
      * Bootstrap Collapse instance.
      * @type {Collapse}

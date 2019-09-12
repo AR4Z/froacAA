@@ -199,7 +199,7 @@
           .catch(e => console.error(e))
       }
 
-      if (document.getElementById(idView).length > 0) {
+      if (document.getElementById(idView) && document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
       if (window.firstTime) {
