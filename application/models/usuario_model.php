@@ -197,7 +197,7 @@ function save_score() {
     // Metodo que guarda los registros a partir de la creación de una cuenta por parte del administrador.
 
     public function guardar_usuario() {
-
+        echo $this->input->post('user_gender');
         $data = array(
          "use_username"        =>  $this->input->post("username"),
          "use_nombre"          =>  $this->input->post("nombre"),
@@ -206,6 +206,7 @@ function save_score() {
          "use_email"           =>  $this->input->post("mail"),
          "use_fecha_registro"  =>  date("Y-m-d"),
          "use_rol_id"          =>  $this->input->post("rol"),
+         "use_gender"          =>  $this->input->post("user_gender")
          );
         $this->db->insert('users', $data);
     }
@@ -288,7 +289,8 @@ if ($this->input->post('cantidad6')!='') {
             'use_nombre' => $this->input->post('name'),
             'use_apellido'=>  $this->input->post('lastName'),
             'use_clave' => md5($this->input->post('password')),
-            'use_email' => ($this->input->post('email')),
+            'use_email' => $this->input->post('email'),
+            'use_gender' => $this->input->post('user_gender'),
             'use_fecha_registro' => $today,
             'use_rol_id'=> 2,
             'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
@@ -301,9 +303,11 @@ if ($this->input->post('cantidad6')!='') {
 
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
-        
-        foreach($this->input->post('dissabilities') as $dissability) {
-            $this->usuario_model->insert_dissability($dissability, $this->input->post('username'));
+
+        if($this->input->post('dissabilities')) {
+            foreach($this->input->post('dissabilities') as $dissability) {
+                $this->usuario_model->insert_dissability($dissability, $this->input->post('username'));
+            }
         }
     }
 

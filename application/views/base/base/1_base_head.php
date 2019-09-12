@@ -202,6 +202,7 @@
       if (document.getElementById(idView) && document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
+
       if (window.firstTime) {
       //if(true){
         window.tour = new Tour()

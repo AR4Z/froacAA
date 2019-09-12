@@ -788,8 +788,10 @@ class Usuario extends CI_Controller {
 
 
         $this->usuario_model->guardar_estudiante();
-        foreach ($_POST['educationalResource'] as $key => $value) {
-            $this->usuario_model->insert_pref($value, $this->input->post('username'));
+        if ($_POST['educationalResource']) {
+            foreach ($_POST['educationalResource'] as $key => $value) {
+                $this->usuario_model->insert_pref($value, $this->input->post('username'));
+            }
         }
 
         // esto agrega al usuario para usar las adaptaciones de interfaz el narrador

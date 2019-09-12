@@ -136,6 +136,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="selectGender">
+                                  <?php echo $this->lang->line('gender'); ?>:
+                                </label>
+                                <select
+                                  class="form-control input-sm m-bot15"
+                                  name="user_gender"
+                                  id="selectGender"
+                                >
+                                    <option value="3" selected>No informar</option>
+                                    <option value="1">Femenino</option>
+                                    <option value="2">Masculino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                               <fieldset aria-labelledby="haveDissabilities">
                                 <legend id="haveDissabilities" style="font-size:1rem;">
                                   <?php echo $this->lang->line('have_disabilities'); ?>:
