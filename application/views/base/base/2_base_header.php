@@ -78,7 +78,14 @@
 
 <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_screen_reader') || $this->session->userdata('need_custom_interfaz') || $this->session->userdata('need_narrator')  || $this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || $this->session->userdata('need_virtual_keyboard')):?>
 
-<a style="position:absolute;bottom:5px;right:15px;margin:0;padding:5px 3px;z-index:10000;" id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
-          aria-expanded="false" aria-controls="accessibilityBar">
-          <?php echo $this->lang->line('accessibility'); ?> </a>
-    <?php endif;?>
+<div class="btn-group btn-group-toggle" style="position:absolute;bottom:5px;right:15px;margin:0;padding:5px 3px;z-index:10000;" data-toggle="buttons">
+  <a id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
+  aria-expanded="false" aria-controls="accessibilityBar">
+    <?php echo $this->lang->line('accessibility'); ?>
+  </a>
+  <a  id="accessibilityBarHelpButton" class="btn btn-info" role="button">
+    <?php echo $this->lang->line('help'); ?> 
+  </a>
+</div>
+
+<?php endif;?>

@@ -202,13 +202,11 @@
       if (document.getElementById(idView) && document.getElementById(idView).length > 0) {
         document.getElementById(idView).classList.add('active')
       }
-
-      if (window.firstTime) {
-      //if(true){
-        window.tour = new Tour()
+      window.tour = new Tour()
         window.next = false
 
         let introModal = document.getElementById('introModal')
+        let helpButton = document.getElementById('accessibilityBarHelpButton')
         let modalIntroInstance = new Modal(introModal)
 
         introModal.addEventListener('shown.bs.modal', e => {
@@ -243,6 +241,11 @@
           }
         })
 
+        helpButton.addEventListener('click', e => {
+          modalIntroInstance.show()
+        })
+
+      if (window.firstTime) {
         modalIntroInstance.show()
       }
 

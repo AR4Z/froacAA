@@ -237,4 +237,5 @@ $lang["portuguese"] = "Português";
 $lang["required_field"] = "Este campo é obrigatório";
 $lang["min_length_field"] = "Este campo deve ter pelo menos {0} caracteres.";
 $lang["sitemap"] = "Mapa do site";
-$lang["gender"] = "Genero";  
+$lang["gender"] = "Genero";
+$lang["help"] = "Socorrer";  
