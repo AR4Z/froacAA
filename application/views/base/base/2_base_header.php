@@ -22,16 +22,7 @@
   </div>
   <div class="firstMenu">
 
-    <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_screen_reader') || $this->session->userdata('need_custom_interfaz') || $this->session->userdata('need_narrator')  || $this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || $this->session->userdata('need_virtual_keyboard')):?>
-
-    <ul class="socialLinks">
-      <li>
-        <a id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
-          aria-expanded="false" aria-controls="accessibilityBar">
-          <?php echo $this->lang->line('accessibility'); ?> </a>
-      </li>
-    </ul>
-    <?php endif;?>
+    
 
   </div>
 
@@ -84,3 +75,10 @@
     <?php endif; ?>
   </ul>
 </nav>
+
+<?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_screen_reader') || $this->session->userdata('need_custom_interfaz') || $this->session->userdata('need_narrator')  || $this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || $this->session->userdata('need_virtual_keyboard')):?>
+
+<a style="position:absolute;bottom:5px;right:15px;margin:0;padding:5px 3px;z-index:10000;" id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
+          aria-expanded="false" aria-controls="accessibilityBar">
+          <?php echo $this->lang->line('accessibility'); ?> </a>
+    <?php endif;?>
