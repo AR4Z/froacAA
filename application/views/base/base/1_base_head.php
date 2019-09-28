@@ -281,7 +281,8 @@
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
-                  <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.removeItem('firstTime');javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                <div class="col-sm">
+                <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.removeItem('firstTime');javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
                     <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
                       if ($this->session->userdata('site_lang')
                       == 'spanish') {
@@ -298,6 +299,17 @@
                           echo 'selected="selected"';
                       } ?>><?php echo $this->lang->line('portuguese'); ?> </a></option>
                   </select>
+                </div>
+                <div class="col-sm">
+                </div>
+                  <div class="col-sm">
+                    <?php if (!$this->session->userdata('logged_in')):?>
+                    <button onclick="tour.takeMeToSignUp()" class="btn btn-outline-success btn-lg interprete-button"
+                  type="submit">
+                  Crear una cuenta
+                </button>
+                    <?php endif;?>
+                  </div>
                 </div>
                 <div class="row justify-content-md-center">
                   <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="100" height="143.383">

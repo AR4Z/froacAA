@@ -1,5 +1,64 @@
 <div class="content-inner" role="main">
     <div class="container-fluid">
+    <div class="modal fade" id="askProfileModal" tabindex="-1" role="dialog" aria-labelledby="labelAskProfileModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                <div class="col-sm">
+                <select aria-label="Seleccionar idioma del sitio" onchange="localStorage.removeItem('firstTime');javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/'+this.value;">
+                    <option data-content='<span class="flag-icon flag-icon-co"></span> Español' value="spanish" <?php
+                      if ($this->session->userdata('site_lang')
+                      == 'spanish') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('spanish'); ?> </a></option>
+                    <option data-content='<span class="flag-icon flag-icon-us"></span> Inglés' value="english" <?php
+                      if ($this->session->userdata('site_lang')
+                      == 'english') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('english'); ?> </a></option>
+                    <option data-content='<span class="flag-icon flag-icon-br"></span> Portugués' value="portuguese"
+                      <?php if ($this->session->userdata('site_lang')
+                      == 'portuguese') {
+                          echo 'selected="selected"';
+                      } ?>><?php echo $this->lang->line('portuguese'); ?> </a></option>
+                  </select>
+                </div>
+                </div>
+                <div class="row justify-content-md-center">
+                  <h2 id="labelAskProfileModal" class="title">¿Tienes alguna dificultad?</h2>
+                  
+                </div>
+                <div class="row justify-content-md-center">
+                <label>
+  <input type="radio" name="selectProfile" value="audible" checked>
+  <img src="<?php echo base_url(); ?>asset/img/ear.png"/ width="60" height="60" alt="Auditiva">
+</label>
+
+<label>
+  <input type="radio" name="selectProfile" value="visual">
+  <img src="<?php echo base_url(); ?>asset/img/eye.png"/ width="60" height="60" alt="Visual">
+</label>
+<label>
+  <input type="radio" name="selectProfile" value="none">
+  <img src="<?php echo base_url(); ?>asset/img/x.png"/ width="60" height="60" alt="Ninguna">
+</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" data-dismiss="modal" type="submit">
+              <?php echo $this->lang->line('exit'); ?>
+              </button>
+              <button class="btn btn-primary" data-dismiss="modal" type="submit">
+              <?php echo $this->lang->line('continue'); ?>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
         <br/>
         <div class="card border-0">
             <h1>
@@ -406,6 +465,18 @@
   let pickerBirthDate;
 
   document.addEventListener('DOMContentLoaded', () => {
+    const profileModal = document.getElementById('askProfileModal');
+    const profileModalInit  = new Modal(profileModal);
+
+    profileModal.addEventListener('hidden.bs.modal', () => {
+      const profileSelected = document.querySelector('input[name="selectProfile"]:checked').value
+      localStorage.setItem('redirectFromTour', false)
+    })
+
+    if (localStorage.getItem('redirectFromTour') === 'true') {
+      profileModalInit.show();
+    }
+
     Array.from(document.querySelectorAll('select.useAccessibilityTools')).forEach((select) => {
       select.addEventListener('change', (e) => {
         if (e.target.value < 3) {

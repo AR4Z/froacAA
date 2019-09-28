@@ -1473,4 +1473,9 @@ class Tour {
       this.carouselControls.slideTo(this.carouselControls.getActiveIndex() + 1)
     }
   }
+
+  takeMeToSignUp() {
+    localStorage.setItem('redirectFromTour', true)
+    window.location.href=`${window.base_url}usuario/registro`
+  }
 }
