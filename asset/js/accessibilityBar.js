@@ -117,6 +117,14 @@ class AccessibilityBar {
 
     // Voice Browser does not depend of user model, so automatically on.
     this.voiceBrowser.start()
+
+    this.gralProfiles = {
+      'visual': {
+      },
+      'audible': {
+      },
+      'none' : {}
+    }
   }
 
   /**
