@@ -217,7 +217,6 @@ function save_score() {
         $today = date("Y-m-d");
         $data = array(
             'use_username' => $this->input->post('username'),
-            'use_stu_datebirth' => $today,
             'use_level_id' => $this->input->post('educationLevel'),
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institutionName'),
@@ -229,7 +228,7 @@ function save_score() {
             'use_kb_id'=>$this->input->post('useKeyboard'),
             'diversity_profile'=>$this->input->post('diversityProfile'),
             'pref_lo_language'=>$this->input->post('prefLOLanguage'),
-            'auto_traslate_los'=>$this->input->post('autoTraslateLOs'),
+            //'auto_traslate_los'=>boolval($this->input->post('autoTraslateLOs')),
             'use_voice_recognition'=>$this->input->post('useVoiceRecognition')
         );
         $data2 = array(
@@ -240,7 +239,8 @@ function save_score() {
             'use_email' => $this->input->post('email'),
             'use_gender' => $this->input->post('user_gender'),
             'use_fecha_registro' => $today,
-            'use_rol_id'=> 2
+            'use_rol_id'=> 2,
+            'use_datebirth'=>$this->input->post('birthDate')
         );
 
         $this->db->insert('users', $data2);
@@ -667,9 +667,9 @@ function save_score() {
     function insert_access_mode() {
         $access_mode_data = array(
             'use_username' => $this->input->post('username'),
-            'auditive' => $this->input->post('auditive'),
-            'textual' => $this->input->post('textual'),
-            'visual' => $this->input->post('visual')
+            'auditive' => boolval($this->input->post('auditive')),
+            'textual' => boolval($this->input->post('textual')),
+            'visual' => boolval($this->input->post('visual'))
         );
         $this->db->insert('use_access_mode', $access_mode_data);
     }

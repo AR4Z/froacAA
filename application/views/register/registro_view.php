@@ -306,33 +306,6 @@
                                 <input type="checkbox" id="autoTraslateLOs">
                                 <label for="autoTraslateLOs"><?php echo $this->lang->line('auto_traslate_los_label'); ?></label>
                             </div>
-                            <div
-                              class="form-group"
-                              role="group"
-                              aria-labelledby="labelUseVoiceRecognition"
-                            >
-                              <label for="useVoiceRecognition" id="labelUseVoiceRecognition">
-                                <?php echo $this->lang->line('use_voice_recognition'); ?>
-                              </label>
-                                <select
-                                  id="useVoiceRecognition"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useVoiceRecognition"
-                                  aria-labelledby="labelUseVoiceRecognition"
-                                  role="listbox"
-                                  aria-required="true"
-                                >
-                                    <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                    <?php }?>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group">
                               <fieldset aria-labelledby="legendAccessMode">
                                 <legend id="legendAccessMode" style="font-size:1rem;"><?php echo $this->lang->line('access_mode'); ?></legend>
@@ -510,16 +483,154 @@
       submit: e => {
         return new Promise((resolve, reject) => {
           const form = e.target;
-          const newUserAdaptInfo = {
-            needCustomInterfaz: parseInt(form.querySelector("select[name='personaliceInterfaz']").value) < 3,
-            needScreenReader: parseInt(form.querySelector("select[name='useSr']").value) < 3,
-            needNarrator: parseInt(form.querySelector("select[name='useNarrator']").value) < 3,
-            needLscTranslator: parseInt(form.querySelector("select[name='useLSCTranslator']").value) < 3,
-            needStructuralNav: parseInt(form.querySelector("select[name='useStructuralNav']").value) < 3,
-            needVirtualKeyboard: parseInt(form.querySelector("select[name='useKeyboard']").value) < 3,
-          }
+          const profiles = [
+            {
+              personaliceInterfaz: 3,
+              useNarrator: 3,
+              useSr: 1,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 3,
+              useVoiceRecognition: 2
+            },
 
-          if (newUserAdaptInfo.needCustomInterfaz) {
+            {
+              personaliceInterfaz: 3,
+              useNarrator: 3,
+              useSr: 1,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 3,
+              useVoiceRecognition: 1
+            },
+
+            {
+              personaliceInterfaz: 1,
+              useNarrator: 2,
+              useSr: 2,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 2
+            },
+
+            {
+              personaliceInterfaz: 1,
+              useNarrator: 1,
+              useSr: 2,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 2
+            },
+            {
+              personaliceInterfaz: 1,
+              useNarrator: 2,
+              useSr: 2,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 2
+            },
+            {
+              personaliceInterfaz: 1,
+              useNarrator: 2,
+              useSr: 2,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 1,
+              useVoiceRecognition: 2
+            },
+            {
+              personaliceInterfaz: 2,
+              useNarrator: 3,
+              useSr: 3,
+              useLSCTranslator: 1,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 3
+            },
+            {
+              personaliceInterfaz: 2,
+              useNarrator: 3,
+              useSr: 3,
+              useLSCTranslator: 2,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 3
+            },
+            {
+              personaliceInterfaz: 2,
+              useNarrator: 3,
+              useSr: 3,
+              useLSCTranslator: 2,
+              useStructuralNav: 3,
+              useKeyboard: 1,
+              useVoiceRecognition: 3
+            },
+            {
+              personaliceInterfaz: 2,
+              useNarrator: 3,
+              useSr: 3,
+              useLSCTranslator: 1,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 3
+            },
+            {
+              personaliceInterfaz: 3,
+              useNarrator: 3,
+              useSr: 3,
+              useLSCTranslator: 3,
+              useStructuralNav: 3,
+              useKeyboard: 2,
+              useVoiceRecognition: 2
+            }
+          ]
+          const newUserAdaptInfo = profiles[parseInt(form.querySelector("select[name='diversityProfile']").value)-1];
+          const inputPersonaliceInterfaz = document.createElement('input');
+          inputPersonaliceInterfaz.setAttribute('type', 'hidden');
+          inputPersonaliceInterfaz.setAttribute('name', 'personaliceInterfaz');
+          inputPersonaliceInterfaz.value = newUserAdaptInfo.personaliceInterfaz;
+          form.appendChild(inputPersonaliceInterfaz);
+
+          const inputUseNarrator = document.createElement('input');
+          inputUseNarrator.setAttribute('type', 'hidden');
+          inputUseNarrator.setAttribute('name', 'useNarrator');
+          inputUseNarrator.value = newUserAdaptInfo.useNarrator;
+          form.appendChild(inputUseNarrator);
+
+          const inputUseSr = document.createElement('input');
+          inputUseSr.setAttribute('type', 'hidden');
+          inputUseSr.setAttribute('name', 'useSr');
+          inputUseSr.value = newUserAdaptInfo.useSr;
+          form.appendChild(inputUseSr);
+
+          const inputUseLSCTranslator = document.createElement('input');
+          inputUseLSCTranslator.setAttribute('type', 'hidden');
+          inputUseLSCTranslator.setAttribute('name', 'useLSCTranslator');
+          inputUseLSCTranslator.value = newUserAdaptInfo.useLSCTranslator;
+          form.appendChild(inputUseLSCTranslator);
+
+          const inputUseStructuralNav = document.createElement('input');
+          inputUseStructuralNav.setAttribute('type', 'hidden');
+          inputUseStructuralNav.setAttribute('name', 'useStructuralNav');
+          inputUseStructuralNav.value = newUserAdaptInfo.useStructuralNav;
+          form.appendChild(inputUseStructuralNav);
+
+          const inputUseKeyboard = document.createElement('input');
+          inputUseKeyboard.setAttribute('type', 'hidden');
+          inputUseKeyboard.setAttribute('name', 'useKeyboard');
+          inputUseKeyboard.value = newUserAdaptInfo.useKeyboard;
+          form.appendChild(inputUseKeyboard);
+
+          const inputUseVoiceRecognition = document.createElement('input');
+          inputUseVoiceRecognition.setAttribute('type', 'hidden');
+          inputUseVoiceRecognition.setAttribute('name', 'useVoiceRecognition');
+          inputUseVoiceRecognition.value = newUserAdaptInfo.useVoiceRecognition;
+          form.appendChild(inputUseVoiceRecognition);
+
+          if (newUserAdaptInfo.personaliceInterfaz < 3) {
             const interfazPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'cursor_size_id': localStorage.getItem('cursor_size_id'),
@@ -557,7 +668,7 @@
             form.appendChild(inputInterfazPreferences);
           }
 
-          if (newUserAdaptInfo.needNarrator) {
+          if (newUserAdaptInfo.useNarrator < 3) {
             const narratorPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'speed_reading': localStorage.getItem('speed_reading_nr'),
@@ -578,7 +689,7 @@
             form.appendChild(inputNarratorPreferences);
           }
 
-          if (newUserAdaptInfo.needScreenReader) {
+          if (newUserAdaptInfo.useSr < 3) {
             const screenReaderPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'speed_reading_id': localStorage.getItem('speed_reading_sr'),
@@ -595,7 +706,7 @@
             form.appendChild(inputScreenReaderPreferences);
           }
 
-          if (newUserAdaptInfo.needLscTranslator) {
+          if (newUserAdaptInfo.useLSCTranslator < 3) {
             const lscTranslatorPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'sign_speed': localStorage.getItem('sign_speed'),
@@ -609,7 +720,7 @@
             form.appendChild(inputLscTranslatorPreferences);
           }
 
-          if (newUserAdaptInfo.needStructuralNav) {
+          if (newUserAdaptInfo.useStructuralNav < 3) {
             const structuralNavPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'nav_strategy_id': localStorage.getItem('nav_strategy_id'),
@@ -623,7 +734,7 @@
             form.appendChild(inputStructuralNavPreferences);
           }
 
-          if (newUserAdaptInfo.needVirtualKeyboard) {
+          if (newUserAdaptInfo.useKeyboard< 3) {
             const keyboardPreferences = {
               'use_username': form.querySelector("input[name='username']").value,
               'kb_size_id': localStorage.getItem('kb_size_id'),
