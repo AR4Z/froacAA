@@ -209,26 +209,6 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                              <fieldset aria-labelledby="haveDissabilities">
-                                <legend id="haveDissabilities" style="font-size:1rem;">
-                                  <?php echo $this->lang->line('have_disabilities'); ?>:
-                                </legend>
-                              <br/>
-                              <?php
-                                  foreach ($dissabilities as $key) { ?>
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    name="dissabilities[]"
-                                    value="<?php echo $key->use_dissability_id ?>"
-                                  />
-                                  <?php echo $key->use_dissability ?>
-                                </label>
-                                <br/>
-                              <?php } ?>
-                              </fieldset>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputInstitutionName" id="labelInstitutionName">
                                   <?php echo $this->lang->line('institution'); ?>:
                                 </label>

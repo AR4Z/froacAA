@@ -197,7 +197,6 @@ function save_score() {
     // Metodo que guarda los registros a partir de la creación de una cuenta por parte del administrador.
 
     public function guardar_usuario() {
-        echo $this->input->post('user_gender');
         $data = array(
          "use_username"        =>  $this->input->post("username"),
          "use_nombre"          =>  $this->input->post("nombre"),
@@ -303,12 +302,6 @@ if ($this->input->post('cantidad6')!='') {
 
         $this->db->insert('users', $data2);
         $this->db->insert('use_student', $data);
-
-        if($this->input->post('dissabilities')) {
-            foreach($this->input->post('dissabilities') as $dissability) {
-                $this->usuario_model->insert_dissability($dissability, $this->input->post('username'));
-            }
-        }
     }
 
     public function insertaAdaptaciones($username, $optInterfaz, $optNarrator, $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard,$dataInterfaz, $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard){
@@ -453,16 +446,7 @@ if ($this->input->post('cantidad6')!='') {
         $this->db->insert('use_pre_stu', $data);
     }
 
-    //Guarda cada una de las discapacidades del estudiante en la tabla "use_dissability_stu"
 
-    public function insert_dissability($dissability, $id) {
-
-        $data = array(
-            'use_dissability_id' => $dissability,
-            'use_username' => $id,
-        );
-        $this->db->insert('use_dissability_stu', $data);
-    }
     //Si el usuario tiene una NEED se actualiza
 
     public function has_need($username){
@@ -575,13 +559,7 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result();
     }
 
-    // Se obtienen los registros de las discapacidades que hay en la tabla "use_dissabilities"
-
-    public function get_dissabilities() {
-        $query = $this->db->get('use_dissabilities');
-
-        return $query->result();
-    }
+  
     // Se obtienen los registros de las preferencias que hay en la tabla "use_level"
 
     public function get_nivel_educativo() {
@@ -606,14 +584,6 @@ if ($this->input->post('cantidad6')!='') {
         return $query->result();
     }
 
-    public function get_discapacidad_est($user) {
-       $this->db->select('*');
-       $this->db->from('use_dissability_stu');
-       $this->db->where('use_username', $user);
-       $this->db->join('use_dissabilities', 'use_dissability_stu.use_dissability_id = use_dissabilities.use_dissability_id');
-       $query = $this->db->get();
-       return $query->result();
-   }
 
     public function update_user($username){
         $optInterfaz = $this->input->post('personaliceInterfaz');

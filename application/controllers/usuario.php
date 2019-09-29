@@ -156,7 +156,6 @@ class Usuario extends CI_Controller {
             redirect(base_url(), 'refresh');//Definir que pasa si ya esta loggeado
         } else {
             $content = array(
-                'dissabilities' => $this->usuario_model->get_dissabilities(),
                 "preferencias" => $this->usuario_model->get_preferencias(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                 'optsAdapta' => $this->usuario_model->get_opts_adapta(),
