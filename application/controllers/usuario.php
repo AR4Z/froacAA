@@ -157,6 +157,7 @@ class Usuario extends CI_Controller {
         } else {
             $content = array(
                 "preferencias" => $this->usuario_model->get_preferencias(),
+                "diversity_profiles" => $this->usuario_model->get_diversity_profiles(),
                 "nivel_educativo" => $this->usuario_model->get_nivel_educativo(),
                 'optsAdapta' => $this->usuario_model->get_opts_adapta(),
                 "main_view" => "register/registro_view",
@@ -793,6 +794,8 @@ class Usuario extends CI_Controller {
             }
         }
 
+        $this->usuario_model->insert_access_mode();
+
         // esto agrega al usuario para usar las adaptaciones de interfaz el narrador
         // o el screen segun lo que el necesite
         // en $opt--- va la opcion elegida por el usuario para cada adaptacion, si requiere, opcional o no requiere
@@ -801,172 +804,6 @@ class Usuario extends CI_Controller {
         $optScreenReader, $optLSCTranslator, $optStructuralNav, $optKeyboard, $dataInterfaz, 
         $dataNarrator, $dataScreenReader, $dataLSCTranslator, $dataStructuralNav, $dataKeyboard);
 
-
-        /*if($_POST["necesidadespecial"]!=""){
-            $this->usuario_model->has_need($this->input->post('username'));
-            $need_vision = null;
-            $need_visiondescri = null;
-            $need_audicion = "no";
-            $need_audiciondescri = null;
-            $need_motriz = "no";
-            $need_motrizdescri = null;
-            $need_coginitiva = "no";
-            $need_cognitivatexto = "no";
-            $need_cognitivainstru = "no";
-            $need_cognitivaconcentra = "no";
-
-            $need = $_POST["necesidadespecial"];
-
-            $need1 = explode(",", $need);
-            //print_r($need1);
-            if(count($need1)>0){
-                for($i = 0; $i<count($need1); $i++){
-                    if(strpos($need1[$i], "Vision")!==false){
-                        if($need1[$i]=="Vision-Nula"){
-                            $need_vision = "si";
-                        }else{
-                            if(strpos($need1[$i],"Vision-Parcial")!==false){
-                                $need_vision = "si";
-                                $need_visiondescri = substr($need1[$i],-3);
-                            }
-                        }
-
-                    }
-
-                    if(strpos($need1[$i], "Audicion")!==false){
-                        $need_audicion = "si";
-                        if(strpos($need1[$i], "Señas-Texto")!==false){
-                            $need_audiciondescri = "señas-texto";
-                        }else{
-                            if(strpos($need1[$i], "Señas")!==false){
-                                $need_audiciondescri = "señas";
-                            }else{
-                                if(strpos($need1[$i], "Texto")!==false){
-                                    $need_audiciondescri = "texto";
-                                }
-                            }
-                        }
-
-
-
-                    }
-
-                    if(strpos($need1[$i], "Motriz")!==false){
-                        $need_motriz = "si";
-                        if(strpos($need1[$i], "Mouse-Teclado")!==false){
-                            $need_motrizdescri = "mouse-teclado";
-                        }else{
-                            if(strpos($need1[$i], "Mouse")!==false){
-                                $need_motrizdescri = "mouse";
-                            }
-                            else{
-
-                                if(strpos($need1[$i], "Teclado")!==false){
-                                    $need_motrizdescri = "teclado";
-                                }
-                            }
-                        }
-
-
-
-                    }
-
-                    if(strpos($need1[$i], "Cognitivo")!==false){
-                        $need_coginitiva = "si";
-                        if(strpos($need1[$i], "ConcentraSi")!==false){
-                            $need_cognitivatexto = "si";
-
-                        }else{
-                            if(strpos($need1[$i], "TextoSi")!==false){
-                                $need_cognitivainstru = "si";
-
-                            }  else{
-                                if(strpos($need1[$i], "InstruccionesSi")!==false){
-                                    $need_cognitivaconcentra = "si";
-                                }
-                            }
-                        }
-
-
-
-                    }
-                }
-
-                $this->usuario_model->update_has_need($this->input->post('username'),$need_vision,
-                    $need_visiondescri, $need_audicion, $need_audiciondescri,
-                    $need_motriz, $need_motrizdescri, $need_coginitiva, $need_cognitivatexto,
-                    $need_cognitivainstru, $need_cognitivaconcentra);
-            }else{
-                if(strpos($need1[0], "Vision")!==false){
-                    if($need1[0]=="Vision-Nula"){
-                        $need_vision = "si";
-                    }else{
-                        if(strpos($need1[0],"Vision-Parcial")!==false){
-                            $need_visiondescri = substr($need1[0],-3);
-                        }
-                    }
-
-                }
-
-                if(strpos($need1[0], "Audicion")!==false){
-                    $need_audicion = "si";
-                    if(strpos($need1[0], "Señas-Texto")!==false){
-                        $need_audiciondescri = "señas-texto";
-                    }else{
-                        if(strpos($need1[0], "Señas")!==false){
-                            $need_audiciondescri = "señas";
-                        } else{
-                            if(strpos($need1[$i], "Texto")!==false){
-                                $need_audiciondescri = "texto";
-                            }
-                        }
-                    }
-
-
-                }
-
-                if(strpos($need1[0], "Motriz")!==false){
-                    $need_motriz = "si";
-                    if(strpos($need1[0], "Mouse-Teclado")!==false){
-                        $need_motrizdescri = "mouse-teclado";
-                    }else{
-                        if(strpos($need1[0], "Mouse")!==false){
-                            $need_motrizdescri = "mouse";
-                        }else{
-                            if(strpos($need1[0], "Teclado")!==false){
-                                $need_motrizdescri = "teclado";
-                            }
-                        }
-                    }
-
-
-                }
-
-                if(strpos($need1[0], "Cognitivo")!==false){
-                    $need_coginitiva = "si";
-                    if(strpos($need1[0], "ConcentraSi")!==false){
-                        $need_cognitivatexto = "si";
-
-                    }else{
-                        if(strpos($need1[0], "TextoSi")!==false){
-                            $need_cognitivainstru = "si";
-
-                        }else{
-                            if(strpos($need1[0], "InstruccionesSi")!==false){
-                                $need_cognitivaconcentra = "si";
-                            }
-
-                        }
-                    }
-
-
-                }
-                $this->usuario_model->update_has_need($this->input->post('username'),$need_vision,
-                    $need_visiondescri, $need_audicion, $need_audiciondescri,
-                    $need_motriz, $need_motrizdescri, $need_coginitiva, $need_cognitivatexto,
-                    $need_cognitivainstru, $need_cognitivaconcentra);
-            }
-        }*/
         $name = $this->input->post('nombre') . ' ' . $this->input->post('apellido');
         
         $this->session->set_userdata('username', $this->input->post('username'));

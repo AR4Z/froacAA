@@ -214,74 +214,23 @@ function save_score() {
     // de usuario: "users" y en la tabla del estudiante: "use_student"
 
     public function guardar_estudiante() {
-
         $today = date("Y-m-d");
-
-/*
-ESTAS CANTIDADES SON LAS QUE DEBERIAN LLEGAR DESDE EL CONTROLADOR
-cantidad1
-cantidad2
-cantidad3
-cantidad4
-cantidad5
-cantidad6*/
-
-if ($this->input->post('result_test')!='') {
-    $result_test = $this->input->post('result_test');
-}else{
-    $result_test = null;
-}
-
-if ($this->input->post('cantidad1')!='') {
-    $cantidad1 = $this->input->post('cantidad1');
-}else{
-    $cantidad1 = null;
-}
-
-if ($this->input->post('cantidad2')!='') {
-    $cantidad2 = $this->input->post('cantidad2');
-}else{
-    $cantidad2 = null;
-}
-
-if ($this->input->post('cantidad3')!='') {
-    $cantidad3 = $this->input->post('cantidad3');
-}else{
-    $cantidad3 = null;
-}
-
-if ($this->input->post('cantidad4')!='') {
-    $cantidad4 = $this->input->post('cantidad4');
-}else{
-    $cantidad4 = null;
-}
-
-if ($this->input->post('cantidad5')!='') {
-    $cantidad5 = $this->input->post('cantidad5');
-}else{
-    $cantidad5 = null;
-}
-
-if ($this->input->post('cantidad6')!='') {
-    $cantidad6 = $this->input->post('cantidad6');
-}else{
-    $cantidad6 = null;
-}
-
-
         $data = array(
             'use_username' => $this->input->post('username'),
             'use_stu_datebirth' => $today,
-            'use_ls_id' => $result_test,
-            'use_stu_level' => $this->input->post('educationLevel'),
-            'use_ls_cant_V' => $cantidad1,
-            'use_ls_cant_A' => $cantidad2,
-            'use_ls_cant_R' => $cantidad3,
-            'use_ls_cant_K' => $cantidad4,
-            'use_ls_cant_G' => $cantidad5,
-            'use_ls_cant_S' => $cantidad6,
+            'use_level_id' => $this->input->post('educationLevel'),
             'use_etnica' => $this->input->post('etnica'),
             'use_institution'=> $this->input->post('institutionName'),
+            'adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
+            'use_narrator_id'=>$this->input->post('useNarrator'),
+            'use_screen_reader_id'=>$this->input->post('useSr'),
+            'use_traslator_lsc_id'=>$this->input->post('useLSCTranslator'),
+            'use_structural_nav_id'=>$this->input->post('useStructuralNav'),
+            'use_kb_id'=>$this->input->post('useKeyboard'),
+            'diversity_profile'=>$this->input->post('diversityProfile'),
+            'pref_lo_language'=>$this->input->post('prefLOLanguage'),
+            'auto_traslate_los'=>$this->input->post('autoTraslateLOs'),
+            'use_voice_recognition'=>$this->input->post('useVoiceRecognition')
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -291,13 +240,7 @@ if ($this->input->post('cantidad6')!='') {
             'use_email' => $this->input->post('email'),
             'use_gender' => $this->input->post('user_gender'),
             'use_fecha_registro' => $today,
-            'use_rol_id'=> 2,
-            'use_adapta_interfaz_id'=> $this->input->post('personaliceInterfaz'),
-            'use_narrator_id'=>$this->input->post('useNarrator'),
-            'use_screen_reader_id'=>$this->input->post('useSr'),
-            'use_traslator_lsc_id'=>$this->input->post('useLSCTranslator'),
-            'use_structural_nav_id'=>$this->input->post('useStructuralNav'),
-            'use_kb_id'=>$this->input->post('useKeyboard'),
+            'use_rol_id'=> 2
         );
 
         $this->db->insert('users', $data2);
@@ -714,28 +657,20 @@ if ($this->input->post('cantidad6')!='') {
         $query = $this->db->get();
         return $query->result();
     }
-    /*
-    function update_test($estilo,$cant_V,$cant_A,$cant_R,$cant_K,$cant_G,$cant_S, $id) {
 
-        $data = array(
-            'use_ls_id' => $estilo
-            'use_ls_cant_V' => $cant_V
-            'use_ls_cant_R' => $cant_R
-            'use_ls_cant_A' => $cant_A
-            'use_ls_cant_K' => $cant_K
-            'use_ls_cant_G' => $cant_G
-            'use_ls_cant_S' => $cant_S
-        );
+    function get_diversity_profiles() {
+        $query = $this->db->get('diversity_profiles');
 
-        $this->db->where('use_username', $id);
-        $this->db->update('use_student', $data);
+        return $query->result();
     }
 
-
-
-*/
-
-
-
-
+    function insert_access_mode() {
+        $access_mode_data = array(
+            'use_username' => $this->input->post('username'),
+            'auditive' => $this->input->post('auditive'),
+            'textual' => $this->input->post('textual'),
+            'visual' => $this->input->post('visual')
+        );
+        $this->db->insert('use_access_mode', $access_mode_data);
+    }
 }

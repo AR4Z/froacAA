@@ -29,22 +29,20 @@
                 </div>
                 <div class="row justify-content-md-center">
                   <h2 id="labelAskProfileModal" class="title">¿Tienes alguna dificultad?</h2>
-                  
                 </div>
                 <div class="row justify-content-md-center">
                 <label>
-  <input type="radio" name="selectProfile" value="audible" checked>
-  <img src="<?php echo base_url(); ?>asset/img/ear.png"/ width="60" height="60" alt="Auditiva">
-</label>
-
-<label>
-  <input type="radio" name="selectProfile" value="visual">
-  <img src="<?php echo base_url(); ?>asset/img/eye.png"/ width="60" height="60" alt="Visual">
-</label>
-<label>
-  <input type="radio" name="selectProfile" value="none">
-  <img src="<?php echo base_url(); ?>asset/img/x.png"/ width="60" height="60" alt="Ninguna">
-</label>
+                  <input type="radio" name="selectProfile" value="audible" checked>
+                  <img src="<?php echo base_url(); ?>asset/img/ear.png"/ width="60" height="60" alt="Auditiva">
+                </label>
+                <label>
+                  <input type="radio" name="selectProfile" value="visual">
+                  <img src="<?php echo base_url(); ?>asset/img/eye.png"/ width="60" height="60" alt="Visual">
+                </label>
+                <label>
+                  <input type="radio" name="selectProfile" value="none">
+                  <img src="<?php echo base_url(); ?>asset/img/x.png"/ width="60" height="60" alt="Ninguna">
+                </label>
                 </div>
               </div>
             </div>
@@ -259,102 +257,70 @@
                                     <?php } ?>
                             </fieldset>
                             </div>
-                            <div
-                              class="form-group"
-                              role="group"
-                              aria-labelledby="labelCustomInterfaz"
-                            >
-                                <label for="useCustomInterfaz" id="labelCustomInterfaz">
-                                  <?php echo $this->lang->line('customize_interface'); ?>
+                            <div class="form-group">
+                                <label id="labelDiversityProfile" for="selectDiversityProfile">
+                                  <?php echo $this->lang->line('diversity_profile'); ?>:
                                 </label>
                                 <select
-                                  id="useCustomInterfaz"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="personaliceInterfaz"
-                                  aria-labelledby="labelCustomInterfaz"
-                                  role="listbox"
-                                  aria-required="true"
-                                >
+                                  class="form-control input-sm m-bot15"
+                                  id="selectDiversityProfile"
+                                  name="diversityProfile"
+                                  aria-labelledby="labelDiversityProfile"
+                                  aria-required="true">
                                     <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                  <?php }?>
+                                      foreach ($diversity_profiles as $key) { ?>
+                                        <?php if($key->id_ == 11) { ?>
+                                        <option name="diversityProfile" value="<?php echo $key->id_ ?>" selected="selected">
+                                          <?php echo $key->description ?>
+                                        </option>
+                                        <?php } else {?>
+                                          <option name="diversityProfile" value="<?php echo $key->id_ ?>">
+                                          <?php echo $key->description ?>
+                                        </option>
+                                        <?php } ?>
+                                    <?php } ?>
                                 </select>
-
+                            </div>
+                            <div class="form-group">
+                                <label id="labelPrefLOLanguage" for="selectPrefLOLanguage">
+                                  <?php echo $this->lang->line('pref_lo_language'); ?>:
+                                </label>
+                                <select
+                                  class="form-control input-sm m-bot15"
+                                  id="selectPrefLOLanguage"
+                                  name="prefLOLanguage"
+                                  aria-labelledby="labelPrefLOLanguage"
+                                  aria-required="true">
+                                      <option name="prefLOLanguage" value="es" selected="selected">
+                                        <?php echo $this->lang->line('spanish'); ?>
+                                      </option>
+                                      <option name="prefLOLanguage" value="en">
+                                        <?php echo $this->lang->line('english'); ?>
+                                      </option>
+                                      <option name="prefLOLanguage" value="pt">
+                                        <?php echo $this->lang->line('portuguese'); ?>
+                                      </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" id="autoTraslateLOs">
+                                <label for="autoTraslateLOs"><?php echo $this->lang->line('auto_traslate_los_label'); ?></label>
                             </div>
                             <div
                               class="form-group"
                               role="group"
-                              aria-labelledby="labelUseNarrator"
+                              aria-labelledby="labelUseVoiceRecognition"
                             >
-                              <label for="useNarrator" id="labelUseNarrator">
-                                <?php echo $this->lang->line('use_narrator'); ?>
+                              <label for="useVoiceRecognition" id="labelUseVoiceRecognition">
+                                <?php echo $this->lang->line('use_voice_recognition'); ?>
                               </label>
                                 <select
-                                  id="useNarrator"
+                                  id="useVoiceRecognition"
                                   class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useNarrator"
-                                  aria-labelledby="labelUseNarrator"
+                                  name="useVoiceRecognition"
+                                  aria-labelledby="labelUseVoiceRecognition"
                                   role="listbox"
                                   aria-required="true"
-                                >
-                                    <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                <?php }?>
-                                </select>
-                            </div>
-                            <div
-                              class="form-group" 
-                              role="group"
-                              aria-labelledby="labelUseScreenReader"
-                            >
-                              <label for="useScreenReader" id="labelUseScreenReader">
-                                <?php echo $this->lang->line('use_screen_reader'); ?>
-                              </label>
-                                <select
-                                  id="useScreenReader"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useSr"
-                                  aria-labelledby="labelUseScreenReader"
-                                  role="listbox"
-                                  aria-required="true"
-                                >
-                                    <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                <?php }?>
-                                </select>
-                            </div>
-
-                            <div
-                              class="form-group"
-                              role="group"
-                              aria-labelledby="labelUseLscTranslator"
-                            >
-                              <label for="useLSCTranslator" id="labelUseLscTranslator">
-                                <?php echo $this->lang->line('use_lsc'); ?>
-                              </label>
-                                <select
-                                  id="useLSCTranslator"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useLSCTranslator"
-                                  aria-labelledby="labelUseLscTranslator"
-                                  role="listbox"
-                                  aria-required="true"
-                                  class="useAccessibilityTools"
                                 >
                                     <?php
                                         foreach($optsAdapta as $key) {?>
@@ -365,64 +331,44 @@
                                         <?php endif?>
                                     <?php }?>
                                 </select>
-
                             </div>
-
-                            <div
-                              class="form-group"
-                              role="group"
-                              aria-labelledby="labelUseStructuralNav"
-                            >
-                              <label for="useStructuralNav" id="labelUseStructuralNav">
-                                <?php echo $this->lang->line('use_struc_nav'); ?>
-                              </label>
-                                <select
-                                  id="useStructuralNav"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useStructuralNav"
-                                  aria-labelledby="labelUseStructuralNav"
-                                  role="listbox"
-                                  aria-required="true"
-                                  class="useAccessibilityTools"
-                                >
-                                    <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                <?php }?>
-                                </select>
-                            </div>
-
-                            <div
-                              class="form-group"
-                              role="group"
-                              aria-labelledby="labelUseVirtualKeyboard"
-                            >
-                              <label for="useKeyboard" id="labelUseVirtualKeyboard">
-                                <?php echo $this->lang->line('use_virtual_keyboard'); ?>
-                              </label>
-                                <select
-                                  id="useKeyboard"
-                                  class="form-control input-sm m-bot15 useAccessibilityTools"
-                                  name="useKeyboard"
-                                  aria-labelledby="labelUseVirtualKeyboard"
-                                  role="listbox"
-                                  aria-required="true"
-                                  class="useAccessibilityTools"
-                                >
-                                  <?php
-                                        foreach($optsAdapta as $key) {?>
-                                            <?php if($key->option_use_id == 3): ?>
-                                            <option value="<?php echo $key->option_use_id?>" selected><?php echo $key->option_use?></option>
-                                        <?php else:?>
-                                            <option value="<?php echo $key->option_use_id?>"><?php echo $key->option_use?></option>
-                                        <?php endif?>
-                                <?php }?>
-                                </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                              <fieldset aria-labelledby="legendAccessMode">
+                                <legend id="legendAccessMode" style="font-size:1rem;"><?php echo $this->lang->line('access_mode'); ?></legend>
+                                  <br/>
+                                      <label>
+                                        <input
+                                          type="checkbox"
+                                          aria-selected="true"
+                                          name="accessModeAuditive"
+                                          value="auditive"
+                                          checked
+                                        />
+                                        <?php echo $this->lang->line('auditive'); ?>
+                                      </label>
+                                      <label>
+                                        <input
+                                          type="checkbox"
+                                          aria-selected="true"
+                                          name="accessModeTextual"
+                                          value="textual"
+                                          checked
+                                        />
+                                        <?php echo $this->lang->line('textual'); ?>
+                                      </label>
+                                      <label>
+                                        <input
+                                          type="checkbox"
+                                          aria-selected="true"
+                                          name="accessModeVisual"
+                                          value="visual"
+                                          checked
+                                        />
+                                        <?php echo $this->lang->line('visual'); ?>
+                                      </label>
+                                  <br/>
+                            </fieldset>
                         </div>
                         <div class="form-group">
                           <input
@@ -563,7 +509,6 @@
 
       submit: e => {
         return new Promise((resolve, reject) => {
-          console.log(e);
           const form = e.target;
           const newUserAdaptInfo = {
             needCustomInterfaz: parseInt(form.querySelector("select[name='personaliceInterfaz']").value) < 3,
