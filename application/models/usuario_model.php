@@ -228,7 +228,7 @@ function save_score() {
             'use_kb_id'=>$this->input->post('useKeyboard'),
             'diversity_profile'=>$this->input->post('diversityProfile'),
             'pref_lo_language'=>$this->input->post('prefLOLanguage'),
-            //'auto_traslate_los'=>boolval($this->input->post('autoTraslateLOs')),
+            'auto_traslate_los'=>isset($_POST['autoTraslateLOs']) ? 'true' : 'false',
             'use_voice_recognition'=>$this->input->post('useVoiceRecognition')
         );
         $data2 = array(
@@ -420,8 +420,8 @@ function save_score() {
 
     // me dice si un usuario necesita adaptar la interfaz o no
     public function get_need_adapta_interfaz($username){
-        $this->db->select('use_adapta_interfaz_id');
-    	  $this->db->from('users');
+        $this->db->select('adapta_interfaz_id');
+    	  $this->db->from('use_student');
     	  $this->db->where('use_username', $username);
         $this->db->limit(1);
     	  $query = $this->db->get();
@@ -434,7 +434,7 @@ function save_score() {
     // me dice si un usuario necesita el traductor de español a lenguaje de señas colombiano
     public function get_need_translator_lsc($username){
         $this->db->select('use_traslator_lsc_id');
-    	  $this->db->from('users');
+    	  $this->db->from('use_student');
     	  $this->db->where('use_username', $username);
         $this->db->limit(1);
     	  $query = $this->db->get();
@@ -447,7 +447,7 @@ function save_score() {
     // me dice si un usuario necesita usar el narrador
     public function get_need_narrator($username){
         $this->db->select('use_narrator_id');
-        $this->db->from('users');
+        $this->db->from('use_student');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -458,7 +458,7 @@ function save_score() {
     // me dice si un usuario necesita usar el screen reader
     public function get_need_sr($username){
         $this->db->select('use_screen_reader_id');
-        $this->db->from('users');
+        $this->db->from('use_student');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -468,7 +468,7 @@ function save_score() {
 
     public function get_need_kb($username){
         $this->db->select('use_kb_id');
-        $this->db->from('users');
+        $this->db->from('use_student');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -478,7 +478,7 @@ function save_score() {
 
     public function get_need_structural_nav($username){
         $this->db->select('use_structural_nav_id');
-        $this->db->from('users');
+        $this->db->from('use_student');
         $this->db->where('use_username', $username);
         $this->db->limit(1);
         $query = $this->db->get();
@@ -541,7 +541,7 @@ function save_score() {
             "use_apellido"        =>  $this->input->post("apellidos"),
             "use_email"           =>  $this->input->post("mail"),
             "use_rol_id"          =>  $this->input->post("tipoU"),
-            "use_adapta_interfaz_id" => $optInterfaz,
+            "adapta_interfaz_id" => $optInterfaz,
             "use_narrator_id" => $optNarrator,
             "use_screen_reader_id" => $optScreenReader,
             "use_traslator_lsc_id" => $optLSCTranslator,
@@ -667,10 +667,11 @@ function save_score() {
     function insert_access_mode() {
         $access_mode_data = array(
             'use_username' => $this->input->post('username'),
-            'auditive' => boolval($this->input->post('auditive')),
-            'textual' => boolval($this->input->post('textual')),
-            'visual' => boolval($this->input->post('visual'))
+            'auditive' => isset($_POST['accessModeAuditive']) ? 'true' : 'false',
+            'textual' => isset($_POST['accessModeTextual']) ? 'true' : 'false',
+            'visual' => isset($_POST['accessModeVisual']) ? 'true' : 'false'
         );
+        var_dump($access_mode_data);
         $this->db->insert('use_access_mode', $access_mode_data);
     }
 }

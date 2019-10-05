@@ -57,7 +57,6 @@
           </div>
         </div>
       </div>
-        <br/>
         <div class="card border-0">
             <h1>
               <?php echo $this->lang->line('signup'); ?> FROAC
@@ -303,7 +302,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" id="autoTraslateLOs">
+                                <input type="checkbox" id="autoTraslateLOs" name="autoTraslateLOs">
                                 <label for="autoTraslateLOs"><?php echo $this->lang->line('auto_traslate_los_label'); ?></label>
                             </div>
                         <div class="form-group">
@@ -315,7 +314,6 @@
                                           type="checkbox"
                                           aria-selected="true"
                                           name="accessModeAuditive"
-                                          value="auditive"
                                           checked
                                         />
                                         <?php echo $this->lang->line('auditive'); ?>
@@ -325,7 +323,6 @@
                                           type="checkbox"
                                           aria-selected="true"
                                           name="accessModeTextual"
-                                          value="textual"
                                           checked
                                         />
                                         <?php echo $this->lang->line('textual'); ?>
@@ -335,7 +332,6 @@
                                           type="checkbox"
                                           aria-selected="true"
                                           name="accessModeVisual"
-                                          value="visual"
                                           checked
                                         />
                                         <?php echo $this->lang->line('visual'); ?>

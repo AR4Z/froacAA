@@ -820,7 +820,7 @@ class Usuario extends CI_Controller {
         
         // pregunto si el usuario necesita adaptaciones de la interfaz
         $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($id);
-        $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+        $use_adapta_interfaz = $use_adapta_interfaz[0]["adapta_interfaz_id"];
 
         // pregunto si el usuario necesita usar narrador
         $use_narrator = $this->usuario_model->get_need_narrator($id);
