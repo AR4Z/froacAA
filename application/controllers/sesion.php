@@ -65,7 +65,7 @@ class Sesion extends CI_Controller {
     		if ($rol[0]['use_rol_id']>1) {
                 // pregunto si el usuario necesita adaptaciones de la interfaz
                 $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
-                $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+                $use_adapta_interfaz = $use_adapta_interfaz[0]["adapta_interfaz_id"];
 
                 // pregunto si el usuario necesita usar narrador
                 $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);

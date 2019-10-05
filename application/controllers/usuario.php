@@ -459,7 +459,7 @@ class Usuario extends CI_Controller {
     public function get_data_accessibility_bar(){
       $session_data = $this->session->userdata('logged_in');
       $data_accessibility_bar = array();
-      $need_custom_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username'])[0]["use_adapta_interfaz_id"];
+      $need_custom_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username'])[0]["adapta_interfaz_id"];
       $need_structural_nav = $this->usuario_model->get_need_structural_nav($session_data['username'])[0]['use_structural_nav_id']; 
       $need_narrator =  $this->usuario_model->get_need_narrator($session_data['username'])[0]['use_narrator_id']; 
       $need_screen_reader = $this->usuario_model->get_need_sr($session_data['username'])[0]['use_screen_reader_id'];
