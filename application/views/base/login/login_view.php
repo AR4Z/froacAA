@@ -1,11 +1,15 @@
 <?php $this->load->view('base/base/1_base_head');?>
 <?php $this->load->view('base/base/accessibility/panel');?>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <a id="accessibilityBarButton" class="btn btn-success pull-right" data-toggle="collapse" href="#accessibilityBar" role="button" aria-expanded="false" aria-controls="collapseExample">ACCESIBILIDAD</a>
-        </div>
-    </div>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <a id="accessibilityBarButton" class="btn btn-success" data-toggle="collapse" href="#accessibilityBar" role="button"
+  aria-expanded="false" aria-controls="accessibilityBar">
+    <?php echo $this->lang->line('accessibility'); ?>
+  </a>
+  <a  id="accessibilityBarHelpButton" class="btn btn-info" role="button">
+    <?php echo $this->lang->line('help'); ?> 
+  </a>
+</div>
     <form role="form" aria-label="Iniciar seción en FROAC" class="form-signin" action="<?php echo base_url()?>index.php/sesion" method="POST">
         <p class="form-signin-heading">Federación de Repositorios de Objetos de Aprendizaje Colombia <br><br>
             <img src="<?php echo base_url() ?>asset/img/logo2.png" alt="Logo FROAC" width="50"></p>
@@ -39,4 +43,4 @@
     </form>
 </div>
 
-    <?php $this->load->view('base/base/4_base_footer');?>
+<?php $this->load->view('base/base/4_base_footer');?>
