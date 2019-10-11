@@ -253,3 +253,7 @@ $lang["textual_alternative"] = "Alternante textual";
 $lang["ls"] = "Linguagem gestual";
 $lang["subtitles"] = "Subtiutlos";
 $lang["adaptation_type"] = "Tipo de adaptação";
+$lang["input_device"] = "Dispositivo de entrada";
+$lang["total_control_keyboard"] = "Controlo total com teclado";
+$lang["total_control_mouse"] = "Controle total com o mouse";
+$lang["control_mouse_keyboard"] = "Controle de mouse e teclado";

@@ -256,3 +256,7 @@ $lang["textual_alternative"] = "Alternating textual";
 $lang["ls"] = "Sign Language";
 $lang["subtitles"] = "Subtitles";
 $lang["adaptation_type"] = "Adaptation type";
+$lang["input_device"] = "Input device";
+$lang["total_control_keyboard"] = "Full control with keyboard";
+$lang["total_control_mouse"] = "Full control with mouse";
+$lang["control_mouse_keyboard"] = "Mouse and keyboard control";
