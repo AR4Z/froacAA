@@ -795,6 +795,7 @@ class Usuario extends CI_Controller {
         }
 
         $this->usuario_model->insert_access_mode();
+        $this->usuario_model->insert_adaptation_type();
 
         // esto agrega al usuario para usar las adaptaciones de interfaz el narrador
         // o el screen segun lo que el necesite

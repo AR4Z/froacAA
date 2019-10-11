@@ -229,7 +229,8 @@ function save_score() {
             'diversity_profile'=>$this->input->post('diversityProfile'),
             'pref_lo_language'=>$this->input->post('prefLOLanguage'),
             'auto_traslate_los'=>isset($_POST['autoTraslateLOs']) ? 'true' : 'false',
-            'use_voice_recognition'=>$this->input->post('useVoiceRecognition')
+            'use_voice_recognition'=>$this->input->post('useVoiceRecognition'),
+            'id_input_device'=>$this->input->post('inputDevice')
         );
         $data2 = array(
             'use_username' => $this->input->post('username'),
@@ -671,7 +672,18 @@ function save_score() {
             'textual' => isset($_POST['accessModeTextual']) ? 'true' : 'false',
             'visual' => isset($_POST['accessModeVisual']) ? 'true' : 'false'
         );
-        var_dump($access_mode_data);
         $this->db->insert('use_access_mode', $access_mode_data);
+    }
+
+    function insert_adaptation_type() {
+        $access_mode_data = array(
+            'use_username' => $this->input->post('username'),
+            'audio_description' => isset($_POST['adaptationTypeAudioDescription']) ? 'true' : 'false',
+            'hearing_alternative' => isset($_POST['adaptationTypeHearingAlternative']) ? 'true' : 'false',
+            'textual_alternative' => isset($_POST['adaptationTypeTextualAlternative']) ? 'true' : 'false',
+            'lsc' => isset($_POST['adaptationTypeLSC']) ? 'true' : 'false',
+            'subtitles' =>  isset($_POST['adaptationTypeSubtitles']) ? 'true' : 'false'
+        );
+        $this->db->insert('use_adaptation_type', $access_mode_data);
     }
 }
