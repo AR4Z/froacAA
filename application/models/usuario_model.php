@@ -686,4 +686,28 @@ function save_score() {
         );
         $this->db->insert('use_adaptation_type', $access_mode_data);
     }
+
+    function save_context($username) {
+        var_dump($_POST);
+        $context_data = array(
+            'use_username' => 'ar4z',
+            'device_id' => $this->input->post('deviceId'),
+            'microphone' => isset($_POST['has_microphone']) ? 'true' : 'false',
+            'speakers' => isset($_POST['has_speakers']) ? 'true' : 'false',
+            'keyboard' => isset($_POST['has_keyboard']) ? 'true' : 'false',
+            'mouse' => isset($_POST['mouse']) ? 'true' : 'false',
+            'browser' =>$this->input->post('browser'),
+            'internet_connection_id' => 2,
+            'noise_level_id' =>$this->input->post('noiseLevel'),
+            'lighting_level_id'=>$this->input->post('lightLevel'),
+            'external_screen_reader'=> isset($_POST['screen_reader']) ? 'true' : 'false',
+            'external_magnifier'=> isset($_POST['magnifier']) ? 'true' : 'false',
+            'external_virtual_keyboard'=> isset($_POST['virtual_kb']) ? 'true' : 'false',
+            'external_voice_recognition'=> isset($_POST['voice_recognition']) ? 'true' : 'false',
+            'educational_purpose_id'=>$this->input->post('educationalPurpose'),
+            'available_time'=>$this->input->post('availableTime')
+        );
+
+        $this->db->insert('use_context', $context_data);
+    }
 }

@@ -125,6 +125,7 @@ class AccessibilityBar {
       },
       'none' : {}
     }
+    this.magnifier = new Magnifier()
   }
 
   /**

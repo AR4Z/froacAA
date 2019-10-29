@@ -60,10 +60,6 @@ class Tour {
           title: 'Configuración del cursor',
           description: 'Cambiar el tamaño del cursor y añadir un rastro que le permita ubicar rápidamente a este.'
         },
-        'card-config-colors': {
-          title: 'Configuración de colores',
-          description: 'Cambiar el contraste de las imagenes y elementos del contenido.'
-        },
         'card-narrator-speed': {
           title: 'Velocidad de lectura',
           description: 'Elige entre estas opciones la velocidad con la cual se leeran los objetos de aprendizaje.'
@@ -186,10 +182,6 @@ class Tour {
           title: 'Configurações do cursor',
           description: 'Altere o tamanho do cursor e adicione uma trilha que permita localizá-lo rapidamente.'
         },
-        'card-config-colors': {
-          title: 'Configuração de cores',
-          description: 'Altere o contraste das imagens e dos elementos de conteúdo.'
-        },
         'card-narrator-speed': {
           title: 'Velocidade de leitura',
           description: 'Escolha entre essas opções a velocidade com que os objetos de aprendizagem serão lidos.'
@@ -303,10 +295,6 @@ class Tour {
         'card-config-cursor': {
           title: 'Cursor settings',
           description: 'Change the size of the cursor and add a trail that allows you to quickly locate it.'
-        },
-        'card-config-colors': {
-          title: 'Configuration of colors',
-          description: 'Change the contrast of the images and content elements.'
         },
         'card-narrator-speed': {
           title: 'Reading speed',
@@ -744,20 +732,6 @@ class Tour {
           }
         },
         {
-          element: '#card-config-colors',
-          popover: {
-            title: `${ this.messages[userLang]['card-config-colors'].title }`,
-            description: `
-              <p class="description">
-                ${ this.messages[userLang]['card-config-colors'].description }
-              </p>
-              <br/>
-              ${ this.buttons }
-            `,
-            position: 'bottom'
-          }
-        },
-        {
           element: '#card-narrator-speed',
           popover: {
             title: `${ this.messages[userLang]['card-narrator-speed'].title }`,
@@ -1088,20 +1062,6 @@ class Tour {
             description: `
             <p class="description">
               ${ this.messages[userLang]['card-config-cursor'].description }
-            </p>
-            <br/>
-            ${ this.buttons }
-          `,
-            position: 'bottom'
-          }
-        },
-        {
-          element: '#card-config-colors',
-          popover: {
-            title: `${ this.messages[userLang]['card-config-colors'].title }`,
-            description: `
-            <p class="description">
-              ${ this.messages[userLang]['card-config-colors'].description }
             </p>
             <br/>
             ${ this.buttons }

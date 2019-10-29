@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'postgres';
+$db['default']['username'] = 'froac';
 $db['default']['password'] = '%froac$';
-$db['default']['database'] = 'froacaa';
+$db['default']['database'] = 'froacAA';
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

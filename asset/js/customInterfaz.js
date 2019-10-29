@@ -51,6 +51,7 @@ class CustomInterfaz {
      * 5 => yellow - black
      * 6 => gray
      * 7 => custom
+     * 8 => reverse-colors
      * @type {number}
      */
     this.contrastColorsId = preferencesInterfaz.contrast_colors_id
@@ -59,21 +60,6 @@ class CustomInterfaz {
     /** @type {CustomColors} */
     this.customColors = preferencesInterfaz.custom_colors
 
-    if(preferencesInterfaz.invert_color_general == 'f') {
-      preferencesInterfaz.invert_color_general = false  
-    } else if(preferencesInterfaz.invert_color_general == 't'){
-      preferencesInterfaz.invert_color_general = true
-    }
-
-    if(preferencesInterfaz.invert_color_image == 'f') {
-      preferencesInterfaz.invert_color_image = false  
-    } else if(preferencesInterfaz.invert_color_image == 't'){
-      preferencesInterfaz.invert_color_image = true
-    }
-    /** @type {boolean} */
-    this.invertColorGeneral = preferencesInterfaz.invert_color_general
-    /** @type {boolean} */    
-    this.invertColorImage = preferencesInterfaz.invert_color_image
     /** @type {string} */
     this.trailCursorColor = preferencesInterfaz.trail_cursor_color
     /** @type {string} */
@@ -81,7 +67,7 @@ class CustomInterfaz {
     /** @type {CursorTrail} */
     this.cursorTrail = new CursorTrail(0)
 
-    if(idView == 'lo_view'){
+    if (idView == 'lo_view') {
       /** @type {LearningObject} */
       this.learningObject = window.learningObject
       /** @type {Document} */
@@ -96,8 +82,6 @@ class CustomInterfaz {
     this._addEventChangeContrast()
     this._addEventChangeCursorSize()
     this._addEventChangeTrailCursorSize()
-    this._addEventChangeInvertGeneral()
-    this._addEventChangeInvertImages()
 
     this._setValuesInLocalStorage()
     this._loadCustomInterfaz()
@@ -113,8 +97,6 @@ class CustomInterfaz {
     localStorage.setItem('color_cursor', this.cursorColor)
     localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
-    localStorage.setItem('invert_color_general', this.invertColorGeneral)
-    localStorage.setItem('invert_color_image', this.invertColorImage)
     localStorage.setItem('contrast_colors_id', this.contrastColorsId)
     localStorage.setItem('font_size', this.fontSize)
     localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
@@ -131,7 +113,7 @@ class CustomInterfaz {
   _loadCustomInterfaz() {
     document.querySelector(`input[name='fontSize']`).value = parseInt(this.fontSize)
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
-    
+
     document.querySelector(`input[name='interlineSpaceSize']`).value = parseFloat(this.sizeLineSpacing)
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
 
@@ -139,31 +121,26 @@ class CustomInterfaz {
     document.querySelector('input[name="foregroundColor"]').dispatchEvent(new Event('change'))
     document.querySelector('input[name="backgroundColor"]').value = this.customColors.background_colour
     document.querySelector('input[name="backgroundColor"]').dispatchEvent(new Event('change'))
-    document.querySelector('input[name="highlightColor"]').value = this.customColors.highlight_colour    
-    document.querySelector('input[name="highlightColor"]').dispatchEvent(new Event('change'))    
-    document.querySelector('input[name="linkColor"]').value = this.customColors.link_colour    
-    document.querySelector('input[name="linkColor"]').dispatchEvent(new Event('change'))     
-    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).checked = true
-    document.querySelector(`input[name='radioOptionscontrast'][value='${ this.contrastColorsId }']`).dispatchEvent(new Event('change'))
+    document.querySelector('input[name="highlightColor"]').value = this.customColors.highlight_colour
+    document.querySelector('input[name="highlightColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="linkColor"]').value = this.customColors.link_colour
+    document.querySelector('input[name="linkColor"]').dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='radioOptionscontrast'][value='${this.contrastColorsId}']`).checked = true
+    document.querySelector(`input[name='radioOptionscontrast'][value='${this.contrastColorsId}']`).dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='type-font'][value='${ this.fontTypeId }']`).checked = true
-    document.querySelector(`input[name='type-font'][value='${ this.fontTypeId }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='type-font'][value='${this.fontTypeId}']`).checked = true
+    document.querySelector(`input[name='type-font'][value='${this.fontTypeId}']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='colorCursorTrails']`).value = this.trailCursorColor
     document.querySelector(`input[name='colorCursorTrails']`).dispatchEvent(new Event('change'))
-    document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${ this.trailCursorSizeId }']`).checked = true
-    document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${ this.trailCursorSizeId }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${this.trailCursorSizeId}']`).checked = true
+    document.querySelector(`input[name='radioOptionsSizeCursorTrails'][value='${this.trailCursorSizeId}']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='colorMousePointer']`).value = this.cursorColor
     document.querySelector(`input[name='colorMousePointer']`).dispatchEvent(new Event('change'))
-    document.querySelector(`input[name='radioOptionsSizeCursor'][value='${ this.cursorSizeId }']`).checked = true
-    document.querySelector(`input[name='radioOptionsSizeCursor'][value='${ this.cursorSizeId }']`).dispatchEvent(new Event('change'))
-  
-    document.querySelector(`input[name='invertImages']`).checked = this.invertColorImage == 't' || this.invertColorImage == 'true' ? true : false
-    document.querySelector(`input[name='invertImages']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='radioOptionsSizeCursor'][value='${this.cursorSizeId}']`).checked = true
+    document.querySelector(`input[name='radioOptionsSizeCursor'][value='${this.cursorSizeId}']`).dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='invertGeneral']`).checked = this.invertColorGeneral == 't' || this.invertColorGeneral == 'true' ? true : false
-    document.querySelector(`input[name='invertGeneral']`).dispatchEvent(new Event('change'))
 
   }
 
@@ -188,7 +165,7 @@ class CustomInterfaz {
     document.querySelector(`input[name='fontSize']`).setAttribute('default', true)
     document.querySelector(`input[name='fontSize']`).value = 12
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
-    
+
     document.querySelector(`input[name='interlineSpaceSize']`).setAttribute('default', true)
     document.querySelector(`input[name='interlineSpaceSize']`).value = 1.5
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
@@ -196,7 +173,7 @@ class CustomInterfaz {
     document.querySelector("input[name='radioOptionscontrast']").setAttribute('default', true)
     document.querySelector("input[name='radioOptionscontrast'][value='1']").checked = true
     document.querySelector("input[name='radioOptionscontrast'][value='1']").dispatchEvent(new Event('change'))
-    
+
     document.querySelector("input[name='type-font']").setAttribute('default', true)
     document.querySelector("input[name='type-font'][value='1']").checked = true
     document.querySelector("input[name='type-font'][value='1']").dispatchEvent(new Event('change'))
@@ -204,32 +181,25 @@ class CustomInterfaz {
     document.querySelector("input[name='radioOptionsSizeCursorTrails']").setAttribute('default', true)
     document.querySelector("input[name='radioOptionsSizeCursorTrails'][value='1']").checked = true
     document.querySelector("input[name='radioOptionsSizeCursorTrails'][value='1']").dispatchEvent(new Event('change'))
-  
+
     document.querySelector("input[name='radioOptionsSizeCursor']").setAttribute('default', true)
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").checked = true
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").dispatchEvent(new Event('change'))
-    
-    document.querySelector(`input[name='invertImages']`).setAttribute('default', true)
-    document.querySelector(`input[name='invertImages']`).checked = false
-    document.querySelector(`input[name='invertImages']`).dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='invertGeneral']`).setAttribute('default', true)
-    document.querySelector(`input[name='invertGeneral']`).checked =  false
-    document.querySelector(`input[name='invertGeneral']`).dispatchEvent(new Event('change'))
 
-    if(!all) {
+    if (!all) {
       window.accessibilityBar.updatePreferencesInterfaz({
-          color_cursor: 'rgb(255,18,18)',
-          contrast_colors_id: 1,
-          cursor_size_id: 1,
-          cursor_url: 'auto',
-          font_size:  12,
-          font_type_id:  1,
-          invert_color_general:  'false',
-          invert_color_image: 'false',
-          size_line_spacing: 1.5,
-          trail_cursor_color: 'rgb(255,18,18)',
-          trail_cursor_size_id: 1
+        color_cursor: 'rgb(255,18,18)',
+        contrast_colors_id: 1,
+        cursor_size_id: 1,
+        cursor_url: 'auto',
+        font_size: 12,
+        font_type_id: 1,
+        invert_color_general: 'false',
+        invert_color_image: 'false',
+        size_line_spacing: 1.5,
+        trail_cursor_color: 'rgb(255,18,18)',
+        trail_cursor_size_id: 1
       })
     }
   }
@@ -252,7 +222,7 @@ class CustomInterfaz {
    */
   _addEventChangeSizeLineSpacing() {
     let inputSizeLineSpacing = document.querySelector('input[name="interlineSpaceSize"]')
-  
+
     inputSizeLineSpacing.addEventListener('change', this.changeSizeLine.bind(this))
   }
 
@@ -286,7 +256,7 @@ class CustomInterfaz {
     document.getElementById('div-color-background').style.display = 'block'
     document.getElementById('div-color-link').style.display = 'block'
     document.getElementById('div-color-highlight').style.display = 'block'
-  
+
     this._addEventChangeBackgroundColor()
     this._addEventChangeForegroundColor()
     this._addEventChangeHighlightColor()
@@ -329,7 +299,7 @@ class CustomInterfaz {
    */
   _addEventChangeFontType() {
     let optionsFontType = document.querySelectorAll('input[name="type-font"]')
-  
+
     Array.prototype.forEach.call(optionsFontType, opt => opt.addEventListener('change', this.changeFontType.bind(this)))
   }
 
@@ -340,11 +310,11 @@ class CustomInterfaz {
    */
   _addEventChangeCursorSize() {
     let optionsCursorSize = document.querySelectorAll('input[name="radioOptionsSizeCursor"]')
-  
+
     Array.prototype.forEach.call(optionsCursorSize, opt => opt.addEventListener('change', (e) => {
       let containerColorCursor = document.getElementById('div-color-cursor')
-      
-      if(parseInt(e.target.value) != 1) {
+
+      if (parseInt(e.target.value) != 1) {
         containerColorCursor.style.display = 'block'
         this._addEventChangeColorCursor()
       } else {
@@ -352,7 +322,7 @@ class CustomInterfaz {
       }
 
       this.changeCursorSize()
-    }))    
+    }))
   }
 
   /**
@@ -377,7 +347,7 @@ class CustomInterfaz {
     Array.prototype.forEach.call(optionsTrailCursorSize, opt => opt.addEventListener('change', (e) => {
       let containerTrailCursorColor = document.getElementById('div-color-cursor-trails')
 
-      if((parseInt(e.target.value) != 1)) {
+      if ((parseInt(e.target.value) != 1)) {
         containerTrailCursorColor.style.display = 'block'
 
         this._addEventChangeTrailCursorColor()
@@ -445,28 +415,6 @@ class CustomInterfaz {
   }
 
   /**
-   * Listen change for invert color interface checkbox
-   * @private
-   * @returns {void}
-   */
-  _addEventChangeInvertGeneral() {
-    let checkboxInvertGeneral = document.getElementsByName('invertGeneral')[0]
-    
-    checkboxInvertGeneral.addEventListener('change', this.changeInvertGeneral.bind(this))
-  }
-
-  /**
-   * Listen change for invert color image checkbox
-   * @private
-   * @returns {void}
-   */
-  _addEventChangeInvertImages() {
-    let checkboxInvertImages = document.getElementsByName('invertImages')[0]
-
-    checkboxInvertImages.addEventListener('change', this.changeInvertImages.bind(this))
-  }
-
-  /**
    * Apply changes font size in user interface and update value in accessibility bar data
    * @public
    * @returns {void}
@@ -477,13 +425,13 @@ class CustomInterfaz {
     let isDefault = inputFontSize.default == 'true'
 
     this.fontSize = parseInt(inputFontSize.value)
-    html.style.fontSize = `${ this.fontSize }px`
+    html.style.fontSize = `${this.fontSize}px`
 
-    if(this.learningObject) {
-      this.learningObjectDoc.querySelector('html').style.fontSize = `${ this.fontSize }px`
+    if (this.learningObject) {
+      this.learningObjectDoc.querySelector('html').style.fontSize = `${this.fontSize}px`
     }
 
-    if((this.fontSize != parseInt(localStorage.getItem('font_size'))) && !isDefault){
+    if ((this.fontSize != parseInt(localStorage.getItem('font_size'))) && !isDefault) {
       accessibilityBar.updatePreferencesInterfaz({
         font_size: this.fontSize
       })
@@ -491,7 +439,7 @@ class CustomInterfaz {
 
     inputFontSize.setAttribute('default', false)
 
-    localStorage.setItem('font_size', this.fontSize) 
+    localStorage.setItem('font_size', this.fontSize)
   }
 
   /**
@@ -505,21 +453,21 @@ class CustomInterfaz {
     let isDefault = inputSizeLine.default == 'true'
 
     this.sizeLineSpacing = parseFloat(inputSizeLine.value)
-    body.style.lineHeight = `${ this.sizeLineSpacing }`
-    
-    if(this.learningObject) {
-      this.learningObjectDoc.querySelector('body').style.lineHeight = `${ this.sizeLineSpacing }`
+    body.style.lineHeight = `${this.sizeLineSpacing}`
+
+    if (this.learningObject) {
+      this.learningObjectDoc.querySelector('body').style.lineHeight = `${this.sizeLineSpacing}`
     }
 
-    if((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing'))) && !isDefault){
+    if ((this.sizeLineSpacing != parseFloat(localStorage.getItem('size_line_spacing'))) && !isDefault) {
       window.accessibilityBar.updatePreferencesInterfaz({
         size_line_spacing: this.sizeLineSpacing
       })
     }
 
     inputSizeLine.setAttribute('default', false)
-    
-    localStorage.setItem('size_line_spacing', this.sizeLineSpacing)    
+
+    localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
   }
 
   /**
@@ -538,30 +486,39 @@ class CustomInterfaz {
       4: 'fl-theme-by',
       5: 'fl-theme-yb',
       6: 'fl-theme-lgdg',
-      7: 'customized'
+      7: 'customized',
+      8: 'reverse-colors'
     }
 
-    
-    let classNameContrastSelected = classNameContrastOptions[optionContrastSelectedValue]
-    document.querySelector('body').classList.remove(classNameContrastOptions[this.contrastColorsId])
-    document.querySelector('body').classList.add(classNameContrastSelected)
-        
 
-    if(this.learningObject) {
-      if(!this.learningObjectDoc.getElementById('contrast-styles')) {
+    let classNameContrastSelected = classNameContrastOptions[optionContrastSelectedValue]
+
+    document.querySelector('body').classList.remove(classNameContrastOptions[this.contrastColorsId])
+    document.querySelector('body').style.filter = 'invert(0)'
+    document.querySelector('body').classList.add(classNameContrastSelected)
+    if (classNameContrastSelected === 'reverse-colors') {
+      document.querySelector('body').style.filter = 'invert(1)'
+    }
+
+
+    if (this.learningObject) {
+      if (!this.learningObjectDoc.getElementById('contrast-styles')) {
         let linkContrastStyles = document.getElementById('contrast-styles').cloneNode()
         this.learningObjectDoc.querySelector('head').appendChild(linkContrastStyles)
       }
 
-      if(this.learningObjectDoc.querySelector('body').classList.contains(classNameContrastOptions[this.contrastColorsId])) {
+      if (this.learningObjectDoc.querySelector('body').classList.contains(classNameContrastOptions[this.contrastColorsId])) {
         this.learningObjectDoc.querySelector('body').classList.remove(classNameContrastOptions[this.contrastColorsId])
       }
 
       this.learningObjectDoc.querySelector('body').classList.add(classNameContrastSelected)
+      if (classNameContrastSelected === 'reverse-colors') {
+        this.learningObjectDoc.querySelector('body').style.filter = 'invert(1)'
+      }
     }
 
     this.contrastColorsId = optionContrastSelectedValue
-    if((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id'))) && !isDefault) {
+    if ((this.contrastColorsId != parseInt(localStorage.getItem('contrast_colors_id'))) && !isDefault) {
       window.accessibilityBar.updatePreferencesInterfaz({
         contrast_colors_id: this.contrastColorsId
       })
@@ -581,20 +538,20 @@ class CustomInterfaz {
     let inputColor = document.getElementsByName('foregroundColor')[0]
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
-    document.documentElement.style.setProperty('--foreground-color', `#${ color }`)
-    if(this.learningObject) {
-      this.learningObjectDoc.documentElement.style.setProperty('--foreground-color', `#${ color }`)  
+    document.documentElement.style.setProperty('--foreground-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--foreground-color', `#${color}`)
     }
 
     this.customColors.foreground_colour = color
 
-    if((this.customColors.foreground_colour != localStorage.getItem('foreground_color')) && !isDefault){
+    if ((this.customColors.foreground_colour != localStorage.getItem('foreground_color')) && !isDefault) {
       window.accessibilityBar.updateCustomColors({
         foreground_colour: this.customColors.foreground_colour
       })
     }
 
-    
+
 
     inputColor.setAttribute('default', false)
 
@@ -610,21 +567,21 @@ class CustomInterfaz {
     let inputColor = document.getElementsByName('backgroundColor')[0]
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
-    document.documentElement.style.setProperty('--background-color', `#${ color }`)
-    if(this.learningObject) {
-      this.learningObjectDoc.documentElement.style.setProperty('--background-color', `#${ color }`)
+    document.documentElement.style.setProperty('--background-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--background-color', `#${color}`)
     }
-    
+
     this.customColors.background_colour = color
 
-    if((this.customColors.background_colour != localStorage.getItem('background_color')) && !isDefault){
+    if ((this.customColors.background_colour != localStorage.getItem('background_color')) && !isDefault) {
       window.accessibilityBar.updateCustomColors({
         background_colour: this.customColors.background_colour
       })
     }
 
     inputColor.setAttribute('default', false)
-    
+
     localStorage.setItem('background_color', this.customColors.background_colour)
   }
 
@@ -637,14 +594,14 @@ class CustomInterfaz {
     let inputColor = document.getElementsByName('linkColor')[0]
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
-    document.documentElement.style.setProperty('--link-color', `#${ color }`)
-    if(this.learningObject) {
-      this.learningObjectDoc.documentElement.style.setProperty('--link-color', `#${ color }`)
+    document.documentElement.style.setProperty('--link-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--link-color', `#${color}`)
     }
 
     this.customColors.link_colour = color
 
-    if((this.customColors.link_colour != localStorage.getItem('link_color')) && !isDefault){
+    if ((this.customColors.link_colour != localStorage.getItem('link_color')) && !isDefault) {
       window.accessibilityBar.updateCustomColors({
         link_colour: this.customColors.link_colour
       })
@@ -664,14 +621,14 @@ class CustomInterfaz {
     let inputColor = document.getElementsByName('highlightColor')[0]
     let color = inputColor.value
     let isDefault = inputColor.default == 'true'
-    document.documentElement.style.setProperty('--highlight-color', `#${ color }`)
-    if(this.learningObject) {
-      this.learningObjectDoc.documentElement.style.setProperty('--highlight-color', `#${ color }`)
+    document.documentElement.style.setProperty('--highlight-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--highlight-color', `#${color}`)
     }
 
     this.customColors.highlight_colour = color
 
-    if((this.customColors.highlight_colour != localStorage.getItem('highlight_color')) && !isDefault){
+    if ((this.customColors.highlight_colour != localStorage.getItem('highlight_color')) && !isDefault) {
       window.accessibilityBar.updateCustomColors({
         highlight_colour: this.customColors.highlight_colour
       })
@@ -707,8 +664,8 @@ class CustomInterfaz {
 
     let body = document.querySelector('body')
     body.style.fontFamily = validFonts[optionFontSelected]
-    if(this.learningObject) {
-      if(!this.learningObjectDoc.getElementById(idFonts[optionFontSelected]) && optionFontSelected != 1) {
+    if (this.learningObject) {
+      if (!this.learningObjectDoc.getElementById(idFonts[optionFontSelected]) && optionFontSelected != 1) {
         let linkFont = document.getElementById(idFonts[optionFontSelected]).cloneNode()
         this.learningObjectDoc.querySelector('head').appendChild(linkFont)
       }
@@ -716,7 +673,7 @@ class CustomInterfaz {
       this.learningObjectDoc.querySelector('body').style.fontFamily = validFonts[optionFontSelected]
     }
 
-    if((this.fontTypeId != parseInt(localStorage.getItem('font_type_id'))) && !isDefault) {
+    if ((this.fontTypeId != parseInt(localStorage.getItem('font_type_id'))) && !isDefault) {
       window.accessibilityBar.updatePreferencesInterfaz({
         font_type_id: this.fontTypeId
       })
@@ -736,7 +693,7 @@ class CustomInterfaz {
     let optionSelectedElm = Array.from(document.getElementsByName('radioOptionsSizeCursor')).filter(radioOption => radioOption.checked)[0]
     let optionSizeSelected = parseInt(optionSelectedElm.value)
     let isDefault = optionSelectedElm.default == 'true'
-    let cursorColor = document.getElementsByName('colorMousePointer')[0].value    
+    let cursorColor = document.getElementsByName('colorMousePointer')[0].value
     this.cursorSizeId = optionSizeSelected
     this.cursorColor = cursorColor
     let validSize = {
@@ -748,29 +705,29 @@ class CustomInterfaz {
 
     let sizeSelected = validSize[optionSizeSelected]
     let body = document.querySelector('body')
-    
-    if(sizeSelected != 0) {
+
+    if (sizeSelected != 0) {
       $('body').awesomeCursor('mouse-pointer', {
         size: sizeSelected,
-        color: `#${ this.cursorColor }`
+        color: `#${this.cursorColor}`
       })
     } else {
       body.style.cursor = 'auto'
     }
 
-    if(this.learningObject) {
+    if (this.learningObject) {
       this.learningObjectDoc.querySelector('body').style.cursor = document.querySelector('body').style.cursor
     }
 
-    if((this.cursorSizeId != localStorage.getItem('cursor_size_id') || 
-    this.cursorColor != localStorage.getItem('color_cursor')) && !isDefault) {
+    if ((this.cursorSizeId != localStorage.getItem('cursor_size_id') ||
+      this.cursorColor != localStorage.getItem('color_cursor')) && !isDefault) {
       window.accessibilityBar.updatePreferencesInterfaz({
         cursor_size_id: this.cursorSizeId,
         color_cursor: this.cursorColor,
         cursor_url: body.style.cursor
       })
     }
-    
+
     optionSelectedElm.setAttribute('default', false)
 
     localStorage.setItem('cursor_size_id', this.cursorSizeId)
@@ -788,10 +745,10 @@ class CustomInterfaz {
     let optionCursorTrailSelected = parseInt(optionSelectedElm.value)
     let isDefault = optionSelectedElm.default == 'true'
     let colorCursorTrail = document.getElementsByName('colorCursorTrails')[0].value
-    
+
     this.trailCursorSizeId = optionCursorTrailSelected
     this.trailCursorColor = colorCursorTrail
-    
+
     let validCursorSizeTrail = {
       1: 0,
       2: 12,
@@ -801,12 +758,12 @@ class CustomInterfaz {
     let validCursorSizeTrailSelected = validCursorSizeTrail[optionCursorTrailSelected]
     this.cursorTrail.setSize(validCursorSizeTrailSelected)
     this.cursorTrail.setColor(colorCursorTrail)
-    if(validCursorSizeTrailSelected >  0){
+    if (validCursorSizeTrailSelected > 0) {
       this.cursorTrail.animate()
     }
 
-    if((this.trailCursorSizeId != parseInt(localStorage.getItem('trail_cursor_size_id')) ||
-    this.trailCursorColor != localStorage.getItem('trail_cursor_color')) && !isDefault) {
+    if ((this.trailCursorSizeId != parseInt(localStorage.getItem('trail_cursor_size_id')) ||
+      this.trailCursorColor != localStorage.getItem('trail_cursor_color')) && !isDefault) {
       window.accessibilityBar.updatePreferencesInterfaz({
         trail_cursor_size_id: this.trailCursorSizeId,
         trail_cursor_color: this.trailCursorColor
@@ -817,90 +774,5 @@ class CustomInterfaz {
 
     localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
-  }
-
-  /**
-   * Apply changes invert all colors in user interface and update value in accessibility bar data
-   * @public
-   * @returns {void}
-   */
-  changeInvertGeneral() {
-    let checkbox = document.getElementsByName('invertGeneral')[0]
-    let isChecked = checkbox.checked
-    let isDefault = checkbox.default == 'true'
-    let body = document.querySelector('body')
-    this.invertColorGeneral = isChecked
-
-    if (isChecked) {
-      body.style.filter = 'invert(1)'
-      if(this.learningObject) {
-        this.learningObjectDoc.querySelector('body').style.filter = 'invert(1)'
-      }
-    } else {
-      body.style.filter = 'invert(0)'
-      if(this.learningObject) {
-        this.learningObjectDoc.querySelector('body').style.filter = 'invert(0)'
-      }
-    }
-
-    if((this.invertColorGeneral != localStorage.getItem('invert_color_general')) && !isDefault){
-      window.accessibilityBar.updatePreferencesInterfaz({
-        invert_color_general: `${ this.invertColorGeneral }`
-      })
-    }
-
-    checkbox.setAttribute('default', false)
-
-    localStorage.setItem('invert_color_general', this.invertColorGeneral)
-
-  }
-
-  /**
-   * Apply changes invert colors images in user interface and update value in accessibility bar data
-   * @public
-   * @returns {void}
-   */
-  changeInvertImages() {
-    let checkbox = document.getElementsByName('invertImages')[0]
-    let isChecked = checkbox.checked
-    let isDefault = checkbox.default == 'true'
-    let images = document.querySelectorAll('img')
-    this.invertColorImage = isChecked
-
-    if(isChecked) {
-      Array.from(images).forEach((image) => {
-        image.style.filter = 'invert(1)'
-      })
-
-      if(this.learningObject) {
-        let learningObjectImages = this.learningObjectDoc.querySelectorAll('img')
-        
-        Array.from(learningObjectImages).forEach((image) => {
-          image.style.filter = 'invert(1)'
-        })
-      }
-    } else {
-      Array.from(images).forEach((image) => {
-        image.style.filter = 'invert(0)'
-      })
-
-      if(this.learningObject) {
-        let learningObjectImages = this.learningObjectDoc.querySelectorAll('img')
-        
-        Array.from(learningObjectImages).forEach((image) => {
-          image.style.filter = 'invert(0)'
-        })
-      }
-    }
-
-    if((this.invertColorImage != localStorage.getItem('invert_color_image')) && !isDefault){
-      window.accessibilityBar.updatePreferencesInterfaz({
-        invert_color_image: `${ this.invertColorImage }`
-      })
-    }
-
-    checkbox.setAttribute('default', true)
-
-    localStorage.setItem('invert_color_image', this.invertColorImage)
   }
 }
