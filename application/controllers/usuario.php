@@ -1113,7 +1113,6 @@ cadena y enviar al modelo estos valores
 
     public function save_context() {
         $session_data = $this->session->userdata('logged_in');
-        $_POST = json_decode(file_get_contents('php://input'), true);
-        $this->usuario_model->save_context($session_data['username'], $_POST['context']);
+        $this->usuario_model->save_context($session_data['username']);
     }
 }

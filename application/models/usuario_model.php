@@ -690,7 +690,7 @@ function save_score() {
     function save_context($username) {
         var_dump($_POST);
         $context_data = array(
-            'use_username' => 'ar4z',
+            'use_username' => $username,
             'device_id' => $this->input->post('deviceId'),
             'microphone' => isset($_POST['has_microphone']) ? 'true' : 'false',
             'speakers' => isset($_POST['has_speakers']) ? 'true' : 'false',
