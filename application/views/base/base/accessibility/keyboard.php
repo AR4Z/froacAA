@@ -76,7 +76,7 @@
       <div class="card-header text-center">
         <span>
           <b>
-            <?php echo $this->lang->line('keyboard'); ?>
+            <?php echo $this->lang->line('keyboard_upper'); ?>
           </b>
         </span>
       </div>

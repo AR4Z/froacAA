@@ -349,7 +349,7 @@
                           <input class="form-check-input" type="radio" role="radio" name="reading-unit-narrator" id="ru-line-narrator"
                             value="2">
                           <label class="form-check-label" for="ru-line-narrator">
-                            <?php echo $this->lang->line('line_to_line'); ?>.</label>
+                            <?php echo $this->lang->line('line_to_line'); ?></label>
                         </div>
                       </div>
                     </div>

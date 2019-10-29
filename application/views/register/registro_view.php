@@ -90,6 +90,16 @@
                 <input type="text" class="birthdate form-control" id="inputBirthDate" name="birthDate" placeholder="<?php echo $this->lang->line('birthdate'); ?>" aria-required="true" aria-labelledby="labelBirthDate" data-validate-field="birthDate" />
               </div>
               <div class="form-group">
+                <label for="selectGender">
+                  <?php echo $this->lang->line('gender'); ?>:
+                </label>
+                <select class="form-control input-sm m-bot15" name="user_gender" id="selectGender">
+                  <option value="3" selected>No informar</option>
+                  <option value="1">Femenino</option>
+                  <option value="2">Masculino</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label id="labelEmail" for="inputEmail">
                   <?php echo $this->lang->line('email'); ?>
                 </label>
@@ -112,26 +122,6 @@
                   <?php echo $this->lang->line('confirmation_password'); ?>:
                 </label>
                 <input type="password" class="form-control" id="inputPasswordConfirmation" name="passwordConfirmation" placeholder="<?php echo $this->lang->line('confirmation_password'); ?>" aria-labelledby="labelPasswordConfirmation" aria-required="true" data-validate-field="passwordConfirmation" />
-              </div>
-              <div class="form-group">
-                <label for="selectEtnica">
-                  <?php echo $this->lang->line('belong_indigenous'); ?>:
-                </label>
-                <select class="form-control input-sm m-bot15" name="etnica" id="selectEtnica">
-                  <option value="ninguna">Ninguna</option>
-                  <option value="embera">Embera Chamí</option>
-                  <option value="otra">Otra comunidad</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="selectGender">
-                  <?php echo $this->lang->line('gender'); ?>:
-                </label>
-                <select class="form-control input-sm m-bot15" name="user_gender" id="selectGender">
-                  <option value="3" selected>No informar</option>
-                  <option value="1">Femenino</option>
-                  <option value="2">Masculino</option>
-                </select>
               </div>
               <div class="form-group">
                 <label for="inputInstitutionName" id="labelInstitutionName">
