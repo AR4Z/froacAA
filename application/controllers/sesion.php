@@ -134,7 +134,7 @@ class Sesion extends CI_Controller
                     // en caso se que no necesite tambien lo almaceno en sesion
                     $this->session->set_userdata('need_virtual_keyboard', false);
                 }
-                $this->session->set_flashdata('show_context_modal', 'true');
+                $this->session->set_flashdata('show_context_modal', true);
 
                 redirect('main', 'refresh');
             } elseif ($rol[0]['use_rol_id'] == 1) {
