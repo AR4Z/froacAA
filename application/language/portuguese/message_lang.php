@@ -275,3 +275,6 @@ $lang["peripherals"] = "Periféricos";
 $lang["speakers"] = "Oradores";
 $lang["keyboard"] = "Teclado";
 $lang["save"] = "Guardar";
+$lang["context_modal_title"] = "Informações sobre o contexto";
+$lang["voice_recognition"] = "Reconhecimento de voz";
+

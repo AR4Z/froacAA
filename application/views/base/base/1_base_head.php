@@ -252,7 +252,8 @@
 
       let contextModal = document.getElementById('contextModal')
       let modalContextInstance = new Modal(contextModal);
-      if (window.show_context_modal) {
+      //if (window.show_context_modal) {
+      if (true) {
         modalContextInstance.show()
         window.context = new Context()
       }
@@ -440,6 +441,9 @@
       <div class="modal fade" id="contextModal" tabindex="-1" role="dialog" aria-labelledby="labelContextModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title mx-auto"><?php echo $this->lang->line('context_modal_title'); ?></h5>
+            </div>
             <div class="modal-body">
               <div class="container-fluid">
                 <div class="row">
@@ -513,7 +517,7 @@
                           </div>
                           <div class="c-group__item">
                             <input id="voice_recognition" name="voice_recognition" type="checkbox">
-                            <label for="voice_recognition"><?php echo $this->lang->line('virtual_keyboard'); ?></label>
+                            <label for="voice_recognition"><?php echo $this->lang->line('voice_recognition'); ?></label>
                           </div>
                         </fieldset>
                       </div>

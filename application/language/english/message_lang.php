@@ -278,3 +278,6 @@ $lang["peripherals"] = "Peripherals";
 $lang["speakers"] = "Speakers";
 $lang["keyboard"] = "Keyboard";
 $lang["save"] = "Save";
+$lang["context_modal_title"] = "Context information";
+$lang["voice_recognition"] = "Voice recognition";
+
