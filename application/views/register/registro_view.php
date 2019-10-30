@@ -272,10 +272,97 @@
     yesterday.setDate(yesterday.getDate() - 1);
     let validator;
     let pickerBirthDate;
+    const setProfileValues = (values) => {
+      const accessMode = ['accessModeAuditive', 'accessModeTextual', 'accessModeVisual']
+      const adaptationTypes = ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative', 'adaptationTypeLSC', 'adaptationTypeSubtitles']
+      const selectInputDevice = document.getElementById('selectInputDevice')
+      selectInputDevice.value = values.input_device
 
+      accessMode.forEach((nameAccessMode) => {
+        const inputAccessMode = document.getElementsByName(nameAccessMode)[0]
+        inputAccessMode.checked = values.access_mode.indexOf(nameAccessMode) >= 0
+      })
+
+      adaptationTypes.forEach((nameAdaptationType) => {
+        const inputAdaptationType = document.getElementsByName(nameAdaptationType)[0]
+        inputAdaptationType.checked = values.adaptation_types.indexOf(nameAdaptationType) >= 0
+      })
+    }
     document.addEventListener('DOMContentLoaded', () => {
       const profileModal = document.getElementById('askProfileModal');
       const profileModalInit = new Modal(profileModal);
+      const profileSelect = document.getElementById('selectDiversityProfile');
+      profileSelect.addEventListener('change', (e) => {
+        const valuesForProfiles = [{
+            input_device: 1,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 1,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeVisual', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeLSC', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeVisual', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeVisual', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeVisual', 'accessModeTextual'],
+            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeLSC', 'adaptationTypeTextualAlternative']
+          },
+          {
+            input_device: 3,
+            access_mode: ['accessModeAuditive', 'accessModeTextual', 'accessModeVisual'],
+            adaptation_types: []
+          }
+        ]
+        const idDiversityProfile = parseInt(e.target.value);
+        setProfileValues(valuesForProfiles[idDiversityProfile - 1])
+
+      })
 
       profileModal.addEventListener('hidden.bs.modal', () => {
         const profileSelected = document.querySelector('input[name="selectProfile"]:checked').value
@@ -400,9 +487,8 @@
                 useLSCTranslator: 3,
                 useStructuralNav: 3,
                 useKeyboard: 3,
-                useVoiceRecognition: 2
+                useVoiceRecognition: 3
               },
-
               {
                 personaliceInterfaz: 3,
                 useNarrator: 3,
@@ -410,90 +496,106 @@
                 useLSCTranslator: 3,
                 useStructuralNav: 3,
                 useKeyboard: 3,
-                useVoiceRecognition: 1
+                useVoiceRecognition: 2
               },
-
               {
                 personaliceInterfaz: 1,
                 useNarrator: 2,
                 useSr: 2,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 2
+                useVoiceRecognition: 2,
+                useStructuralNav: 3
               },
-
+              {
+                personaliceInterfaz: 1,
+                useNarrator: 2,
+                useSr: 2,
+                useLSCTranslator: 3,
+                useKeyboard: 2,
+                useVoiceRecognition: 1,
+                useStructuralNav: 3
+              },
               {
                 personaliceInterfaz: 1,
                 useNarrator: 1,
                 useSr: 2,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 2
+                useVoiceRecognition: 2,
+                useStructuralNav: 3
+              },
+              {
+                personaliceInterfaz: 1,
+                useNarrator: 1,
+                useSr: 2,
+                useLSCTranslator: 3,
+                useKeyboard: 2,
+                useVoiceRecognition: 1,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 1,
                 useNarrator: 2,
                 useSr: 2,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 2
+                useVoiceRecognition: 2,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 1,
                 useNarrator: 2,
                 useSr: 2,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
                 useKeyboard: 1,
-                useVoiceRecognition: 2
+                useVoiceRecognition: 2,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 2,
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 1,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 3
+                useVoiceRecognition: 3,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 2,
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 2,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 3
+                useVoiceRecognition: 3,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 2,
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 2,
-                useStructuralNav: 3,
                 useKeyboard: 1,
-                useVoiceRecognition: 3
+                useVoiceRecognition: 3,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 2,
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 1,
-                useStructuralNav: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 3
+                useVoiceRecognition: 3,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 3,
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
-                useKeyboard: 2,
-                useVoiceRecognition: 2
+                useKeyboard: 3,
+                useVoiceRecognition: 3,
+                useStructuralNav: 3
               }
             ]
             const newUserAdaptInfo = profiles[parseInt(form.querySelector("select[name='diversityProfile']").value) - 1];
