@@ -252,8 +252,8 @@
 
       let contextModal = document.getElementById('contextModal')
       let modalContextInstance = new Modal(contextModal);
-      //if (window.show_context_modal) {
-      if (true) {
+      if (window.show_context_modal) {
+      //if (true) {
         modalContextInstance.show()
         window.context = new Context()
       }

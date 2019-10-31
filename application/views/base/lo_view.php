@@ -54,7 +54,7 @@
                                     </div>
 
                                 </div>
-                                <?php if ($this->session->userdata('logged_in')) : ?>
+                              <!--  <?php if ($this->session->userdata('logged_in')) : ?>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ratingModal">
                     Evaluar objeto de aprendizaje
                 </button>
@@ -67,7 +67,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>-->
                     <div id="error" class="jumbotron jumbotron-fluid" style="display:none;">
                         <div class="container">
                             <h1 class="display-4">¡Error!</h1>
@@ -173,8 +173,8 @@
             const lo_name = "<?php echo base64_decode($lo_name); ?>";
             const lo_id = "<?php echo base64_decode($lo_id); ?>";
             const rep_id = "<?php echo base64_decode($rep_id); ?>";
-            const user_lo_rank = <?php echo $user_lo_rank;?>;
-            const gral_lo_rank = <?php echo $lo_rating; ?>;
+            const user_lo_rank = [1]
+            const gral_lo_rank = [2]
 
             learningObject = new LearningObject(lo_url, lo_name, lo_id, rep_id, user_lo_rank[0], gral_lo_rank[0])
         });

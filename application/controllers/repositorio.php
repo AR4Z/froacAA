@@ -190,6 +190,7 @@ class Repositorio extends CI_Controller{
         if ($actualizar == "3") //Rango de Fechas
             $url = "http://localhost:8080/harvesterFROAC/HarvesterOAI?cadenaOAI=" . $cadenaoai . "&idROA=" . $idrepository . "&metadata=" . $metadata . "&fechainicio=" . $fechainicio . "&fechafin=" . $fechafin . "";
         
+        echo($url);
         $tags = get_meta_tags($url);
         return $tags;
     }

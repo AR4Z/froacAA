@@ -64,7 +64,7 @@
             <?php $this->load->view('base/base/accessibility/interfaz');?>
         <?php endif?>
 
-        <?php if($this->session->userdata('need_structural_nav') || !($this->session->userdata('logged_in'))):?>
+        <?php if($this->session->userdata('need_narrator') || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/narrator');?>
         <?php endif?>
         

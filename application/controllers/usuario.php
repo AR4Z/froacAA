@@ -210,6 +210,7 @@ class Usuario extends CI_Controller
                     );
                     $this->load->view('base/rep_template', $content);
                 } else {
+                    
                     $content = array(
                         "user" => $session_data['username'],
                         "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -221,6 +222,7 @@ class Usuario extends CI_Controller
                 }
             }
         } else {
+            echo("hola");
             redirect(base_url(), 'refresh');
         }
     }
@@ -338,7 +340,7 @@ class Usuario extends CI_Controller
             } else {
                 // pregunto si el usuario necesita adaptaciones de la interfaz
                 $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
-                $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+                $use_adapta_interfaz = $use_adapta_interfaz[0]["adapta_interfaz_id"];
 
                 // pregunto si el usuario necesita usar narrador
                 $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
@@ -358,6 +360,9 @@ class Usuario extends CI_Controller
                 $use_keyboard = $this->usuario_model->get_need_kb($session_data['username']);
                 $use_keyboard = $use_keyboard[0]['use_kb_id'];
 
+                $use_voice_recognition = $this->usuario_model->get_need_voice_recognition($session_data['username']);
+                $use_voice_recognition = $use_voice_recognition[0]['use_voice_recognition'];
+
                 $content = array(
                     "user" => $session_data['username'],
                     "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
@@ -370,6 +375,7 @@ class Usuario extends CI_Controller
                     "selectedOptLSCTranslator" => $use_LSCTraslator,
                     'selectedOptStructuralNav' => $use_structuralNav,
                     'selectedOptKeyboard' => $use_keyboard,
+                    'selectedOptvoiceRecognition'=>$use_voice_recognition,
                     "main_view" => "usr/editar_view",
                     "id_view" => "edit_user"
                 );
@@ -387,7 +393,7 @@ class Usuario extends CI_Controller
             $this->usuario_model->update_user($session_data["username"]);
             // pregunto si el usuario necesita adaptaciones de la interfaz
             $use_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username']);
-            $use_adapta_interfaz = $use_adapta_interfaz[0]["use_adapta_interfaz_id"];
+            $use_adapta_interfaz = $use_adapta_interfaz[0]["adapta_interfaz_id"];
 
             // pregunto si el usuario necesita usar narrador
             $use_narrator = $this->usuario_model->get_need_narrator($session_data['username']);
@@ -1111,7 +1117,8 @@ cadena y enviar al modelo estos valores
         $this->load->view('base/base_template', $content);
     }
 
-    public function save_context() {
+    public function save_context()
+    {
         $session_data = $this->session->userdata('logged_in');
         $this->usuario_model->save_context($session_data['username']);
     }

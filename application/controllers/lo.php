@@ -15,9 +15,8 @@ class Lo extends CI_Controller
 
     public function buscar_lo($params, $sess, $user)
     {
-        $dissabilities_id = array();
         $languages = ["spanish" => "es", "portuguese" => "pt", "english" => "en"];
-        $lang = $languages[$this->session->userdata('site_lang') ];
+        $lang = $languages[$this->session->userdata('site_lang')];
         $params = urldecode($params);
         $params = preg_replace('/_+/', '_', $params);
         if (substr($params, -1) == "_") {
@@ -738,196 +737,112 @@ class Lo extends CI_Controller
         $andParams = "('spanish', '" . preg_replace('/_/', ' & ', $params) . "')";
         $orParams = "('spanish','" . preg_replace('/_/', ' | ', $params) . "')";
         $result = $this->lo_model->get_oas_b($orParams, $andParams, $lang);
-        
+
 
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            $dissabilities = $this->usuario_model->get_discapacidad_est($session_data['username']);
-            $etnica = $this->usuario_model->get_etnica($session_data['username']);
+            $user_narrator = $this->usuario_model->get_need_narrator($session_data['username'])[0];
+            $access_mode = $this->usuario_model->get_access_modes($session_data['username'])[0];
+
+            $access_mode_textual = $access_mode->textual == 't';
+            $access_mode_visual = $access_mode->visual == 't';
+            $access_mode_auditive = $access_mode->auditive == 't';
+            $user_sr = $this->usuario_model->get_need_sr($session_data['username'])[0];
+            $user_lsc  = $this->usuario_model->get_need_translator_lsc($session_data['username'])[0];
+            $user_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username'])[0];
+            $user_data = $this->usuario_model->get_all_usr_data($session_data['username'])[0];
+
+            /*
+            foreach ($result as $oa => $obj) {
+                $dom = new DOMDocument();
+                $dom->loadXML($result[$oa]['lo_xml_lom']);
+                if (
+                    strtolower(trim($dom->getElementsByTagName('language')[0]->textContent))  == strtolower(trim($user_data['pref_lo_language'])) &&
+                    strtolower(trim($dom->getElementsByTagName('language')[0]->textContent)) == strtolower(trim($user_data['use_level']))
+                )
+            }*/
             foreach ($result as $oa => $obj) {
                 $result[$oa]['val'] = 0;
             }
 
-            foreach ($dissabilities as $dissability) {
-                array_push($dissabilities_id, $dissability->use_dissability_id);
-            }
-
-            if (in_array(2, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $auditory = $dom->getElementsByTagName('auditory') [0]->textContent == 'voz';
-                    $hearingalternative = $dom->getElementsByTagName('hearingalternative') [0]->textContent == 'yes';
-                    $textual = $dom->getElementsByTagName('textual') [0]->textContent == 'yes';
-                    $textualalterantive = $dom->getElementsByTagName('textualalternative') [0]->textContent == 'yes';
-                    $interactivitylevel_text = $dom->getElementsByTagName('interactivitylevel') [0]->textContent;
-                    $interactivitylevel_low = $interactivitylevel_text == 'low';
-                    $interactivitylevel_medium = $interactivitylevel_text == 'medium';
-                    $interactivitylevel_high = $interactivitylevel_text == 'high';
-                    $format_text_content = $dom->getElementsByTagName('format') [0]->textContent;
-                    $format_audio = $format_text_content == 'audio';
-                    $format_video = $format_text_content == 'video';
-                    $format_text = $format_text_content == 'text';
-                    if (($auditory && $hearingalternative) || ($textual && $textualalterantive)) {
-                        $result[$oa]['val']+= 0.7;
+            foreach ($result as $oa => $obj) {
+                $dom = new DOMDocument();
+                $dom->loadXML($result[$oa]['lo_xml_lom']);
+                $textual = $dom->getElementsByTagName('textual')[0]->textContent;
+                $textual_alternative = $dom->getElementsByTagName('textualalternative')[0]->textContent;
+                $interactivity_level = $dom->getElementsByTagName('interactivitylevel')[0]->textContent;
+                $rights_cost = $dom->getElementsByTagName('cost')[0]->textContent;
+                $rights_copyrightandotherrestrictions = $dom->getElementsByTagName('copyrightandotherrestrictions')[0]->textContent;
+                $accessibility_sign_lang = $dom->getElementsByTagName('signlanguage')[0]->textContent;
+                $accessibility_presen_visual = $dom->getElementsByTagName('visual')[0]->textContent;
+                $accessibility_presen_auditory = $dom->getElementsByTagName('auditory')[0]->textContent;
+                $accessibility_subtitles = $dom->getElementsByTagName('subtitles')[0]->textContent;
+                $adaptation_type_audio_description = $dom->getElementsByTagName('audiodescription')[0]->textContent;
+                $adaptation_type_hearing_alternative = $dom->getElementsByTagName('hearingalternative')[0]->textContent;
+                if ($user_narrator == 1 || $user_sr == 1) {
+                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
+                        $result[$oa]['val'] += 0.2;
                     }
 
-                    if ($interactivitylevel_low || $interactivitylevel_medium || $interactivitylevel_high) {
-                        $result[$oa]['val']+= 0.15;
+                    if ($interactivity_level == 'low' || $interactivity_level == 'medium') {
+                        $result[$oa]['val'] += 0.05;
                     }
 
-                    if ($format_audio || $format_video || $format_text) {
-                        $result[$oa]['val']+= 0.15;
+                    if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
+                        $result[$oa]['val'] += 0.05;
+                    }
+                }
+
+                if ($user_lsc == 1) {
+                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
+                        $result[$oa]['val'] += 0.2;
+                    }
+
+                    if ($accessibility_sign_lang  == 'yes' || $accessibility_subtitles == 'yes') {
+                        $result[$oa]['val'] += 0.5;
+                    }
+
+                    if ($interactivity_level == 'very low' || $interactivity_level == 'low' || $interactivity_level == 'medium') {
+                        $result[$oa]['val'] += 0.05;
+                    }
+
+                    if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
+                        $result[$oa]['val'] += 0.05;
+                    }
+                }
+
+                if ($user_adapta_interfaz == 1) {
+                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
+                        $result[$oa]['val'] += 0.15;
+                    }
+
+                    if ($access_mode_visual && ($accessibility_presen_visual == 'yes')) {
+                        $result[$oa]['val'] += 0.1;
+                    }
+
+
+                    if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
+                        $result[$oa]['val'] += 0.05;
+                    }
+                }
+
+                if ($access_mode_auditive) {
+                    if ($accessibility_presen_auditory == 'voice' || $accessibility_presen_auditory == 'sound' || $adaptation_type_audio_description == 'yes' ||  $adaptation_type_hearing_alternative == 'yes') {
+                        $result[$oa]['val'] += 0.15;
                     }
                 }
             }
 
-            if (in_array(1, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $auditory = $dom->getElementsByTagName('auditory') [0]->textContent == 'voz';
-                    $hearingalternative = $dom->getElementsByTagName('hearingalternative') [0]->textContent == 'yes';
-                    $format_text_content = $dom->getElementsByTagName('format') [0]->textContent;
-                    $format_audio = $format_text_content == 'audio';
-                    $format_video = $format_text_content == 'video';
-                    $interactivitylevel_text = $dom->getElementsByTagName('interactivitylevel') [0]->textContent;
-                    $interactivitylevel_very_low = $interactivitylevel_text == 'very low';
-                    $interactivitylevel_medium = $interactivitylevel_text == 'medium';
-                    $interactivitylevel_low = $interactivitylevel_text == 'low';
-                    if ($auditory && $hearingalternative) {
-                        $result[$oa]['val']+= 0.8;
-                    }
-
-                    if ($interactivitylevel_low || $interactivitylevel_medium || $interactivitylevel_very_low) {
-                        $result[$oa]['val']+= 0.1;
-                    }
-
-                    if ($format_audio || $format_video) {
-                        $result[$oa]['val']+= 0.1;
-                    }
-                }
-            }
-
-            if (in_array(3, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $signalalternative = $dom->getElementsByTagName('signlanguage') [0]->textContent == 'yes';
-                    $interactivitylevel_text = $dom->getElementsByTagName('interactivitylevel') [0]->textContent;
-                    $interactivitylevel_very_low = $interactivitylevel_text == 'very low';
-                    $interactivitylevel_medium = $interactivitylevel_text == 'medium';
-                    $interactivitylevel_low = $interactivitylevel_text == 'low';
-                    if ($signalalternative) {
-                        $result[$oa]['val']+= 0.9;
-                    }
-
-                    if ($interactivitylevel_low || $interactivitylevel_medium || $interactivitylevel_very_low) {
-                        $result[$oa]['val']+= 0.1;
-                    }
-                }
-            }
-
-            if (in_array(4, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $signalalternative = $dom->getElementsByTagName('signlanguage') [0]->textContent == 'yes';
-                    $textual = $dom->getElementsByTagName('textual') [0]->textContent == 'yes';
-                    $textualalterantive = $dom->getElementsByTagName('textualalternative') [0]->textContent == 'yes';
-                    $interactivitylevel_text = $dom->getElementsByTagName('interactivitylevel') [0]->textContent;
-                    $interactivitylevel_very_low = $interactivitylevel_text == 'very low';
-                    $interactivitylevel_medium = $interactivitylevel_text == 'medium';
-                    $interactivitylevel_low = $interactivitylevel_text == 'low';
-                    $format_text_content = $dom->getElementsByTagName('format') [0]->textContent;
-                    $format_text = $format_text_content == 'text';
-                    $format_image = $format_text_content == 'image';
-                    $format_application = $format_text_content == 'application';
-                    if (($signalalternative || $textual) && $textualalterantive) {
-                        $result[$oa]['val']+= 0.8;
-                    }
-
-                    if ($interactivitylevel_low || $interactivitylevel_medium || $interactivitylevel_very_low) {
-                        $result[$oa]['val']+= 0.1;
-                    }
-
-                    if ($format_text || $format_image || $format_application) {
-                        $result[$oa]['val']+= 0.1;
-                    }
-                }
-            }
-
-            if (in_array(6, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $mouse = $dom->getElementsByTagName('mouse') [0]->textContent == 'yes';
-                    if ($mouse) {
-                        $result[$oa]['val']+= 1;
-                    }
-                }
-            }
-
-            if (in_array(5, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $keyboard = $dom->getElementsByTagName('keyboard') [0]->textContent == 'yes';
-                    if ($keyboard) {
-                        $result[$oa]['val']+= 1;
-                    }
-                }
-            }
-
-            if (!(in_array(5, $dissabilities_id) || in_array(6, $dissabilities_id))) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $keyboard = $dom->getElementsByTagName('keyboard') [0]->textContent == 'yes';
-                    $mouse = $dom->getElementsByTagName('mouse') [0]->textContent == 'yes';
-                    if ($keyboard || $mouse) {
-                        $result[$oa]['val']+= 1;
-                    }
-                }
-            }
-
-            if (in_array(7, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $auditory_textcontent = $dom->getElementsByTagName('auditory') [0]->textContent;
-                    $auditory_voice = $auditory_textcontent == 'voice';
-                    $auditory_sound = $auditory_textcontent == 'sound';
-                    $visual = $dom->getElementsByTagName('visual') [0]->textContent == 'yes';
-                    if ($auditory_sound || $auditory_voice || $visual) {
-                        $result[$oa]['val']+= 1;
-                    }
-                }
-            }
-
-            if (in_array(8, $dissabilities_id)) {
-                foreach ($result as $oa => $obj) {
-                    $dom = new DOMDocument();
-                    $dom->loadXML($result[$oa]['lo_xml_lom']);
-                    $interactivitylevel_text = $dom->getElementsByTagName('interactivitylevel') [0]->textContent;
-                    $interactivitylevel_very_low = $interactivitylevel_text == 'very low';
-                    $interactivitylevel_medium = $interactivitylevel_text == 'medium';
-                    $interactivitylevel_low = $interactivitylevel_text == 'low';
-                    if ($interactivitylevel_low || $interactivitylevel_medium || $interactivitylevel_very_low) {
-                        $result[$oa]['val']+= 1;
-                    }
-                }
-            }
 
             foreach ($result as $i_oa => $oa) {
                 if ($result[$i_oa]['val'] < 0.8) {
                     unset($result[$i_oa]);
                 }
             }
-            
+
             array_multisort(array_column($result, 'val'), SORT_DESC, $result);
         }
-        
+
         $content = array(
             "result" => $result,
             "palabras" => $palabras,
@@ -1117,22 +1032,22 @@ class Lo extends CI_Controller
 
     public function load_lo($url, $lo_name, $lo_id, $rep_id)
     {
-        $lo_rating = json_encode($this->lo_model->get_lo_gral_rating(base64_decode($lo_id), base64_decode($rep_id)));
+        //$lo_rating = json_encode($this->lo_model->get_lo_gral_rating(base64_decode($lo_id), base64_decode($rep_id)));
         if ($this->session->userdata('logged_in')) {
-			$session_data = $this->session->userdata('logged_in');
-			$user_lo_rank = json_encode($this->lo_model->get_user_rate_learning_object($session_data['username'], base64_decode($lo_id), base64_decode($rep_id)));
+            $session_data = $this->session->userdata('logged_in');
+            //$user_lo_rank = json_encode($this->lo_model->get_user_rate_learning_object($session_data['username'], base64_decode($lo_id), base64_decode($rep_id)));
             $content = array(
                 "user" => $session_data['username'],
-                "usr_data" => $this->usuario_model->get_usr_data($session_data['username']) ,
-                "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']) ,
+                "usr_data" => $this->usuario_model->get_usr_data($session_data['username']),
+                "usr_all_data" => $this->usuario_model->get_all_usr_data($session_data['username']),
                 "main_view" => "base/lo_view",
                 "sess" => 1,
                 "url" => $url,
                 "lo_name" => $lo_name,
                 "lo_id" => $lo_id,
                 "rep_id" => $rep_id,
-                "lo_rating"=> $lo_rating,
-                "user_lo_rank" => $user_lo_rank,
+                //"lo_rating"=> $lo_rating,
+                //"user_lo_rank" => $user_lo_rank,
                 "id_view" => "lo_view"
             );
             if ($session_data['username'] == "admin") {
@@ -1147,8 +1062,8 @@ class Lo extends CI_Controller
                 "url" => $url,
                 "lo_name" => $lo_name,
                 "lo_id" => $lo_id,
-                "lo_rating"=> $lo_rating,
-                "user_lo_rank"=> json_encode(array()),
+                //"lo_rating"=> $lo_rating,
+                "user_lo_rank" => json_encode(array()),
                 "rep_id" => $rep_id,
                 "id_view" => "lo_view"
             );
@@ -1168,7 +1083,7 @@ class Lo extends CI_Controller
         $output = $this->curl->simple_post($url, $post_data);
         header('Content-Type: application/json');
         $json = json_encode($output);
-        echo($json);
+        echo ($json);
     }
 
     public function getLanguage()
@@ -1199,11 +1114,12 @@ class Lo extends CI_Controller
         }
     }
 
-    public function getLOGralRating() {
+    public function getLOGralRating()
+    {
         $_POST = json_decode(file_get_contents('php://input'), true);
         $rating = $this->lo_model->get_lo_gral_rating($_POST['lo_id'], $_POST['rep_id']);
         header('Content-Type: application/json');
         $json = json_encode($rating);
-        echo($json);
+        echo ($json);
     }
 }

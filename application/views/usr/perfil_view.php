@@ -45,7 +45,7 @@
                                      <p><span><?php echo $this->lang->line('last_name'); ?>: </span> <?php echo $usr_data['use_apellido']?></p>
                                   </div>
                                   <div class="bio-row">
-                                      <p><span><?php echo $this->lang->line('birthdate'); ?>:</span> <?php echo $usr_data['use_stu_datebirth']?></p>
+                                      <p><span><?php echo $this->lang->line('birthdate'); ?>:</span> <?php echo $usr_data['use_datebirth']?></p>
                                   </div>
                                   <div class="bio-row">
                                       <p><span><?php echo $this->lang->line('email'); ?>: </span> <?php echo $usr_data['use_email']?></p>
@@ -58,12 +58,6 @@
                                   </div>
                                   <div class="bio-row">
                                       <p><span><?php echo $this->lang->line('rol'); ?>: </span> <?php echo $usr_data['use_rol_nombre']?></p>
-                                  </div>
-                                  <div class="bio-row">
-                                     <p><span><?php echo $this->lang->line('learning_style'); ?>: </span> <?php echo $usr_data['use_ls_learningstyle']?></p>
-                                  </div>
-                                  <div class="bio-row">
-                                     <p><span><?php echo $this->lang->line('description_ls'); ?>: </span> <?php echo $usr_data['use_ls_description']?></p>
                                   </div>
                               </div>
                           </div>
