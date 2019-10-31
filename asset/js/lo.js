@@ -57,7 +57,7 @@ class LearningObject {
       // hide loading_screen splash
       window.loading_screen.finish()
       // object for rate lo
-      this.ratingLO = new RatingLO(this.idLO, this.idRep, this.userLORank, this.gralLORank, this.getDocument());
+      //this.ratingLO = new RatingLO(this.idLO, this.idRep, this.userLORank, this.gralLORank, this.getDocument());
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache
