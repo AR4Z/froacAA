@@ -409,7 +409,7 @@
                         <dt class="col-sm-4"><strong><?php echo $this->lang->line('send_form'); ?> </strong></dt>
                         <dd class="col-sm-8"><?php echo $this->lang->line('send_focus_form'); ?> </dd>
                         <dt class="col-sm-4"><strong><?php echo $this->lang->line('writer_content'); ?> </strong></dt>
-                        <dd class="col-sm-8"><?php echo $this->lang->line('writer_in_current_field'); ?></dd>
+                        <dd class="col-sm-8"><?php echo $this->lang->line('write_in_current_field'); ?></dd>
                       </dl>
                     </div>
                   </div>
