@@ -170,6 +170,18 @@ class Sesion extends CI_Controller
         $this->session->unset_userdata('need_lsc_translator');
         $this->session->unset_userdata('need_virtual_keyboard');
 
+        $this->session->unset_userdata('device_id');
+        $this->session->unset_userdata('has_microphone');        
+        $this->session->unset_userdata('has_speakers');
+        $this->session->unset_userdata('has_keyboard');
+        $this->session->unset_userdata('has_mouse');
+        $this->session->unset_userdata('browser');
+        $this->session->unset_userdata('use_external_sr');
+        $this->session->unset_userdata('use_external_magnifier');
+        $this->session->unset_userdata('use_external_vk');
+        $this->session->unset_userdata('use_external_vr');
+
+
         redirect(base_url(), 'refresh');
     }
 }

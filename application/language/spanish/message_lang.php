@@ -280,3 +280,4 @@ $lang["keyboard"] = "Teclado";
 $lang["save"] = "Guardar";
 $lang["context_modal_title"] = "Información del contexto";
 $lang["voice_recognition"] = "Reconocimiento de voz";
+$lang["concentration"] = "Posibilidad de concentración";

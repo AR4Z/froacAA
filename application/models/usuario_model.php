@@ -789,7 +789,8 @@ where users.use_username='" . $username . "'");
             'external_virtual_keyboard' => isset($_POST['virtual_kb']) ? 'true' : 'false',
             'external_voice_recognition' => isset($_POST['voice_recognition']) ? 'true' : 'false',
             'educational_purpose_id' => $this->input->post('educationalPurpose'),
-            'available_time' => $this->input->post('availableTime')
+            'available_time' => $this->input->post('availableTime'),
+            'concentration_id' => $this->input->post('concentration')
         );
 
         $this->db->insert('use_context', $context_data);

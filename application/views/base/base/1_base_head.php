@@ -172,10 +172,10 @@
       window.show_context_modal = Boolean(<?php echo $this->session->flashdata('show_context_modal'); ?>) || false;
       window.needCustomInterfaz = Boolean(<?php echo $this->session->userdata('need_custom_interfaz'); ?>) || !session_user;
       window.needNarrator = Boolean(<?php echo $this->session->userdata('need_narrator'); ?>) || !session_user;
-      window.needScreenReader = Boolean(<?php echo $this->session->userdata('need_screen_reader'); ?>) || !session_user;
+      window.needScreenReader = (Boolean(<?php echo $this->session->userdata('need_screen_reader'); ?>) && !Boolean(<?php echo $this->session->userdata('use_external_sr'); ?>)) || !session_user;
       window.needLscTranslator = (Boolean(<?php echo $this->session->userdata('need_lsc_translator'); ?>) || !session_user) && ("<?php echo $this->session->userdata('site_lang'); ?>" == 'spanish');
       window.needStructuralNavigation = Boolean(<?php echo $this->session->userdata('need_structural_nav'); ?>) || !session_user;
-      window.needVirtualKeyboard = Boolean(<?php echo $this->session->userdata('need_virtual_keyboard'); ?>) || !session_user;
+      window.needVirtualKeyboard = (Boolean(<?php echo $this->session->userdata('need_virtual_keyboard'); ?>) && !Boolean(<?php echo $this->session->userdata('use_external_vk'); ?>)) || !session_user;
       window.idView = "<?php echo $id_view ?>" || "nada";
       window.base_url = "<?php echo base_url() ?>";
       window.idView = "<?php echo $id_view ?>" || "nada";
@@ -206,20 +206,20 @@
       window.tour = new Tour()
       window.next = false
 
-      let introModal = document.getElementById('introModal')
+      window.introModal = document.getElementById('introModal')
       let helpButton = document.getElementById('accessibilityBarHelpButton')
-      let modalIntroInstance = new Modal(introModal)
+      window.modalIntroInstance = new Modal(window.introModal)
 
-      introModal.addEventListener('shown.bs.modal', e => {
+      window.introModal.addEventListener('shown.bs.modal', e => {
         hotkeys('enter', function(event, handler) {
           window.next = true
-          modalIntroInstance.hide()
+          window.modalIntroInstance.hide()
         })
 
         window.tour.speech('welcome')
       })
 
-      introModal.addEventListener('hidden.bs.modal', e => {
+      window.introModal.addEventListener('hidden.bs.modal', e => {
         localStorage.setItem('firstTime', false)
         hotkeys.unbind('enter')
         if (window.tour.synth.speaking) {
@@ -243,11 +243,11 @@
       })
 
       helpButton.addEventListener('click', e => {
-        modalIntroInstance.show()
+        window.modalIntroInstance.show()
       })
 
       if (window.firstTime) {
-        modalIntroInstance.show()
+        window.modalIntroInstance.show()
       }
 
       let contextModal = document.getElementById('contextModal')
@@ -344,6 +344,9 @@
                 <button onclick="tour.speech('welcome')" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
                   <i class="fas fa-headphones"></i>
                   <?php echo $this->lang->line('listen'); ?>
+                </button>
+                <button onclick="window.modalIntroInstance.hide();tour.driver.reset()" class="btn btn-outline-success btn-lg text-to-speech-button" type="submit">
+                  Controles
                 </button>
               </div>
               <button class="btn btn-danger" data-dismiss="modal" type="submit">
@@ -543,6 +546,21 @@
                             <?php echo $this->lang->line('available_time'); ?>:
                           </label>
                           <input type="number" min="1.0" max="2.0" step="0.1" value="1.5" id="inputAvailableTime" name="availableTime" />
+                          <br/>  
+                          <label id="labelConcentration" for="selectConcentration">
+                            <?php echo $this->lang->line('concentration'); ?>:
+                          </label>
+                          <select class="form-control input-sm m-bot15" id="selectConcentration" name="concentration" aria-labelledby="labelConcentration" aria-required="true">
+                            <option name="concentration" value="1" selected="selected">
+                              <?php echo $this->lang->line('high'); ?>
+                            </option>
+                            <option name="concentration" value="2">
+                              <?php echo $this->lang->line('medium'); ?>
+                            </option>
+                            <option name="concentration" value="3">
+                              <?php echo $this->lang->line('low'); ?>
+                            </option>
+                          </select>
                         </fieldset>
                       </div>
                       <input id="submitContextForm" class="btn btn-primary" type="submit" value="<?php echo $this->lang->line('save'); ?>" />

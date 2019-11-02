@@ -131,6 +131,7 @@ class ScreenReader {
           this._previous()
           break
         case 'ctrl+s':
+          console.log("sw")
           this._loadTree()
           this.tree.nextNode()
           this._screenReader()

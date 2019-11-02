@@ -1438,4 +1438,7 @@ class Tour {
     localStorage.setItem('redirectFromTour', true)
     window.location.href=`${window.base_url}usuario/registro`
   }
+  finish() {
+    this.driver.reset()
+  }
 }

@@ -1121,5 +1121,16 @@ cadena y enviar al modelo estos valores
     {
         $session_data = $this->session->userdata('logged_in');
         $this->usuario_model->save_context($session_data['username']);
+        $this->session->set_userdata('device_id', $this->input->post('deviceId'));
+        $this->session->set_userdata('has_microphone', isset($_POST['has_microphone']));        
+        $this->session->set_userdata('has_speakers', isset($_POST['has_speakers']));
+        $this->session->set_userdata('has_keyboard', isset($_POST['has_keyboard']));
+        $this->session->set_userdata('has_mouse', isset($_POST['mouse']));
+        $this->session->set_userdata('browser', $this->input->post('browser'));
+        $this->session->set_userdata('use_external_sr', isset($_POST['screen_reader']));
+        $this->session->set_userdata('use_external_magnifier', isset($_POST['magnifier']));
+        $this->session->set_userdata('use_external_vk', isset($_POST['virtual_kb']));
+        $this->session->set_userdata('use_external_vr', isset($_POST['voice_recognition']));
+        redirect(base_url(), 'refresh');
     }
 }
