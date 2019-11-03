@@ -113,8 +113,12 @@ class Tour {
           description: 'Cambie la velocidad con la cual se traduce el mensaje al lenguaje de señas. 10, 20, 30 o 40 son los valores válidos.'
         },
         'card-lsc-translator-model': {
-          title: 'Modelo',
+          title: 'Tipo de intérprete',
           description: 'Elija quien hará la traducción del mensaje, un avatar o un humano.'
+        },
+        'card-show-lsc-translator': {
+          title: 'Traductor LSC',
+          description: 'Elija si desea ver o no el traductor a lenguaje de señas.'
         },
         'card-structural-nav-strategy-nav': {
           title: 'Estrategia de navagación',
@@ -533,9 +537,9 @@ class Tour {
             window.accessibilityBar.tabs.structuralNav.addEventListener('shown.bs.tab', handler)
             window.accessibilityBar.tabsCollection.structuralNav.show()
           }
-        } else if (elm.node.id == 'card-lsc-translator-model') {
+        } else if (elm.node.id == 'card-show-lsc-translator') {
           let handler = (e) => {
-            this.driver.start(19)
+            this.driver.start(20)
             this.lastStepTour = this.driver.currentStep
             window.accessibilityBar.tabs.structuralNav.removeEventListener('shown.bs.tab', handler)
           }
@@ -545,9 +549,9 @@ class Tour {
         } else if (elm.node.id == 'card-structural-nav-show-toc') {
           let handler = (e) => {
             if (userLang == 'spanish') {
-              this.driver.start(21)
+              this.driver.start(22)
             } else {
-              this.driver.start(19)
+              this.driver.start(20)
             }
 
             this.lastStepTour = this.driver.currentStep
@@ -612,7 +616,7 @@ class Tour {
         } else if (elm.node.id == 'card-structural-nav-strategy-nav') {
           if (userLang == 'spanish') {
             let handler = (e) => {
-              this.driver.start(18)
+              this.driver.start(19)
               this.lastStepTour = this.driver.currentStep
               window.accessibilityBar.tabs.lscTranslator.removeEventListener('shown.bs.tab', handler)
             }
@@ -632,9 +636,9 @@ class Tour {
         } else if (elm.node.id == 'card-virtual-keyboard-size') {
           let handler = (e) => {
             if (userLang == 'spanish') {
-              this.driver.start(20)
+              this.driver.start(21)
             } else {
-              this.driver.start(18)
+              this.driver.start(19)
             }
 
             this.lastStepTour = this.driver.currentStep
@@ -920,6 +924,20 @@ class Tour {
           description: `
             <p class="description">
               ${ this.messages[userLang]['card-lsc-translator-model'].description}
+            </p>
+              <br/>
+              ${ this.buttons}
+            `,
+          position: 'bottom'
+        }
+      },
+      {
+        element: '#card-show-lsc-translator',
+        popover: {
+          title: `${this.messages[userLang]['card-show-lsc-translator'].title}`,
+          description: `
+            <p class="description">
+              ${ this.messages[userLang]['card-show-lsc-translator'].description}
             </p>
               <br/>
               ${ this.buttons}

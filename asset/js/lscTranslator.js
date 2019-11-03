@@ -68,6 +68,8 @@ class LscTranslator {
      */
     this.onEnd = () => null
 
+    this.showLscTranslator = localStorage.getItem('show_lsc_translator') ? localStorage.getItem('show_lsc_translator'): true;
+
     $(this.containerIris).draggable({
       containment: "parent",
       scroll: false,
@@ -101,7 +103,7 @@ class LscTranslator {
     this._addEventClickStop()
     this._addEventClickPause()
     this._addEventSelectionText()
-
+    this._addEventChangeShowLscTranslator()
     this._setValuesInLocalStorage()
     this._loadLscTranslator()
   }
@@ -127,6 +129,9 @@ class LscTranslator {
 
     document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).checked = true
     document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).dispatchEvent(new Event('change'))
+    
+    document.querySelector(`input[name='showLscTranslator']`).checked = this.showLscTranslator == 'true' || this.showLscTranslator != 'false' ? true : false
+    document.querySelector(`input[name='showLscTranslator']`).dispatchEvent(new Event('change'))
   }
 
   /**
@@ -198,6 +203,12 @@ class LscTranslator {
       learningObject.getDocument().onmouseup = () => { this.setSelectionText(learningObject.getDocument()) }
     }
     document.onmouseup = () => { this.setSelectionText(document) }
+  }
+
+  _addEventChangeShowLscTranslator() {
+    let checkboxShowLscTranslator = document.getElementsByName('showLscTranslator')[0]
+
+    checkboxShowLscTranslator.addEventListener('change', this.changeShowLscTranslator.bind(this))
   }
 
   /**
@@ -604,5 +615,20 @@ class LscTranslator {
     } else {
       this.loadImages(this.splitWordsInValidSigns(this.specialSigns(this.cleanNumbers(this.prepareText(text)))));
     }
+  }
+
+  changeShowLscTranslator() {
+    let checkbox = document.getElementsByName('showLscTranslator')[0]
+    let isChecked = checkbox.checked
+    this.showLscTranslator = isChecked
+
+    if (!isChecked) {
+      this.containerIris.style.display = 'none'
+    } else {
+      this.containerIris.style.display = ''
+    }
+
+    checkbox.setAttribute('default', false)
+    localStorage.setItem('show_lsc_translator', this.showLscTranslator)
   }
 }

@@ -37,8 +37,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" role="radio" name="LSC-translator-model" id="LSC-translator-model-avatar"
-                      value="1">
+                    <input class="form-check-input" type="radio" role="radio" name="LSC-translator-model" id="LSC-translator-model-avatar" value="1">
                     <label class="form-check-label" for="LSC-translator-model-avatar">
                       <?php echo $this->lang->line('avatar'); ?></label>
                   </div>
@@ -49,8 +48,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" role="radio" name="LSC-translator-model" id="LSC-translator-model-human"
-                      value="2">
+                    <input class="form-check-input" type="radio" role="radio" name="LSC-translator-model" id="LSC-translator-model-human" value="2">
                     <label class="form-check-label" for="LSC-translator-model-human">
                       <?php echo $this->lang->line('human'); ?></label>
                   </div>
@@ -59,6 +57,30 @@
             </div>
           </div>
         </fieldset>
+      </div>
+    </div>
+    <div id="card-show-lsc-translator" class="card bg-light mb-3" style="max-width: 18rem; min-width: 18rem;">
+      <div class="card-header text-center">
+        <span>
+          <b>
+            <?php echo $this->lang->line('lsc_translator'); ?>
+          </b>
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label for="showLscTranslatorCheck">
+              <?php echo $this->lang->line('show_lsc_translator'); ?>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <br/>
+            <input type="checkbox" name="showLscTranslator" id="showLscTranslatorCheck"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
