@@ -772,7 +772,6 @@ where users.use_username='" . $username . "'");
 
     function save_context($username)
     {
-        var_dump($_POST);
         $context_data = array(
             'use_username' => $username,
             'device_id' => $this->input->post('deviceId'),

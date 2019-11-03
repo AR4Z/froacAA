@@ -90,6 +90,7 @@ class ScreenReader {
 
       button(element) {
         let textElement = this._getText(element)
+        console.log(element)
 
         if (element.tagName != 'BUTTON' && element.tagName != 'A') {
           console.log("entry")
@@ -102,6 +103,8 @@ class ScreenReader {
           return `Botón para abrir, ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. ${ element.getAttribute('aria-expanded') != 'true' ? 'Presione enter para abrir y leer.' : 'Presione ctrl + g para leer.'}`
         } else if (element.getAttribute('aria-controls')) {
           return `Botón para controlar ${ document.getElementById(element.getAttribute('aria-controls')).getAttribute('aria-label') }. Descripción: ${ textElement }`
+        } else {
+          return `Botón ${element.textContent}`
         }
       },
 
