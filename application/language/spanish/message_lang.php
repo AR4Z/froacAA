@@ -282,3 +282,4 @@ $lang["context_modal_title"] = "Información del contexto";
 $lang["voice_recognition"] = "Reconocimiento de voz";
 $lang["concentration"] = "Posibilidad de concentración";
 $lang["show_lsc_translator"] = "Mostrar traductor a Lengua de Señas Colombiana";
+$lang["reverse_colors"] = "Invertir colores";

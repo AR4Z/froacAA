@@ -445,7 +445,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title mx-auto"><?php echo $this->lang->line('context_modal_title'); ?></h5>
+              <h5 class="modal-title mx-auto" id="labelContextModal" ><?php echo $this->lang->line('context_modal_title'); ?></h5>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -530,7 +530,7 @@
                           <label id="labelEducationalPurpose" for="selectEducationalPurpose">
                             <?php echo $this->lang->line('educational_purpose'); ?>:
                           </label>
-                          <select class="form-control input-sm m-bot15" id="selecteducationalPurpose" name="educationalPurpose" aria-labelledby="labeleducationalPurpose" aria-required="true">
+                          <select class="form-control input-sm m-bot15" id="selectEducationalPurpose" name="educationalPurpose" aria-labelledby="labelEducationalPurpose" aria-required="true">
                             <option name="educationalPurpose" value="1" selected="selected">
                               <?php echo $this->lang->line('initial_conceptualization'); ?>
                             </option>

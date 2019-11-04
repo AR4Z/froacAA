@@ -281,3 +281,4 @@ $lang["save"] = "Save";
 $lang["context_modal_title"] = "Context information";
 $lang["voice_recognition"] = "Voice recognition";
 $lang["concentration"] = "Possibility of concentration";
+$lang["reverse_colors"] = "Reverse colors";
