@@ -532,13 +532,10 @@
                           </label>
                           <select class="form-control input-sm m-bot15" id="selectEducationalPurpose" name="educationalPurpose" aria-labelledby="labelEducationalPurpose" aria-required="true">
                             <option name="educationalPurpose" value="1" selected="selected">
-                              <?php echo $this->lang->line('initial_conceptualization'); ?>
+                              <?php echo $this->lang->line('content_presentation'); ?>
                             </option>
                             <option name="educationalPurpose" value="2">
-                              <?php echo $this->lang->line('informal_exploration'); ?>
-                            </option>
-                            <option name="educationalPurpose" value="3">
-                              <?php echo $this->lang->line('activities'); ?>
+                              <?php echo $this->lang->line('interactive_activities'); ?>
                             </option>
                           </select>
                           <br />

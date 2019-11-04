@@ -283,3 +283,5 @@ $lang["voice_recognition"] = "Reconocimiento de voz";
 $lang["concentration"] = "Posibilidad de concentración";
 $lang["show_lsc_translator"] = "Mostrar traductor a Lengua de Señas Colombiana";
 $lang["reverse_colors"] = "Invertir colores";
+$lang["interactive_activities"] = "Actividades interactivas";
+$lang["content_presentation"] = "Presentación de contenidos";

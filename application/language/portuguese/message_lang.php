@@ -279,3 +279,5 @@ $lang["context_modal_title"] = "Informações sobre o contexto";
 $lang["voice_recognition"] = "Reconhecimento de voz";
 $lang["concentration"] = "Possibilidade de concentração";
 $lang["reverse_colors"] = "Inverter cores";
+$lang["interactive_activities"] = "Atividades interativas";
+$lang["content_presentation"] = "Apresentação de conteúdos";
