@@ -53,8 +53,8 @@ class StructuralNavigation {
   }
 
   _loadStructuralNavigation() {
-    document.querySelector(`input[name='navigation-strategy'][value='${ this.navStrategyId }']`).checked = true
-    document.querySelector(`input[name='navigation-strategy'][value='${ this.navStrategyId }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='navigation-strategy'][value='${this.navStrategyId}']`).checked = true
+    document.querySelector(`input[name='navigation-strategy'][value='${this.navStrategyId}']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='showTOC']`).checked = this.showToc == 't' || this.showToc == 'true' ? true : false
     document.querySelector(`input[name='showTOC']`).dispatchEvent(new Event('change'))
@@ -150,7 +150,7 @@ class StructuralNavigation {
 
     if (this.showToc != localStorage.getItem('show_toc') && !isDefault) {
       window.accessibilityBar.updatePreferencesStructuralNav({
-        showtoc: `${ this.showToc }`
+        showtoc: `${this.showToc}`
       })
     }
 
@@ -169,27 +169,29 @@ class StructuralNavigation {
     let headings = [].slice.call(documentRef.body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
     let ul = documentRef.createElement('ul')
     headings.forEach((heading, index) => {
-      let anchor = documentRef.createElement('a');
-      anchor.setAttribute('name', 'toc' + index);
-      anchor.setAttribute('id', 'toc' + index);
+      if (this.elementIsVisible(heading)) {
+        let anchor = documentRef.createElement('a');
+        anchor.setAttribute('name', 'toc' + index);
+        anchor.setAttribute('id', 'toc' + index);
 
 
-      let link = documentRef.createElement('a');
-      link.textContent = heading.textContent;
+        let link = documentRef.createElement('a');
+        link.textContent = heading.textContent;
 
-      if (customDoc) {
-        link.addEventListener('click', () => {
-          this.scrollInsideIframe(`toc${ index }`)
-        })
-      } else {
-        link.setAttribute('href', '#toc' + index);
+        if (customDoc) {
+          link.addEventListener('click', () => {
+            this.scrollInsideIframe(`toc${index}`)
+          })
+        } else {
+          link.setAttribute('href', '#toc' + index);
+        }
+
+        let li = documentRef.createElement('li');
+
+        li.appendChild(link);
+        ul.appendChild(li);
+        heading.parentNode.insertBefore(anchor, heading);
       }
-
-      let li = documentRef.createElement('li');
-
-      li.appendChild(link);
-      ul.appendChild(li);
-      heading.parentNode.insertBefore(anchor, heading);
     });
 
     this.containerBodyToc.appendChild(ul)
@@ -199,5 +201,9 @@ class StructuralNavigation {
     let iframeDocument = learningObject.getDocument()
     let posElement = iframeDocument.getElementById(id).offsetTop
     $(iframeDocument).contents().scrollTop(posElement)
+  }
+
+  elementIsVisible(elem) {
+    return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
   }
 }
