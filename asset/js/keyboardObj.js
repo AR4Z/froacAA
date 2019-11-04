@@ -49,12 +49,12 @@ class VirtualKeyboard {
    * @returns {void}
    */
   _loadKeyboard() {
-    document.querySelector(`input[name='keyboard-size'][value='${ this.keyboardSizeId }']`).checked = true
-    document.querySelector(`input[name='keyboard-size'][value='${ this.keyboardSizeId }']`).dispatchEvent(new Event('change'))
+    document.querySelector(`input[name='keyboard-size'][value='${this.keyboardSizeId}']`).checked = true
+    document.querySelector(`input[name='keyboard-size'][value='${this.keyboardSizeId}']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='play_key_sound']`).checked = this.playKeySound == 't' || this.playKeySound == 'true' ? true : false
     document.querySelector(`input[name='play_key_sound']`).dispatchEvent(new Event('change'))
-  
+
     document.querySelector(`input[name='useKeyboard']`).checked = this.useKeyboard
     document.querySelector(`input[name='useKeyboard']`).dispatchEvent(new Event('change'))
   }
@@ -92,11 +92,11 @@ class VirtualKeyboard {
     checkboxUseKeyboard.addEventListener('change', (e) => {
       /** @type {boolean} */
       let useKeyboard = e.target.checked
-      
-      if(useKeyboard) {
+
+      if (useKeyboard) {
         this.createKeyboard();
       }
-      
+
       localStorage.setItem('use_keyboard', useKeyboard)
       this.useKeyboard = localStorage.getItem('use_keyboard')
     })
@@ -172,8 +172,8 @@ class VirtualKeyboard {
     let keySound = document.getElementById('key-sound');
     // its playing?
     if (keySound.played.length == 1) {
-        keySound.pause();
-        keySound.currentTime = 0;
+      keySound.pause();
+      keySound.currentTime = 0;
     }
     keySound.play()
   }
@@ -192,7 +192,7 @@ class VirtualKeyboard {
       2: 'medio',
       3: 'large'
     }
-    
+
     this.keyboardSizeId = optionKeyboardSizeSelected
     this.keyboardSizeClass = validClassSize[this.keyboardSizeId]
 
@@ -219,7 +219,7 @@ class VirtualKeyboard {
 
     if (this.playKeySound != localStorage.getItem('play_key_sound') && !isDefault) {
       accessibilityBar.updatePreferencesKeyboard({
-        play_key_sound: `${ this.playKeySound }`
+        play_key_sound: `${this.playKeySound}`
       })
     }
 
@@ -260,6 +260,7 @@ class VirtualKeyboard {
         // empty button class name {empty}
         buttonEmpty: 'ui-keyboard-empty'
       },
+      tabNavigation: true,
 
       position: {
         // optional - null (attach to input/textarea) or a jQuery object
@@ -278,8 +279,11 @@ class VirtualKeyboard {
           virtual keyboard size to the current size
         */
         if (this.useKeyboard == 'false') {
-          let keyboard = $(`#${$('.ui-keyboard')[0].id}`).getkeyboard();
-          keyboard.destroy();
+          let keyboard = document.getElementsByClassName('ui-keyboard')[0]
+          if (keyboard) {
+            keyboard = $(keyboard).getkeyboard()
+            keyboard.destroy()
+          }
         } else {
           let keys = document.getElementsByClassName('ui-state-default')
 
@@ -293,7 +297,7 @@ class VirtualKeyboard {
         // add event click handler each of key for play key sound, if user wants
         Array.prototype.forEach.call(keyboardButtons, button => {
           button.addEventListener('click', () => {
-            if(this.playKeySound) {
+            if (this.playKeySound) {
               this.playSoundKey()
             }
 
