@@ -27,7 +27,7 @@ class Usuario_model extends CI_Model
     function get_all_usr_data($username)
     {
         $query = $this->db->query("select users.use_username, users.use_nombre, users.use_email, users.use_fecha_registro,users.use_apellido, use_rol.use_rol_nombre, use_rol.use_rol_id,
- users.use_datebirth, use_level.use_level, use_level.use_id_level, use_student.pref_lo_language
+ users.use_datebirth, use_level.use_level, use_level.use_id_level, use_student.pref_lo_language, use_student.id_input_device
  from users
  inner join use_student on use_student.use_username=users.use_username
  inner join use_level on use_level.use_id_level=use_student.use_level_id

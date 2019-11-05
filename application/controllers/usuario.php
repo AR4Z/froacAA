@@ -1131,6 +1131,9 @@ cadena y enviar al modelo estos valores
         $this->session->set_userdata('use_external_magnifier', isset($_POST['magnifier']));
         $this->session->set_userdata('use_external_vk', isset($_POST['virtual_kb']));
         $this->session->set_userdata('use_external_vr', isset($_POST['voice_recognition']));
+        $this->session->set_userdata('concentration', $this->input->post('concentration'));
+        $this->session->set_userdata('available_time', $this->input->post('avilableTime'));
+        $this->session->set_userdata('educational_purpose', $this->input->post('educationalPurpose'));
         redirect(base_url(), 'refresh');
     }
 }

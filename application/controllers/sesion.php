@@ -171,7 +171,7 @@ class Sesion extends CI_Controller
         $this->session->unset_userdata('need_virtual_keyboard');
 
         $this->session->unset_userdata('device_id');
-        $this->session->unset_userdata('has_microphone');        
+        $this->session->unset_userdata('has_microphone');
         $this->session->unset_userdata('has_speakers');
         $this->session->unset_userdata('has_keyboard');
         $this->session->unset_userdata('has_mouse');
@@ -180,6 +180,9 @@ class Sesion extends CI_Controller
         $this->session->unset_userdata('use_external_magnifier');
         $this->session->unset_userdata('use_external_vk');
         $this->session->unset_userdata('use_external_vr');
+        $this->session->unset_userdata('concentration');
+        $this->session->unset_userdata('available_time');
+        $this->session->unset_userdata('educational_purpose');
 
 
         redirect(base_url(), 'refresh');

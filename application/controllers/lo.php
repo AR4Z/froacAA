@@ -398,7 +398,6 @@ class Lo extends CI_Controller
             $session_data = $this->session->userdata('logged_in');
             $user_narrator = $this->usuario_model->get_need_narrator($session_data['username'])[0];
             $access_mode = $this->usuario_model->get_access_modes($session_data['username'])[0];
-
             $access_mode_textual = $access_mode->textual == 't';
             $access_mode_visual = $access_mode->visual == 't';
             $access_mode_auditive = $access_mode->auditive == 't';
@@ -406,7 +405,13 @@ class Lo extends CI_Controller
             $user_lsc  = $this->usuario_model->get_need_translator_lsc($session_data['username'])[0];
             $user_adapta_interfaz = $this->usuario_model->get_need_adapta_interfaz($session_data['username'])[0];
             $user_data = $this->usuario_model->get_all_usr_data($session_data['username'])[0];
+            $user_prefer_resource_types = $this->usuario_model->get_preferencia_est($session_data['username']);
+            $context_educational_purpose = $this->session->userdata('educational_purpose');
+            $context_concentration  = $this->session->userdata('concentration');
+            $available_time = $this->session->userdata('available_time');
 
+
+            //var_dump($user_data);
             /*
             foreach ($result as $oa => $obj) {
                 $dom = new DOMDocument();
@@ -417,7 +422,7 @@ class Lo extends CI_Controller
                 )
             }*/
             foreach ($result as $oa => $obj) {
-                $result[$oa]['val'] = 0;
+                $result[$oa]['val'] = 0.0;
             }
 
             foreach ($result as $oa => $obj) {
@@ -434,63 +439,112 @@ class Lo extends CI_Controller
                 $accessibility_subtitles = $dom->getElementsByTagName('subtitles')[0]->textContent;
                 $adaptation_type_audio_description = $dom->getElementsByTagName('audiodescription')[0]->textContent;
                 $adaptation_type_hearing_alternative = $dom->getElementsByTagName('hearingalternative')[0]->textContent;
+                $educational_context = $dom->getElementsByTagName('context')[0]->textContent;
+                $resource_types = $dom->getElementsByTagName('learningresourcetype');
+                $interaction_mode_keyboard = $dom->getElementsByTagName('keyboard')[0]->textContent;
+                $interaction_mode_mouse = $dom->getElementsByTagName('mouse')[0]->textContent;
+                $difficulty = $dom->getElementsByTagName('difficulty')[0]->textContent;
+                $oa_resource_types = [];
+
+                foreach ($resource_types as $key => $tag) {
+                    array_push($oa_resource_types, $tag->textContent);
+                }
+
+                if (strtolower($user_data['use_level']) == $educational_context) {
+                    $result[$oa]['val'] += 10;
+                }
+
+                foreach ($user_prefer_resource_types as $key => $prefer_resource) {
+                    if (in_array($prefer_resource, $oa_resource_types)) {
+                        $result[$oa]['val'] += 10;
+                    }
+                }
+
                 if ($user_narrator == 1 || $user_sr == 1) {
-                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
-                        $result[$oa]['val'] += 0.2;
+                    if ($access_mode_auditive && ($accessibility_presen_auditory == 'voz' || $accessibility_presen_auditory == 'voice'
+                        || $accessibility_presen_auditory = 'sonido' || $accessibility_presen_auditory = 'sound' || $adaptation_type_audio_description == 'si' || $adaptation_type_audio_description == 'yes' || $adaptation_type_hearing_alternative == 'si' || $adaptation_type_hearing_alternative == 'yes')) {
+                        $result[$oa]['val'] += 20;
                     }
 
-                    if ($interactivity_level == 'low' || $interactivity_level == 'medium') {
-                        $result[$oa]['val'] += 0.05;
+
+                    if ($access_mode_textual && ($textual == 'yes' || $textual == 'si' || $textual_alternative == 'yes' || $textual_alternative == 'si') && $rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
+                        $result[$oa]['val'] += 15;
                     }
 
-                    if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
-                        $result[$oa]['val'] += 0.05;
+                    if ($interactivity_level == 'low' || $interactivity_level == 'bajo' || $interactivity_level == 'medium' || $interactivity_level == 'medio') {
+                        $result[$oa]['val'] += 5;
                     }
                 }
 
                 if ($user_lsc == 1) {
-                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
-                        $result[$oa]['val'] += 0.2;
+                    if ($accessibility_sign_lang  == 'yes' || $accessibility_sign_lang  == 'si') {
+                        $result[$oa]['val'] += 20;
+                    }
+                    if (
+                        $access_mode_textual && ($textual == 'yes' || $textual == 'si' || $textual_alternative == 'yes' || $textual_alternative == 'si') &&
+                        $rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no'
+                    ) {
+                        $result[$oa]['val'] += 15;
                     }
 
-                    if ($accessibility_sign_lang  == 'yes' || $accessibility_subtitles == 'yes') {
-                        $result[$oa]['val'] += 0.5;
+                    if ($accessibility_subtitles == 'yes' || $accessibility_subtitles == 'si') {
+                        $result[$oa]['val'] += 10;
                     }
 
-                    if ($interactivity_level == 'very low' || $interactivity_level == 'low' || $interactivity_level == 'medium') {
-                        $result[$oa]['val'] += 0.05;
+                    if ($access_mode_visual && ($accessibility_presen_visual == 'yes' || $accessibility_presen_visual == 'si')) {
+                        $result[$oa]['val'] += 10;
                     }
-
-                    if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
-                        $result[$oa]['val'] += 0.05;
+                    if (
+                        $interactivity_level == 'very low' || $interactivity_level == 'muy bajo'
+                        || $interactivity_level == 'low' || $interactivity_level == 'bajo'
+                        || $interactivity_level == 'medium' || $interactivity_level == 'medio'
+                    ) {
+                        $result[$oa]['val'] += 5;
                     }
                 }
 
                 if ($user_adapta_interfaz == 1) {
-                    if ($access_mode_textual && ($textual == 'yes' || $textual_alternative == 'yes')) {
-                        $result[$oa]['val'] += 0.15;
+                    if ($access_mode_textual && ($textual == 'yes' || $textual == 'si' || $textual_alternative == 'yes' || $textual_alternative == 'si')) {
+                        $result[$oa]['val'] += 15;
                     }
 
-                    if ($access_mode_visual && ($accessibility_presen_visual == 'yes')) {
-                        $result[$oa]['val'] += 0.1;
+                    if ($access_mode_visual && ($accessibility_presen_visual == 'yes' || $accessibility_presen_visual == 'si')) {
+                        $result[$oa]['val'] += 10;
                     }
 
 
                     if ($rights_cost == 'no' && $rights_copyrightandotherrestrictions == 'no') {
-                        $result[$oa]['val'] += 0.05;
+                        $result[$oa]['val'] += 0.10;
                     }
                 }
 
-                if ($access_mode_auditive) {
-                    if ($accessibility_presen_auditory == 'voice' || $accessibility_presen_auditory == 'sound' || $adaptation_type_audio_description == 'yes' ||  $adaptation_type_hearing_alternative == 'yes') {
-                        $result[$oa]['val'] += 0.15;
-                    }
+                if ($user_data['id_input_device'] == 1 && ($interaction_mode_keyboard == 'yes' || $interaction_mode_keyboard == 'si')) {
+                    $result[$oa]['val'] += 5;
+                }
+
+                if ($user_data['id_input_device'] == 2 && ($interaction_mode_mouse == 'yes' || $interaction_mode_mouse == 'si')) {
+                    $result[$oa]['val'] += 5;
+                }
+
+                if ($context_educational_purpose == '2' && in_array('Actividad interactiva', $oa_resource_types)) {
+                    $result[$oa]['val'] += 10;
+                }
+
+                if ($context_concentration == '2' || $context_concentration == '3' && ($difficulty == 'muy fácil'
+                    || $difficulty == 'very easy') || ($difficulty == 'medium' || $difficulty == 'medio')) {
+                    $result[$oa]['val'] += 10;
+                }
+
+                if (
+                    $context_concentration == '1' && ($difficulty == 'difícil' || $difficulty == 'difficult')
+                    || ($difficulty == 'muy difícil' || $difficulty == 'very difficult')
+                ) {
+                    $result[$oa]['val'] += 10;
                 }
             }
-
-
+            var_dump($result);
             foreach ($result as $i_oa => $oa) {
-                if ($result[$i_oa]['val'] < 0.8) {
+                if ($result[$i_oa]['val'] < 40) {
                     unset($result[$i_oa]);
                 }
             }
