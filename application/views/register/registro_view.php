@@ -456,7 +456,301 @@
                 useStructuralNav: 3
               }
             ]
-            const newUserAdaptInfo = profiles[parseInt(form.querySelector("select[name='diversityProfile']").value) - 1];
+            const accessibilityBarPreferencesProfiles = {
+              'interfaz': [{
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': localStorage.getItem('cursor_size_id'),
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': localStorage.getItem('font_size'),
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': localStorage.getItem('size_line_spacing'),
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                }, {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': 3,
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': 30,
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': 2,
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': 3,
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': 30,
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': 2,
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': 3,
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': 20,
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': 1.5,
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': localStorage.getItem('cursor_size_id'),
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': localStorage.getItem('font_size'),
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': localStorage.getItem('size_line_spacing'),
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': localStorage.getItem('cursor_size_id'),
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': localStorage.getItem('font_size'),
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': localStorage.getItem('size_line_spacing'),
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': localStorage.getItem('cursor_size_id'),
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': localStorage.getItem('font_size'),
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': localStorage.getItem('size_line_spacing'),
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'cursor_size_id': localStorage.getItem('cursor_size_id'),
+                  'color_cursor': localStorage.getItem('color_cursor'),
+                  'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
+                  'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
+                  'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
+                  'font_size': localStorage.getItem('font_size'),
+                  'font_type_id': localStorage.getItem('font_type_id'),
+                  'size_line_spacing': localStorage.getItem('size_line_spacing'),
+                  'cursor_url': localStorage.getItem('cursor_url'),
+                }
+              ],
+              'custom_colors': [{
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': '000000',
+                  'background_colour': 'FFFF00',
+                  'highlight_colour': '171BFF',
+                  'link_colour': '000000'
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'foreground_colour': localStorage.getItem('foreground_colour'),
+                  'background_colour': localStorage.getItem('background_colour'),
+                  'highlight_colour': localStorage.getItem('highlight_colour'),
+                  'link_colour': localStorage.getItem('link_colour')
+                }
+              ],
+              'narrator': [{
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': 1,
+                  'pitch_nr': 2,
+                  'volume_id': 2,
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': 1,
+                  'highlight_id': 2,
+                  'reading_unit_id': 2,
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'speed_reading': localStorage.getItem('speed_reading_nr'),
+                  'pitch_nr': localStorage.getItem('pitch_nr'),
+                  'volume_id': localStorage.getItem('volume_id_nr'),
+                  'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
+                  'links_id': localStorage.getItem('links_id_nr'),
+                  'highlight_id': localStorage.getItem('highlight_id_nr'),
+                  'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
+                  'read_puncts': localStorage.getItem('read_puncts'),
+                  'punct_signs': localStorage.getItem('punct_signs'),
+                }
+              ],
+              'lsc_translator': [{
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': 30,
+                  'model_id': 1
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': 20,
+                  'model_id': 1
+                },
+                {
+                  'use_username': form.querySelector("input[name='username']").value,
+                  'sign_speed': localStorage.getItem('sign_speed'),
+                  'model_id': localStorage.getItem('model_id')
+                }
+              ]
+            }
+            const diversityProfileId = parseInt(form.querySelector("select[name='diversityProfile']").value) - 1
+            const newUserAdaptInfo = profiles[diversityProfileId];
             const inputPersonaliceInterfaz = document.createElement('input');
             inputPersonaliceInterfaz.setAttribute('type', 'hidden');
             inputPersonaliceInterfaz.setAttribute('name', 'personaliceInterfaz');
@@ -500,26 +794,9 @@
             form.appendChild(inputUseVoiceRecognition);
 
             if (newUserAdaptInfo.personaliceInterfaz < 3) {
-              const interfazPreferences = {
-                'use_username': form.querySelector("input[name='username']").value,
-                'cursor_size_id': localStorage.getItem('cursor_size_id'),
-                'color_cursor': localStorage.getItem('color_cursor'),
-                'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
-                'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
-                'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
-                'font_size': localStorage.getItem('font_size'),
-                'font_type_id': localStorage.getItem('font_type_id'),
-                'size_line_spacing': localStorage.getItem('size_line_spacing'),
-                'cursor_url': localStorage.getItem('cursor_url'),
-              }
+              const interfazPreferences = accessibilityBarPreferencesProfiles['interfaz'][diversityProfileId]
 
-              const customColors = {
-                'use_username': form.querySelector("input[name='username']").value,
-                'foreground_colour': localStorage.getItem('foreground_colour'),
-                'background_colour': localStorage.getItem('background_colour'),
-                'highlight_colour': localStorage.getItem('highlight_colour'),
-                'link_colour': localStorage.getItem('link_colour')
-              }
+              const customColors = accessibilityBarPreferencesProfiles['custom_colors'][diversityProfileId]
 
               const inputCustomColors = document.createElement('input');
               inputCustomColors.setAttribute('type', 'hidden');
@@ -536,18 +813,7 @@
             }
 
             if (newUserAdaptInfo.useNarrator < 3) {
-              const narratorPreferences = {
-                'use_username': form.querySelector("input[name='username']").value,
-                'speed_reading': localStorage.getItem('speed_reading_nr'),
-                'pitch_nr': localStorage.getItem('pitch_nr'),
-                'volume_id': localStorage.getItem('volume_id_nr'),
-                'voice_gender_id': localStorage.getItem('voice_gender_id_nr'),
-                'links_id': localStorage.getItem('links_id_nr'),
-                'highlight_id': localStorage.getItem('highlight_id_nr'),
-                'reading_unit_id': localStorage.getItem('reading_unit_id_nr'),
-                'read_puncts': localStorage.getItem('read_puncts'),
-                'punct_signs': localStorage.getItem('punct_signs'),
-              }
+              const narratorPreferences = accessibilityBarPreferencesProfiles['narrator'][diversityProfileId]
 
               const inputNarratorPreferences = document.createElement('input');
               inputNarratorPreferences.setAttribute('type', 'hidden');
@@ -574,11 +840,7 @@
             }
 
             if (newUserAdaptInfo.useLSCTranslator < 3) {
-              const lscTranslatorPreferences = {
-                'use_username': form.querySelector("input[name='username']").value,
-                'sign_speed': localStorage.getItem('sign_speed'),
-                'model_id': localStorage.getItem('model_id')
-              }
+              const lscTranslatorPreferences = accessibilityBarPreferencesProfiles['lsc_translator'][diversityProfileId]
 
               const inputLscTranslatorPreferences = document.createElement('input');
               inputLscTranslatorPreferences.setAttribute('type', 'hidden');
