@@ -40,6 +40,10 @@ class Tour {
           title: 'Traductor a señas',
           description: 'Para usar el traductor basta con seleccionar el texto que quiera ser traducido.'
         },
+        magnifier: {
+          title: 'Uso de magnificador',
+          description: 'Manteniendo oprimida la tecla Ctrl dar clic en cualquier parte de la página donde quiera usar el magnificador. Para desactivar el efecto del magnificador mantenga oprimida la tecla Ctrl y haga clic.'
+        },
         'card-font-size': {
           title: 'Tamaño de fuente',
           description: 'Cambia el tamaño de la fuente escribiendo un número entre 9 y 36.'
@@ -166,6 +170,10 @@ class Tour {
           title: 'Tradutor para assinar',
           description: 'Para usar o tradutor, basta selecionar o texto que você deseja traduzir.'
         },
+        magnifier: {
+          title: 'Utilização da lupa',
+          description: 'Mantenha pressionada a tecla Ctrl e clique em qualquer lugar da página onde você deseja usar a lupa. Para desactivar o efeito de lupa, mantenha premida a tecla Ctrl e clique.'
+        },
         'card-font-size': {
           title: 'Tamanho da fonte',
           description: 'Altere o tamanho da fonte digitando um número entre 9 e 36.'
@@ -279,6 +287,10 @@ class Tour {
         lscTranslator: {
           title: 'Translator to sign',
           description: 'To use the translator, just select the text that you want to be translated.'
+        },
+        magnifier: {
+          title: 'Use of magnifier',
+          description: 'Hold down the Ctrl key and click anywhere on the page where you want to use the magnifier. To deactivate the magnifier effect hold down the Ctrl key and click.'
         },
         'card-font-size': {
           title: 'Font size',
@@ -440,7 +452,7 @@ class Tour {
             this.synth.cancel()
           }
 
-          if (this.carouselControls.getActiveIndex() == 2) {
+          if (this.carouselControls.getActiveIndex() == 3) {
             document.getElementById('finishButtonControls').style.display = ''
             document.getElementById('nextButtonControls').style.display = 'none'
           } else {
@@ -1359,6 +1371,10 @@ class Tour {
             text = `${this.messages[userLang]['voiceCommands'].title}. ${this.messages[userLang]['voiceCommands'].description}`
             break
           }
+        case 3:
+          {
+            text = `${this.messages[userLang]['magnifier'].title}. ${this.messages[userLang]['magnifier'].description}`
+          }
       }
     } else {
       text = `${this.messages[userLang][name].title}. ${this.messages[userLang][name].description}`
@@ -1405,6 +1421,10 @@ class Tour {
             text = `${this.messages[userLang]['voiceCommands'].title}. ${this.messages[userLang]['voiceCommands'].description}`
             break
           }
+        case 3:
+            {
+              text = `${this.messages[userLang]['magnifier'].title}. ${this.messages[userLang]['magnifier'].description}`
+            }
       }
     } else {
       text = `${this.messages[userLang][name].title}. ${this.messages[userLang][name].description}`
@@ -1447,7 +1467,7 @@ class Tour {
   }
 
   nextControlsSlide() {
-    if (this.carouselControls.getActiveIndex() < 2) {
+    if (this.carouselControls.getActiveIndex() < 3) {
       this.carouselControls.slideTo(this.carouselControls.getActiveIndex() + 1)
     }
   }

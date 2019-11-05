@@ -284,3 +284,6 @@ $lang["concentration"] = "Possibility of concentration";
 $lang["reverse_colors"] = "Reverse colors";
 $lang["interactive_activities"] = "Interactive activities";
 $lang["content_presentation"] = "Presentation of contents";
+$lang["magnifier_use"] = "Use of magnifier";
+$lang["active_magnifier_explain"] = "Hold down the Ctrl key and click anywhere on the page where you want to use the magnifier.";
+$lang["deactivate_magnifier_explain"] = "To deactivate the magnifier effect hold down the Ctrl key and click.";

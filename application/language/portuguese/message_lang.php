@@ -281,3 +281,6 @@ $lang["concentration"] = "Possibilidade de concentração";
 $lang["reverse_colors"] = "Inverter cores";
 $lang["interactive_activities"] = "Atividades interativas";
 $lang["content_presentation"] = "Apresentação de conteúdos";
+$lang["magnifier_use"] = "Utilização da lupa";
+$lang["active_magnifier_explain"] = "Mantenha pressionada a tecla Ctrl e clique em qualquer lugar da página onde você deseja usar a lupa.";
+$lang["deactivate_magnifier_explain"] = "Para desactivar o efeito de lupa, mantenha premida a tecla Ctrl e clique.";

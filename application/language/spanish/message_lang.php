@@ -285,3 +285,6 @@ $lang["show_lsc_translator"] = "Mostrar traductor a Lengua de Señas Colombiana"
 $lang["reverse_colors"] = "Invertir colores";
 $lang["interactive_activities"] = "Actividades interactivas";
 $lang["content_presentation"] = "Presentación de contenidos";
+$lang["magnifier_use"] = "Uso de magnificador";
+$lang["active_magnifier_explain"] = "Manteniendo oprimida la tecla Ctrl dar clic en cualquier parte de la página donde quiera usar el magnificador.";
+$lang["deactivate_magnifier_explain"] = "Para desactivar el efecto del magnificador mantenga oprimida la tecla Ctrl y haga clic";

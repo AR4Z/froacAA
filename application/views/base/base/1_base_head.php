@@ -253,7 +253,7 @@
       let contextModal = document.getElementById('contextModal')
       let modalContextInstance = new Modal(contextModal);
       if (window.show_context_modal) {
-      //if (true) {
+        //if (true) {
         modalContextInstance.show()
         window.context = new Context()
       }
@@ -413,6 +413,17 @@
                       </dl>
                     </div>
                   </div>
+                  <div class="carousel-item">
+                    <div class="container-fluid">
+                      <div class="row justify-content-md-center">
+                        <h2 class="title"><?php echo $this->lang->line('magnifier_use'); ?> </h2>
+                      </div>
+                      <dl class="row">
+                        <p><?php echo $this->lang->line('active_magnifier_explain'); ?></p>
+                        <p><?php echo $this->lang->line('deactivate_magnifier_explain'); ?></p>
+                      </dl>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -445,7 +456,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title mx-auto" id="labelContextModal" ><?php echo $this->lang->line('context_modal_title'); ?></h5>
+              <h5 class="modal-title mx-auto" id="labelContextModal"><?php echo $this->lang->line('context_modal_title'); ?></h5>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -543,7 +554,7 @@
                             <?php echo $this->lang->line('available_time'); ?>:
                           </label>
                           <input type="number" min="1.0" max="2.0" step="0.1" value="1.5" id="inputAvailableTime" name="availableTime" />
-                          <br/>  
+                          <br />
                           <label id="labelConcentration" for="selectConcentration">
                             <?php echo $this->lang->line('concentration'); ?>:
                           </label>
