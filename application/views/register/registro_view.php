@@ -398,8 +398,8 @@
                 useSr: 2,
                 useLSCTranslator: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 2
-                useStructuralNav: 3,
+                useVoiceRecognition: 2,
+                useStructuralNav: 3
               },
               {
                 personaliceInterfaz: 1,
