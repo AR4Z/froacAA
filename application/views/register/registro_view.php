@@ -236,26 +236,6 @@
             adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
           },
           {
-            input_device: 1,
-            access_mode: ['accessModeAuditive', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
-          },
-          {
-            input_device: 3,
-            access_mode: ['accessModeAuditive', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
-          },
-          {
-            input_device: 3,
-            access_mode: ['accessModeAuditive', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
-          },
-          {
-            input_device: 3,
-            access_mode: ['accessModeAuditive', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
-          },
-          {
             input_device: 3,
             access_mode: ['accessModeAuditive', 'accessModeTextual'],
             adaptation_types: ['adaptationTypeAudioDescription', 'adaptationTypeHearingAlternative', 'adaptationTypeTextualAlternative']
@@ -278,17 +258,12 @@
           {
             input_device: 3,
             access_mode: ['accessModeVisual', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeTextualAlternative']
+            adaptation_types: ['adaptationTypeTextualAlternative', 'adaptationTypeSubtitles']
           },
           {
             input_device: 3,
             access_mode: ['accessModeVisual', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeTextualAlternative']
-          },
-          {
-            input_device: 3,
-            access_mode: ['accessModeVisual', 'accessModeTextual'],
-            adaptation_types: ['adaptationTypeSubtitles', 'adaptationTypeLSC', 'adaptationTypeTextualAlternative']
+            adaptation_types: ['adaptationTypeTextualAlternative', 'adaptationTypeSubtitles', 'adaptationTypeLSC']
           },
           {
             input_device: 3,
@@ -415,25 +390,16 @@
                 useLSCTranslator: 3,
                 useStructuralNav: 3,
                 useKeyboard: 3,
-                useVoiceRecognition: 3
+                useVoiceRecognition: 1
               },
               {
-                personaliceInterfaz: 3,
-                useNarrator: 3,
-                useSr: 1,
+                personaliceInterfaz: 1,
+                useNarrator: 2,
+                useSr: 2,
                 useLSCTranslator: 3,
-                useStructuralNav: 3,
-                useKeyboard: 3,
+                useKeyboard: 2,
                 useVoiceRecognition: 2
-              },
-              {
-                personaliceInterfaz: 1,
-                useNarrator: 2,
-                useSr: 2,
-                useLSCTranslator: 3,
-                useKeyboard: 2,
-                useVoiceRecognition: 2,
-                useStructuralNav: 3
+                useStructuralNav: 3,
               },
               {
                 personaliceInterfaz: 1,
@@ -450,34 +416,7 @@
                 useSr: 2,
                 useLSCTranslator: 3,
                 useKeyboard: 2,
-                useVoiceRecognition: 2,
-                useStructuralNav: 3
-              },
-              {
-                personaliceInterfaz: 1,
-                useNarrator: 1,
-                useSr: 2,
-                useLSCTranslator: 3,
-                useKeyboard: 2,
                 useVoiceRecognition: 1,
-                useStructuralNav: 3
-              },
-              {
-                personaliceInterfaz: 1,
-                useNarrator: 2,
-                useSr: 2,
-                useLSCTranslator: 3,
-                useKeyboard: 2,
-                useVoiceRecognition: 2,
-                useStructuralNav: 3
-              },
-              {
-                personaliceInterfaz: 1,
-                useNarrator: 2,
-                useSr: 2,
-                useLSCTranslator: 3,
-                useKeyboard: 1,
-                useVoiceRecognition: 2,
                 useStructuralNav: 3
               },
               {
@@ -485,15 +424,6 @@
                 useNarrator: 3,
                 useSr: 3,
                 useLSCTranslator: 1,
-                useKeyboard: 2,
-                useVoiceRecognition: 3,
-                useStructuralNav: 3
-              },
-              {
-                personaliceInterfaz: 2,
-                useNarrator: 3,
-                useSr: 3,
-                useLSCTranslator: 2,
                 useKeyboard: 2,
                 useVoiceRecognition: 3,
                 useStructuralNav: 3
@@ -576,8 +506,6 @@
                 'color_cursor': localStorage.getItem('color_cursor'),
                 'trail_cursor_size_id': localStorage.getItem('trail_cursor_size_id'),
                 'trail_cursor_color': localStorage.getItem('trail_cursor_color'),
-                'invert_color_image': localStorage.getItem('invert_color_image'),
-                'invert_color_general': localStorage.getItem('invert_color_general'),
                 'contrast_colors_id': localStorage.getItem('contrast_colors_id'),
                 'font_size': localStorage.getItem('font_size'),
                 'font_type_id': localStorage.getItem('font_type_id'),
