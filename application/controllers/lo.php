@@ -542,7 +542,6 @@ class Lo extends CI_Controller
                     $result[$oa]['val'] += 10;
                 }
             }
-            var_dump($result);
             foreach ($result as $i_oa => $oa) {
                 if ($result[$i_oa]['val'] < 40) {
                     unset($result[$i_oa]);
