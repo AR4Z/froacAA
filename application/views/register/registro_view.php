@@ -326,18 +326,6 @@
               }
             }
           },
-          email: {
-            required: true,
-            email: true,
-            remote: {
-              url: '<?php echo base_url() ?>index.php/usuario/verify_email',
-              method: 'post',
-              nameData: 'email',
-              check: (data) => {
-                return !data.success;
-              }
-            }
-          },
           birthDate: {
             required: true,
             date: 'yyyy-mm-dd',
@@ -367,9 +355,6 @@
           minLength: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('min_length_field'); ?></div>",
           username: {
             remote: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('use_username'); ?></div>"
-          },
-          email: {
-            remote: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('use_email'); ?></div>"
           },
           birthDate: {
             date: () => "<br><div aria-hidden='false' aria-live='assertive' role='alert' class='alert alert-danger'><?php echo $this->lang->line('invalid_birthdate'); ?></div>",
