@@ -555,7 +555,8 @@ class Lo extends CI_Controller
             "result" => $result,
             "palabras" => $palabras,
             "sess" => $sess,
-            "user" => $user
+            "user" => $user,
+            "len_result" => count($result)
         );
         $this->load->view("base/result_view", $content);
     }
