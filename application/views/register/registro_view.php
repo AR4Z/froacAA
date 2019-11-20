@@ -299,8 +299,9 @@
           const year = date.getFullYear();
           return `${year}-${month}-${day}`;
         },
-        minDate: new Date('1975-01-01'),
-        maxDate: yesterday
+        minDate: new Date('1900-01-01'),
+        maxDate: yesterday,
+        yearRange: [1900, 2019]
       });
 
       validator = new Validator(registerForm, {
