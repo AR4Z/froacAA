@@ -30,12 +30,12 @@
             <button class="btn btn-lg btn-success btn-block" type="submit"><?php echo $this->lang->line('signin'); ?></button>
             <div class="registration text-center">
             <?php echo $this->lang->line('message_signup'); ?><br>
-                <a class="" href="<?php echo base_url()?>usuario/registro">
+                <a class="" href="<?php echo base_url()?>usuario/registro" style="color:#001eff;">
                 <?php echo $this->lang->line('create_account'); ?>
                 </a>
             </div><br>
             <div class="registration text-center">
-                <a class="" href="<?php echo base_url()?>">
+                <a href="<?php echo base_url()?>" style="color:#001eff;">
                     <i class="fa fa-reply"></i><?php echo $this->lang->line('return'); ?>
                 </a>
             </div>

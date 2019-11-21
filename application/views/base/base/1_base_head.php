@@ -149,6 +149,23 @@
       position: static;
       font-size: calc(.8em + 1vw);
     }
+
+    .nav-link {
+      color:#001eff;
+    }
+
+    .btn-success{
+      background:#124A1F;
+    }
+
+    .btn-outline-success {
+      color:white;
+      background: #124A1F;
+    }
+
+    .badge-info {
+      background: #0C5D6A;
+    }
   </style>
   <script type="text/javascript">
     $(document).ready(function() {
