@@ -2,29 +2,51 @@
 $lo_xml = $xml[0]["lo_xml_lom"];
 $xml_dom = new DOMDocument();
 $xml_dom->loadXML($lo_xml);
-echo '<h3>General</h3>';
-$catalog = $xml_dom->getElementsByTagName('catalog')[0]->textContent;
-echo '<b>Catalogo: </b>' . $catalog . '<br/>';
-$entry = $xml_dom->getElementsByTagName('entry')[0]->textContent;
-echo '<b>Entrada: </b>' . $entry . '<br/>';
-$title = $xml_dom->getElementsByTagName('title')[0]->textContent;
-echo '<b>Título: </b>' . $title . '<br/>';
-$language = $xml_dom->getElementsByTagName('language')[0]->textContent;
-echo '<b>Lenguage: </b>' . $language . '<br/>';
-$description = $xml_dom->getElementsByTagName('description')[0]->textContent;
-echo '<b>Descripción: </b>' . $description . '<br/>';
-$gral_tag = $xml_dom->getElementsByTagName('general')[0];
-$gral_keywords_tags = $gral_tag->getElementsByTagName('keyword');
-$coverage = $xml_dom->getElementsByTagName('coverage')[0]->textContent;
-echo '<b>Cobertura: </b>' . $coverage . '<br/>';
-$structure = $xml_dom->getElementsByTagName('structure')[0]->textContent;
-echo '<b>Estructura: </b>' . $structure . '<br/>';
-$aggregation_level = $xml_dom->getElementsByTagName('aggregationlevel')[0]->textContent;
-echo '<b>Nivel de agregación: </b>' . $aggregation_level . '<br/>';
 $gral = $xml_dom->getElementsByTagName('general');
-
 if ($gral->length) {
+	echo '<h3>General</h3>';
 	$gral_keywords = $gral[0]->getElementsByTagName('keyword');
+	$gral_catalog = $gral[0]->getElementsByTagName('catalog');
+	$gral_entry = $gral[0]->getElementsByTagName('entry');
+	$gral_title = $gral[0]->getElementsByTagName('title');
+	$gral_language = $gral[0]->getElementsByTagName('language');
+	$gral_description = $gral[0]->getElementsByTagName('description');
+	$gral_coverage = $gral[0]->getElementsByTagName('coverage');
+	$gral_structure = $gral[0]->getElementsByTagName('structure');
+	$gral_aggregation_level = $gral[0]->getElementsByTagName('aggregationlevel');
+
+	if($gral_catalog->length) {
+		echo '<b>Catalogo: </b>' . $gral_catalog[0]->textContent . '<br/>';
+	}
+
+	if($gral_entry->length) {
+		echo '<b>Entrada: </b>' . $gral_entry[0]->textContent . '<br/>';
+	}
+
+	if($gral_title->length) {
+		echo '<b>Título: </b>' . $gral_title[0]->textContent . '<br/>';
+	}
+
+	if($gral_language->length) {
+		echo '<b>Lenguaje: </b>' . $gral_language[0]->textContent . '<br/>';
+	}
+
+	if($gral_description->length) {
+		echo '<b>Descripción: </b>' . $gral_description[0]->textContent . '<br/>';
+	}
+
+	if($gral_coverage->length) {
+		echo '<b>Cobertura: </b>' . $gral_coverage[0]->textContent . '<br/>';
+	}
+
+	if($gral_structure->length) {
+		echo '<b>Estructura: </b>' . $gral_structure[0]->textContent . '<br/>';
+	}
+
+	if($gral_aggregation_level->length) {
+		echo '<b>Nivel de agregación: </b>' . $gral_aggregation_level[0]->textContent . '<br/>';
+	}
+
 	if ($gral_keywords->length) {
 		echo '<b>Palabras clave: </b> <br/><ul>';
 		foreach ($gral_keywords as $key => $kw) {
@@ -33,6 +55,7 @@ if ($gral->length) {
 		echo '</ul>';
 	}
 }
+
 $lifecycle = $xml_dom->getElementsByTagName('lifecycle');
 if ($lifecycle->length) {
 	echo '<h3>Ciclo de vida</h3>';
@@ -133,7 +156,6 @@ if ($technical->length) {
 	}
 
 	if ($technical_type->length) {
-		var_dump($technical_type[0]);
 		echo '<b>Tipo: </b>' . $technical_type[0]->textContent . '<br/>';
 	}
 

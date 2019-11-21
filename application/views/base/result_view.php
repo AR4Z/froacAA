@@ -13,14 +13,17 @@ if ($sess == 1) {
   <div class="card border-0">
     <h4 class="card-title"><?php echo $this->lang->line('message_result'); ?> <b>(<?php echo $palabras ?> )</b> En total: <?php echo $len_result ?></h4>
     <p class="no-results"><?php echo $this->lang->line('no_results'); ?>.</p>
-    <label for="resultsPerPage">Resultados por página:</label>
-    <select id="resultsPerPage">
-      <option selected>10</option>
-      <option>20</option>
-      <option>30</option>
-      <option>40</option>
-      <option>50</option>
-    </select>
+    <div class="col-lg-3">
+      <label for="resultsPerPage">Resultados por página:</label>
+      <select id="resultsPerPage">
+        <option selected>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>40</option>
+        <option>50</option>
+      </select>
+    </div>
+
     <div id="show_oas" class="card-body">
     </div>
     <br />
