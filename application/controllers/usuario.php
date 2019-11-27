@@ -817,7 +817,7 @@ class Usuario extends CI_Controller
 
 
         $this->usuario_model->guardar_estudiante();
-        if ($_POST['educationalResource']) {
+        if (isset($_POST['educationalResource'])) {
             foreach ($_POST['educationalResource'] as $key => $value) {
                 $this->usuario_model->insert_pref($value, $this->input->post('username'));
             }
