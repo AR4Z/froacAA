@@ -446,6 +446,12 @@ class Lo extends CI_Controller
                 $difficulty = $dom->getElementsByTagName('difficulty')[0]->textContent;
                 $oa_resource_types = [];
 
+                $recourse_types = array('Contenido explicativo' => 'narrative text',
+                                        'Actividad Interactiva' => 'questionnaire',
+                                        'Diagrama'=> 'diagram',
+                                        'Imagen'=> 'figure',
+                                        'Vídeo'=> 'video');
+
                 foreach ($resource_types as $key => $tag) {
                     array_push($oa_resource_types, $tag->textContent);
                 }
@@ -455,7 +461,7 @@ class Lo extends CI_Controller
                 }
 
                 foreach ($user_prefer_resource_types as $key => $prefer_resource) {
-                    if (in_array($prefer_resource, $oa_resource_types)) {
+                    if (in_array($recourse_types[$prefer_resource->use_pre_preferencia], $oa_resource_types)) {
                         $result[$oa]['val'] += 10;
                     }
                 }
