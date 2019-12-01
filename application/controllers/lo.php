@@ -424,10 +424,9 @@ class Lo extends CI_Controller
             foreach ($result as $oa => $obj) {
                 $result[$oa]['val'] = 0.0;
             }
-
             foreach ($result as $oa => $obj) {
                 $dom = new DOMDocument();
-                $dom->loadXML($result[$oa]['lo_xml_lom']);
+                $dom->loadXML($result[$oa]['lo_xml_lom'], LIBXML_PARSEHUGE); 
                 $textual = $dom->getElementsByTagName('textual')[0]->textContent;
                 $textual_alternative = $dom->getElementsByTagName('textualalternative')[0]->textContent;
                 $interactivity_level = $dom->getElementsByTagName('interactivitylevel')[0]->textContent;
@@ -546,11 +545,6 @@ class Lo extends CI_Controller
                     || ($difficulty == 'muy difícil' || $difficulty == 'very difficult')
                 ) {
                     $result[$oa]['val'] += 10;
-                }
-            }
-            foreach ($result as $i_oa => $oa) {
-                if ($result[$i_oa]['val'] < 40) {
-                    unset($result[$i_oa]);
                 }
             }
 
