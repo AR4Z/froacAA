@@ -68,6 +68,7 @@ class CustomInterfaz {
     this.cursorTrail = new CursorTrail(0)
     this.letterSpacing = preferencesInterfaz.letter_spacing
     this.wordSpacing = preferencesInterfaz.word_spacing
+    this.limitCharsPerLine = preferencesInterfaz.limit_chars_per_line
 
     if (idView == 'lo_view') {
       /** @type {LearningObject} */
@@ -86,9 +87,11 @@ class CustomInterfaz {
     this._addEventChangeContrast()
     this._addEventChangeCursorSize()
     this._addEventChangeTrailCursorSize()
+    this._addEventChangeLimitCharsPerLine()
 
     this._setValuesInLocalStorage()
     this._loadCustomInterfaz()
+    this.disableTextJustify()
   }
 
   /**
@@ -108,6 +111,7 @@ class CustomInterfaz {
     localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
     localStorage.setItem('font_type_id', this.fontTypeId)
     localStorage.setItem('cursor_url', this.cursorUrl)
+    localStorage.setItem('limit_chars_per_line', this.limitCharsPerLine)
   }
 
   /**
@@ -153,7 +157,8 @@ class CustomInterfaz {
     document.querySelector(`input[name='radioOptionsSizeCursor'][value='${this.cursorSizeId}']`).checked = true
     document.querySelector(`input[name='radioOptionsSizeCursor'][value='${this.cursorSizeId}']`).dispatchEvent(new Event('change'))
 
-
+    document.querySelector(`input[name='limitCharsPerLine']`).checked = this.limitCharsPerLine == 'true' || this.limitCharsPerLine != 'false' ? true : false
+    document.querySelector(`input[name='limitCharsPerLine']`).dispatchEvent(new Event('change'))
   }
 
   /**
@@ -206,6 +211,8 @@ class CustomInterfaz {
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").checked = true
     document.querySelector("input[name='radioOptionsSizeCursor'][value='1']").dispatchEvent(new Event('change'))
 
+    document.querySelector(`input[name='limitCharsPerLine']`).checked = true
+    document.querySelector(`input[name='limitCharsPerLine']`).dispatchEvent(new Event('change'))
 
     if (!all) {
       window.accessibilityBar.updatePreferencesInterfaz({
@@ -217,6 +224,7 @@ class CustomInterfaz {
         letter_spacing: 12 * 0.12,
         word_spacing: 12 * 0.16,
         font_type_id: 1,
+        limit_chars_per_line: 'false',
         invert_color_general: 'false',
         invert_color_image: 'false',
         size_line_spacing: 1.5,
@@ -247,6 +255,12 @@ class CustomInterfaz {
     let inputWordSpacing = document.querySelector('input[name="wordSpacing"')
 
     inputWordSpacing.addEventListener('change', this.changeWordSpacing.bind(this))
+  }
+
+  _addEventChangeLimitCharsPerLine() {
+    let checkboxLimitCharsPerLine = document.getElementsByName('limitCharsPerLine')[0]
+
+    checkboxLimitCharsPerLine.addEventListener('change', this.changeLimitCharsPerLine.bind(this))
   }
 
   /**
@@ -855,5 +869,57 @@ class CustomInterfaz {
 
     localStorage.setItem('trail_cursor_size_id', this.trailCursorSizeId)
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
+  }
+
+  disableTextJustify() {
+    let html = document.getElementsByTagName('html')[0]
+    html.style.textJustify = 'none'
+    if (this.learningObject) {
+      this.learningObjectDoc.querySelector('html').style.textJustify = 'none'
+    }
+  }
+
+  changeLimitCharsPerLine() {
+    let limitCharsPerLine = document.getElementsByName('limitCharsPerLine')[0].checked
+    this.limitCharsPerLine = limitCharsPerLine
+    let css = `
+        p {
+          max-width: 80ch;
+        }
+      `
+
+    if (limitCharsPerLine) {
+      if (!document.getElementById('styleLimitCharsPerLine')) {
+        let head = document.head
+        let style = document.createElement('style')
+        style.id = "styleLimitCharsPerLine"
+
+        head.appendChild(style);
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode(css))
+      }
+
+      if (this.learningObject && !this.learningObjectDoc.getElementById('styleLimitCharsPerLine')) {
+        let styleLO = document.createElement('style')
+        styleLO.id = "styleLimitCharsPerLine"
+        this.learningObjectDoc.head.appendChild(styleLO)
+        styleLO.type = 'text/css';
+        styleLO.appendChild(document.createTextNode(css));
+      }
+    } else {
+      let style = document.getElementById('styleLimitCharsPerLine');
+      if (style) {
+        style.remove()
+      }
+
+      if (this.learningObject) {
+        let styleLO = this.learningObjectDoc.getElementById('styleLimitCharsPerLine');
+        if (styleLO) {
+          styleLO.remove()
+        }
+      }
+    }
+
+    localStorage.setItem('limit_chars_per_line', this.limitCharsPerLine)
   }
 }

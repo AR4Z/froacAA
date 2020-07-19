@@ -31,7 +31,7 @@
             <div class="card-header text-center">
               <span>
                 <b>
-                  Espacio entre letras</b>
+                  ESPACIO ENTRE LETRAS</b>
               </span>
             </div>
             <div class="card-body">
@@ -55,7 +55,7 @@
             <div class="card-header text-center">
               <span>
                 <b>
-                  Espacio entre palabras</b>
+                  ESPACIO ENTRE PALABRAS</b>
               </span>
             </div>
             <div class="card-body">
@@ -70,6 +70,30 @@
                 <div class="col">
                   <div class="input-group">
                     <input type="number" id="wordSpacingInput" name="wordSpacing" value="1,92" min="1,92" max="5,92">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="card_other_text_options" class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center">
+              <span>
+                <b>
+                  OTRAS OPCIONES DE TEXTO</b>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <label for="limitCharsPerLine">
+                    Limitar el número de carácteres por línea
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group">
+                      <input type="checkbox" name="limitCharsPerLine" id="limitCharsPerLineCheck"/>
                   </div>
                 </div>
               </div>
