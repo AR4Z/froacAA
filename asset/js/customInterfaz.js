@@ -67,6 +67,7 @@ class CustomInterfaz {
     /** @type {CursorTrail} */
     this.cursorTrail = new CursorTrail(0)
     this.letterSpacing = preferencesInterfaz.letter_spacing
+    this.wordSpacing = preferencesInterfaz.word_spacing
 
     if (idView == 'lo_view') {
       /** @type {LearningObject} */
@@ -79,6 +80,7 @@ class CustomInterfaz {
 
     this._addEventChangeFontSize()
     this._addEventChangeLetterSpacing()
+    this._addEventChangeWordSpacing()
     this._addEventChangeSizeLineSpacing()
     this._addEventChangeFontType()
     this._addEventChangeContrast()
@@ -102,6 +104,7 @@ class CustomInterfaz {
     localStorage.setItem('contrast_colors_id', this.contrastColorsId)
     localStorage.setItem('font_size', this.fontSize)
     localStorage.setItem('letter_spacing', this.letterSpacing)
+    localStorage.setItem('word_spacing', this.wordSpacing)
     localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
     localStorage.setItem('font_type_id', this.fontTypeId)
     localStorage.setItem('cursor_url', this.cursorUrl)
@@ -119,6 +122,9 @@ class CustomInterfaz {
 
     document.querySelector(`input[name='letterSpacing']`).value = parseFloat(this.letterSpacing)
     document.querySelector(`input[name='letterSpacing']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='wordSpacing']`).value = parseFloat(this.wordSpacing)
+    document.querySelector(`input[name='wordSpacing']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='interlineSpaceSize']`).value = parseFloat(this.sizeLineSpacing)
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
@@ -176,6 +182,10 @@ class CustomInterfaz {
     document.querySelector(`input[name='letterSpacing']`).value = 12 * 0.12
     document.querySelector(`input[name='letterSpacing']`).dispatchEvent(new Event('change'))
 
+    document.querySelector(`input[name='wordSpacing']`).setAttribute('default', true)
+    document.querySelector(`input[name='wordSpacing']`).value = 12 * 0.16
+    document.querySelector(`input[name='wordSpacing']`).dispatchEvent(new Event('change'))
+
     document.querySelector(`input[name='interlineSpaceSize']`).setAttribute('default', true)
     document.querySelector(`input[name='interlineSpaceSize']`).value = 1.5
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
@@ -205,6 +215,7 @@ class CustomInterfaz {
         cursor_url: 'auto',
         font_size: 12,
         letter_spacing: 12 * 0.12,
+        word_spacing: 12 * 0.16,
         font_type_id: 1,
         invert_color_general: 'false',
         invert_color_image: 'false',
@@ -230,6 +241,12 @@ class CustomInterfaz {
     let inputLetterSpacing = document.querySelector('input[name="letterSpacing"')
 
     inputLetterSpacing.addEventListener('change', this.changeLetterSpacing.bind(this))
+  }
+
+  _addEventChangeWordSpacing() {
+    let inputWordSpacing = document.querySelector('input[name="wordSpacing"')
+
+    inputWordSpacing.addEventListener('change', this.changeWordSpacing.bind(this))
   }
 
   /**
@@ -480,6 +497,30 @@ class CustomInterfaz {
     inputLetterSpacing.setAttribute('default', false)
 
     localStorage.setItem('letter_spacing', this.letterSpacing)
+  }
+
+  changeWordSpacing() {
+    let inputWordSpacing = document.getElementsByName('wordSpacing')[0]
+    let html = document.getElementsByTagName('html')[0]
+    let isDefault = inputWordSpacing.default == 'true'
+
+    this.wordSpacing = parseFloat(inputWordSpacing.value)
+    html.style.wordSpacing = `${this.wordSpacing}px`
+
+    if (this.learningObject) {
+      this.learningObjectDoc.querySelector('html').style.wordSpacing = `${this.wordSpacing}px`
+    }
+
+    if ((this.wordSpacing != parseFloat(localStorage.getItem('word_spacing'))) && !isDefault) {
+      accessibilityBar.updatePreferencesInterfaz({
+        word_spacing: this.wordSpacing
+      })
+    }
+
+    inputWordSpacing.setAttribute('default', false)
+
+    localStorage.setItem('word_spacing', this.wordSpacing)
+
   }
 
   /**
