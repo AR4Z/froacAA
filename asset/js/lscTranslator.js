@@ -4,7 +4,7 @@ class LscTranslator {
    * Create Lsc Translator.
    * @param {object} preferencesLscTranslator 
    */
-  constructor(preferencesLscTranslator) {
+  constructor(preferencesLscTranslator, elementsAutomaticTranslate) {
     /** 
      * This object save the animation. Can play, pause or stop the animation.     
      * @type {object} 
@@ -38,18 +38,18 @@ class LscTranslator {
     this.irisLeft = localStorage.getItem('irisLeftPos') || 'calc(100% - 340px)'
 
     /** @type {HTMLElement} */
-    this.containerIris = document.getElementById('container-iris')    
-    /** @type {HTMLElement} */    
+    this.containerIris = document.getElementById('container-iris')
+    /** @type {HTMLElement} */
     this.containerBodyIris = document.getElementById('container-body-iris')
-    /** @type {HTMLElement} */    
+    /** @type {HTMLElement} */
     this.minimizeIrisButton = document.getElementById('minimize-iris')
-    /** @type {HTMLElement} */    
+    /** @type {HTMLElement} */
     this.maximizeIrisButton = document.getElementById('maximize-iris')
-    /** @type {HTMLElement} */    
+    /** @type {HTMLElement} */
     this.stopIrisButton = document.getElementById('stop-iris')
-    /** @type {HTMLElement} */    
+    /** @type {HTMLElement} */
     this.pauseIrisButton = document.getElementById('pause-iris')
-    /** @type {HTMLElement} */    
+    /** @type {HTMLElement} */
     this.playIrisButton = document.getElementById('play-iris')
 
     /** 
@@ -68,14 +68,14 @@ class LscTranslator {
      */
     this.onEnd = () => null
 
-    this.showLscTranslator = localStorage.getItem('show_lsc_translator') ? localStorage.getItem('show_lsc_translator'): true;
+    this.showLscTranslator = localStorage.getItem('show_lsc_translator') ? localStorage.getItem('show_lsc_translator') : true;
 
     $(this.containerIris).draggable({
       containment: "parent",
       scroll: false,
       create: () => {
         this.containerIris.style.top = this.irisTop,
-        this.containerIris.style.left = this.irisLeft
+          this.containerIris.style.left = this.irisLeft
 
         if (this.minimized == 'true') {
           this.minimize()
@@ -103,6 +103,7 @@ class LscTranslator {
     this._addEventClickStop()
     this._addEventClickPause()
     this._addEventSelectionText()
+    this._addEventAutoTranslate(elementsAutomaticTranslate)
     this._addEventChangeShowLscTranslator()
     this._setValuesInLocalStorage()
     this._loadLscTranslator()
@@ -127,9 +128,9 @@ class LscTranslator {
     document.getElementsByName('signSpeed')[0].value = parseInt(this.signSpeed)
     document.getElementsByName('signSpeed')[0].dispatchEvent(new Event('change'))
 
-    document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).checked = true
-    document.querySelector(`input[name='LSC-translator-model'][value='${ this.modelId }']`).dispatchEvent(new Event('change'))
-    
+    document.querySelector(`input[name='LSC-translator-model'][value='${this.modelId}']`).checked = true
+    document.querySelector(`input[name='LSC-translator-model'][value='${this.modelId}']`).dispatchEvent(new Event('change'))
+
     document.querySelector(`input[name='showLscTranslator']`).checked = this.showLscTranslator == 'true' || this.showLscTranslator != 'false' ? true : false
     document.querySelector(`input[name='showLscTranslator']`).dispatchEvent(new Event('change'))
   }
@@ -199,10 +200,18 @@ class LscTranslator {
    * @returns {void}
    */
   _addEventSelectionText() {
-    if(window.idView == 'lo_view') {
+    if (window.idView == 'lo_view') {
       learningObject.getDocument().onmouseup = () => { this.setSelectionText(learningObject.getDocument()) }
     }
     document.onmouseup = () => { this.setSelectionText(document) }
+  }
+
+  _addEventAutoTranslate(elements) {
+    Array.from(elements).forEach(element => {
+      element.onmouseover = () => {
+        this.translate(element.textContent)
+      }
+    })
   }
 
   _addEventChangeShowLscTranslator() {
@@ -232,12 +241,12 @@ class LscTranslator {
     document.getElementsByName('signSpeed')[0].value = 20
     document.getElementsByName('signSpeed')[0].setAttribute('default', true)
     document.getElementsByName('signSpeed')[0].dispatchEvent(new Event('change'))
-  
+
     document.querySelector(`input[name='LSC-translator-model'][value='1']`).checked = true
     document.querySelector(`input[name='LSC-translator-model']`).setAttribute('default', true)
     document.querySelector(`input[name='LSC-translator-model'][value='1']`).dispatchEvent(new Event('change'))
-  
-    if(!all) {
+
+    if (!all) {
       window.accessibilityBar.updatePreferencesLscTranslator({
         sign_speed: 20,
         model_id: 1
@@ -442,7 +451,7 @@ class LscTranslator {
    * @returns {void}
    */
   loadImages(signsName) {
-    let base = `${ accessibilityBar.url }asset/img/lengua/`
+    let base = `${accessibilityBar.url}asset/img/lengua/`
 
     for (let index = 0; index < signsName.length; index++) {
       const element = signsName[index]

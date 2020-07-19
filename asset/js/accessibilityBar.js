@@ -248,9 +248,10 @@ class AccessibilityBar {
     }
 
     if (this.needLscTranslator) {
+      let menuElements = document.getElementsByClassName('auto-translate');
       this.tabs.lscTranslator = document.getElementById('LSC-translator-tab')
       this.tabsCollection.lscTranslator = new Tab(this.tabs.lscTranslator)
-      this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator)
+      this.lscTranslator = new LscTranslator(this.dataAccessibilityBar.data_lsc_translator, menuElements)
     }
 
     if (this.needScreenReader) {
