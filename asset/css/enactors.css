@@ -1118,3 +1118,15 @@
 .customized ::-moz-selection {
   background-color: var(--highlight-color) !important;
 }
+
+
+.customized a[href]:not([tabindex='-1']):focus,
+.customized area[href]:not([tabindex='-1']):focus,
+.customized input:not([disabled]):not([tabindex='-1']):focus,
+.customized select:not([disabled]):not([tabindex='-1']):focus,
+.customized textarea:not([disabled]):not([tabindex='-1']):focus,
+.customized button:not([disabled]):not([tabindex='-1']):focus {
+      color: var(--focus-color, none) !important;
+      border-color: var(--focus-border-color, none) !important;
+      background-color: var(--focus-background-color, none) !important;
+}

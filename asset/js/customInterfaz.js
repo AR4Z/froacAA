@@ -141,6 +141,12 @@ class CustomInterfaz {
     document.querySelector('input[name="highlightColor"]').dispatchEvent(new Event('change'))
     document.querySelector('input[name="linkColor"]').value = this.customColors.link_colour
     document.querySelector('input[name="linkColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="focusColor"]').value = this.customColors.focus_color
+    document.querySelector('input[name="focusColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="focusBorderColor"]').value = this.customColors.focus_border_color
+    document.querySelector('input[name="focusBorderColor"]').dispatchEvent(new Event('change'))
+    document.querySelector('input[name="focusBackgroundColor"]').value = this.customColors.focus_background_color
+    document.querySelector('input[name="focusBackgroundColor"]').dispatchEvent(new Event('change'))
     document.querySelector(`input[name='radioOptionscontrast'][value='${this.contrastColorsId}']`).checked = true
     document.querySelector(`input[name='radioOptionscontrast'][value='${this.contrastColorsId}']`).dispatchEvent(new Event('change'))
 
@@ -304,16 +310,25 @@ class CustomInterfaz {
     document.getElementById('div-color-background').style.display = 'block'
     document.getElementById('div-color-link').style.display = 'block'
     document.getElementById('div-color-highlight').style.display = 'block'
+    document.getElementById('div-focus-color').style.display = 'block'
+    document.getElementById('div-focus-border-color').style.display = 'block'
+    document.getElementById('div-focus-background-color').style.display = 'block'
 
     this._addEventChangeBackgroundColor()
     this._addEventChangeForegroundColor()
     this._addEventChangeHighlightColor()
     this._addEventChangeLinkColor()
+    this._addEventChangeFocusColor()
+    this._addEventChangeFocusBorderColor()
+    this._addEventChangeFocusBackgroundColor()
 
     let inputForegroundColor = document.getElementsByName('foregroundColor')[0]
     let inputBackgroundColor = document.getElementsByName('backgroundColor')[0]
     let inputHighlightColor = document.getElementsByName('highlightColor')[0]
     let inputLinkColor = document.getElementsByName('linkColor')[0]
+    let inputFocusColor = document.getElementsByName('focusColor')[0]
+    let inputFocusBorderColor = document.getElementsByName('focusBorderColor')[0]
+    let inputFocusBackgroundColor = document.getElementsByName('focusBackgroundColor')[0]
 
     inputForegroundColor.value = localStorage.getItem('foreground_color') || '000000'
     inputForegroundColor.dispatchEvent(new Event('change'))
@@ -326,6 +341,15 @@ class CustomInterfaz {
 
     inputLinkColor.value = localStorage.getItem('link_color') || 'FFFF00'
     inputLinkColor.dispatchEvent(new Event('change'))
+
+    inputFocusColor.value = localStorage.getItem('focus_color') || 'FFFF00'
+    inputFocusColor.dispatchEvent(new Event('change'))
+
+    inputFocusBorderColor.value = localStorage.getItem('focus_border_color') || 'FFFF00'
+    inputFocusBorderColor.dispatchEvent(new Event('change'))
+
+    inputFocusBackgroundColor.value = localStorage.getItem('focus_background_color') || 'FFFFFF'
+    inputFocusBackgroundColor.dispatchEvent(new Event('change'))
   }
 
   /**
@@ -338,6 +362,9 @@ class CustomInterfaz {
     document.getElementById('div-color-background').style.display = 'none'
     document.getElementById('div-color-link').style.display = 'none'
     document.getElementById('div-color-highlight').style.display = 'none'
+    document.getElementById('div-focus-color').style.display = 'none'
+    document.getElementById('div-focus-border-color').style.display = 'none'
+    document.getElementById('div-focus-background-color').style.display = 'none'
   }
 
   /**
@@ -460,6 +487,24 @@ class CustomInterfaz {
     let inputHighlightColor = document.getElementsByName('highlightColor')[0]
 
     inputHighlightColor.addEventListener('change', this.changeHighlightColor.bind(this))
+  }
+
+  _addEventChangeFocusColor() {
+    let inputFocusColor = document.getElementsByName('focusColor')[0]
+
+    inputFocusColor.addEventListener('change', this.changeFocusColor.bind(this))
+  }
+
+  _addEventChangeFocusBorderColor() {
+    let inputFocusBorderColor = document.getElementsByName('focusBorderColor')[0]
+
+    inputFocusBorderColor.addEventListener('change', this.changeFocusBorderColor.bind(this))
+  }
+
+  _addEventChangeFocusBackgroundColor() {
+    let inputFocusBackgroundColor = document.getElementsByName('focusBackgroundColor')[0]
+
+    inputFocusBackgroundColor.addEventListener('change', this.changeFocusBackgroundColor.bind(this))
   }
 
   /**
@@ -732,6 +777,72 @@ class CustomInterfaz {
     inputColor.setAttribute('default', false)
 
     localStorage.setItem('highlight_color', color)
+  }
+
+  changeFocusColor() {
+    let inputColor = document.getElementsByName('focusColor')[0]
+    let color = inputColor.value
+    let isDefault = inputColor.default == 'true'
+    document.documentElement.style.setProperty('--focus-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--focus-color', `#${color}`)
+    }
+
+    this.customColors.focus_color = color
+
+    if ((this.customColors.focus_color != localStorage.getItem('focus_color')) && !isDefault) {
+      window.accessibilityBar.updateCustomColors({
+        focus_color: this.customColors.focus_color
+      })
+    }
+
+    inputColor.setAttribute('default', false)
+
+    localStorage.setItem('focus_color', color)
+  }
+
+  changeFocusBorderColor() {
+    let inputColor = document.getElementsByName('focusBorderColor')[0]
+    let color = inputColor.value
+    let isDefault = inputColor.default == 'true'
+    document.documentElement.style.setProperty('--focus-border-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--focus-border-color', `#${color}`)
+    }
+
+    this.customColors.focus_border_color = color
+
+    if ((this.customColors.focus_border_color != localStorage.getItem('focus_border_color')) && !isDefault) {
+      window.accessibilityBar.updateCustomColors({
+        focus_border_color: this.customColors.focus_border_color
+      })
+    }
+
+    inputColor.setAttribute('default', false)
+
+    localStorage.setItem('focus_border_color', color)
+  }
+
+  changeFocusBackgroundColor() {
+    let inputColor = document.getElementsByName('focusBackgroundColor')[0]
+    let color = inputColor.value
+    let isDefault = inputColor.default == 'true'
+    document.documentElement.style.setProperty('--focus-background-color', `#${color}`)
+    if (this.learningObject) {
+      this.learningObjectDoc.documentElement.style.setProperty('--focus-background-color', `#${color}`)
+    }
+
+    this.customColors.focus_background_color = color
+
+    if ((this.customColors.focus_background_color != localStorage.getItem('focus_background_color')) && !isDefault) {
+      window.accessibilityBar.updateCustomColors({
+        focus_background_color: this.customColors.focus_background_color
+      })
+    }
+
+    inputColor.setAttribute('default', false)
+
+    localStorage.setItem('focus_background_color', color)
   }
 
   /**

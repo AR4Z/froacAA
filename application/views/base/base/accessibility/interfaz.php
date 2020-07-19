@@ -124,7 +124,13 @@
 
             </div>
           </div>
-          <div id="card-contrast-colors" class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
+          
+          
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="d-flex flex-row flex-nowrap">
+        <div id="card-contrast-colors" class="card bg-light mb-3" style="max-width: 45rem; min-width: 45rem;">
             <div class="card-header text-center">
               <span>
                 <b>
@@ -283,10 +289,49 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col">
+                    <div id="div-focus-color" class="no-high-contrast" style="display:none">
+                      <label for="focusColorInput">
+                        <b class="no-high-contrast">
+                          Color de foco</b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="focusColorInput" name="focusColor" value="rgb(0,0,0)" class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div id="div-focus-background-color" class="no-high-contrast" style="display:none">
+                      <label for="focusBackgroundColorInput">
+                        <b class="no-high-contrast">
+                          Color de fondo en foco</b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="focusBackgroundColorInput" name="focusBackgroundColor" value="rgb(255, 255, 255)" class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col">
+                    <div id="div-focus-border-color" class="no-high-contrast" style="display:none">
+                      <label for="focusBorderColorInput">
+                        <b class="no-high-contrast">
+                          Color de borde en foco</b>
+                      </label>
+                      <br />
+                      <div class="input-group colorpicker-component formcolorpicker no-high-contrast no-invert-color">
+                        <input type="text" id="focusBorderColorInput" name="focusBorderColor" value="rgb(211, 211, 211)" class="jscolor form-control no-high-contrast no-invert-color" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </fieldset>
             </div>
           </div>
-          <div id="card-font-type" class="card bg-light mb-3" style="max-width: 20rem;">
+        <div id="card-font-type" class="card bg-light mb-3" style="max-width: 20rem;">
             <div class="card-header text-center">
               <span>
                 <b>
@@ -341,10 +386,6 @@
               </fieldset>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="d-flex flex-row flex-nowrap">
           <div id="card-config-cursor" class="card bg-light mb-3" style="max-width: 40rem; min-width: 40rem;">
             <div class="card-header text-center">
               <span>

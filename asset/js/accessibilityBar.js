@@ -123,7 +123,7 @@ class AccessibilityBar {
       },
       'audible': {
       },
-      'none' : {}
+      'none': {}
     }
     this.magnifier = new Magnifier()
   }
@@ -136,7 +136,7 @@ class AccessibilityBar {
    */
   fetchDataAccessibilityBar() {
     if (this.loggedIn) {
-      return fetch(`${ this.url }usuario/get_data_accessibility_bar`)
+      return fetch(`${this.url}usuario/get_data_accessibility_bar`)
         .then(r => r.json())
         .catch(err => console.error(err))
     } else {
@@ -161,7 +161,10 @@ class AccessibilityBar {
               foreground_colour: localStorage.getItem('foreground_colour') || "rgb(0,0,0)",
               background_colour: localStorage.getItem('background_colour') || "rgb(255,255,255)",
               highlight_colour: localStorage.getItem('highlight_colour') || "rgb(211,211,211)",
-              link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)"
+              link_colour: localStorage.getItem('link_colour') || "rgb(255,255,0)",
+              focus_color: localStorage.getItem('focus_color') || "rgb(255,255,0)",
+              focus_border_color: localStorage.getItem('focus_border_color') || "rgb(255,255,0)",
+              focus_background_color: localStorage.getItem('focus_background_color') || "rgb(255,255,0)"
             }
           },
 
@@ -277,7 +280,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_interface_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_interface_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesInterface).forEach(key => {
             this.dataAccessibilityBar.data_custom_interfaz[key] = preferencesInterface[key]
@@ -313,7 +316,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_custom_colors`, fetchData)
+      fetch(`${this.url}usuario/update_custom_colors`, fetchData)
         .then(() => {
           Object.keys(customColors).forEach(key => {
             this.dataAccessibilityBar.data_custom_interfaz.custom_colors[key] = customColors[key]
@@ -346,7 +349,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_narrator_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_narrator_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesNarrator).forEach(key => {
             this.dataAccessibilityBar.data_narrator[key] = preferencesNarrator[key]
@@ -379,7 +382,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_screen_reader_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_screen_reader_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesScreenReader).forEach(key => {
             this.dataAccessibilityBar.data_screen_reader[key] = preferencesScreenReader[key]
@@ -412,7 +415,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_lsc_translator_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_lsc_translator_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesLscTranslator).forEach(key => {
             this.dataAccessibilityBar.data_lsc_translator[key] = preferencesLscTranslator[key]
@@ -445,7 +448,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_structural_nav_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_structural_nav_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesStructuralNav).forEach(key => {
             this.dataAccessibilityBar.data_structural_nav[key] = preferencesStructuralNav[key]
@@ -478,7 +481,7 @@ class AccessibilityBar {
         })
       }
 
-      fetch(`${ this.url }usuario/update_keyboard_preferences`, fetchData)
+      fetch(`${this.url}usuario/update_keyboard_preferences`, fetchData)
         .then(() => {
           Object.keys(preferencesKeyboard).forEach(key => {
             this.dataAccessibilityBar.data_virtual_keyboard[key] = preferencesKeyboard[key]
@@ -505,7 +508,7 @@ class AccessibilityBar {
         }
       }
 
-      fetch(`${ this.url }usuario/set_all_preferences_to_default`, fetchData)
+      fetch(`${this.url}usuario/set_all_preferences_to_default`, fetchData)
         .then(() => {
           this._setDataAccessibilityToDefault()
         })
