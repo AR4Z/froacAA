@@ -66,6 +66,7 @@ class CustomInterfaz {
     this.cursorUrl = preferencesInterfaz.cursor_url
     /** @type {CursorTrail} */
     this.cursorTrail = new CursorTrail(0)
+    this.letterSpacing = preferencesInterfaz.letter_spacing
 
     if (idView == 'lo_view') {
       /** @type {LearningObject} */
@@ -77,6 +78,7 @@ class CustomInterfaz {
     }
 
     this._addEventChangeFontSize()
+    this._addEventChangeLetterSpacing()
     this._addEventChangeSizeLineSpacing()
     this._addEventChangeFontType()
     this._addEventChangeContrast()
@@ -99,6 +101,7 @@ class CustomInterfaz {
     localStorage.setItem('trail_cursor_color', this.trailCursorColor)
     localStorage.setItem('contrast_colors_id', this.contrastColorsId)
     localStorage.setItem('font_size', this.fontSize)
+    localStorage.setItem('letter_spacing', this.letterSpacing)
     localStorage.setItem('size_line_spacing', this.sizeLineSpacing)
     localStorage.setItem('font_type_id', this.fontTypeId)
     localStorage.setItem('cursor_url', this.cursorUrl)
@@ -113,6 +116,9 @@ class CustomInterfaz {
   _loadCustomInterfaz() {
     document.querySelector(`input[name='fontSize']`).value = parseInt(this.fontSize)
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='letterSpacing']`).value = parseFloat(this.letterSpacing)
+    document.querySelector(`input[name='letterSpacing']`).dispatchEvent(new Event('change'))
 
     document.querySelector(`input[name='interlineSpaceSize']`).value = parseFloat(this.sizeLineSpacing)
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
@@ -166,6 +172,10 @@ class CustomInterfaz {
     document.querySelector(`input[name='fontSize']`).value = 12
     document.querySelector(`input[name='fontSize']`).dispatchEvent(new Event('change'))
 
+    document.querySelector(`input[name='letterSpacing']`).setAttribute('default', true)
+    document.querySelector(`input[name='letterSpacing']`).value = 12 * 0.12
+    document.querySelector(`input[name='letterSpacing']`).dispatchEvent(new Event('change'))
+
     document.querySelector(`input[name='interlineSpaceSize']`).setAttribute('default', true)
     document.querySelector(`input[name='interlineSpaceSize']`).value = 1.5
     document.querySelector(`input[name='interlineSpaceSize']`).dispatchEvent(new Event('change'))
@@ -194,6 +204,7 @@ class CustomInterfaz {
         cursor_size_id: 1,
         cursor_url: 'auto',
         font_size: 12,
+        letter_spacing: 12 * 0.12,
         font_type_id: 1,
         invert_color_general: 'false',
         invert_color_image: 'false',
@@ -213,6 +224,12 @@ class CustomInterfaz {
     let inputFontSize = document.querySelector('input[name="fontSize"]')
 
     inputFontSize.addEventListener('change', this.changeFontSize.bind(this))
+  }
+
+  _addEventChangeLetterSpacing() {
+    let inputLetterSpacing = document.querySelector('input[name="letterSpacing"')
+
+    inputLetterSpacing.addEventListener('change', this.changeLetterSpacing.bind(this))
   }
 
   /**
@@ -440,6 +457,29 @@ class CustomInterfaz {
     inputFontSize.setAttribute('default', false)
 
     localStorage.setItem('font_size', this.fontSize)
+  }
+
+  changeLetterSpacing() {
+    let inputLetterSpacing = document.getElementsByName('letterSpacing')[0]
+    let html = document.getElementsByTagName('html')[0]
+    let isDefault = inputLetterSpacing.default == 'true'
+
+    this.letterSpacing = parseFloat(inputLetterSpacing.value)
+    html.style.letterSpacing = `${this.letterSpacing}px`
+
+    if (this.learningObject) {
+      this.learningObjectDoc.querySelector('html').style.letterSpacing = `${this.letterSpacing}px`
+    }
+
+    if ((this.letterSpacing != parseFloat(localStorage.getItem('letter_spacing'))) && !isDefault) {
+      accessibilityBar.updatePreferencesInterfaz({
+        letter_spacing: this.letterSpacing
+      })
+    }
+
+    inputLetterSpacing.setAttribute('default', false)
+
+    localStorage.setItem('letter_spacing', this.letterSpacing)
   }
 
   /**

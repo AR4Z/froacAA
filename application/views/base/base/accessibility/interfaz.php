@@ -27,6 +27,30 @@
               </div>
             </div>
           </div>
+          <div id="card-letter-spacing" class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center">
+              <span>
+                <b>
+                  Espacio entre letras</b>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <label for="letterSpacingInput">
+                    
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group">
+                    <input type="number" id="letterSpacingInput" name="letterSpacing" value="1,44" min="1,44" max="4,44">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div id="card-interline-size" class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header text-center">
               <span>

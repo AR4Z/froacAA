@@ -148,6 +148,7 @@ class AccessibilityBar {
             cursor_size_id: parseInt(localStorage.getItem('cursor_size_id')) || 1,
             cursor_url: localStorage.getItem('cursor_url') || 'auto',
             font_size: parseInt(localStorage.getItem('font_size')) || 12,
+            letter_spacing: parseFloat(localStorage.getItem('letter_spacing')) || 1.44,
             font_type_id: parseInt(localStorage.getItem('font_type_id')) || 1,
             invert_color_general: localStorage.getItem('invert_color_general') || 'f',
             invert_color_image: localStorage.getItem('invert_color_image') || 'f',
