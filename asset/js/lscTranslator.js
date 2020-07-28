@@ -105,6 +105,7 @@ class LscTranslator {
     this._addEventSelectionText()
     this._addEventAutoTranslate(elementsAutomaticTranslate)
     this._addEventChangeShowLscTranslator()
+    this._addEventVideoSubtitles()
     this._setValuesInLocalStorage()
     this._loadLscTranslator()
   }
@@ -218,6 +219,27 @@ class LscTranslator {
     let checkboxShowLscTranslator = document.getElementsByName('showLscTranslator')[0]
 
     checkboxShowLscTranslator.addEventListener('change', this.changeShowLscTranslator.bind(this))
+  }
+
+  _addEventVideoSubtitles() {
+    if (window.idView == 'lo_view') {
+      const loDocument = learningObject.getDocument()
+      const videoTags = loDocument.getElementsByTagName('video')
+
+      Array.from(videoTags).forEach(videoTag => {
+        if (!videoTag.textTracks) return;
+
+        const track = videoTag.textTracks[0];
+
+        track.oncuechange = (e) => {
+          const cue = track.activeCues[0];
+
+          if (cue) {
+            this.translate(cue.text)
+          }
+        };
+      })
+    }
   }
 
   /**

@@ -61,7 +61,7 @@ class LearningObject {
     }
 
     // use ?time=Date.now so that the iframe document is not loaded from the cache
-    this.iframeElement.src = `${base_url}LOs/${path_lo}?time=${Date.now()}`
+    this.iframeElement.src = `${base_url}los/${path_lo}?time=${Date.now()}`
   }
 
   /**
