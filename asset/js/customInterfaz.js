@@ -1114,6 +1114,24 @@ class CustomInterfaz {
       fieldsetTrailCursor.style.display = 'block'
     }
 
+    // manage click events
+
+    document.addEventListener('click', (e) => {
+      if (disableCursor) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }, true);
+
+    if (this.learningObject) {
+      this.learningObjectDoc.addEventListener('click', (e) => {
+        if (disableCursor) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }, true);
+    }
+
     localStorage.setItem('disable_cursor', this.disableCursor)
   }
 }
