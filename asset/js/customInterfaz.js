@@ -94,6 +94,17 @@ class CustomInterfaz {
     this._setValuesInLocalStorage()
     this._loadCustomInterfaz()
     this.disableTextJustify()
+
+    hotkeys('ctrl+1', (event, handler) => {
+      event.preventDefault()
+
+      switch (handler.key) {
+        case 'ctrl+1':
+          document.querySelector(`input[name='disableCursor']`).checked = false
+          document.querySelector(`input[name='disableCursor']`).dispatchEvent(new Event('change'))
+          break
+      }
+    })
   }
 
   /**
