@@ -1069,6 +1069,8 @@ class CustomInterfaz {
     `
     const styleId = 'styleDisableCursor'
     const disableCursor = document.getElementsByName('disableCursor')[0].checked
+    const fieldsetCursorSize = document.getElementById('cursorSizeSet')
+    const fieldsetTrailCursor = document.getElementById('trailCursorSet')
 
     this.disableCursor = disableCursor
 
@@ -1092,6 +1094,9 @@ class CustomInterfaz {
         styleLO.type = 'text/css';
         styleLO.appendChild(document.createTextNode(css));
       }
+      fieldsetCursorSize.style.display = 'none'
+      fieldsetTrailCursor.style.display = 'none'
+
     } else {
       let style = document.getElementById(styleId);
       if (style) {
@@ -1104,6 +1109,9 @@ class CustomInterfaz {
           styleLO.remove()
         }
       }
+
+      fieldsetCursorSize.style.display = 'block'
+      fieldsetTrailCursor.style.display = 'block'
     }
 
     localStorage.setItem('disable_cursor', this.disableCursor)

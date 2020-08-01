@@ -404,7 +404,7 @@
                 </div>
               </div>
               <div class="row">
-                <fieldset class="col" role="radiogroup" aria-labelledby="group_size_cursor">
+                <fieldset class="col" role="radiogroup" aria-labelledby="group_size_cursor" id="cursorSizeSet">
                   <legend id="group_size_cursor" style="font-size:1rem; font-weight: bold;">
                     <?php echo $this->lang->line('size_cursor'); ?>
                   </legend>
@@ -436,7 +436,7 @@
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="col" role="radiogroup" aria-labelledby="group_trail_cursor">
+                <fieldset class="col" role="radiogroup" aria-labelledby="group_trail_cursor" id="trailCursorSet">
                   <legend id="group_trail_cursor" style="font-size:1rem;font-weight:bold;">
                     <?php echo $this->lang->line('size_trail'); ?>
                   </legend>
