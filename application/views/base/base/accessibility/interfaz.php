@@ -38,7 +38,7 @@
               <div class="row">
                 <div class="col">
                   <label for="letterSpacingInput">
-                    
+                    Define el espacio entre letras
                   </label>
                 </div>
               </div>
@@ -62,7 +62,7 @@
               <div class="row">
                 <div class="col">
                   <label for="wordSpacingInput">
-                    
+                    Define el espacio entre palabras
                   </label>
                 </div>
               </div>
