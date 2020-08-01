@@ -69,6 +69,7 @@ class CustomInterfaz {
     this.letterSpacing = preferencesInterfaz.letter_spacing
     this.wordSpacing = preferencesInterfaz.word_spacing
     this.limitCharsPerLine = preferencesInterfaz.limit_chars_per_line
+    this.disableCursor = preferencesInterfaz.disable_cursor
 
     if (idView == 'lo_view') {
       /** @type {LearningObject} */
@@ -88,6 +89,7 @@ class CustomInterfaz {
     this._addEventChangeCursorSize()
     this._addEventChangeTrailCursorSize()
     this._addEventChangeLimitCharsPerLine()
+    this._addEventChangeDisableCursor()
 
     this._setValuesInLocalStorage()
     this._loadCustomInterfaz()
@@ -112,6 +114,7 @@ class CustomInterfaz {
     localStorage.setItem('font_type_id', this.fontTypeId)
     localStorage.setItem('cursor_url', this.cursorUrl)
     localStorage.setItem('limit_chars_per_line', this.limitCharsPerLine)
+    localStorage.setItem('disable_cursor', this.disableCursor)
   }
 
   /**
@@ -165,6 +168,9 @@ class CustomInterfaz {
 
     document.querySelector(`input[name='limitCharsPerLine']`).checked = this.limitCharsPerLine == 'true' || this.limitCharsPerLine != 'false' ? true : false
     document.querySelector(`input[name='limitCharsPerLine']`).dispatchEvent(new Event('change'))
+
+    document.querySelector(`input[name='disableCursor']`).checked = this.disableCursor == 'true' || this.disableCursor != 'false' ? true : false
+    document.querySelector(`input[name='disableCursor']`).dispatchEvent(new Event('change'))
   }
 
   /**
@@ -220,6 +226,9 @@ class CustomInterfaz {
     document.querySelector(`input[name='limitCharsPerLine']`).checked = true
     document.querySelector(`input[name='limitCharsPerLine']`).dispatchEvent(new Event('change'))
 
+    document.querySelector(`input[name='disableCursor']`).checked = false
+    document.querySelector(`input[name='disableCursor']`).dispatchEvent(new Event('change'))
+
     if (!all) {
       window.accessibilityBar.updatePreferencesInterfaz({
         color_cursor: 'rgb(255,18,18)',
@@ -235,7 +244,8 @@ class CustomInterfaz {
         invert_color_image: 'false',
         size_line_spacing: 1.5,
         trail_cursor_color: 'rgb(255,18,18)',
-        trail_cursor_size_id: 1
+        trail_cursor_size_id: 1,
+        disable_cursor: 0
       })
     }
   }
@@ -267,6 +277,12 @@ class CustomInterfaz {
     let checkboxLimitCharsPerLine = document.getElementsByName('limitCharsPerLine')[0]
 
     checkboxLimitCharsPerLine.addEventListener('change', this.changeLimitCharsPerLine.bind(this))
+  }
+
+  _addEventChangeDisableCursor() {
+    let checkboxDisableCursor = document.getElementsByName('disableCursor')[0]
+
+    checkboxDisableCursor.addEventListener('change', this.changeDisableCursor.bind(this))
   }
 
   /**
@@ -1011,7 +1027,7 @@ class CustomInterfaz {
       }
 
       if (this.learningObject && !this.learningObjectDoc.getElementById('styleLimitCharsPerLine')) {
-        let styleLO = document.createElement('style')
+        let styleLO = this.learningObjectDoc.createElement('style')
         styleLO.id = "styleLimitCharsPerLine"
         this.learningObjectDoc.head.appendChild(styleLO)
         styleLO.type = 'text/css';
@@ -1032,5 +1048,53 @@ class CustomInterfaz {
     }
 
     localStorage.setItem('limit_chars_per_line', this.limitCharsPerLine)
+  }
+
+  changeDisableCursor() {
+    const css = `
+      html * {
+        cursor:none;
+      }
+    `
+    const styleId = 'styleDisableCursor'
+    const disableCursor = document.getElementsByName('disableCursor')[0].checked
+
+    this.disableCursor = disableCursor
+
+    if (disableCursor) {
+      if (!document.getElementById(styleId)) {
+        let head = document.head
+        let style = document.createElement('style')
+        style.id = styleId
+
+        head.appendChild(style)
+        style.type = 'text/css'
+        style.appendChild(document.createTextNode(css))
+
+
+      }
+
+      if (this.learningObject && !this.learningObjectDoc.getElementById(styleId)) {
+        let styleLO = this.learningObjectDoc.createElement('style')
+        styleLO.id = styleId
+        this.learningObjectDoc.head.appendChild(styleLO)
+        styleLO.type = 'text/css';
+        styleLO.appendChild(document.createTextNode(css));
+      }
+    } else {
+      let style = document.getElementById(styleId);
+      if (style) {
+        style.remove()
+      }
+
+      if (this.learningObject) {
+        let styleLO = this.learningObjectDoc.getElementById(styleId);
+        if (styleLO) {
+          styleLO.remove()
+        }
+      }
+    }
+
+    localStorage.setItem('disable_cursor', this.disableCursor)
   }
 }

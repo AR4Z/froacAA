@@ -464,6 +464,15 @@
                     </div>
                   </div>
                 </fieldset>
+                <div class="row">
+                <div class="col">
+                  <label for="disableCursor">
+                    Deshabilitar mouse
+                  </label>
+                  <br/>
+                  <input type="checkbox" name="disableCursor" id="disableCursorCheck"/>
+                </div>
+              </div>
               </div>
             </div>
           </div>
