@@ -2,6 +2,7 @@ class Behavior {
     constructor(preferencesBehavior) {
         this.disableAlerts = preferencesBehavior.disable_alerts
 
+        // copy default alert behavior
         this.defaultAlertBehavior = window.alert
 
         this._addEventChangeDisableAlerts()
@@ -34,7 +35,7 @@ class Behavior {
         let disableAlerts = document.getElementsByName('disableAlerts')[0].checked
         this.disableAlerts = disableAlerts
 
-        if (disable_alerts) {
+        if (disableAlerts) {
             // overwrite default behavior
             window.alert = () => { }
         } else {
