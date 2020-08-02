@@ -63,7 +63,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.28.7/languages/es.min.js"></script>
   <script src="<?php echo base_url() ?>asset/js/keyboardObj.js"></script>
 <?php endif; ?>
-
+<script src="<?php echo base_url() ?>asset/js/behavior.js"></script>
 <script src="<?php echo base_url() ?>asset/js/zoom.js"></script>
 <script src="<?php echo base_url() ?>asset/js/magnifier.js"></script>
 <script src="<?php echo base_url() ?>asset/js/accessibilityBar.js"></script>

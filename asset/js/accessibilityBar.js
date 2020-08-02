@@ -109,6 +109,8 @@ class AccessibilityBar {
      * @type {?ScreenReader}
      */
     this.screenReader = null
+
+    this.behavior = null
     /**
      * Voice Browser object.
      * @type {?VoiceBrowser}
@@ -200,6 +202,10 @@ class AccessibilityBar {
           data_virtual_keyboard: {
             kb_size_id: parseInt(localStorage.getItem('kb_size_id')) || 2,
             play_key_sound: localStorage.getItem('play_key_sound') || 't'
+          },
+
+          data_behavior: {
+            disable_alerts: localStorage.getItem('disable_alerts') || 'true',
           }
         })
       })
@@ -260,6 +266,11 @@ class AccessibilityBar {
       this.tabsCollection.screenReader = new Tab(this.tabs.screenReader)
       this.screenReader = new ScreenReader(this.dataAccessibilityBar.data_screen_reader)
     }
+
+    // always uses behavior feature
+    this.tabs.behavior = document.getElementById('behavior-tab')
+    this.tabsCollection.behavior = new Tab(this.tabs.behavior)
+    this.behavior = new Behavior(this.dataAccessibilityBar.data_behavior)
   }
 
   /**
@@ -593,6 +604,10 @@ class AccessibilityBar {
         play_key_sound: true
       }
     }
+
+    this.dataAccessibilityBar.data_behavior = {
+      disable_alerts: false
+    }
   }
 
   /**
@@ -625,6 +640,7 @@ class AccessibilityBar {
       this.structuralNavigation.setDefaultValues(true)
     }
 
+    this.behavior.setDefaultValues(true)
     this._updateAllPreferencesToDefault()
   }
 
