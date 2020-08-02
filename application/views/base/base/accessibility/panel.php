@@ -29,6 +29,9 @@
         <li class="nav-item">
             <a class="nav-link" id="keyboard-tab" data-toggle="tab" href="#keyboard-cf" role="tab" aria-controls="<?php echo $this->lang->line('virtual_keyboard'); ?>" aria-selected="false"><?php echo $this->lang->line('virtual_keyboard'); ?></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="behavior-tab" data-toggle="tab" href="#behavior" role="tab" aria-controls="Comportamiento" aria-selected="false">Comportamiento</a>
+        </li>
         <?php endif?>
         <?php if(!($this->session->userdata('logged_in')) || $this->session->userdata('need_screen_reader') ||  $this->session->userdata('need_narrator') ||  $this->session->userdata('need_custom_interfaz') ||  $this->session->userdata('need_lsc_translator') || $this->session->userdata('need_structural_nav') || $this->session->userdata('need_virtual_keyboard')):?>
         <li class="nav-item dropdown">
@@ -52,6 +55,7 @@
                 <?php if(($this->session->userdata('need_virtual_keyboard') && !$this->session->userdata('use_external_vk')) || !($this->session->userdata('logged_in'))):?>
                 <a class="dropdown-item" onclick="accessibilityBar.virtualKeyboard.setDefaultValues()" href="#"><?php echo $this->lang->line('virtual_keyboard'); ?></a>
                 <?php endif?>
+                <a class="dropdown-item" onclick="accessibilityBar.behavior.setDefaultValues()" href="#">Comportamiento</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" id="reset-all" onclick="accessibilityBar.setDefaultAllValues()" href="#"><?php echo $this->lang->line('all'); ?></a>
             </div>
@@ -83,6 +87,7 @@
         <?php if(($this->session->userdata('need_virtual_keyboard') && !$this->session->userdata('use_external_sr')) || !($this->session->userdata('logged_in'))):?>
             <?php $this->load->view('base/base/accessibility/keyboard');?>
         <?php endif?>
+        <?php $this->load->view('base/base/accessibility/behavior');?>
     </div>
     <br/>
 </div>
