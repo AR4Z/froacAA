@@ -2,6 +2,8 @@ class Behavior {
     constructor(preferencesBehavior) {
         this.disableAlerts = preferencesBehavior.disable_alerts
 
+        this.defaultAlertBehavior = window.alert
+
         this._addEventChangeDisableAlerts()
         this._setValuesInLocalStorage()
         this._loadBehavior()
@@ -23,13 +25,23 @@ class Behavior {
     }
 
     setDefaultValues(all) {
-        document.querySelector(`input[name='disablealerts']`).setAttribute('default', true)
-        document.querySelector(`input[name='disablealerts']`).checked = true
-        document.querySelector(`input[name='disablealerts']`).dispatchEvent(new Event('change'))
+        document.querySelector(`input[name='disableAlerts']`).setAttribute('default', true)
+        document.querySelector(`input[name='disableAlerts']`).checked = true
+        document.querySelector(`input[name='disableAlerts']`).dispatchEvent(new Event('change'))
     }
 
     changeDisableAlerts() {
-        return
+        let disableAlerts = document.getElementsByName('disableAlerts')[0].checked
+        this.disableAlerts = disableAlerts
+
+        if (disable_alerts) {
+            // overwrite default behavior
+            window.alert = () => { }
+        } else {
+            window.alert = this.defaultAlertBehavior
+        }
+
+        localStorage.setItem('disable_alerts', this.disableAlerts)
     }
 
 }
