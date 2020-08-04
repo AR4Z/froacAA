@@ -4,6 +4,17 @@ class Behavior {
 
         // copy default alert behavior
         this.defaultAlertBehavior = window.alert
+        const elementsNeedConfirmation = document.getElementsByClassName('need-confirmation')
+
+        Array.from(elementsNeedConfirmation).forEach(elm => {
+            elm.addEventListener('click', (e) => {
+                const msg = elm.getAttribute('data-allyxe-confirm')
+                const follow = confirm(`${msg}`)
+                if (!follow) {
+                    e.preventDefault()
+                }
+            })
+        })
 
         this._addEventChangeDisableAlerts()
         this._setValuesInLocalStorage()
