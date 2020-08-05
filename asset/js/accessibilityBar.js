@@ -206,6 +206,7 @@ class AccessibilityBar {
 
           data_behavior: {
             disable_alerts: localStorage.getItem('disable_alerts') || 'true',
+            confirm_context_change: localStorage.getItem('confirm_context_change') || 'false'
           }
         })
       })
@@ -606,7 +607,8 @@ class AccessibilityBar {
     }
 
     this.dataAccessibilityBar.data_behavior = {
-      disable_alerts: false
+      disable_alerts: false,
+      confirm_context_change: false
     }
   }
 
