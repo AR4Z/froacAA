@@ -128,8 +128,6 @@ class AccessibilityBar {
       'none': {}
     }
     this.magnifier = new Magnifier()
-
-    this.hideElementsWithoutDescription()
   }
 
   /**
@@ -274,6 +272,7 @@ class AccessibilityBar {
     this.tabs.behavior = document.getElementById('behavior-tab')
     this.tabsCollection.behavior = new Tab(this.tabs.behavior)
     this.behavior = new Behavior(this.dataAccessibilityBar.data_behavior)
+    this.hideElementsWithoutDescription()
   }
 
   /**
