@@ -128,6 +128,8 @@ class AccessibilityBar {
       'none': {}
     }
     this.magnifier = new Magnifier()
+
+    this.hideElementsWithoutDescription()
   }
 
   /**
@@ -648,5 +650,23 @@ class AccessibilityBar {
 
   open() {
     this.collapseInstance.show();
+  }
+
+  hideElementsWithoutDescription() {
+    const documentElements = document.querySelectorAll('img')
+    const hideElementsFunc = elem => {
+      if (!elem.hasAttribute('alt') || elem.alt.trim() == '') {
+        elem.style.display = 'none'
+      }
+    }
+
+    if (window.idView == 'lo_view') {
+      const iframeDocumentElements = learningObject.getDocument()
+      Array.from(iframeDocumentElements, hideElementsFunc)
+    }
+    
+    Array.from(documentElements).forEach(hideElementsFunc)
+
+
   }
 }
