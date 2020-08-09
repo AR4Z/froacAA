@@ -660,7 +660,8 @@ class AccessibilityBar {
     }
 
     if (window.idView == 'lo_view') {
-      const iframeDocumentElements = learningObject.getDocument()
+      const iframeDocument = learningObject.getDocument()
+      const iframeDocumentElements = iframeDocument.querySelectorAll('img')
       Array.from(iframeDocumentElements, hideElementsFunc)
     }
     
