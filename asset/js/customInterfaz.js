@@ -1117,7 +1117,7 @@ class CustomInterfaz {
     // manage click events
 
     document.addEventListener('click', (e) => {
-      if (disableCursor) {
+      if (this.disableCursor) {
         e.stopPropagation();
         e.preventDefault();
       }
@@ -1125,7 +1125,7 @@ class CustomInterfaz {
 
     if (this.learningObject) {
       this.learningObjectDoc.addEventListener('click', (e) => {
-        if (disableCursor) {
+        if (this.disableCursor) {
           e.stopPropagation();
           e.preventDefault();
         }

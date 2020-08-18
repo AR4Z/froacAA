@@ -206,7 +206,16 @@ class AccessibilityBar {
 
           data_behavior: {
             disable_alerts: localStorage.getItem('disable_alerts') || 'true',
-            confirm_context_change: localStorage.getItem('confirm_context_change') || 'false'
+            confirm_context_change: localStorage.getItem('confirm_context_change') || 'false',
+            ctrl1: localStorage.getItem('ctrl1') || 0,
+            ctrl2: localStorage.getItem('ctrl2') || 1,
+            ctrl3: localStorage.getItem('ctrl3') || 2,
+            ctrl4: localStorage.getItem('ctrl4') || 3,
+            ctrl5: localStorage.getItem('ctrl5') || 4,
+            ctrl6: localStorage.getItem('ctrl6') || 5,
+            ctrl7: localStorage.getItem('ctrl7') || 6,
+            ctrl8: localStorage.getItem('ctrl8') || 7,
+            ctrl9: localStorage.getItem('ctrl9') || 8
           }
         })
       })
@@ -664,7 +673,7 @@ class AccessibilityBar {
       const iframeDocumentElements = iframeDocument.querySelectorAll('img')
       Array.from(iframeDocumentElements, hideElementsFunc)
     }
-    
+
     Array.from(documentElements).forEach(hideElementsFunc)
 
 
